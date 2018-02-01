@@ -1,0 +1,5 @@
+kami_api_core:
+  locales: ['en', 'ru']
+  resources:
+    - { name: category, entity: Kami\ShopBundle\Entity\Category }
+    - { name: test, entity: Kami\ShopBundle\Entity\Test }

@@ -1,0 +1,4 @@
+services:
+#    kami_shop.example:
+#        class: Kami\ShopBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]

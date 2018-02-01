@@ -1,0 +1,17 @@
+model: Kami\UserBundle\Entity\User
+service_calls:
+    updateUser:
+        service: fos_user.user_manager
+        method: updateUser
+fixtures:
+    admin:
+        email: admin@apimonster.com
+        plain_password: admin
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    user:
+        email: user@apimonster.com
+        plain_password: user
+        enabled: true

@@ -1,0 +1,3 @@
+kami_api:
+    resource: .
+    type: kami_api_core
