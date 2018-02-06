@@ -4,3 +4,8 @@ kami_api_core:
 
 api_login_check:
     path: /api/login_check
+
+kami_frontend:
+    resource: "@KamiFrontendBundle/Controller/"
+    type:     annotation
+    prefix:   /

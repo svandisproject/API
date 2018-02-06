@@ -24,8 +24,8 @@ class AppKernel extends Kernel
 
 
             new Kami\ApiCoreBundle\KamiApiCoreBundle(),
-            new Kami\ShopBundle\KamiShopBundle(),
             new Kami\UserBundle\KamiUserBundle(),
+            new Kami\FrontendBundle\KamiFrontendBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
