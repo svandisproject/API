@@ -7,6 +7,8 @@ composer require kami/api-core-bundle
 ```
 
 ```php
+<?php
+
 // AppKernel.php
 
     public function registerBundles()
@@ -34,6 +36,8 @@ kami_api_core:
 ### @Access
 Defines roles that can access the resource
 ```php
+<?php
+
 namespace AppBundle\Entity;
 
 class YourEntity
