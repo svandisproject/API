@@ -4,11 +4,6 @@
 <script lang="js">
   export default  {
     name: 'ui-spinner',
-    data() {
-      return {
-        show: true
-      }
-    },
-    props: ['show']
+    props: {'show':{type: Boolean, default: true}}
 }
 </script>
