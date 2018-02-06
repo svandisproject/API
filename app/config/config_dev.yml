@@ -6,6 +6,8 @@ framework:
         resource: '%kernel.project_dir%/app/config/routing_dev.yml'
         strict_requirements: true
     profiler: { only_exceptions: false }
+    assets:
+        json_manifest_path: '%kernel.project_dir%/web/build/manifest.json'
 
 web_profiler:
     toolbar: true
@@ -13,7 +15,6 @@ web_profiler:
 
 khepin_yaml_fixtures:
     resources:
-        - KamiShopBundle
         - KamiUserBundle
     directory: Resources/fixtures
 

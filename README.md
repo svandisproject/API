@@ -1,4 +1,9 @@
-apimonster
+Symfony KAMI Edition
 ==========
 
-A Symfony project created on January 30, 2018, 1:25 pm.
+Starter template for KAMI Labs applications
+
+Under the hood:
+* KamiApiCoreBundle - For easy CRUD API resources generation
+* Vue.js with configured encore
+* UiKit an awesome frintend framework 
