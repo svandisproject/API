@@ -1,20 +1,4 @@
 {
   "build/admin.css": "http://localhost:8080/build/admin.css",
-  "build/admin.js": "http://localhost:8080/build/admin.js",
-  "build/images/close-icon.svg": "http://localhost:8080/build/images/close-icon.43b2455e.svg",
-  "build/images/close-large.svg": "http://localhost:8080/build/images/close-large.2a8666c4.svg",
-  "build/images/marker.svg": "http://localhost:8080/build/images/marker.ccdb8795.svg",
-  "build/images/navbar-toggle-icon.svg": "http://localhost:8080/build/images/navbar-toggle-icon.ac0e2334.svg",
-  "build/images/overlay-icon.svg": "http://localhost:8080/build/images/overlay-icon.38f2e1a7.svg",
-  "build/images/pagination-next.svg": "http://localhost:8080/build/images/pagination-next.7de83045.svg",
-  "build/images/pagination-previous.svg": "http://localhost:8080/build/images/pagination-previous.91bec765.svg",
-  "build/images/search-icon.svg": "http://localhost:8080/build/images/search-icon.9e8cd27c.svg",
-  "build/images/search-large.svg": "http://localhost:8080/build/images/search-large.1f442d3c.svg",
-  "build/images/search-navbar.svg": "http://localhost:8080/build/images/search-navbar.9e1699e1.svg",
-  "build/images/slidenav-next-large.svg": "http://localhost:8080/build/images/slidenav-next-large.cc9de521.svg",
-  "build/images/slidenav-next.svg": "http://localhost:8080/build/images/slidenav-next.917ba628.svg",
-  "build/images/slidenav-previous-large.svg": "http://localhost:8080/build/images/slidenav-previous-large.13de152b.svg",
-  "build/images/slidenav-previous.svg": "http://localhost:8080/build/images/slidenav-previous.e632e5c7.svg",
-  "build/images/spinner.svg": "http://localhost:8080/build/images/spinner.74c520d7.svg",
-  "build/images/totop.svg": "http://localhost:8080/build/images/totop.634078d3.svg"
+  "build/admin.js": "http://localhost:8080/build/admin.js"
 }
