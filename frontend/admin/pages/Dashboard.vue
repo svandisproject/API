@@ -6,6 +6,7 @@
     <p>Slider nav section</p>
     <ui-slider-nav overlay large></ui-slider-nav>
     <p>End Slider nav section</p>
+    <uk-accordion notCollapsible multiple></uk-accordion>
 
   </section>
 </template>
