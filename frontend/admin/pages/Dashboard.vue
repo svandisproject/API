@@ -3,7 +3,7 @@
     <h1>dashboard Component</h1>
     <ui-spinner :show="true"></ui-spinner>
     <p>Slider nav section</p>
-    <slider-nav></slider-nav>
+    <ui-slider-nav></ui-slider-nav>
     <p>End Slider nav section</p>
   </section>
 </template>

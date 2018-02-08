@@ -1,5 +1,5 @@
 import "./styles/theme.scss";
-import SliderNav from './components/SliderNavigation/SliderNav'
+import SliderNav from './components/slider-navigation/SliderNav'
 import Spinner from './components/Spinner'
 import UIkit from 'uikit'
 

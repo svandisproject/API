@@ -2,7 +2,7 @@
     <div>
         <a href="#" uk-slidenav-previous></a>
         <a href="#" uk-slidenav-next></a>
-        
+
         <p>Large modifier</p>
         <a href="#" class="uk-slidenav-large" uk-slidenav-previous></a>
         <a href="#" class="uk-slidenav-large" uk-slidenav-next></a>
@@ -24,7 +24,7 @@
 
 <script>
     export default {
-        name: 'slider-nav'
+        name: 'ui-slider-nav'
     }
 </script>
 
