@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 const state = {
-   loading: false
+   loading: false,
+   user: {},
+   token: null,
 }
 
 const mutations = {
@@ -13,6 +16,16 @@ const mutations = {
     },
     FINISH_LOADING (state) {
         state.loading = false
+    },
+    SET_JWT_TOKEN (state, token) {
+        state.token = token
+    },
+    SET_USER (state, user) {
+        state.user = user;
+    },
+    LOGOUT(state) {
+        state.token = null
+        state.user = null
     }
 }
 
@@ -25,14 +38,17 @@ const actions = {
 }
 
 const getters = {
-    loading: (state) => { return state.loading }
+    isLoading:      (state) => { return state.loading },
+    getUser:        (state) => { return state.user },
+    getToken:       (state) => { return state.token },
 }
 
 const store = new Vuex.Store({
     state,
     mutations,
     actions,
-    getters
+    getters,
+    plugins: [ createPersistedState() ]
 })
 
 export default store

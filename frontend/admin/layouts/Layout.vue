@@ -1,8 +1,8 @@
 <template lang="html">
   <section class="layout">
-    <ui-container>
-        <router-view v-if="!loading"></router-view>
-        <preloader v-if="loading"></preloader>
+    <ui-container size="large">
+        <router-view v-show="!isLoading"></router-view>
+        <preloader v-show="isLoading"></preloader>
     </ui-container>
   </section>
 </template>
@@ -14,8 +14,13 @@
   export default  {
     name: 'layout',
     computed: {
-        ...mapGetters(['loading'])
+        ...mapGetters(['isLoading'])
     },
     components: {Preloader}
 }
 </script>
+<style lang="scss" scoped>
+    .layout {
+        min-height: 100%;
+    }
+</style>

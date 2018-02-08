@@ -11,5 +11,9 @@ Encore
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
 ;
+var config = Encore.getWebpackConfig();
 
-module.exports = Encore.getWebpackConfig();
+config.resolve.alias['uikit-icons'] = 'uikit/dist/js/uikit-icons.js';
+
+
+module.exports = config;

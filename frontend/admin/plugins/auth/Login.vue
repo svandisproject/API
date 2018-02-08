@@ -1,0 +1,73 @@
+<template lang="html">
+  <form class="login">
+    <div class="uk-margin">
+        <div class="uk-inline">
+            <ui-icon i="mail" class="uk-form-icon"  />
+            <input type="email"
+                   name="email"
+                   v-validate="'required|email'"
+                   v-model="email"
+                   class="uk-input uk-form-width-large"
+                   placeholder="Email"
+                   :class="{'uk-form-danger': errors.has('email')}"
+                   >
+        </div>
+    </div>
+    <div class="uk-margin">
+        <div class="uk-inline">
+            <ui-icon i="lock" class="uk-form-icon" />
+            <input type="password"
+                   name="password"
+                   v-validate="'required'"
+                   v-model="password"
+                   class="uk-input uk-form-width-large"
+                   placeholder="Password"
+                   :class="{'uk-form-danger': errors.has('password')}"
+                   >
+        </div>
+    </div>
+    <button class="uk-button uk-button-primary" @click.prevent="login">Login</button>
+  </form>
+
+</template>
+
+<script lang="js">
+  export default  {
+    name: 'k-login',
+    data() {
+      return {
+        email: null,
+        password: null,
+      }
+    },
+    methods: {
+        login() {
+            if(this.$validator.errors.count() > 0) {
+                return;
+            }
+            this.$axios.postFormData('/api/login_check', {
+                username: this.email,
+                password: this.password
+            })
+                .then( (response) => {
+                    this.$store.commit('SET_JWT_TOKEN', response.data.token);
+                    this.$router.push('/')
+                })
+        }
+    },
+    computed: {
+
+    },
+    beforeRouteEnter (to, from, next) {
+       next(vm => {
+           vm.$store.commit('SET_LAYOUT_CLASS', 'login-container')
+       })
+    }
+}
+</script>
+
+<style scoped lang="stylus">
+  .login {
+
+  }
+</style>

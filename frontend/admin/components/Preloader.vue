@@ -1,6 +1,6 @@
 <template lang="html">
 
-  <div class="preloader" v-if="loading">
+  <div class="preloader" v-if="isLoading">
     <ui-position center>
         We are loading <ui-spinner></ui-spinner>
     </ui-position>
@@ -13,7 +13,7 @@
   export default  {
     name: 'k-preloader',
     computed: {
-        ...mapGetters(['loading'])
+        ...mapGetters(['isLoading'])
     }
 }
 </script>

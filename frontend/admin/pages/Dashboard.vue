@@ -1,8 +1,7 @@
 <template lang="html">
   <section class="dashboard">
     <h1>dashboard Component</h1>
-    <ui-spinner :show="true"></ui-spinner>
-    <ui-position center relative><p>Hello</p></ui-position>
+    <k-logout></k-logout>
   </section>
 </template>
 

@@ -17,7 +17,7 @@
           'center': {type: Boolean, default: true},
           'out': {type: Boolean, default: false},
           'small': {type: Boolean, default: false},
-          'medium': {type: Boolean, default: true},
+          'medium': {type: Boolean, default: false},
           'large': {type: Boolean, default: false},
           'relative': {type: Boolean, default: false},
           'absolute': {type: Boolean, default: false},
@@ -37,7 +37,7 @@
                 throw new Error('Position is unevident. You can not declare small, medium and large properties together')
             }
             if(this.relative && this.absolute || this.relative && this.fixed || this.fixed && this.absolute) {
-                throw new Error('Position is unevident. You can not declare small, medium and large properties together')
+                throw new Error('Position is unevident. You can not declare relative, absolute and fixed properties together')
             }
 
             let classes = 'uk-position';
@@ -80,7 +80,7 @@
             if(this.zIndex) {
                 classes += ' uk-position-z-index'
             }
-            console.log(classes);
+
             return classes;
         }
     }

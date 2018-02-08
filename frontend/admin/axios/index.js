@@ -6,6 +6,7 @@ export default function(store, $eventHub) {
         return config
     }, (error) => {
         $eventHub.$emit('axios.error', error)
+        store.commit('FINISH_LOADING');
         return Promise.reject(error);
     });
     axios.interceptors.response.use((response) => {
@@ -13,7 +14,17 @@ export default function(store, $eventHub) {
         return response;
     }, (error) => {
         $eventHub.$emit('axios.error', error)
+        store.commit('FINISH_LOADING');
         return Promise.reject(error);
     });
+
+    axios.postFormData = (url, data) => {
+        let formData = new FormData();
+        Object.keys(data).map((key)=> {
+            formData.append(key, data[key])
+        })
+        return axios.post(url, formData)
+    }
+
     return axios
 }
