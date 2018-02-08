@@ -5,7 +5,8 @@ import Dashboard from '../pages/Dashboard'
 Vue.use(Router);
 
 export default new Router({
-    mode: 'hash',
+    base: '/admin',
+    mode: 'history',
     routes: [
         {
             path: '/',

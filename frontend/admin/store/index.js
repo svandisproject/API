@@ -4,15 +4,15 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 const state = {
-    count: 0
+   loading: false
 }
 
 const mutations = {
-    INCREMENT (state) {
-        state.count++
+    START_LOADING (state) {
+        state.loading = true
     },
-    DECREMENT (state) {
-        state.count--
+    FINISH_LOADING (state) {
+        state.loading = false
     }
 }
 
@@ -24,10 +24,15 @@ const actions = {
     }
 }
 
+const getters = {
+    loading: (state) => { return state.loading }
+}
+
 const store = new Vuex.Store({
     state,
     mutations,
-    actions
+    actions,
+    getters
 })
 
 export default store

@@ -1,35 +1,21 @@
 <template lang="html">
-
   <section class="layout">
-    <h1>layout Component</h1>
-    <router-view></router-view>
+    <ui-container>
+        <router-view v-if="!loading"></router-view>
+        <preloader v-if="loading"></preloader>
+    </ui-container>
   </section>
-
 </template>
 
 <script lang="js">
+  import Preloader from '../components/Preloader.vue'
+  import { mapGetters } from 'vuex'
+
   export default  {
     name: 'layout',
-    props: [],
-    mounted() {
-
-    },
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
     computed: {
-
-    }
+        ...mapGetters(['loading'])
+    },
+    components: {Preloader}
 }
 </script>
-
-<style scoped lang="stylus">
-  .layout {
-
-  }
-</style>

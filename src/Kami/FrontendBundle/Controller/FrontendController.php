@@ -4,6 +4,7 @@ namespace Kami\FrontendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Response;
 
 class FrontendController extends Controller
 {
@@ -12,11 +13,12 @@ class FrontendController extends Controller
      */
     public function indexAction()
     {
+        sleep(3);
         return $this->render('@KamiFrontend/Default/index.html.twig');
     }
 
     /**
-     * @Route("/admin")
+     * @Route("/admin{slash}{any}", requirements={"any":"(\w+)?", "slash":"\/?"})
      */
     public function adminAction()
     {
