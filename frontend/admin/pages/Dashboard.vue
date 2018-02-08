@@ -2,6 +2,7 @@
   <section class="dashboard">
     <h1>dashboard Component</h1>
     <ui-spinner :show="true"></ui-spinner>
+    <ui-position center relative><p>Hello</p></ui-position>
   </section>
 </template>
 
