@@ -26,7 +26,12 @@ let app = new Vue({
     template: '<layout />',
     router,
     store,
-    components: { Layout }
+    components: { Layout },
+    created() {
+        if(this.$store.getters.getToken) {
+            this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.getters.getToken;
+        }
+    }
 })
 
 export { app, router, store }

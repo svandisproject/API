@@ -3,6 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: rest_resources.yml }
     - { resource: "@KamiFrontendBundle/Resources/config/services.yml" }
+    - { resource: "@KamiContentBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -93,3 +94,11 @@ nelmio_cors:
             allow_headers: ['*']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE']
             max_age: 3600
+
+# StofDoctrineExtensions Configuration
+stof_doctrine_extensions:
+    default_locale: en_US
+    orm:
+        default:
+            tree: true
+            timestampable: true

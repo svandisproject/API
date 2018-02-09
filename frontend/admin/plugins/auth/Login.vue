@@ -52,6 +52,7 @@
                 .then( (response) => {
                     this.$store.commit('SET_JWT_TOKEN', response.data.token);
                     this.$router.push('/')
+                    this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
                 })
         }
     },
@@ -65,9 +66,3 @@
     }
 }
 </script>
-
-<style scoped lang="stylus">
-  .login {
-
-  }
-</style>

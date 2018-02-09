@@ -12,7 +12,6 @@ class ApiController extends Controller
 
     public function indexAction(Request $request)
     {
-        PreSerializeEvent::
         return $this->get('kami_api_core.api_manager')->getIndex($request);
     }
 
