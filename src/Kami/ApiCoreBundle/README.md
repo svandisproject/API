@@ -66,8 +66,54 @@ class YourEntity
 ```
 ### @AnonymousAccess
 Defines anonymous access to the resource
+```php
+<?php
+
+namespace AppBundle\Entity;
+
+use Kami\ApiCoreBundle\Annotation as Api;
+
+/**
+ * @Api\AnonymousAccess
+ */
+class YourEntity
+{
+    ...
+        
+    /**
+     * @ORM\Column(name="property", type="string", length=255)
+     */
+    private $property;
+    
+    ...
+}
+```
 ### @AnonymousCreate
 Defines if anonymous users can create the resource
+
+```php
+<?php
+
+namespace AppBundle\Entity;
+
+use Kami\ApiCoreBundle\Annotation as Api;
+
+/**
+ * @Api\AnonymousCreate
+ */
+class YourEntity
+{
+    ...
+        
+    /**
+     * @ORM\Column(name="property", type="string", length=255)
+     */
+    private $property;
+    
+    ...
+}
+```
+
 ### @AnonymousEdit
 Defines if anonymous users can edit the resource
 _Usage example_
@@ -87,7 +133,6 @@ class YourEntity
     ...
         
     /**
-     * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
      * @ORM\Column(name="property", type="string", length=255)
      */
     private $property;
