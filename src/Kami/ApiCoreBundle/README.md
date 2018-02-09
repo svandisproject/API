@@ -32,11 +32,11 @@ kami_api_core:
 
 ### Routing loader
 Bundle will generate 4 routes for each resource you specified in your config
-`GET /api/your-resource-name` - Index route
-`GET /api/your-resource-name/{id}` - Get single resource
-`POST /api/your-resource-name` - Create resource
-`PUT /api/your-resource-name/{id}` - Update resource
-`DELETE /api/your-resource-name/{id}` - Delete resource
+* `GET /api/your-resource-name` - Index route
+* `GET /api/your-resource-name/{id}` - Get single resource
+* `POST /api/your-resource-name` - Create resource
+* `PUT /api/your-resource-name/{id}` - Update resource
+* `DELETE /api/your-resource-name/{id}` - Delete resource
 
 ## Annotations reference
 
