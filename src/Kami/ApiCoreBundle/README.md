@@ -247,9 +247,6 @@ namespace AppBundle\Entity;
 
 use Kami\ApiCoreBundle\Annotation as Api;
 
-/**
- * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
- */
 class YourEntity
 {
     ...
