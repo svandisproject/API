@@ -54,7 +54,7 @@ class AccessManager
             if($annotation instanceof Access && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
                         array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getUser()->getRoles())
+                            $this->tokenStorage->getToken()->getRoles())
                     ) > 0;
             }
         }
@@ -74,7 +74,7 @@ class AccessManager
             if($annotation instanceof Access && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
                         array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getUser()->getRoles())
+                            $this->tokenStorage->getToken()->getRoles())
                     ) > 0;
             }
         }
@@ -92,7 +92,7 @@ class AccessManager
                 && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
                         array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getUser()->getRoles())
+                            $this->tokenStorage->getToken()->getRoles())
                     ) > 0;
             }
         }
@@ -102,7 +102,7 @@ class AccessManager
 
     public function canCreateProperty(\ReflectionProperty $property)
     {
-        foreach ($this->annotationReader->getClassAnnotations($property) as $annotation) {
+        foreach ($this->annotationReader->getPropertyAnnotations($property) as $annotation) {
             if($annotation instanceof AnonymousCreate) {
                 return true;
             }
@@ -110,7 +110,7 @@ class AccessManager
                 && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
                         array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getUser()->getRoles())
+                            $this->tokenStorage->getToken()->getRoles())
                     ) > 0;
             }
         }
@@ -136,7 +136,7 @@ class AccessManager
         return false;
     }
 
-    public function canUpdateProperty(\ReflectionProperty $property)
+    public function canEditProperty(\ReflectionProperty $property)
     {
         foreach ($this->annotationReader->getPropertyAnnotations($property) as $annotation) {
             if($annotation instanceof AnonymousCreate) {

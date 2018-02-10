@@ -1,6 +1,5 @@
 kami_api_core:
     resource: "@KamiApiCoreBundle/Resources/config/routing.yml"
-    prefix:   /
 
 api_login_check:
     path: /api/login_check

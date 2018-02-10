@@ -7,6 +7,7 @@ use Doctrine\Common\Util\Inflector;
 use Kami\ApiCoreBundle\Annotation\CanBeCreatedBy;
 use Kami\ApiCoreBundle\Annotation\CanBeEditedBy;
 use Kami\ApiCoreBundle\Annotation\Form;
+use Kami\ApiCoreBundle\Security\AccessManager;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -24,21 +25,22 @@ class Factory
     private $annotationReader;
 
     /**
-     * @var TokenStorage
+     * @var AccessManager
      */
-    private $tokenStorage;
+    private $accessManager;
 
     /**
      * Factory constructor.
+     *
      * @param FormFactory $formFactory
      * @param CachedReader $annotationReader
-     * @param TokenStorage $tokenStorage
+     * @param AccessManager $accessManager
      */
-    public function __construct(FormFactory $formFactory, CachedReader $annotationReader, TokenStorage $tokenStorage)
+    public function __construct(FormFactory $formFactory, CachedReader $annotationReader, AccessManager $accessManager)
     {
         $this->formFactory = $formFactory;
         $this->annotationReader = $annotationReader;
-        $this->tokenStorage = $tokenStorage;
+        $this->accessManager = $accessManager;
     }
 
     /**
@@ -48,30 +50,12 @@ class Factory
     public function getCreateForm($entity)
     {
         $reflection = new \ReflectionClass($entity);
-        $builder = $this->formFactory->createNamedBuilder(
-            Inflector::tableize($reflection->getShortName()),
-            FormType::class,
-            $entity,
-            ['csrf_protection' => false]
-        );
+        $builder = $this->createBaseFormBuilder($entity, $reflection);
         foreach ($reflection->getProperties() as $property) {
-            if($property->getName() !== 'id') {
-                $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($property);
-                $canBeCreated = false;
-                $form = null;
-                foreach ($propertyAnnotations as $annotation) {
-                    if ($annotation instanceof CanBeCreatedBy) {
-                        $canBeCreated = true;
-                    }
-                    if ($annotation instanceof Form) {
-                        $form = $annotation;
-                    }
-                }
-                if ($canBeCreated && !isset($form)) {
-                    $builder->add($property->getName());
-                }
-                if ($canBeCreated && $form instanceof Form) {
-                    $builder->add($form->type, $form->options);
+            if($property->getName() !== 'id' && $this->accessManager->canCreateProperty($property)) {
+                $formAnnotation = $this->annotationReader->getPropertyAnnotation($property, Form::class);
+                if ($formAnnotation) {
+                    $builder->add($property->getName(), $formAnnotation->type, $formAnnotation->options);
                 }
             }
         }
@@ -86,35 +70,33 @@ class Factory
     public function getEditForm($entity)
     {
         $reflection = new \ReflectionClass($entity);
+        $builder = $this->createBaseFormBuilder($entity, $reflection);
+        $builder->setMethod('PUT');
+        foreach ($reflection->getProperties() as $property) {
+            if($property->getName() !== 'id' && $this->accessManager->canEditProperty($property)) {
+                $formAnnotation = $this->annotationReader->getPropertyAnnotation($property, Form::class);
+                if ($formAnnotation) {
+                    $builder->add($property->getName(), $formAnnotation->type, $formAnnotation->options);
+                }
+            }
+        }
+
+        return $builder->getForm();
+    }
+
+    /**
+     * @param $entity
+     * @param $reflection
+     * @return \Symfony\Component\Form\FormBuilderInterface
+     */
+    private function createBaseFormBuilder($entity, $reflection)
+    {
         $builder = $this->formFactory->createNamedBuilder(
             Inflector::tableize($reflection->getShortName()),
             FormType::class,
             $entity,
             ['csrf_protection' => false]
         );
-        $builder->setMethod('PUT');
-        foreach ($reflection->getProperties() as $property) {
-            if($property->getName() !== 'id') {
-                $propertyAnnotations = $this->annotationReader->getPropertyAnnotations($property);
-                $canBeEdited = false;
-                $form = null;
-                foreach ($propertyAnnotations as $annotation) {
-                    if ($annotation instanceof CanBeEditedBy) {
-                        $canBeEdited = true;
-                    }
-                    if ($annotation instanceof Form) {
-                        $form = $annotation;
-                    }
-                }
-                if ($canBeEdited && !isset($form)) {
-                    $builder->add($property->getName());
-                }
-                if ($canBeEdited && $form instanceof Form) {
-                    $builder->add($form->type, $form->options);
-                }
-            }
-        }
-
-        return $builder->getForm();
+        return $builder;
     }
 }

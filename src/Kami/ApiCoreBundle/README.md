@@ -1,11 +1,18 @@
 # KamiApiCoreBundle
 
-## Installation
+This bundle provides easiest way to create CRUD actions in 
+your REST applications. Simple and flexible configuration for 
+each resource included.
 
+## Installation
+Installation is easy. I promise.
+
+Require it
 ```bash
 composer require kami/api-core-bundle
 ```
 
+Add ut to your kernel
 ```php
 <?php
 
@@ -22,21 +29,48 @@ composer require kami/api-core-bundle
 ```
 
 ## Configuration
+Add your resources
 ```yaml
+# app/config/config.yml
+
 kami_api_core:
   locales: ['en', 'de']
   resources:
     - { name: your-resource-name, entity: AppBundle\Entity\YourEntiy }
 ```
+Add KamiApiCore routing loader
+```yaml
+kami_api_core:
+    resource: "@KamiApiCoreBundle/Resources/config/routing.yml"
+```
+
+Now you are good to go.
+
 ## Workflow
 
 ### Routing loader
-Bundle will generate 4 routes for each resource you specified in your config
+Bundle will generate 5 routes for each resource you specified in your config
 * `GET /api/your-resource-name` - Index route
 * `GET /api/your-resource-name/{id}` - Get single resource
 * `POST /api/your-resource-name` - Create resource
 * `PUT /api/your-resource-name/{id}` - Update resource
 * `DELETE /api/your-resource-name/{id}` - Delete resource
+>
+> #### Note! You must clear your cache after modifying your resources 
+>
+### Access rules
+You have to define access rules in your entity using annotations.
+By default all resources have restricted access. You must explicitly grant
+access to each user role. 
+
+  
+### Form generation
+Bundle will generate forms for both `POST` and `PUT` actions. See `@CanBeCreatedBy`, `@CanBeEditedBy`,
+ `@AnonymousCreate`, `@AnonymousEdit` and `@Form` in annotation reference.  
+
+## Extending
+Extending API is the easiest part here. No special actions required. Just create 
+additional routes and controllers.
 
 ## Annotations reference
 
@@ -66,6 +100,8 @@ class YourEntity
 ```
 ### @AnonymousAccess
 Defines anonymous access to the resource
+
+_Usage example_
 ```php
 <?php
 
@@ -91,6 +127,7 @@ class YourEntity
 ### @AnonymousCreate
 Defines if anonymous users can create the resource
 
+_Usage example_
 ```php
 <?php
 
@@ -116,8 +153,8 @@ class YourEntity
 
 ### @AnonymousEdit
 Defines if anonymous users can edit the resource
-_Usage example_
 
+_Usage example_
 ```php
 <?php
 
@@ -143,8 +180,8 @@ class YourEntity
 
 ### @CanBeCreatedBy
 Defines roles that can create the resource or property
-_Usage example_
 
+_Usage example_
 ```php
 <?php
 
@@ -171,8 +208,8 @@ class YourEntity
 ### @CanBeUpdatedBy
 
 Defines roles that can update the resource or property
-_Usage example_
 
+_Usage example_
 ```php
 <?php
 
@@ -199,9 +236,10 @@ class YourEntity
 
 ### @Form
 
-Defines roles that can update the resource or property
-_Usage example_
+Used to define form options. Accepts two arguments: `type` and `options`. See 
+ Symfony Form component [documentation](https://symfony.com/doc/current/forms.html#built-in-field-types)
 
+_Usage example_
 ```php
 <?php
 
