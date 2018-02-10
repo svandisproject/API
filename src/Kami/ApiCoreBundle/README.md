@@ -55,9 +55,11 @@ Bundle will generate 5 routes for each resource you specified in your config
 * `POST /api/your-resource-name` - Create resource
 * `PUT /api/your-resource-name/{id}` - Update resource
 * `DELETE /api/your-resource-name/{id}` - Delete resource
->
+
+
 > #### Note! You must clear your cache after modifying your resources 
->
+
+
 ### Access rules
 You have to define access rules in your entity using annotations.
 By default all resources have restricted access. You must explicitly grant
