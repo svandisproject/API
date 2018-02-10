@@ -65,8 +65,13 @@ access to each user role.
 
   
 ### Form generation
-Bundle will generate forms for both `POST` and `PUT` actions. See `@CanBeCreatedBy`, `@CanBeEditedBy`,
- `@AnonymousCreate`, `@AnonymousEdit` and `@Form` in annotation reference.  
+Bundle will generate forms for both `POST` and `PUT` actions. See `@CanBeCreatedBy`, 
+`@CanBeEditedBy`, `@AnonymousCreate`, `@AnonymousEdit` and `@Form` in annotation reference.  
+
+### Request body converter
+
+Most frontend libraries send form data as json. Bundle converts this payload
+and injects parameters to request data 
 
 ## Extending
 Extending API is the easiest part here. No special actions required. Just create 
