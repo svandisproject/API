@@ -211,7 +211,7 @@ class YourEntity
     ...
 }
 ```
-### @CanBeUpdatedBy
+### @CanBeEditedBy
 
 Defines roles that can update the resource or property
 
@@ -224,14 +224,14 @@ namespace AppBundle\Entity;
 use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
- * @Api\CanBeUpdatedBy({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\CanBeEditedBy({"ROLE_USER", "ROLE_ADMIN"})
  */
 class YourEntity
 {
     ...
         
     /**
-     * @Api\CanBeUpdatedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_USER", "ROLE_ADMIN"})
      * @ORM\Column(name="property", type="string", length=255)
      */
     private $property;
