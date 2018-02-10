@@ -59,7 +59,6 @@ Bundle will generate 5 routes for each resource you specified in your config
 
 > #### Note! You must clear your cache after modifying your resources 
 
-
 ### Access rules
 You have to define access rules in your entity using annotations.
 By default all resources have restricted access. You must explicitly grant
