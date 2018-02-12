@@ -1,10 +1,12 @@
 <template>
-    $END$
+    <h1 class="uk-article-title">
+        <slot></slot>
+    </h1>
 </template>
 
 <script>
     export default {
-        name: 'article-title'
+        name: 'uk-article-title'
     }
 </script>
 

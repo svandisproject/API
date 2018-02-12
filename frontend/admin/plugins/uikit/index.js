@@ -3,6 +3,10 @@ import Accordion from './components/Accordion'
 import AccordionContent from './components/AccordionContent'
 import Alert from './components/Alert'
 import Align from './components/Align'
+import Article from './components/Article'
+import ArticleTitle from './components/ArticleTitle'
+import ArticleMeta from './components/ArticleMeta'
+import Breadcrumb from './components/Breadcrumb'
 import Card from './components/Card'
 import Container from './components/Container'
 import Icon from './components/Icon'
@@ -24,6 +28,10 @@ const uikit = {
         Vue.component(AccordionContent.name, AccordionContent);
         Vue.component(Alert.name, Alert);
         Vue.component(Align.name, Align);
+        Vue.component(Article.name, Article);
+        Vue.component(ArticleTitle.name, ArticleTitle);
+        Vue.component(ArticleMeta.name, ArticleMeta);
+        Vue.component(Breadcrumb.name, Breadcrumb);
         Vue.component(Card.name, Card);
         Vue.component(Container.name, Container);
         Vue.component(Icon.name, Icon);

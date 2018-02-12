@@ -25,7 +25,7 @@
 
 <script>
     export default {
-        name: 'navbar-container-position-list'
+        name: 'ui-navbar-container-position-list'
     }
 </script>
 

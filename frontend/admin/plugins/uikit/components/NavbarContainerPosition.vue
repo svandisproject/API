@@ -6,7 +6,7 @@
 
 <script>
     export default {
-        name: 'navbar-container-position',
+        name: 'ui-navbar-container-position',
         props: {
             'left': {type: Boolean, default: false},
             'right': {type: Boolean, default: false},
