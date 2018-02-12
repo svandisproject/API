@@ -7,6 +7,7 @@ import Article from './components/Article'
 import ArticleTitle from './components/ArticleTitle'
 import ArticleMeta from './components/ArticleMeta'
 import Breadcrumb from './components/Breadcrumb'
+import ButtonGroup from './components/ButtonGroup'
 import Card from './components/Card'
 import Container from './components/Container'
 import Icon from './components/Icon'
@@ -32,6 +33,7 @@ const uikit = {
         Vue.component(ArticleTitle.name, ArticleTitle);
         Vue.component(ArticleMeta.name, ArticleMeta);
         Vue.component(Breadcrumb.name, Breadcrumb);
+        Vue.component(ButtonGroup.name, ButtonGroup);
         Vue.component(Card.name, Card);
         Vue.component(Container.name, Container);
         Vue.component(Icon.name, Icon);
