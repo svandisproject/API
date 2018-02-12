@@ -2,8 +2,7 @@
   <section class="dashboard">
     <h1>dashboard Component</h1>
     <k-logout></k-logout>
-
-      <uk-align></uk-align>
+    
   </section>
 </template>
 

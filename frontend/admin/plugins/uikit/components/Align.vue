@@ -1,5 +1,6 @@
 <template>
     <div class="uk-panel">
+        <slot>
         <p>Example</p>
         <img class="uk-align-left uk-margin-remove-adjacent" src="http://bipbap.ru/wp-content/uploads/2017/09/Cool-High-Resolution-Wallpaper-1920x1080.jpg" width="225" height="150" alt="Example image">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -19,7 +20,7 @@
             .uk-align-left@xl
             .uk-align-right@xl
          -->
-
+        </slot>
     </div>
 </template>
 
