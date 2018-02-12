@@ -11,6 +11,7 @@ use Kami\ApiCoreBundle\Event\CrudEvent;
 use Kami\ApiCoreBundle\Form\Factory;
 use Kami\ApiCoreBundle\Security\AccessManager;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +46,7 @@ class ApiManager
     private $formFactory;
 
     /**
-     * @var EventDispatcher
+     * @var EventDispatcherInterface
      */
     private $eventDispatcher;
 
@@ -61,14 +62,14 @@ class ApiManager
      * @param AccessManager $accessManager
      * @param Factory $formFactory
      * @param Serializer $serializer
-     * @param EventDispatcher $eventDispatcher
+     * @param EventDispatcherInterface $eventDispatcher
      * @param int $perPage
      */
     public function __construct(Registry $doctrine,
                                 AccessManager $accessManager,
                                 Factory $formFactory,
                                 Serializer $serializer,
-                                EventDispatcher $eventDispatcher,
+                                EventDispatcherInterface $eventDispatcher,
                                 $perPage)
     {
         $this->doctrine = $doctrine;

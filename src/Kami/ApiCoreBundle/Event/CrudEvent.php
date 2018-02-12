@@ -3,7 +3,10 @@
 namespace Kami\ApiCoreBundle\Event;
 
 
-class CrudEvent
+
+use Symfony\Component\EventDispatcher\Event;
+
+class CrudEvent extends Event
 {
     /**
      * @var mixed

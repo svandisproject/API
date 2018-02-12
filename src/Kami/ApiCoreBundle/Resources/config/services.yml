@@ -32,7 +32,7 @@ services:
         arguments:
           - "@form.factory"
           - "@annotation_reader"
-          - "kami_api_core.access_manager"
+          - "@kami_api_core.access_manager"
 
     kami_api_core.api_manager:
         class: "%kami_api_core.api_manager.class%"
@@ -41,6 +41,7 @@ services:
           - "@kami_api_core.access_manager"
           - "@kami_api_core.form_factory"
           - "@jms_serializer"
+          - "@event_dispatcher"
           - "%kami_api_core.pagination.per_page%"
         public: true
 
