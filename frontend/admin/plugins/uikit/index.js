@@ -2,6 +2,7 @@ import "./styles/theme.scss";
 import Accordion from './components/Accordion'
 import AccordionContent from './components/AccordionContent'
 import Alert from './components/Alert'
+import Align from './components/Align'
 import Card from './components/Card'
 import Container from './components/Container'
 import Icon from './components/Icon'
@@ -22,6 +23,7 @@ const uikit = {
         Vue.component(Accordion.name, Accordion);
         Vue.component(AccordionContent.name, AccordionContent);
         Vue.component(Alert.name, Alert);
+        Vue.component(Align.name, Align);
         Vue.component(Card.name, Card);
         Vue.component(Container.name, Container);
         Vue.component(Icon.name, Icon);

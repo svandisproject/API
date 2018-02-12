@@ -2,11 +2,8 @@
   <section class="dashboard">
     <h1>dashboard Component</h1>
     <k-logout></k-logout>
-    <ui-navbar-wrap>
-      <navbar-container-position>
-        <navbar-container-position-list></navbar-container-position-list>
-    </navbar-container-position>
-    </ui-navbar-wrap>
+
+      <uk-align></uk-align>
   </section>
 </template>
 
