@@ -5,14 +5,14 @@ your REST applications. Simple and flexible configuration for
 each resource included.
 
 ## Installation
-Installation is easy. I promise.
+Follow these steps for easy instalation 
 
 Require it
 ```bash
 composer require kami/api-core-bundle
 ```
 
-Add ut to your kernel
+Add it to your kernel
 ```php
 <?php
 
