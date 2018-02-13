@@ -2,8 +2,9 @@
   <section class="dashboard">
     <h1>dashboard Component</h1>
     <k-logout></k-logout>
-    <ui-count-down></ui-count-down>
-
+<ui-cover>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQp587hpHKm-ItEzzb2OyortIT6RTe2785PYWgmLK2ifufz91s7" alt="">
+  </ui-cover>
   </section>
 </template>
 
