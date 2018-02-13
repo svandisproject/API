@@ -57,6 +57,7 @@ class Factory
                 if ($formAnnotation) {
                     $builder->add($property->getName(), $formAnnotation->type, $formAnnotation->options);
                 }
+                $builder->add($property->getName());
             }
         }
 
@@ -78,6 +79,7 @@ class Factory
                 if ($formAnnotation) {
                     $builder->add($property->getName(), $formAnnotation->type, $formAnnotation->options);
                 }
+                $builder->add($property->getName());
             }
         }
 
