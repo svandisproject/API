@@ -52,7 +52,7 @@ class Factory
         $reflection = new \ReflectionClass($entity);
         $builder = $this->createBaseFormBuilder($entity, $reflection);
         foreach ($reflection->getProperties() as $property) {
-            if($property->getName() !== 'id' && $this->accessManager->canCreateProperty($property)) {
+            if ($property->getName() !== 'id' && $this->accessManager->canCreateProperty($property)) {
                 $formAnnotation = $this->annotationReader->getPropertyAnnotation($property, Form::class);
                 if ($formAnnotation) {
                     $builder->add($property->getName(), $formAnnotation->type, $formAnnotation->options);
@@ -74,7 +74,7 @@ class Factory
         $builder = $this->createBaseFormBuilder($entity, $reflection);
         $builder->setMethod('PUT');
         foreach ($reflection->getProperties() as $property) {
-            if($property->getName() !== 'id' && $this->accessManager->canEditProperty($property)) {
+            if ($property->getName() !== 'id' && $this->accessManager->canEditProperty($property)) {
                 $formAnnotation = $this->annotationReader->getPropertyAnnotation($property, Form::class);
                 if ($formAnnotation) {
                     $builder->add($property->getName(), $formAnnotation->type, $formAnnotation->options);
@@ -99,6 +99,7 @@ class Factory
             $entity,
             ['csrf_protection' => false]
         );
+
         return $builder;
     }
 }

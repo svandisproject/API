@@ -48,13 +48,15 @@ class AccessManager
     public function canAccessProperty($entity, $context, PropertyMetadata $metadata)
     {
         foreach ($this->annotationReader->getPropertyAnnotations($metadata->reflection) as $annotation) {
-            if($annotation instanceof AnonymousAccess) {
+            if ($annotation instanceof AnonymousAccess) {
                 return true;
             }
-            if($annotation instanceof Access && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
+            if ($annotation instanceof Access && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
-                        array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getRoles())
+                        array_intersect(
+                            $annotation->roles,
+                            $this->tokenStorage->getToken()->getRoles()
+                        )
                     ) > 0;
             }
         }
@@ -68,13 +70,15 @@ class AccessManager
     public function canAccessResource(\ReflectionClass $entity)
     {
         foreach ($this->annotationReader->getClassAnnotations($entity) as $annotation) {
-            if($annotation instanceof AnonymousAccess) {
+            if ($annotation instanceof AnonymousAccess) {
                 return true;
             }
-            if($annotation instanceof Access && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
+            if ($annotation instanceof Access && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
-                        array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getRoles())
+                        array_intersect(
+                            $annotation->roles,
+                            $this->tokenStorage->getToken()->getRoles()
+                        )
                     ) > 0;
             }
         }
@@ -85,14 +89,16 @@ class AccessManager
     public function canCreateResource(\ReflectionClass $entity)
     {
         foreach ($this->annotationReader->getClassAnnotations($entity) as $annotation) {
-            if($annotation instanceof AnonymousCreate) {
+            if ($annotation instanceof AnonymousCreate) {
                 return true;
             }
-            if($annotation instanceof CanBeCreatedBy
+            if ($annotation instanceof CanBeCreatedBy
                 && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
-                        array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getRoles())
+                        array_intersect(
+                            $annotation->roles,
+                            $this->tokenStorage->getToken()->getRoles()
+                        )
                     ) > 0;
             }
         }
@@ -103,14 +109,16 @@ class AccessManager
     public function canCreateProperty(\ReflectionProperty $property)
     {
         foreach ($this->annotationReader->getPropertyAnnotations($property) as $annotation) {
-            if($annotation instanceof AnonymousCreate) {
+            if ($annotation instanceof AnonymousCreate) {
                 return true;
             }
-            if($annotation instanceof CanBeCreatedBy
+            if ($annotation instanceof CanBeCreatedBy
                 && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
-                        array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getRoles())
+                        array_intersect(
+                            $annotation->roles,
+                            $this->tokenStorage->getToken()->getRoles()
+                        )
                     ) > 0;
             }
         }
@@ -121,14 +129,16 @@ class AccessManager
     public function canEditResource(\ReflectionClass $entity)
     {
         foreach ($this->annotationReader->getPropertyAnnotations($entity) as $annotation) {
-            if($annotation instanceof AnonymousEdit) {
+            if ($annotation instanceof AnonymousEdit) {
                 return true;
             }
-            if($annotation instanceof CanBeEditedBy
+            if ($annotation instanceof CanBeEditedBy
                 && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
-                        array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getUser()->getRoles())
+                        array_intersect(
+                            $annotation->roles,
+                            $this->tokenStorage->getToken()->getUser()->getRoles()
+                        )
                     ) > 0;
             }
         }
@@ -139,14 +149,16 @@ class AccessManager
     public function canEditProperty(\ReflectionProperty $property)
     {
         foreach ($this->annotationReader->getPropertyAnnotations($property) as $annotation) {
-            if($annotation instanceof AnonymousCreate) {
+            if ($annotation instanceof AnonymousCreate) {
                 return true;
             }
-            if($annotation instanceof CanBeCreatedBy
+            if ($annotation instanceof CanBeCreatedBy
                 && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
-                        array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getUser()->getRoles())
+                        array_intersect(
+                            $annotation->roles,
+                            $this->tokenStorage->getToken()->getUser()->getRoles()
+                        )
                     ) > 0;
             }
         }
@@ -157,14 +169,16 @@ class AccessManager
     public function canDeleteResource(\ReflectionClass $entity)
     {
         foreach ($this->annotationReader->getClassAnnotations($entity) as $annotation) {
-            if($annotation instanceof AnonymousDelete) {
+            if ($annotation instanceof AnonymousDelete) {
                 return true;
             }
-            if($annotation instanceof CanBeDeletedBy
+            if ($annotation instanceof CanBeDeletedBy
                 && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
-                        array_intersect($annotation->roles,
-                            $this->tokenStorage->getToken()->getUser()->getRoles())
+                        array_intersect(
+                            $annotation->roles,
+                            $this->tokenStorage->getToken()->getUser()->getRoles()
+                        )
                     ) > 0;
             }
         }

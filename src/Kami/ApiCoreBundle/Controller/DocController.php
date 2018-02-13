@@ -11,6 +11,5 @@ class DocController extends Controller
      */
     public function docAction()
     {
-
     }
 }

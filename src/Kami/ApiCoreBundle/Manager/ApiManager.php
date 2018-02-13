@@ -65,13 +65,14 @@ class ApiManager
      * @param EventDispatcherInterface $eventDispatcher
      * @param int $perPage
      */
-    public function __construct(Registry $doctrine,
+    public function __construct(
+        Registry $doctrine,
                                 AccessManager $accessManager,
                                 Factory $formFactory,
                                 Serializer $serializer,
                                 EventDispatcherInterface $eventDispatcher,
-                                $perPage)
-    {
+                                $perPage
+    ) {
         $this->doctrine = $doctrine;
         $this->accessManager = $accessManager;
         $this->formFactory = $formFactory;
@@ -116,7 +117,7 @@ class ApiManager
 
         $entity = $this->doctrine->getManager()->getRepository($entity->getName())->find($request->get('id'));
 
-        if(!$entity) {
+        if (!$entity) {
             throw new NotFoundHttpException();
         }
 
@@ -150,7 +151,7 @@ class ApiManager
             return $this->createResponse($entity, $request);
         }
 
-        return $this->createResponse($form->getErrors(), $request,400);
+        return $this->createResponse($form->getErrors(), $request, 400);
     }
 
     /**
@@ -159,7 +160,6 @@ class ApiManager
      */
     public function editResource(Request $request)
     {
-
         $entityName = $request->attributes->get('_entity');
         $reflection = new \ReflectionClass($entityName);
         if (!$this->accessManager->canEditResource($reflection)) {
@@ -168,7 +168,7 @@ class ApiManager
 
         $entity = $this->doctrine->getManager()->getRepository($entityName)->find($request->get('id'));
 
-        if(!$entity) {
+        if (!$entity) {
             throw new NotFoundHttpException();
         }
 
@@ -182,7 +182,7 @@ class ApiManager
             return $this->createResponse($entity, $request);
         }
 
-        return $this->createResponse($form->getErrors(), $request,400);
+        return $this->createResponse($form->getErrors(), $request, 400);
     }
 
     /**
@@ -199,7 +199,7 @@ class ApiManager
 
         $entity = $this->doctrine->getManager()->getRepository($entityName)->find($request->get('id'));
 
-        if(!$entity) {
+        if (!$entity) {
             throw new NotFoundHttpException();
         }
 

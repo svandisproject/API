@@ -2,7 +2,6 @@
 
 namespace Kami\ApiCoreBundle;
 
-
 class ApiCoreEvents
 {
     const RESOURCE_INDEX_REQUEST  = 'kami.api_core.resource_index_request';
