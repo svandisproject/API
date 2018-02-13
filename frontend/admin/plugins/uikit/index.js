@@ -20,6 +20,7 @@ import Divider from './components/Divider'
 import Dotnav from './components/Dotnav'
 import Dropdown from './components/Dropdown'
 import Icon from './components/Icon'
+import Heading from './components/Heading'
 import NavbarContainer from './components/NavbarContainer'
 import NavbarContainerPosition from './components/NavbarContainerPosition'
 import NavbarContainerPositionList from './components/NavbarContainerPositionList'
@@ -55,6 +56,7 @@ const uikit = {
         Vue.component(Dotnav.name, Dotnav);
         Vue.component(Dropdown.name, Dropdown);
         Vue.component(Icon.name, Icon);
+        Vue.component(Heading.name, Heading);
         Vue.component(NavbarContainer.name, NavbarContainer);
         Vue.component(NavbarContainerPosition.name, NavbarContainerPosition);
         Vue.component(NavbarContainerPositionList.name, NavbarContainerPositionList);
