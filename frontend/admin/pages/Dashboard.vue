@@ -3,7 +3,6 @@
     <h1>dashboard Component</h1>
     <k-logout></k-logout>
 
-
   </section>
 </template>
 
