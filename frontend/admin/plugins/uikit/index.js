@@ -15,6 +15,7 @@ import Column from './components/Column'
 import CountDown from './components/CountDown'
 import Container from './components/Container'
 import Cover from './components/Cover'
+import DescriptionList from './components/DescriptionList'
 import Icon from './components/Icon'
 import NavbarContainer from './components/NavbarContainer'
 import NavbarContainerPosition from './components/NavbarContainerPosition'
@@ -46,6 +47,7 @@ const uikit = {
         Vue.component(CountDown.name, CountDown);
         Vue.component(Container.name, Container);
         Vue.component(Cover.name, Cover);
+        Vue.component(DescriptionList.name, DescriptionList);
         Vue.component(Icon.name, Icon);
         Vue.component(NavbarContainer.name, NavbarContainer);
         Vue.component(NavbarContainerPosition.name, NavbarContainerPosition);
