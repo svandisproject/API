@@ -11,6 +11,8 @@ import Button from './components/Button'
 import ButtonGroup from './components/ButtonGroup'
 import Card from './components/Card'
 import Close from './components/Close'
+import Column from './components/Column'
+import CountDown from './components/CountDown'
 import Container from './components/Container'
 import Icon from './components/Icon'
 import NavbarContainer from './components/NavbarContainer'
@@ -39,6 +41,8 @@ const uikit = {
         Vue.component(ButtonGroup.name, ButtonGroup);
         Vue.component(Card.name, Card);
         Vue.component(Close.name, Close);
+        Vue.component(Column.name, Column);
+        Vue.component(CountDown.name, CountDown);
         Vue.component(Container.name, Container);
         Vue.component(Icon.name, Icon);
         Vue.component(NavbarContainer.name, NavbarContainer);

@@ -2,7 +2,8 @@
   <section class="dashboard">
     <h1>dashboard Component</h1>
     <k-logout></k-logout>
-<ui-close></ui-close>
+    <ui-count-down></ui-count-down>
+
   </section>
 </template>
 
