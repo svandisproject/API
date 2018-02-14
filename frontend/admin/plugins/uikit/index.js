@@ -30,6 +30,7 @@ import NavbarContainerPosition from './components/NavbarContainerPosition'
 import NavbarContainerPositionList from './components/NavbarContainerPositionList'
 import SliderNav from './components/SliderNav'
 import Spinner from './components/Spinner'
+import Tab from './components/Tab'
 import Position from './components/Position'
 
 import UIkit from 'uikit'
@@ -71,6 +72,7 @@ const uikit = {
         Vue.component(Position.name, Position);
         Vue.component(Spinner.name, Spinner);
         Vue.component(SliderNav.name, SliderNav);
+        Vue.component(Tab.name, Tab);
     }
 };
 
