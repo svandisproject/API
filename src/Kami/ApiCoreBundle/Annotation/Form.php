@@ -7,7 +7,13 @@ namespace Kami\ApiCoreBundle\Annotation;
  */
 class Form
 {
+    /**
+     * @var string
+     */
     public $type;
 
+    /**
+     * @var array
+     */
     public $options;
 }

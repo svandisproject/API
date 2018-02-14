@@ -2,8 +2,6 @@
 
 namespace Kami\ApiCoreBundle\Event;
 
-
-
 use Symfony\Component\EventDispatcher\Event;
 
 class CrudEvent extends Event
@@ -29,5 +27,4 @@ class CrudEvent extends Event
     {
         return $this->data;
     }
-
 }

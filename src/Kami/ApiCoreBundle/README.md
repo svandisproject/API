@@ -5,7 +5,7 @@ your REST applications. Simple and flexible configuration for
 each resource included.
 
 ## Installation
-Follow these steps for easy instalation 
+Installation is easy. You just follow these sipmle steps 
 
 Require it
 ```bash

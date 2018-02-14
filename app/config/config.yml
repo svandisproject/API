@@ -102,3 +102,7 @@ stof_doctrine_extensions:
         default:
             tree: true
             timestampable: true
+
+# VichUploaderBundle Configutration
+vich_uploader:
+    db_driver: orm

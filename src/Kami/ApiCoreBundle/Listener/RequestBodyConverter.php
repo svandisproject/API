@@ -29,13 +29,14 @@ class RequestBodyConverter
     {
         $request = $event->getRequest();
         if (stristr($request->headers->get('content-type'), 'application/json')) {
-            if($request->getContent()) {
+            if ($request->getContent()) {
                 try {
                     $data = json_decode($request->getContent(), true);
                     foreach ($data as $key => $value) {
                         $request->request->set($key, $value);
                     }
-                } catch (\Exception $e) {};
+                } catch (\Exception $e) {
+                };
             }
         }
     }

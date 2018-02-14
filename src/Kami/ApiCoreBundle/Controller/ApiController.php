@@ -2,14 +2,11 @@
 
 namespace Kami\ApiCoreBundle\Controller;
 
-use JMS\Serializer\EventDispatcher\PreSerializeEvent;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 class ApiController extends Controller
 {
-
     public function indexAction(Request $request)
     {
         return $this->get('kami_api_core.api_manager')->getIndex($request);
