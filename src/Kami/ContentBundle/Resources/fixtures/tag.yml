@@ -1,0 +1,8 @@
+model: Kami\ContentBundle\Entity\Tag
+fixtures:
+    tag1:
+        title: Bitcoin
+    tag2:
+        title: Etherum
+    tag3:
+        title: Litecoin

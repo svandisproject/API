@@ -12,7 +12,7 @@
     name: 'dashboard',
     props: [],
     mounted() {
-
+        this.$axios.post('/hello-world', {some: 'data'});
     },
     data() {
       return {

@@ -45,29 +45,16 @@
             if(this.$validator.errors.count() > 0) {
                 return;
             }
-            this.$axios.postFormData('/api/login_check', {
+            this.$axios.post('/api/login_check', {
                 username: this.email,
                 password: this.password
             })
                 .then( (response) => {
                     this.$store.commit('SET_JWT_TOKEN', response.data.token);
                     this.$router.push('/')
+                    this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
                 })
         }
-    },
-    computed: {
-
-    },
-    beforeRouteEnter (to, from, next) {
-       next(vm => {
-           vm.$store.commit('SET_LAYOUT_CLASS', 'login-container')
-       })
     }
 }
 </script>
-
-<style scoped lang="stylus">
-  .login {
-
-  }
-</style>
