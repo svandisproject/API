@@ -21,6 +21,7 @@ import Dotnav from './components/Dotnav'
 import Dropdown from './components/Dropdown'
 import Icon from './components/Icon'
 import Inverse from './components/Inverse'
+import Label from './components/Label'
 import Heading from './components/Heading'
 import NavbarContainer from './components/NavbarContainer'
 import NavbarContainerPosition from './components/NavbarContainerPosition'
@@ -58,6 +59,7 @@ const uikit = {
         Vue.component(Dropdown.name, Dropdown);
         Vue.component(Icon.name, Icon);
         Vue.component(Inverse.name, Inverse);
+        Vue.component(Label.name, Label);
         Vue.component(Heading.name, Heading);
         Vue.component(NavbarContainer.name, NavbarContainer);
         Vue.component(NavbarContainerPosition.name, NavbarContainerPosition);
