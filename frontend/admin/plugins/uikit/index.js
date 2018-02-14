@@ -23,6 +23,7 @@ import Icon from './components/Icon'
 import Inverse from './components/Inverse'
 import Label from './components/Label'
 import Lightbox from './components/Lightbox'
+import List from './components/List'
 import Heading from './components/Heading'
 import NavbarContainer from './components/NavbarContainer'
 import NavbarContainerPosition from './components/NavbarContainerPosition'
@@ -62,6 +63,7 @@ const uikit = {
         Vue.component(Inverse.name, Inverse);
         Vue.component(Label.name, Label);
         Vue.component(Lightbox.name, Lightbox);
+        Vue.component(List.name, List);
         Vue.component(Heading.name, Heading);
         Vue.component(NavbarContainer.name, NavbarContainer);
         Vue.component(NavbarContainerPosition.name, NavbarContainerPosition);

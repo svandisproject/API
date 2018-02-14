@@ -2,7 +2,7 @@
   <section class="dashboard">
     <h1>dashboard Component</h1>
     <k-logout></k-logout>
-      <ui-lightbox animation="fade">123123</ui-lightbox>
+
   </section>
 </template>
 
