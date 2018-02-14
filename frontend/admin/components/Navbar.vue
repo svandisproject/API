@@ -1,15 +1,17 @@
 <template lang="html">
-  <section class="dashboard">
-    <h1>dashboard Component</h1>
-    <k-logout></k-logout>
-  </section>
+    <ui-navbar>
+        <ul class="uk-navbar-nav" slot="left">
+            <li><router-link to="/">Dashboard</router-link></li>
+        </ul>
+    </ui-navbar>
 </template>
 
 <script lang="js">
   export default  {
-    name: 'dashboard',
+    name: 'navbar',
     props: [],
     mounted() {
+
     },
     data() {
       return {
@@ -26,8 +28,7 @@
 </script>
 
 <style scoped lang="stylus">
-  .dashboard {
+  .navbar {
 
   }
-
 </style>

@@ -1,25 +1,30 @@
 import Vue from 'vue'
 import { sync } from 'vuex-router-sync'
+import VeeValidate from 'vee-validate';
+import Notifications from 'vue-notification'
 import router from './router'
 import store from './store'
+import socket from './plugins/socket'
 import Layout from './layouts/Layout'
 import uikit from './plugins/uikit'
 import configureAxios from './axios'
-import VeeValidate from 'vee-validate';
 import auth from './plugins/auth';
 
 sync(store, router)
 
 import './styles/base.scss'
 
-Vue.use(VeeValidate);
-Vue.use(uikit)
 let $eventHub = new Vue
-
 Vue.prototype.$eventHub = $eventHub
+
+Vue.use(VeeValidate);
+Vue.use(Notifications)
+Vue.use(uikit)
+Vue.use(socket)
+Vue.use(auth)
+
 Vue.prototype.$axios = configureAxios(store, $eventHub)
 
-Vue.use(auth)
 
 let app = new Vue({
     el: '#app',

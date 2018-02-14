@@ -22,9 +22,7 @@ import Dropdown from './components/Dropdown'
 import Icon from './components/Icon'
 import Inverse from './components/Inverse'
 import Heading from './components/Heading'
-import NavbarContainer from './components/NavbarContainer'
-import NavbarContainerPosition from './components/NavbarContainerPosition'
-import NavbarContainerPositionList from './components/NavbarContainerPositionList'
+import Navbar from './components/Navbar'
 import SliderNav from './components/SliderNav'
 import Spinner from './components/Spinner'
 import Position from './components/Position'
@@ -59,9 +57,7 @@ const uikit = {
         Vue.component(Icon.name, Icon);
         Vue.component(Inverse.name, Inverse);
         Vue.component(Heading.name, Heading);
-        Vue.component(NavbarContainer.name, NavbarContainer);
-        Vue.component(NavbarContainerPosition.name, NavbarContainerPosition);
-        Vue.component(NavbarContainerPositionList.name, NavbarContainerPositionList);
+        Vue.component(Navbar.name, Navbar);
         Vue.component(Position.name, Position);
         Vue.component(Spinner.name, Spinner);
         Vue.component(SliderNav.name, SliderNav);

@@ -6,7 +6,9 @@ Vue.use(Vuex)
 
 const state = {
    loading: false,
-   user: {},
+   user: {
+       roles: []
+   },
    token: null,
 }
 

@@ -5,7 +5,4 @@ io.on('connection', (client) => {
 });
 console.log('Server started');
 
-
-io.on('message', )
-
-io.listen(3000);
+io.listen(1337);
