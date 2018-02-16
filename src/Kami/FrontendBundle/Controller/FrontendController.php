@@ -18,7 +18,7 @@ class FrontendController extends Controller
     }
 
     /**
-     * @Route("/admin{slash}{any}", requirements={"any":"(\w+)?", "slash":"\/?"})
+     * @Route("/admin{slash}{any}", requirements={"any":"(.+)?", "slash":"\/?"})
      */
     public function adminAction()
     {

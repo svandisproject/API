@@ -18,16 +18,16 @@
         props: {
             position: {
                 type: String,
-                default: 'bottom',
+                default: '',
                 validator: (value) => {
-                    return ['bottom', 'left', 'right'].indexOf(value) > -1
+                    return ['bottom', 'left', 'right', ''].indexOf(value) > -1
                 }
             },
             alignment: {
                 type: String,
-                default: 'flex-center',
+                default: '',
                 validator: (value) => {
-                    return ['flex-right', 'flex-left', 'flex-center'].indexOf(value) > -1
+                    return ['flex-right', 'flex-left', 'flex-center', ''].indexOf(value) > -1
                 }
             }
         }

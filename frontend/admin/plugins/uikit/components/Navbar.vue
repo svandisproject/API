@@ -4,6 +4,7 @@
         'uk-navbar-contatiner': container
     }" uk-navbar>
         <div class="uk-navbar-left" v-if="$slots['left']">
+            <slot name="logo"></slot>
             <slot name="left"></slot>
         </div>
         <div class="uk-navbar-center" v-if="$slots['center']">
