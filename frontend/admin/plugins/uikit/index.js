@@ -25,9 +25,7 @@ import Label from './components/Label'
 import Lightbox from './components/Lightbox'
 import List from './components/List'
 import Heading from './components/Heading'
-import NavbarContainer from './components/NavbarContainer'
-import NavbarContainerPosition from './components/NavbarContainerPosition'
-import NavbarContainerPositionList from './components/NavbarContainerPositionList'
+import Navbar from './components/Navbar'
 import SliderNav from './components/SliderNav'
 import Spinner from './components/Spinner'
 import Tab from './components/Tab'
@@ -66,9 +64,7 @@ const uikit = {
         Vue.component(Lightbox.name, Lightbox);
         Vue.component(List.name, List);
         Vue.component(Heading.name, Heading);
-        Vue.component(NavbarContainer.name, NavbarContainer);
-        Vue.component(NavbarContainerPosition.name, NavbarContainerPosition);
-        Vue.component(NavbarContainerPositionList.name, NavbarContainerPositionList);
+        Vue.component(Navbar.name, Navbar);
         Vue.component(Position.name, Position);
         Vue.component(Spinner.name, Spinner);
         Vue.component(SliderNav.name, SliderNav);

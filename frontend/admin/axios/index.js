@@ -18,13 +18,5 @@ export default function(store, $eventHub) {
         return Promise.reject(error);
     });
 
-    axios.postFormData = (url, data) => {
-        let formData = new FormData();
-        Object.keys(data).map((key)=> {
-            formData.append(key, data[key])
-        })
-        return axios.post(url, formData)
-    }
-
     return axios
 }

@@ -7,5 +7,4 @@ namespace Kami\ApiCoreBundle\Annotation;
  */
 class CanBeDeletedBy
 {
-
 }

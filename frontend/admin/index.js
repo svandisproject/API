@@ -1,32 +1,46 @@
 import Vue from 'vue'
 import { sync } from 'vuex-router-sync'
+import VeeValidate from 'vee-validate'
+import Notifications from 'vue-notification'
 import router from './router'
 import store from './store'
+import socket from './plugins/socket'
 import Layout from './layouts/Layout'
 import uikit from './plugins/uikit'
 import configureAxios from './axios'
-import VeeValidate from 'vee-validate';
-import auth from './plugins/auth';
+import auth from './plugins/auth'
 
 sync(store, router)
 
 import './styles/base.scss'
 
-Vue.use(VeeValidate);
-Vue.use(uikit)
 let $eventHub = new Vue
-
 Vue.prototype.$eventHub = $eventHub
-Vue.prototype.$axios = configureAxios(store, $eventHub)
 
+Vue.use(VeeValidate);
+Vue.use(Notifications)
+Vue.use(uikit)
+Vue.use(socket)
 Vue.use(auth)
+
+Vue.prototype.$axios = configureAxios(store, $eventHub)
 
 let app = new Vue({
     el: '#app',
     template: '<layout />',
     router,
     store,
-    components: { Layout }
+    components: { Layout },
+    created() {
+        if(this.$store.getters.getToken) {
+            if(this.$store.getters.getUser.exp <= new Date().getTime()/1000) {
+                this.$store.commit('LOGOUT');
+                this.$router.push({'name':'login'})
+            } else {
+                this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + this.$store.getters.getToken;
+            }
+        }
+    }
 })
 
 export { app, router, store }

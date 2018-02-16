@@ -21,11 +21,13 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Lexik\Bundle\JWTAuthenticationBundle\LexikJWTAuthenticationBundle(),
             new Nelmio\CorsBundle\NelmioCorsBundle(),
-
+            new Vich\UploaderBundle\VichUploaderBundle(),
+            new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
 
             new Kami\ApiCoreBundle\KamiApiCoreBundle(),
             new Kami\UserBundle\KamiUserBundle(),
             new Kami\FrontendBundle\KamiFrontendBundle(),
+            new Kami\ContentBundle\KamiContentBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

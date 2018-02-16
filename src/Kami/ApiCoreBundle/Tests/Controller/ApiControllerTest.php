@@ -4,7 +4,7 @@ namespace Kami\ApiCoreBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class DefaultControllerTest extends WebTestCase
+class ApiControllerTest extends WebTestCase
 {
     public function testIndex()
     {

@@ -1,7 +1,9 @@
 <template lang="html">
-    <div class="logout">
-        <span class="logout" @click="logout"><ui-icon i="lock"/> Logout</span>
-    </div>
+    <a class="logout" @click="logout">
+        <slot>
+            <ui-icon i="lock"/> Logout
+        </slot>
+    </a>
 </template>
 
 <script lang="js">

@@ -32,6 +32,9 @@
 </template>
 
 <script lang="js">
+  import jwtDecode from 'jwt-decode';
+  import config from '../../config';
+
   export default  {
     name: 'k-login',
     data() {
@@ -45,29 +48,28 @@
             if(this.$validator.errors.count() > 0) {
                 return;
             }
-            this.$axios.postFormData('/api/login_check', {
-                username: this.email,
-                password: this.password
-            })
-                .then( (response) => {
-                    this.$store.commit('SET_JWT_TOKEN', response.data.token);
-                    this.$router.push('/')
+            this.$axios.post('/api/login_check', {username: this.email, password: this.password})
+                .then((response) => {
+                    let user = jwtDecode(response.data.token);
+                    if(user.roles.indexOf(config.AUTH.ADMIN_AREA_ACCESS_ROLE) > -1) {
+                        this.$store.commit('SET_JWT_TOKEN', response.data.token)
+                        this.$store.commit('SET_USER', jwtDecode(response.data.token))
+                        this.$router.push('/')
+                        this.$axios.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.token
+                    }
+                    this.$emit('access-denied')
                 })
-        }
-    },
-    computed: {
+                .catch((error) => {
+                    this.$notify({
+                        title: 'Authentication error',
+                        position: 'top center',
+                        group: 'auth',
+                        text: error.response.data.message,
+                        type: 'error',
+                    });
+                })
 
-    },
-    beforeRouteEnter (to, from, next) {
-       next(vm => {
-           vm.$store.commit('SET_LAYOUT_CLASS', 'login-container')
-       })
+        }
     }
 }
 </script>
-
-<style scoped lang="stylus">
-  .login {
-
-  }
-</style>

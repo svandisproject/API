@@ -6,7 +6,10 @@ Vue.use(Vuex)
 
 const state = {
    loading: false,
-   user: {},
+   user: {
+       authenticated: false,
+       roles: []
+   },
    token: null,
 }
 
@@ -25,7 +28,10 @@ const mutations = {
     },
     LOGOUT(state) {
         state.token = null
-        state.user = null
+        state.user = {
+            authenticated: false,
+            roles: []
+        }
     }
 }
 

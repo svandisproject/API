@@ -1,0 +1,4 @@
+services:
+#    kami_content.example:
+#        class: Kami\ContentBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
