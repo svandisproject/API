@@ -1,6 +1,6 @@
 <template lang="html">
   <section class="layout">
-    <navbar />
+    <navbar v-if="$auth.authenticated()"/>
     <ui-container size="large">
         <router-view v-show="!isLoading"></router-view>
         <preloader v-show="isLoading"></preloader>

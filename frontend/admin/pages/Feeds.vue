@@ -1,14 +1,17 @@
 <template lang="html">
-  <section class="dashboard">
-    <h1>dashboard Component</h1>
+
+  <section class="feeds">
+    <h1>feeds Component</h1>
   </section>
+
 </template>
 
 <script lang="js">
   export default  {
-    name: 'dashboard',
+    name: 'feeds',
     props: [],
     mounted() {
+
     },
     data() {
       return {
@@ -25,8 +28,7 @@
 </script>
 
 <style scoped lang="stylus">
-  .dashboard {
+  .feeds {
 
   }
-
 </style>

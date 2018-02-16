@@ -24,10 +24,6 @@
         name: 'ui-navbar',
         props: {
             'container': { type: Boolean, default: false }
-        },
-        mounted() {
-            console.log(123)
-            console.log(this.$slots)
         }
     }
 </script>
