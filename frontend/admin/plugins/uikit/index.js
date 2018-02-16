@@ -21,10 +21,14 @@ import Dotnav from './components/Dotnav'
 import Dropdown from './components/Dropdown'
 import Icon from './components/Icon'
 import Inverse from './components/Inverse'
+import Label from './components/Label'
+import Lightbox from './components/Lightbox'
+import List from './components/List'
 import Heading from './components/Heading'
 import Navbar from './components/Navbar'
 import SliderNav from './components/SliderNav'
 import Spinner from './components/Spinner'
+import Tab from './components/Tab'
 import Position from './components/Position'
 
 import UIkit from 'uikit'
@@ -56,11 +60,15 @@ const uikit = {
         Vue.component(Dropdown.name, Dropdown);
         Vue.component(Icon.name, Icon);
         Vue.component(Inverse.name, Inverse);
+        Vue.component(Label.name, Label);
+        Vue.component(Lightbox.name, Lightbox);
+        Vue.component(List.name, List);
         Vue.component(Heading.name, Heading);
         Vue.component(Navbar.name, Navbar);
         Vue.component(Position.name, Position);
         Vue.component(Spinner.name, Spinner);
         Vue.component(SliderNav.name, SliderNav);
+        Vue.component(Tab.name, Tab);
     }
 };
 
