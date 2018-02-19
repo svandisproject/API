@@ -1,6 +1,7 @@
 <template lang="html">
   <section class="dashboard">
     <h1>dashboard Component</h1>
+    <ui-off-canvas></ui-off-canvas>
   </section>
 </template>
 
