@@ -30,6 +30,7 @@ import OffCanvas from './components/OffCanvas'
 import Overlay from './components/Overlay'
 import Padding from './components/Padding'
 import Placeholder from './components/Placeholder'
+import Search from './components/Search'
 import SliderNav from './components/SliderNav'
 import Spinner from './components/Spinner'
 import Tab from './components/Tab'
@@ -75,6 +76,7 @@ const uikit = {
         Vue.component(Placeholder.name, Placeholder);
         Vue.component(Position.name, Position);
         Vue.component(Spinner.name, Spinner);
+        Vue.component(Search.name, Search);
         Vue.component(SliderNav.name, SliderNav);
         Vue.component(Tab.name, Tab);
     }
