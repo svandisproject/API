@@ -28,6 +28,7 @@ import Heading from './components/Heading'
 import Navbar from './components/Navbar'
 import OffCanvas from './components/OffCanvas'
 import Overlay from './components/Overlay'
+import Padding from './components/Padding'
 import SliderNav from './components/SliderNav'
 import Spinner from './components/Spinner'
 import Tab from './components/Tab'
@@ -69,6 +70,7 @@ const uikit = {
         Vue.component(Navbar.name, Navbar);
         Vue.component(OffCanvas.name, OffCanvas);
         Vue.component(Overlay.name, Overlay);
+        Vue.component(Padding.name, Padding);
         Vue.component(Position.name, Position);
         Vue.component(Spinner.name, Spinner);
         Vue.component(SliderNav.name, SliderNav);
