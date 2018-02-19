@@ -21,6 +21,7 @@
     },
     "require": {
         "php": ">=5.5.9",
+        "craue/config-bundle": "^2.1",
         "doctrine/annotations": "^1.6",
         "doctrine/doctrine-bundle": "^1.6",
         "doctrine/orm": "^2.5",
@@ -31,6 +32,7 @@
         "knplabs/knp-gaufrette-bundle": "^0.5.2",
         "lexik/jwt-authentication-bundle": "^2.4",
         "nelmio/cors-bundle": "^1.5",
+        "paragonie/random-lib": "^2.0",
         "sensio/distribution-bundle": "^5.0.19",
         "sensio/framework-extra-bundle": "^5.0.0",
         "stof/doctrine-extensions-bundle": "^1.3",
@@ -56,11 +58,16 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
+        "kami-scripts": [
+            "Kami\\WorkerBundle\\Composer\\ScriptHandler::createWorkerSecret"
+        ],
         "post-install-cmd": [
-            "@symfony-scripts"
+            "@symfony-scripts",
+            "@kami-scripts"
         ],
         "post-update-cmd": [
-            "@symfony-scripts"
+            "@symfony-scripts",
+            "@kami-scripts"
         ]
     },
     "config": {

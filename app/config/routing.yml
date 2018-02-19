@@ -1,3 +1,8 @@
+kami_worker:
+    resource: "@KamiWorkerBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 kami_api_core:
     resource: "@KamiApiCoreBundle/Resources/config/routing.yml"
 

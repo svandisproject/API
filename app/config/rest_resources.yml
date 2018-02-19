@@ -3,3 +3,4 @@ kami_api_core:
   resources:
     - { name: website-post, entity: Kami\ContentBundle\Entity\WebsitePost }
     - { name: tag, entity: Kami\ContentBundle\Entity\Tag }
+    - { name: worker, entity: Kami\WorkerBundle\Entity\Worker }

@@ -4,6 +4,8 @@ import Dashboard from '../pages/Dashboard'
 import Login from '../pages/Login'
 import Tag from '../pages/Tag'
 import Feeds from '../pages/Feeds'
+import Settings from '../pages/Settings'
+import Workers from '../pages/Workers'
 
 Vue.use(Router);
 
@@ -47,6 +49,19 @@ const router = new Router({
                     name: 'feeds_twitter',
                     path: '/feeds/twitter',
                     component: Feeds
+                }
+            ]
+        },
+        {
+            name: 'settings',
+            path: '/settings',
+            component: Settings,
+            props: {'access': ['ROLE_ADMIN']},
+            children: [
+                {
+                    name: 'settings_workers',
+                    path: '/settings_workers',
+                    component: Workers
                 }
             ]
         }

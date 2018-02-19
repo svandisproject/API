@@ -4,11 +4,23 @@ imports:
     - { resource: rest_resources.yml }
     - { resource: "@KamiFrontendBundle/Resources/config/services.yml" }
     - { resource: "@KamiContentBundle/Resources/config/services.yml" }
+    - { resource: "@KamiWorkerBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    craue_config.cache_adapter.class: Craue\ConfigBundle\CacheAdapter\SymfonyCacheComponentAdapter
+
+# Services
+services:
+    craue_config_cache_provider:
+        class: Symfony\Component\Cache\Adapter\FilesystemAdapter
+        public: false
+        arguments:
+            - 'craue_config'
+            - 0
+            - '%kernel.cache_dir%'
 
 framework:
     #esi: ~

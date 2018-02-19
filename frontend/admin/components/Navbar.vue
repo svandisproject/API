@@ -4,11 +4,12 @@
         <logo></logo>
     </router-link>
    <ul class="uk-navbar-nav" slot="left">
-        <li><router-link to="/">Dashboard</router-link></li>
-        <li><router-link to="/feeds">Feeds</router-link></li>
+        <li><router-link :to="{name: 'dashboard'}">Dashboard</router-link></li>
+        <li><router-link :to="{name: 'feeds'}">Feeds</router-link></li>
     </ul>
 
     <ul class="uk-navbar-nav" slot="right">
+        <li v-if="$auth.hasRole('ROLE_ADMIN')"><router-link :to="{name: 'settings'}">Settings</router-link></li>
         <li><k-logout /></li>
     </ul>
     </ui-navbar>

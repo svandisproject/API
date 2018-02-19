@@ -21,11 +21,16 @@ const auth = {
             }
             if(store.getters.getToken && store.getters.getUser.roles.indexOf(config.AUTH.ADMIN_AREA_ACCESS_ROLE) > -1) {
                 let access = false;
-                for(let i in store.getters.getUser.roles) {
-                    if (to.matched[0].props.default.access.indexOf(store.getters.getUser.roles[i]) > -1) {
-                        access = true;
-                        break;
+                // console.log(to.matched[0].props.default.access);
+                if(to.matched.length > 0 && to.matched[0].props.default.access) {
+                    for(let i in store.getters.getUser.roles) {
+                        if (to.matched[0].props.default.access.indexOf(store.getters.getUser.roles[i]) > -1) {
+                            access = true;
+                            break;
+                        }
                     }
+                } else {
+                    access = true;
                 }
                 if(!access) {
                     return false

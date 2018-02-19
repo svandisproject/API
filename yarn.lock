@@ -1408,7 +1408,7 @@ colormin@^1.0.5:
     css-color-names "0.0.4"
     has "^1.0.1"
 
-colors@~1.1.2:
+colors@^1.1.2, colors@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/colors/-/colors-1.1.2.tgz#168a4701756b6a7f51a12ce0c97bfa28c084ed63"
 
@@ -4533,6 +4533,10 @@ pretty-error@^2.1.1:
 private@^0.1.6, private@^0.1.7:
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/private/-/private-0.1.8.tgz#2381edb3689f7a53d653190060fcf822d2f368ff"
+
+process-argv@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/process-argv/-/process-argv-1.0.0.tgz#fac4c21f6e5e8ddfa460cf06a6a422171f4d4ffc"
 
 process-nextick-args@~1.0.6:
   version "1.0.7"
