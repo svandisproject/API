@@ -1,7 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 561.36 420.22">
-    <defs>
-        <style>.dark{fill:#171717;}.light{fill:#2e2e2e;}</style>
-    </defs>
+<template lang="html">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 561.36 420.22" class="logo">
     <title>SVANDIS</title>
         <g id="swan">
             <path id="body-1" class="dark"
@@ -25,4 +23,16 @@
                   d="M560.63,140.1l-82-96.35.89-1.29c2.74,1.44,5.52,2.8,8.21,4.32,17,9.6,34,19.15,50.89,29a12.28,12.28,0,0,1,5.21,6.15c6.06,18.76,11.77,37.63,17.56,56.47C561.42,138.61,561.12,139,560.63,140.1Z"/>
             <path id="head-1" class="dark" d="M555.32,32.16l-12,39.15L476,33.13l.25-1Z"/>
         </g>
-</svg>
+    </svg>
+</template>
+<style scoped lang="scss">
+  .logo {
+      height: 70%;
+      .dark {
+          fill:#171717;
+      }
+      .light {
+          fill:#2e2e2e;
+      }
+  }
+</style>

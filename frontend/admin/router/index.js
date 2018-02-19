@@ -31,7 +31,24 @@ const router = new Router({
             name: 'feeds',
             path: '/feeds',
             component: Feeds,
-            props: {'access': ['ROLE_ADMIN']}
+            props: {'access': ['ROLE_ADMIN']},
+            children: [
+                {
+                    name: 'feeds_web',
+                    path: '/feeds/web',
+                    component: Feeds
+                },
+                {
+                    name: 'feeds_facebook',
+                    path: '/feeds/facebook',
+                    component: Feeds
+                },
+                {
+                    name: 'feeds_twitter',
+                    path: '/feeds/twitter',
+                    component: Feeds
+                }
+            ]
         }
     ]
 })

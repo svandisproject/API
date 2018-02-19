@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * WebsitePost
@@ -14,6 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="website_post")
  * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\WebsitePostRepository")
  * @UniqueEntity("url")
+ * @Api\Access({"ROLE_ADMIN"})
  */
 class WebsitePost
 {
@@ -23,7 +25,8 @@ class WebsitePost
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Assert\NotBlank()
+     *
+     *
      */
     private $id;
 
@@ -32,6 +35,7 @@ class WebsitePost
      *
      * @ORM\Column(name="title", type="string", length=255)
      * @Assert\NotBlank()
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -40,6 +44,7 @@ class WebsitePost
      *
      * @ORM\Column(name="url", type="string", length=255, unique=true)
      * @Assert\Url()
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $url;
 
@@ -48,6 +53,7 @@ class WebsitePost
      *
      * @ORM\Column(name="content", type="text")
      * @Assert\NotBlank()
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $content;
 
@@ -56,6 +62,7 @@ class WebsitePost
      *
      * @ORM\Column(name="source", type="string", length=255)
      * @Assert\NotBlank()
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $source;
 
@@ -64,6 +71,7 @@ class WebsitePost
      *
      * @ORM\Column(name="createdAt", type="datetime")
      * @Gedmo\Timestampable(on="create")
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $createdAt;
 
@@ -72,6 +80,7 @@ class WebsitePost
      *
      * @ORM\Column(name="publishedAt", type="datetime")
      * @Assert\NotBlank()
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $publishedAt;
 
@@ -79,6 +88,7 @@ class WebsitePost
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="websitePosts")
      * @ORM\JoinTable(name="website_post_tags")
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $tags;
 
