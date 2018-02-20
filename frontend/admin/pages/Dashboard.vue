@@ -1,6 +1,7 @@
 <template lang="html">
   <section class="dashboard">
     <h1>dashboard Component</h1>
+
   </section>
 </template>
 
@@ -28,5 +29,4 @@
   .dashboard {
 
   }
-
 </style>

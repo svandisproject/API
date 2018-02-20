@@ -26,8 +26,14 @@ import Lightbox from './components/Lightbox'
 import List from './components/List'
 import Heading from './components/Heading'
 import Navbar from './components/Navbar'
+import OffCanvas from './components/OffCanvas'
+import Overlay from './components/Overlay'
+import Padding from './components/Padding'
+import Placeholder from './components/Placeholder'
+import Search from './components/Search'
 import SliderNav from './components/SliderNav'
 import Spinner from './components/Spinner'
+import Section from './components/Section'
 import Tab from './components/Tab'
 import Position from './components/Position'
 
@@ -65,9 +71,15 @@ const uikit = {
         Vue.component(List.name, List);
         Vue.component(Heading.name, Heading);
         Vue.component(Navbar.name, Navbar);
+        Vue.component(OffCanvas.name, OffCanvas);
+        Vue.component(Overlay.name, Overlay);
+        Vue.component(Padding.name, Padding);
+        Vue.component(Placeholder.name, Placeholder);
         Vue.component(Position.name, Position);
         Vue.component(Spinner.name, Spinner);
+        Vue.component(Search.name, Search);
         Vue.component(SliderNav.name, SliderNav);
+        Vue.component(Section.name, Section);
         Vue.component(Tab.name, Tab);
     }
 };
