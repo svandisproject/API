@@ -1,7 +1,7 @@
 <template lang="html">
   <section class="dashboard">
     <h1>dashboard Component</h1>
-
+<ui-padding size="large" :remove="['top', 'left']">oiasfn oasdjfaiopsj foasdjfopasdjfasopkd</ui-padding>
   </section>
 </template>
 
