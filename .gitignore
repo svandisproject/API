@@ -17,5 +17,5 @@
 /web/bundles/
 /node_modules
 /web/build/*
-
+/worker/node_modules
 yarn-error.log

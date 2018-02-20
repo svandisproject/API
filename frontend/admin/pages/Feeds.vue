@@ -6,11 +6,9 @@
         <li><router-link :to="{name: 'feeds_facebook'}"><ui-icon i="facebook" />&nbsp;Facebook feeds</router-link></li>
         <li><router-link :to="{name: 'feeds_twitter'}"><ui-icon i="twitter" />&nbsp;Twitter feeds</router-link></li>
       </ui-tab>
-        <ul class="feed uk-switcher uk-width-5-6">
-         <li><web-feed/></li>
-         <li>Facebook</li>
-         <li>Twitter</li>
-        </ul>
+      <div class="feed uk-width-5-6">
+        <router-view></router-view>
+      </div>
   </section>
 
 </template>

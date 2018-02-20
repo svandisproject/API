@@ -9,7 +9,9 @@
     </ul>
 
     <ul class="uk-navbar-nav" slot="right">
-        <li v-if="$auth.hasRole('ROLE_ADMIN')"><router-link :to="{name: 'settings'}">Settings</router-link></li>
+        <li v-if="$auth.hasRole('ROLE_ADMIN')">
+            <router-link :to="{name: 'settings'}"><ui-icon i="settings" />&nbsp;Settings</router-link>
+        </li>
         <li><k-logout /></li>
     </ul>
     </ui-navbar>

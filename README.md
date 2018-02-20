@@ -24,7 +24,7 @@ Run following in your terminal:
 ```bash
 bin/console server:run
 yarn run encore dev-server --hot
-node socket/index.js
+node socket/worker
 ```
 
 ## Additional Resourses

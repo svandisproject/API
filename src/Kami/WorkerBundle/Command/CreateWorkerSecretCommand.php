@@ -25,7 +25,7 @@ class CreateWorkerSecretCommand extends ContainerAwareCommand
 
         try {
             $secret = $this->getContainer()->get('craue_config')->get('worker.secret');
-            if($secret) {
+            if ($secret) {
                 $io->writeln(sprintf('<info>Current secret is: %s</info>', $secret));
                 $helper = $this->getHelper('question');
                 $question = new ConfirmationQuestion("Reset worker token? y/n \n", false);
@@ -37,8 +37,8 @@ class CreateWorkerSecretCommand extends ContainerAwareCommand
                     $this->generateNewWorkerSecret($io)
                 );
             }
-
-        } catch (\RuntimeException $e) {;
+        } catch (\RuntimeException $e) {
+            ;
             $setting = new Setting();
             $setting->setName('worker.secret');
             $setting->setValue($this->generateNewWorkerSecret($io));

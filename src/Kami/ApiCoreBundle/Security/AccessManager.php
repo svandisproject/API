@@ -77,7 +77,7 @@ class AccessManager
                 return count(
                         array_intersect(
                             $annotation->roles,
-                            $this->tokenStorage->getToken()->getRoles()
+                            $this->tokenStorage->getToken()->getUser()->getRoles()
                         )
                     ) > 0;
             }
@@ -97,7 +97,7 @@ class AccessManager
                 return count(
                         array_intersect(
                             $annotation->roles,
-                            $this->tokenStorage->getToken()->getRoles()
+                            $this->tokenStorage->getToken()->getUser()->getRoles()
                         )
                     ) > 0;
             }
@@ -117,7 +117,7 @@ class AccessManager
                 return count(
                         array_intersect(
                             $annotation->roles,
-                            $this->tokenStorage->getToken()->getRoles()
+                            $this->tokenStorage->getToken()->getUser()->getRoles()
                         )
                     ) > 0;
             }

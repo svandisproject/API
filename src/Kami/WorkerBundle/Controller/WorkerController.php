@@ -16,7 +16,7 @@ class WorkerController extends Controller
     /**
      * @Route("/worker/register", methods={"POST"}, name="worker.register")
      */
-    public function indexAction(Request $request)
+    public function registerAction(Request $request)
     {
         $secret = $this->get('craue_config')->get('worker.secret');
 
@@ -42,5 +42,36 @@ class WorkerController extends Controller
         return new JsonResponse([
             'token'=>$worker->getSecret()
         ]);
+    }
+
+    /**
+     * @Route("/worker/heartbeat", methods={"POST"}, name="worker.heartbeat")
+     */
+    public function heartbeatAction(Request $request)
+    {
+        $worker = $this->getDoctrine()->getRepository('KamiWorkerBundle:Worker')
+            ->findOneBy([
+                'secret' => $request->get('secret'),
+                'host'   => $request->getClientIp()
+            ]);
+
+        if (!$worker) {
+            throw $this->createNotFoundException('Worker not found');
+        }
+
+        $worker->setLastSeenAt(new \DateTime());
+
+        $this->getDoctrine()->getManager()->persist($worker);
+        $this->getDoctrine()->getManager()->flush();
+
+        return new JsonResponse(null, 204);
+    }
+
+    /**
+     * @Route("/api/settings/worker/secret", methods={"GET"}, name="worker.settings.secret")
+     */
+    public function getWorkerSecretAction()
+    {
+        return new JsonResponse(['secret'=>$this->get('craue_config')->get('worker.secret')]);
     }
 }

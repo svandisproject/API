@@ -60,7 +60,7 @@ const router = new Router({
             children: [
                 {
                     name: 'settings_workers',
-                    path: '/settings_workers',
+                    path: '/settings/workers',
                     component: Workers
                 }
             ]

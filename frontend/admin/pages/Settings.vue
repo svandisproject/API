@@ -1,6 +1,13 @@
 <template lang="html">
   <section class="settings">
-    <h1>System settings</h1>
+    <div uk-grid>
+        <ui-tab position="left" class="uk-width-1-6">
+          <li><router-link :to="{name: 'settings_workers'}"><ui-icon i="server" />&nbsp;Workers</router-link></li>
+        </ui-tab>
+        <div class="feed uk-width-5-6">
+            <router-view></router-view>
+        </div>
+    </div>
   </section>
 </template>
 

@@ -3,12 +3,15 @@
 namespace Kami\WorkerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * Worker
  *
  * @ORM\Table(name="worker")
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\WorkerRepository")
+ * @Api\Access({"ROLE_ADMIN"})
  */
 class Worker
 {
@@ -18,6 +21,7 @@ class Worker
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $id;
 
@@ -25,6 +29,7 @@ class Worker
      * @var string
      *
      * @ORM\Column(name="host", type="string", length=255)
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $host;
 
@@ -32,6 +37,7 @@ class Worker
      * @var string
      *
      * @ORM\Column(name="secret", type="string", length=128, unique=true)
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $secret;
 
@@ -39,6 +45,7 @@ class Worker
      * @var \DateTime
      *
      * @ORM\Column(name="last_seen_at", type="datetime", nullable=true)
+     * @Api\Access({"ROLE_ADMIN"})
      */
     private $lastSeenAt;
 

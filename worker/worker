@@ -1,0 +1,57 @@
+#!/usr/bin/env node
+
+var colors = require('colors');
+var args = require('process-argv')({
+    enable_commands: true
+});
+var axios = require('axios');
+var config = require('./config');
+var fs = require('fs');
+
+switch (args.command) {
+    case "register":
+        registerWorker();
+        break;
+    case "start":
+        startWorker();
+        break;
+    default:
+        break;
+}
+
+function registerWorker() {
+    if(typeof args.options === 'undefined' || typeof args.options.secret === 'undefined') {
+        console.log('Secret is required to register worker'.red);
+        process.exit(1);
+    }
+    console.log('Registering worker'.green);
+    axios.post(
+        config.API_URL + '/worker/register', {
+            secret: args.options.secret
+        })
+        .then(function (response) {
+            var token = response.data.token;
+            fs.writeFileSync('./runtime.json', JSON.stringify({secret: token}));
+            console.log("Successfully registered worker".bgGreen.black);
+
+        })
+        .catch(function (error) {
+            console.error("Error registering worker".red);
+            if(error.response.status === 403) {
+                console.error("Bad worker secret".red);
+            }
+        });
+}
+
+function startWorker() {
+    var runtime = require('./runtime.json');
+    heartbeat(runtime.secret);
+}
+
+function heartbeat(secret) {
+    setInterval(() => {
+        axios.post(config.API_URL + '/worker/heartbeat', {
+            secret: secret
+        })
+    }, 60000);
+}
