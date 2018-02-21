@@ -5,6 +5,7 @@ namespace Kami\WorkerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * Worker
@@ -13,7 +14,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\WorkerRepository")
  * @Api\Access({"ROLE_ADMIN"})
  */
-class Worker
+class Worker implements UserInterface
 {
     /**
      * @var int
@@ -48,6 +49,11 @@ class Worker
      * @Api\Access({"ROLE_ADMIN"})
      */
     private $lastSeenAt;
+
+    /**
+     * @var array
+     */
+    private $roles = ['ROLE_WORKER'];
 
     /**
      * Get id.
@@ -125,4 +131,33 @@ class Worker
     {
         return $this->lastSeenAt;
     }
+
+    /**
+     * @return array
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    public function getPassword()
+    {
+        return;
+    }
+
+    public function getSalt()
+    {
+        return;
+    }
+
+    public function getUsername()
+    {
+        return;
+    }
+
+    public function eraseCredentials()
+    {
+        return;
+    }
+
 }

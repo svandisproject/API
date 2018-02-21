@@ -5,6 +5,8 @@ security:
     providers:
         fos_userbundle:
             id: fos_user.user_provider.username_email
+        kami_workerbundle:
+            id: kami_worker.user_provider
 
     firewalls:
         login:
@@ -27,5 +29,15 @@ security:
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
+                    - kami_worker.authenticator
+                entry_point: lexik_jwt_authentication.jwt_token_authenticator
+
+        worker:
+            pattern:   ^/worker/heartbeat
+            stateless: true
+            anonymous: true
+            guard:
+                authenticators:
+                    - kami_worker.authenticator
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }

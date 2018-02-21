@@ -24,7 +24,13 @@ Run following in your terminal:
 ```bash
 bin/console server:run
 yarn run encore dev-server --hot
-node socket/worker
+node socket/index.js
+```
+
+## Adding workers
+```bash
+cd worker
+./worker register --secret <your-worker-secret>
 ```
 
 ## Additional Resourses

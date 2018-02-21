@@ -31,7 +31,7 @@ function registerWorker() {
         })
         .then(function (response) {
             var token = response.data.token;
-            fs.writeFileSync('./runtime.json', JSON.stringify({secret: token}));
+            fs.writeFileSync(__dirname + '/runtime.json', JSON.stringify({secret: token}));
             console.log("Successfully registered worker".bgGreen.black);
 
         })
@@ -45,13 +45,19 @@ function registerWorker() {
 
 function startWorker() {
     var runtime = require('./runtime.json');
-    heartbeat(runtime.secret);
+    axios.defaults.headers.common['X-WORKER-TOKEN'] = runtime.secret;
+    heartbeat();
+    console.log("Worker started".green)
+
 }
 
-function heartbeat(secret) {
+function heartbeat() {
     setInterval(() => {
-        axios.post(config.API_URL + '/worker/heartbeat', {
-            secret: secret
+        axios.post(config.API_URL + '/worker/heartbeat')
+            .then((response) => {
+            console.log("Heartbeat sent.".green)
+            }).catch((error) => {
+            console.log(error)
         })
     }, 60000);
 }

@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use RandomLib\Factory;
 use SecurityLib\Strength;
 
@@ -49,15 +50,7 @@ class WorkerController extends Controller
      */
     public function heartbeatAction(Request $request)
     {
-        $worker = $this->getDoctrine()->getRepository('KamiWorkerBundle:Worker')
-            ->findOneBy([
-                'secret' => $request->get('secret'),
-                'host'   => $request->getClientIp()
-            ]);
-
-        if (!$worker) {
-            throw $this->createNotFoundException('Worker not found');
-        }
+        $worker = $this->getUser();
 
         $worker->setLastSeenAt(new \DateTime());
 
