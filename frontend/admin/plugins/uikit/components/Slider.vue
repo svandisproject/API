@@ -1,13 +1,30 @@
 <template>
-    <div uk-slider="clsActivated: uk-transition-active">
-        <ul class="uk-slider-items">
-        </ul>
+    <div :class="" :uk-slider="{
+    'autoplay': options === 'autoplay',
+    'autoplay-interval': options === 'interval',
+    'center': options === 'center',
+    'finite': options === 'finite',
+    'index': options === 'index',
+    'pause-on-hover': options === 'hover',
+    'sets': options === 'sets',
+    'velocity': options === 'velocity'
+    }">
+            <slot></slot>
     </div>
 </template>
 
 <script>
     export default {
-        name: 'slider'
+        name: 'ui-slider',
+        props:{
+            'options':{
+                type: String,
+                default: '',
+                validator: (value) => {
+                    return ['autoplay', 'center', 'finite', 'hover', 'sets', 'interval', 'index', 'velocity'].indexOf(value) > -1
+                },
+            }
+        }
     }
 </script>
 
