@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "axios": "^0.17.1",
-    "colors": "^1.1.2"
+    "colors": "^1.1.2",
+    "redis": "^2.8.0",
+    "socket.io-client": "^2.0.4",
+    "process-argv": "^1.0.0"
   }
 }

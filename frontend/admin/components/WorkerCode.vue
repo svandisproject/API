@@ -1,6 +1,6 @@
 <template lang="html">
     <ui-card>
-        To register new worker run <pre>$ worker register {{secret}}</pre>
+        To register new worker run <pre>$ ./worker register --secret {{secret}}</pre>
     </ui-card>
 </template>
 

@@ -1,5 +1,4 @@
-var config = {
-    API_URL: 'http://localhost:8000'
+module['exports'] = {
+    API_URL: 'http://localhost:8000',
+    SOCKET_SERVER_URL: 'http://localhost:1337'
 };
-
-module['exports'] = config;

@@ -44,11 +44,21 @@ function registerWorker() {
 }
 
 function startWorker() {
-    var runtime = require('./runtime.json');
+    var runtime = require(__dirname + '/runtime.json');
     axios.defaults.headers.common['X-WORKER-TOKEN'] = runtime.secret;
+    var socket = require('socket.io-client')(config.SOCKET_SERVER_URL);
     heartbeat();
     console.log("Worker started".green)
-
+    socket.on('connect', () => {
+        console.log("Connected to socket server".yellow)
+    });
+    socket.on('worker-crawl-task', function(data) {
+        console.log("Crawling task received".orange)
+        if(data.secret === runtime.secret) {
+            console.log("Executing crawling task".bold.purple);
+            executeCrawlTask(data.task)
+        }
+    });
 }
 
 function heartbeat() {
@@ -60,4 +70,16 @@ function heartbeat() {
             console.log(error)
         })
     }, 60000);
+}
+
+function executeCrawlTask(task) {
+    switch (task.name) {
+        case 'web':
+            var crawler = require('./crawlers/web.js');
+            break;
+        default:
+            break;
+
+        crawler.execute();
+    }
 }

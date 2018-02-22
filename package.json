@@ -17,9 +17,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
-    "colors": "^1.1.2",
     "jwt-decode": "^2.2.0",
-    "process-argv": "^1.0.0",
     "socket.io-client": "^2.0.4",
     "uikit": "^3.0.0-beta.39",
     "vee-validate": "^2.0.3",

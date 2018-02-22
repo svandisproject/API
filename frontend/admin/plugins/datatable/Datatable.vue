@@ -11,8 +11,8 @@
         <tbody>
             <tr v-for="row in list">
                 <td v-for="(column, key) in columns">
-                    <template v-if="column.type === 'timeago'" :auto-update="60">
-                        <timeago v-if="row[key]" :since="row[key]" auto-update="1"></timeago>
+                    <template v-if="column.type === 'timeago'">
+                        <timeago v-if="row[key]" :since="row[key]" :auto-update="1"></timeago>
                         <span v-else>Never</span>
                     </template>
                     <template v-else>

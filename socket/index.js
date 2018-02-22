@@ -23,9 +23,22 @@ fs.readFile('public.pem', 'utf8', function(err, data) {
         }
     });
 
-    io.on('connection', (client) => {
-        console.log(client.connectedUser)
-    });
     console.log('Server started');
     io.listen(1337);
 });
+
+io.on('connection', (client) => {
+    console.log('Client connected...');
+    // console.log(client.connectedUser)
+});
+
+setInterval(() => {
+    console.log('Crawl task emitted')
+    io.emit('worker-crawl-task', {
+        name: 'web',
+        url: 'https://www.coindesk.com/',
+        config: {
+
+        }
+    })
+}, 60000)
