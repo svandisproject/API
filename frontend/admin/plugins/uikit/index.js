@@ -34,7 +34,9 @@ import Search from './components/Search'
 import SliderNav from './components/SliderNav'
 import Spinner from './components/Spinner'
 import Section from './components/Section'
+import Slider from './components/Slider'
 import Tab from './components/Tab'
+import Totop from './components/Totop'
 import Position from './components/Position'
 
 import UIkit from 'uikit'
@@ -80,7 +82,9 @@ const uikit = {
         Vue.component(Search.name, Search);
         Vue.component(SliderNav.name, SliderNav);
         Vue.component(Section.name, Section);
+        Vue.component(Slider.name, Slider);
         Vue.component(Tab.name, Tab);
+        Vue.component(Totop.name, Totop);
     }
 };
 
