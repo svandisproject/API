@@ -21,6 +21,7 @@ fs.readFile('public.pem', 'utf8', function(err, data) {
                 socket.disconnect();
             }
         }
+        next();
     });
 
     console.log('Server started');
