@@ -81,21 +81,21 @@ io.on('worker-finished-task', (secret) => {
 });
 
 
-setInterval(() => {
-    console.log('Crawl task emitted');
-    for(let i in workerPool) {
-        if(workerPool[i].status === STATUS_FREE) {
-            console.log('Found free worker'.green)
-            io.to(workerPool[i].id).emit('worker-crawl-task', {
-                name: 'web',
-                url: 'https://www.coindesk.com/',
-                config: {
-                    titleSelector: 'h3.article-top-title',
-                    contentSelector: '.article-content-container',
-                    publishedAtSelector: '.article-container-left-timestamp'
-                }});
-            workerPool[i].status = STATUS_BUSY;
-            break;
-        }
-    }
-}, 10000)
+// setInterval(() => {
+//     console.log('Crawl task emitted');
+//     for(let i in workerPool) {
+//         if(workerPool[i].status === STATUS_FREE) {
+//             console.log('Found free worker'.green)
+//             io.to(workerPool[i].id).emit('worker-crawl-task', {
+//                 name: 'web',
+//                 url: 'https://www.coindesk.com/',
+//                 config: {
+//                     titleSelector: 'h3.article-top-title',
+//                     contentSelector: '.article-content-container',
+//                     publishedAtSelector: '.article-container-left-timestamp'
+//                 }});
+//             workerPool[i].status = STATUS_BUSY;
+//             break;
+//         }
+//     }
+// }, 10000)

@@ -15,6 +15,10 @@ Considering you have php, composer, mysql, node, npm and yarn installed
 ```bash
 composer install
 yarn
+
+mkdir var/jwt
+openssl genrsa -out var/jwt/private.pem -aes256 4096
+openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
 ```
 
 ## Development server
