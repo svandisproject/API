@@ -81,7 +81,7 @@ class WebsitePost
     private $publishedAt;
 
     /**
-     * @var string
+     * @var \DateTime
      *
      * @ORM\Column(name="createdAt", type="datetime")
      * @Gedmo\Timestampable(on="create")
