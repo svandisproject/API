@@ -258,8 +258,8 @@ class YourEntity
     ...
         
     /**
-     * @Api\Form("Symfony\Component\Form\Extension\Core\Type\TextType", "{"option":"value"}"")
-     * @ORM\Column(name="property", type="string", length=255)
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType", options={"widget": "single_text"})
+     * @ORM\Column(name="property", type="datetime")
      */
     private $property;
     

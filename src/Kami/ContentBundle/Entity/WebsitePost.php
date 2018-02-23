@@ -76,7 +76,7 @@ class WebsitePost
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER"})
-     * @Api\Form("Symfony\Component\Form\Extension\Core\Type\DateTimeType", {"widget": "single_text"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType", options={"widget": "single_text"})
      */
     private $publishedAt;
 
