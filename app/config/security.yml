@@ -41,3 +41,4 @@ security:
                     - kami_worker.authenticator
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/worker/authenticate, roles: IS_AUTHENTICATED_ANONYMOUSLY }

@@ -67,4 +67,17 @@ class WorkerController extends Controller
     {
         return new JsonResponse(['secret'=>$this->get('craue_config')->get('worker.secret')]);
     }
+
+    /**
+     * @Route("/worker/authenticate", methods={"POST"}, name="worker.authenticate")
+     */
+    public function authenticateForSocketAction(Request $request)
+    {
+        $worker = $this->getDoctrine()->getRepository('KamiWorkerBundle:Worker')
+            ->findOneBy([
+                'secret' => $request->get('secret')
+            ]);
+
+        return new JsonResponse(['host'=>$worker->getHost()]);
+    }
 }

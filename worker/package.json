@@ -1,9 +1,11 @@
 {
   "dependencies": {
     "axios": "^0.17.1",
+    "cheerio": "^1.0.0-rc.2",
     "colors": "^1.1.2",
+    "process-argv": "^1.0.0",
     "redis": "^2.8.0",
-    "socket.io-client": "^2.0.4",
-    "process-argv": "^1.0.0"
+    "simplecrawler": "^1.1.6",
+    "socket.io-client": "^2.0.4"
   }
 }

@@ -1,42 +1,41 @@
-var fs            = require('fs');
-var Crawler       = require('simplecrawler');
-var cheerio       = require('cheerio');
-var redis = require('redis');
-
+const Crawler       = require('simplecrawler');
+const cheerio       = require('cheerio');
+const redis = require('redis');
+const config = require('../config');
 const STATUS_SUCCESS = 1;
 
-var execute = function(axios) {
-    var redisClient = redis.createClient();
-    var crawler = Crawler("https://www.coindesk.com/")
-        .on("fetchcomplete", function(queueItem, responseBuffer, response, body) {
-            var data = {};
+let crawler = {
+    execute(task, axios) {
+        let redisClient = redis.createClient();
+        let crawler = Crawler(task.url)
+            .on("fetchcomplete", function(queueItem, responseBuffer, response, body) {
+                let data = {};
 
-            var $ = cheerio.load(responseBuffer.toString());
-            if($('body').hasClass('single-post')) {
+                let $ = cheerio.load(responseBuffer.toString());
+                    data.url     = queueItem.url;
+                    data.title   = $(task.config.titleSelector).text();
+                    data.content = $(task.config.contentSelector).text();
+                    data.source  = task.url;
+                    data.publishedAt = $(task.config.publishedAtSelector).text();
+                    
+                    axios.post(config.API_URL + '/api/website-post', { 'website-post': data })
+                        .then(function(response) {
+                            redisClient.set(queueItem.url, STATUS_SUCCESS)
+                        })
+                        .catch(function(error) {
+                            console.log(error.response.data);
+                            console.log((error.response.status + ' ' + error.response.statusText).red)
+                        })
+                    ;
+            });
 
-                data.url     = queueItem.url
-                data.title   = $('h3.article-top-title').text();
-                data.content = $('.article-content-container').text();
-                data.source  = 'Coindesk';
-                data.publishedAt = $('meta[property="article:published_time"]')[$('meta[property="article:published_time"]').length - 1].attribs.content;
-                axios.post(apiURL + 'api/content', { content: data })
-                    .then(function(response){
-                        stream.write(queueItem.url + '\n');
-                    })
-                    .catch(function(error){
-                        console.log(error.response.status + ' ' + error.response.statusText)
-                    })
-                ;
-            } else {
-                stream.write(queueItem.url + '\n');
-            }
+        crawler.maxDepth = 3;
+        crawler.addFetchCondition( function(queueItem, referrerQueueItem, callback ) {
+            callback(null, !redisClient.get(queueItem.url))
         });
 
-    crawler.maxDepth = 3;
-    crawler.addFetchCondition( function(queueItem, referrerQueueItem, callback ) {
-        callback(null, crawled.indexOf(queueItem.url) === -1)
-    });
+        crawler.start();
+    }
+}
 
-    crawler.start();
-};
-
+module['exports'] = crawler;
