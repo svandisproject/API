@@ -32,18 +32,13 @@ fs.readFile('public.pem', 'utf8', function(err, key) {
                 secret: secret
             })
                 .then((response) => {
-                    if(socket.handshake.address.indexOf(response.data.host) > -1) {
                         console.log("Worker attached to pool".green)
                         workerPool.push({
                             status: STATUS_FREE,
                             id: socket.id,
                             secret: secret
-                        });
+                        })
                         next()
-                    } else {
-                        console.error("Worker host does not match!");
-                        socket.disconnect();
-                    }
                 })
                 .catch((error) => {
                     console.error(err);
