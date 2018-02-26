@@ -5,12 +5,12 @@
     </label>
     <li v-for="(col, idx) in columns">
       <input
-        type="checkbox"
-        :id="uuidGen(col.field || idx)"
-        :name="groupName"
-        :checked="isColVisible(col)"
-        :disabled="typeof col.visible === 'string'"
-        @change="handleChange(col, $event.target.checked)">
+              type="checkbox"
+              :id="uuidGen(col.field || idx)"
+              :name="groupName"
+              :checked="isColVisible(col)"
+              :disabled="typeof col.visible === 'string'"
+              @change="handleChange(col, $event.target.checked)">
       <label :for="uuidGen(col.field || idx)">
         {{ col.label || col.title }}
         <i v-if="col.explain" class="fa fa-info-circle" style="cursor: help" :title="col.explain"></i>

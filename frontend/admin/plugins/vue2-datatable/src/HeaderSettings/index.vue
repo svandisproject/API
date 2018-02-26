@@ -1,19 +1,22 @@
+
 <template>
-  <div class="btn-group" name="HeaderSettings">
-    <button class="btn btn-default dropdown-toggle" ref="dropdownBtn" type="button">
-      <i class="fa" :class="[usingBak && 'text-info', processingCls || 'fa-cog']"></i>
-      <span class="caret"></span>
-    </button>
-    <div class="dropdown-menu clearfix" :style="drpMenuStyle">
+  <div class="btn-group btn-right" name="HeaderSettings">
+
+    <button type="button" class="uk-button uk-button-default">
+    <!--<i class="fa" :class="[usingBak && 'text-info', processingCls || 'fa-cog']"></i>-->
+      <span class="" uk-icon="cog"></span>
+    <span class="" uk-icon="triangle-down"></span>
+  </button>
+    <div class="text-left-button" uk-dropdown="mode: click" :style="drpMenuStyle">
       <div class="-col-group-container">
         <column-group v-for="(columns, groupName) in colGroups"
-          ref="colGroups" :key="groupName"
-          :group-name="groupName" :columns="columns">
+                      ref="colGroups" :key="groupName"
+                      :group-name="groupName" :columns="columns">
         </column-group>
       </div>
       <div class="clearfix" style="margin: 10px 0">
         <div class="btn-group btn-group-sm pull-right">
-          <button class="btn btn-default" type="button" @click="apply()">
+          <button class="uk-button uk-button-default" type="button" @click="apply()">
             {{ $i18nForDatatable('Apply') }}
           </button>
           <template v-if="supportBackup">
@@ -133,5 +136,11 @@ export default {
 <style>
 .-col-group-container {
   border-bottom: 1px solid #ddd;
+}
+.btn-right{
+  text-align: right;
+}
+.text-left-button{
+  text-align: left;
 }
 </style>
