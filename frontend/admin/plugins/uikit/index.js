@@ -18,6 +18,7 @@ import Cover from './components/Cover'
 import DescriptionList from './components/DescriptionList'
 import Divider from './components/Divider'
 import Dotnav from './components/Dotnav'
+import Drop from './components/Drop'
 import Dropdown from './components/Dropdown'
 import Icon from './components/Icon'
 import Inverse from './components/Inverse'
@@ -29,6 +30,8 @@ import Navbar from './components/Navbar'
 import OffCanvas from './components/OffCanvas'
 import Overlay from './components/Overlay'
 import Padding from './components/Padding'
+import Pagination from './components/Pagination'
+import PaginationList from './components/PaginationList'
 import Placeholder from './components/Placeholder'
 import Search from './components/Search'
 import SliderNav from './components/SliderNav'
@@ -65,6 +68,7 @@ const uikit = {
         Vue.component(DescriptionList.name, DescriptionList);
         Vue.component(Divider.name, Divider);
         Vue.component(Dotnav.name, Dotnav);
+        Vue.component(Drop.name, Drop);
         Vue.component(Dropdown.name, Dropdown);
         Vue.component(Icon.name, Icon);
         Vue.component(Inverse.name, Inverse);
@@ -76,6 +80,8 @@ const uikit = {
         Vue.component(OffCanvas.name, OffCanvas);
         Vue.component(Overlay.name, Overlay);
         Vue.component(Padding.name, Padding);
+        Vue.component(Pagination.name, Pagination);
+        Vue.component(PaginationList.name, PaginationList);
         Vue.component(Placeholder.name, Placeholder);
         Vue.component(Position.name, Position);
         Vue.component(Spinner.name, Spinner);
