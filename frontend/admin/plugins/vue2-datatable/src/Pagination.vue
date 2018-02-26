@@ -1,5 +1,5 @@
 <template>
-  <ui-pagination uk-pagination flexCenter>
+  <ui-pagination flexCenter>
     <li v-if="!isFirstPage" @click="turnPage(-1)">
       <a href="#" @click.prevent>
         <span uk-pagination-previous></span>
