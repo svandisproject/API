@@ -2,7 +2,7 @@
 <template>
   <div class="btn-group btn-right" name="HeaderSettings">
 
-    <button type="button">
+    <button type="button" class="uk-button uk-button-default">
     <!--<i class="fa" :class="[usingBak && 'text-info', processingCls || 'fa-cog']"></i>-->
       <span class="" uk-icon="cog"></span>
     <span class="" uk-icon="triangle-down"></span>
@@ -16,7 +16,7 @@
       </div>
       <div class="clearfix" style="margin: 10px 0">
         <div class="btn-group btn-group-sm pull-right">
-          <button class="btn btn-default" type="button" @click="apply()">
+          <button class="uk-button uk-button-default" type="button" @click="apply()">
             {{ $i18nForDatatable('Apply') }}
           </button>
           <template v-if="supportBackup">
