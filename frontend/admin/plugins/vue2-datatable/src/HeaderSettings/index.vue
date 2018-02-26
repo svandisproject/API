@@ -121,14 +121,14 @@ export default {
       replaceWith(this.columns, parseStr(this.origSettings)) // restore
     },
     toggle () {
-      $(this.$el).toggleClass('open')
+//      $(this.$el).toggleClass('open')
     },
     showProcessing () {
-      ['fa-spinner fa-pulse', 'fa-check', ''].forEach((cls, idx) => {
-        setTimeout(() => {
-          this.processingCls = cls
-        }, idx * 1000)
-      })
+//      ['fa-spinner fa-pulse', 'fa-check', ''].forEach((cls, idx) => {
+//        setTimeout(() => {
+//          this.processingCls = cls
+//        }, idx * 1000)
+//      })
     }
   }
 }

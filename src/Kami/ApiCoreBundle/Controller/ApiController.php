@@ -12,6 +12,11 @@ class ApiController extends Controller
         return $this->get('kami_api_core.api_manager')->getIndex($request);
     }
 
+    public function filterAction(Request $request)
+    {
+        return $this->get('kami_api_core.api_manager')->filter($request);
+    }
+
     public function itemAction(Request $request)
     {
         return $this->get('kami_api_core.api_manager')->getSingleResource($request);

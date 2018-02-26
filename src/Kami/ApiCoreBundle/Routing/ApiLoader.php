@@ -59,6 +59,10 @@ class ApiLoader extends Loader
                 $this->createIndexRoute($resource)
             );
             $routes->add(
+                sprintf('kami_api_core_%s_filter', $resource['name']),
+                $this->createFilterRoute($resource)
+            );
+            $routes->add(
                 sprintf('kami_api_core_%s_item', $resource['name']),
                 $this->createItemRoute($resource)
             );
@@ -90,6 +94,26 @@ class ApiLoader extends Loader
     private function createIndexRoute(array $resource)
     {
         $path = sprintf('/api/{_locale}{_S}%s{_dot}{_format}', $resource['name']);
+        $defaults = [
+            '_controller' => ApiController::class.'::indexAction',
+            '_locale' => $this->defaultLocale,
+            '_entity' => $resource['entity'],
+            '_format' => 'json'
+        ];
+        $requirements = [
+            '_S' => '/?',
+            '_dot' => '\.?',
+            '_locale' => '|'.implode('|', $this->locales),
+            '_format' => 'json|xml'
+        ];
+        $route = new Route($path, $defaults, $requirements, [], '', [], ['GET']);
+
+        return $route;
+    }
+
+    private function createFilterRoute(array $resource)
+    {
+        $path = sprintf('/api/{_locale}{_S}%s/filter{_dot}{_format}', $resource['name']);
         $defaults = [
             '_controller' => ApiController::class.'::indexAction',
             '_locale' => $this->defaultLocale,

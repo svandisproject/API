@@ -2,8 +2,7 @@
   <section class="dashboard">
     <h1>dashboard Component</h1>
     <code>query: {{ query }}</code>
-    <datatable v-bind="$data" />
-    <ui-pagination flexCenter></ui-pagination>
+    <k-datatable v-bind="$data" resource="tag" />
   </section>
 </template>
 
@@ -16,21 +15,112 @@
     data() {
       return {
           columns: [
-              { title: 'User ID', field: 'uid', sortable: true },
-              { title: 'Username', field: 'name' },
-              { title: 'Age', field: 'age', sortable: true },
-              { title: 'Email', field: 'email' },
-              { title: 'Country', field: 'country' }
+              { title: 'Id', field: 'id', sortable: true, thComp: 'dt-text-filter' },
+              { title: 'Title', field: 'title', sortable: true, thComp: 'FilterTh' }
           ],
           data: [
+              {
+                  id: 123,
+                  title: 'John Doe'
+              },
               {
                   uid: 123,
                   name: 'John Doe',
                   age: 45,
                   email: 'test@test.com',
                   country: 'Ukraine'
-              }
-
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
           ],
           total: 99,
           query: {}
