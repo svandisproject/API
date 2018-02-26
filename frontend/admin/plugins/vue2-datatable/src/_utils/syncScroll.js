@@ -18,7 +18,7 @@ export default function (els, callback) {
 
         let offsetLeft = me.scrollLeft()
         others.scrollLeft(offsetLeft)
-        
+
         callback(offsetLeft)
       }))
       // scroll stops
