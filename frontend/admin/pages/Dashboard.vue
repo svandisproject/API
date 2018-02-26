@@ -1,7 +1,8 @@
 <template lang="html">
   <section class="dashboard">
     <h1>dashboard Component</h1>
-
+    <code>query: {{ query }}</code>
+    <datatable v-bind="$data" />
   </section>
 </template>
 
@@ -13,7 +14,24 @@
     },
     data() {
       return {
-
+          columns: [
+              { title: 'User ID', field: 'uid', sortable: true },
+              { title: 'Username', field: 'name' },
+              { title: 'Age', field: 'age', sortable: true },
+              { title: 'Email', field: 'email' },
+              { title: 'Country', field: 'country' }
+          ],
+          data: [
+              {
+                  uid: 123,
+                  name: 'John Doe',
+                  age: 45,
+                  email: 'test@test.com',
+                  country: 'Ukraine'
+              },
+          ],
+          total: 1,
+          query: {}
       }
     },
     methods: {

@@ -11,6 +11,7 @@ import configureAxios from './axios'
 import auth from './plugins/auth'
 import datatable from './plugins/datatable'
 import VueTimeago from 'vue-timeago'
+import Datatable from './plugins/vue2-datatable'
 
 sync(store, router)
 
@@ -32,6 +33,7 @@ Vue.use(uikit)
 Vue.use(socket)
 Vue.use(auth)
 Vue.use(datatable)
+Vue.use(Datatable)
 
 Vue.prototype.$axios = configureAxios(store, $eventHub)
 
