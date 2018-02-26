@@ -88,7 +88,7 @@ function executeTask(task, axios) {
     if(crawler) {
         crawler.execute(task, axios);
     } else {
-        throw new Error('No crawler found for task '+ task.name)
+        console.error(('No crawler found for task '+ task.name).red)
     }
 
 }

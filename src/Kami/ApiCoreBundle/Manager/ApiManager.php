@@ -15,6 +15,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -102,6 +103,47 @@ class ApiManager
 
         return $this->createResponse($data, $request);
     }
+
+    public function filter(Request $request)
+    {
+        $rc = new \ReflectionClass($request->attributes->get('_entity'));
+        $builder = $this->createQueryBuilder('e')
+        ;
+
+        $sort = $request->get('sort');
+        if($sort) {
+            if(!$rc->hasProperty($sort) || $this->accessManager->canEditProperty($rc->getProperty($sort))) {
+                throw new BadRequestHttpException(sprintf('There is no such field %s', $sort));
+            }
+            $builder->orderBy(
+                'e.'.$sort,
+                in_array($request->get('order'), ['asc', 'desc']) ? $request->get('order') : 'desc'
+            );
+        }
+
+        foreach($rc->getProperties() as $property) {
+            $name = $property->getName();
+            if($value = $request->get($name)) {
+                $builder->andWhere($builder->expr()->orX(
+                    $builder->expr()->like('e.'.$name, ':value')
+                ));
+                $builder->setParameter('value', '%'.$value.'%');
+            }
+        }
+
+        $countBuilder = clone $builder;
+
+        return $this->createResponse([
+            'total' => $countBuilder->select('count(c.id)')->getQuery()->getSingleScalarResult(),
+            'rows' => $builder
+                ->setMaxResults($request->get('limit') ? $request->get('limit') : 20)
+                ->setFirstResult($request->get('offset') ? $request->get('offset') : 0)
+                ->getQuery()
+                ->getResult()
+        ], $request);
+
+    }
+
 
     /**
      * @param Request $request

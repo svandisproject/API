@@ -6,3 +6,21 @@ fixtures:
         title: Etherum
     tag3:
         title: Litecoin
+    tag4:
+        title: Bitcoin1
+    tag5:
+        title: Etherum1
+    tag6:
+        title: Litecoin1
+    tag7:
+        title: Bitcoin2
+    tag8:
+        title: Etherum2
+    tag9:
+        title: Litecoin2
+    tag10:
+        title: Bitcoin3
+    tag11:
+        title: Etherum3
+    tag12:
+        title: Litecoin3
