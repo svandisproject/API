@@ -1,20 +1,12 @@
 <template lang="html">
-    <datatable
-    :columns="columns"
-    :data="data"
-    :total="total"
-    :query="query"
-    :selection="selection"
-    :summary="summary"
-    :xprops="xprops"
-    :HeaderSettings="HeaderSettings"
-    :Pagination="Pagination"
-    :pageSizeOptions="pageSizeOptions"
-    :tblClass="tblClass"
-    :tblStyle="tblStyle"
-    :fixHeaderAndSetBodyMaxHeight="fixHeaderAndSetBodyMaxHeight"
-    :supportNested="supportNested"
-    :supportBackup="supportBackup" />
+    <section class="datatable">
+        <code>query: {{ query }}</code>
+        <datatable
+        v-bind="$data"
+        :columns="columns"
+        :query="query"
+        />
+    </section>
 </template>
 
 <script lang="js">
@@ -22,18 +14,22 @@
 
   export default  {
     name: 'k-datatable',
+    data () {
+        return {
+            data: [],
+            total: 0,
+            query: {
+                limit: 10,
+                offset: 0
+            }
+        }
+    },
     props: {
         resource: {
             type: String,
             required: true
         },
         columns: { type: Array, required: true },
-        data: { type: Array, required: true },
-        total: { type: Number, required: true },
-        query: { type: Object, required: true },
-        selection: Array,
-        summary: Object,
-        xprops: Object,
         HeaderSettings: { type: Boolean, default: true },
         Pagination: { type: Boolean, default: true },
         pageSizeOptions: { type: Array, default: () => [10, 20, 40, 80, 100] },
@@ -44,10 +40,18 @@
         supportBackup: Boolean
     },
     mounted() {
+        this.getData(this.query)
     },
     watch: {
       query: {
           handler (query) {
+              this.getData(query)
+          },
+          deep: true
+      },
+    },
+      methods: {
+          getData(query) {
               let queryString = Object.entries(query).map(([key, val]) => val !== '' && typeof val !== 'undefined' ?
                   `${key}=${val}` : null).filter((val) => {return val}).join('&');
               this.$axios.get('/api/'+this.resource+'/filter?' + queryString)
@@ -55,11 +59,13 @@
                       this.data = res.data.rows;
                       this.total = parseInt(res.data.total);
                   })
-          },
-          deep: true
+          }
+      },
+      computed: {
+        currentQuery: () => {
+            return this.query;
+        }
       }
-  },
-
   }
 </script>
 
