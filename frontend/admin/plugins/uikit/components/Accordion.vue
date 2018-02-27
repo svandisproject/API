@@ -2,8 +2,7 @@
     <div>
         <ul :uk-accordion="getConfig()">
             <slot>
-                <accordion-content></accordion-content>
-                <accordion-content></accordion-content>
+                <uk-accordion-content></uk-accordion-content>
             </slot>
         </ul>
     </div>
