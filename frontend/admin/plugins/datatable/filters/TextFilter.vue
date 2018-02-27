@@ -1,11 +1,12 @@
 <template>
   <div class="uk-inline">
-    <span class="filterable">{{title}}</span>
-    <div uk-drop="mode: click; pos: bottom">
+    <button class="uk-button uk-button-text">{{title}}</button>
+    <div uk-drop="mode: click; pos: bottom" class="filter" ref="drop">
       <ui-card size="small">
         <div class="uk-inline uk-width-1-1">
           <a class="uk-form-icon uk-form-icon-flip" @click="search" uk-icon="icon: search"></a>
           <input class="uk-input uk-form-small"
+                 ref="input"
                  v-model="keyword"
                  @keydown.enter="search"
                  :placeholder="`Search ${field}...`">
@@ -15,6 +16,8 @@
   </div>
 </template>
 <script>
+import UIkit from 'uikit'
+
 export default {
   name: 'dt-text-filter',
   props: ['field', 'title', 'query'],
@@ -22,7 +25,10 @@ export default {
     keyword: ''
   }),
   mounted () {
-//    $(this.$el).on('shown.bs.dropdown', e => this.$refs.input.focus())
+      let input = this.$refs.input;
+      UIkit.util.on(this.$refs.drop, 'show', () => {
+          input.focus()
+      })
   },
   watch: {
     keyword (kw) {
@@ -41,9 +47,9 @@ export default {
   }
 }
 </script>
-<style>
-input[type=search]::-webkit-search-cancel-button {
-  -webkit-appearance: searchfield-cancel-button;
-  cursor: pointer;
-}
+<style lang="scss" scoped>
+  .filterable {
+    border-bottom: 1px dashed;
+    cursor: pointer;
+  }
 </style>

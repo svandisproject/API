@@ -115,7 +115,7 @@ class ApiLoader extends Loader
     {
         $path = sprintf('/api/{_locale}{_S}%s/filter{_dot}{_format}', $resource['name']);
         $defaults = [
-            '_controller' => ApiController::class.'::indexAction',
+            '_controller' => ApiController::class.'::filterAction',
             '_locale' => $this->defaultLocale,
             '_entity' => $resource['entity'],
             '_format' => 'json'

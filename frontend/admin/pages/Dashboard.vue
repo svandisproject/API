@@ -2,7 +2,9 @@
   <section class="dashboard">
     <h1>dashboard Component</h1>
     <code>query: {{ query }}</code>
-    <k-datatable v-bind="$data" resource="tag" />
+    <ui-card>
+        <k-datatable v-bind="$data" resource="tag" />
+    </ui-card>
   </section>
 </template>
 
@@ -15,14 +17,13 @@
     data() {
       return {
           columns: [
-              { title: 'Id', field: 'id', sortable: true, thComp: 'dt-text-filter' },
-              { title: 'Title', field: 'title', sortable: true, thComp: 'FilterTh' }
+              { title: 'User ID', field: 'uid', sortable: true, thComp: 'dt-text-filter'},
+              { title: 'Username', field: 'name', thComp: 'dt-text-filter'},
+              { title: 'Age', field: 'age', sortable: true },
+              { title: 'Email', field: 'email', thComp: 'dt-text-filter' },
+              { title: 'Country', field: 'country', thComp: 'dt-text-filter'}
           ],
           data: [
-              {
-                  id: 123,
-                  title: 'John Doe'
-              },
               {
                   uid: 123,
                   name: 'John Doe',

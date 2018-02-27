@@ -30,7 +30,7 @@ function registerWorker() {
         config.API_URL + '/worker/register', {
             secret: args.options.secret
         })
-        .then(function (response) {
+        .then((response) => {
             let token = response.data.token;
             fs.writeFileSync(__dirname + '/runtime.json', JSON.stringify({secret: token}));
             console.log("Successfully registered worker".bgGreen.black);

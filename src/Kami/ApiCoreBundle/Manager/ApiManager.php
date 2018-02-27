@@ -106,13 +106,12 @@ class ApiManager
 
     public function filter(Request $request)
     {
-        $rc = new \ReflectionClass($request->attributes->get('_entity'));
-        $builder = $this->createQueryBuilder('e')
-        ;
+        $entity = new \ReflectionClass($request->attributes->get('_entity'));
+        $builder = $this->doctrine->getRepository($entity->getName())->createQueryBuilder('e');
 
         $sort = $request->get('sort');
         if($sort) {
-            if(!$rc->hasProperty($sort) || $this->accessManager->canEditProperty($rc->getProperty($sort))) {
+            if(!$entity->hasProperty($sort) || $this->accessManager->canEditProperty($entity->getProperty($sort))) {
                 throw new BadRequestHttpException(sprintf('There is no such field %s', $sort));
             }
             $builder->orderBy(
@@ -121,7 +120,7 @@ class ApiManager
             );
         }
 
-        foreach($rc->getProperties() as $property) {
+        foreach($entity->getProperties() as $property) {
             $name = $property->getName();
             if($value = $request->get($name)) {
                 $builder->andWhere($builder->expr()->orX(
@@ -134,7 +133,7 @@ class ApiManager
         $countBuilder = clone $builder;
 
         return $this->createResponse([
-            'total' => $countBuilder->select('count(c.id)')->getQuery()->getSingleScalarResult(),
+            'total' => $countBuilder->select('count(e.id)')->getQuery()->getSingleScalarResult(),
             'rows' => $builder
                 ->setMaxResults($request->get('limit') ? $request->get('limit') : 20)
                 ->setFirstResult($request->get('offset') ? $request->get('offset') : 0)
@@ -239,7 +238,9 @@ class ApiManager
             throw new AccessDeniedHttpException();
         }
 
-        $entity = $this->doctrine->getManager()->getRepository($entityName)->find($request->get('id'));
+        $entity = $this->doctrine->getManager()
+            ->getRepository($entityName)
+            ->find($request->get('id'));
 
         if (!$entity) {
             throw new NotFoundHttpException();
