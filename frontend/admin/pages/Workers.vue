@@ -4,7 +4,7 @@
     <worker-code />
     <h2>Registered workers</h2>
     <ui-card>
-        <k-datatable resource="worker" :columns="columns"/>
+        <k-datatable resource="worker" :columns="getColumns()"/>
     </ui-card>
   </section>
 </template>
@@ -19,28 +19,34 @@
     },
     data() {
       return {
-        columns: {
-            host: {
-                label: 'Host',
-                type: 'string',
-                filter: {
-                    type: 'string'
-                },
-                sortable: true
-            },
-            last_seen_at: {
-                label: 'Last seen',
-                type: 'timeago',
-                filter: {
-                    type: 'daterange'
-                },
-                sortable: true
-            }
-        }
+//        columns: {
+//            host: {
+//                label: 'Host',
+//                type: 'string',
+//                filter: {
+//                    type: 'string'
+//                },
+//                sortable: true
+//            },
+//            last_seen_at: {
+//                label: 'Last seen',
+//                type: 'timeago',
+//                filter: {
+//                    type: 'daterange'
+//                },
+//                sortable: true
+//            }
+//        }
       }
     },
     methods: {
-
+    getColumns() {
+        return [
+            { title: 'Id', field: 'id', sortable: true},
+            { title: 'Host', field: 'host', sortable: true},
+            { title: 'Last seen', field: 'last_seen_at', tdComp: 'table-timeago',  sortable: true},
+        ]
+    }
     },
     computed: {
 

@@ -111,7 +111,11 @@ class ApiManager
 
         $sort = $request->get('sort');
         if($sort) {
-            if(!$entity->hasProperty($sort) || $this->accessManager->canEditProperty($entity->getProperty($sort))) {
+            $sort = lcfirst(implode('', array_map(function ($key) {
+                return ucfirst($key);
+            }, explode('_', $sort))));
+
+            if(!$entity->hasProperty($sort)) {
                 throw new BadRequestHttpException(sprintf('There is no such field %s', $sort));
             }
             $builder->orderBy(
