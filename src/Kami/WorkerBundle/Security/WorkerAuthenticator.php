@@ -38,21 +38,19 @@ class WorkerAuthenticator extends AbstractGuardAuthenticator
     {
         return array(
             'secret' => $request->headers->get('X-WORKER-TOKEN'),
-            'host'   => $request->getClientIp()
         );
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         $secret = $credentials['secret'];
-        $host = $credentials['host'];
 
-        if (null === $host || null === $host) {
+        if (null === $secret) {
             return;
         }
 
         // if a User object, checkCredentials() is called
-        return $this->workerUserProvider->loadUserByUsername($secret, $host);
+        return $this->workerUserProvider->loadUserByUsername($secret);
     }
 
     public function checkCredentials($credentials, UserInterface $user)

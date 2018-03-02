@@ -22,11 +22,10 @@ class WorkerUserProvider implements UserProviderInterface
         $this->doctrine = $doctrine;
     }
 
-    public function loadUserByUsername($username, $host = '')
+    public function loadUserByUsername($username)
     {
         $worker = $this->doctrine->getRepository(Worker::class)->findOneBy([
-            'secret' => $username,
-            'host'   => $host
+            'secret' => $username
         ]);
 
         if(!$worker)  {
