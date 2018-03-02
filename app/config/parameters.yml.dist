@@ -24,3 +24,4 @@ parameters:
 
     # Socket servers
     socket_server_url: http://localhost:1337
+    socket_server_secret: testSocketSecret
