@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        name: 'accordion-content',
+        name: 'uk-accordion-content',
         props: {
             open: false
         },

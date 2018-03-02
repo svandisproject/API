@@ -9,15 +9,15 @@
 
     <tbl v-bind="$props" />
     
-    <div v-if="Pagination" class="row" style="margin-top: 10px">
-      <div class="col-sm-6" style="white-space: nowrap">
+    <div v-if="Pagination" class="uk-grid" style="margin-top: 10px">
+      <div  class="uk-width-1-3" style="white-space: nowrap">
         <strong>
-          {{ $i18nForDatatable('Total') }} {{ total }} {{ $i18nForDatatable(',') }}
+          {{ $i18nForDatatable('Total') }} {{ total }} {{ $i18nForDatatable('') }}
         </strong>
         <page-size-select :query="query" :page-size-options="pageSizeOptions" />
       </div>
-      <div class="col-sm-6">
-        <pagination class="pull-right" :total="total" :query="query" />
+      <div class="uk-width-1-3">
+        <pagination :total="total" :query="query" />
       </div>
     </div>
   </div>
