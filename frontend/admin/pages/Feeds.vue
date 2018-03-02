@@ -14,24 +14,8 @@
 </template>
 
 <script lang="js">
-  import WebFeed from '../components/WebFeed'
   export default  {
-    name: 'feeds',
-    props: [],
-    mounted() {
-
-    },
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
-    components: {
-        WebFeed
-    }
+    name: 'feeds'
 }
 </script>
 

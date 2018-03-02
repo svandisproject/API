@@ -76,6 +76,26 @@ io.on('worker-finished-task', (secret) => {
 });
 
 
+// setInterval(() => {
+//     console.log('Crawl task emitted');
+//     for(let i in workerPool) {
+//         if(workerPool[i].status === STATUS_FREE) {
+//             console.log('Found free worker'.green)
+//             io.to(workerPool[i].id).emit('worker-crawl-task', {
+//                 name: 'web',
+//                 url: 'https://www.coindesk.com/',
+//                 config: {
+//                     titleSelector: '.article-top-title',
+//                     contentSelector: '.article-post-container',
+//                     publishedAtSelector: '.article-container-left-timestamp',
+//                     dateFormat: 'MMM, D, YYYY at HH:mm'
+//                 }});
+//             workerPool[i].status = STATUS_BUSY;
+//             break;
+//         }
+//     }
+// }, 10000)
+
 setInterval(() => {
     console.log('Crawl task emitted');
     for(let i in workerPool) {
@@ -83,12 +103,12 @@ setInterval(() => {
             console.log('Found free worker'.green)
             io.to(workerPool[i].id).emit('worker-crawl-task', {
                 name: 'web',
-                url: 'https://www.coindesk.com/',
+                url: 'https://cointelegraph.com',
                 config: {
-                    titleSelector: '.article-top-title',
-                    contentSelector: '.article-post-container',
-                    publishedAtSelector: '.article-container-left-timestamp',
-                    publishedAtRegexp: '/^(\\w\\w\\w) (\\d\\d?), (\\d\\d\\d\\d) at (\\d\\d:\\d\\d) UTC/'
+                    titleSelector: '.header',
+                    contentSelector: '.post-full-text',
+                    publishedAtSelector: '.date',
+                    // dateFormat: 'MMM, D, YYYY at HH:mm'
                 }});
             workerPool[i].status = STATUS_BUSY;
             break;

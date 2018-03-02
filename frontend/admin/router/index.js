@@ -6,10 +6,10 @@ import Tag from '../pages/Tag'
 import Feeds from '../pages/Feeds'
 import Settings from '../pages/Settings'
 import Workers from '../pages/Workers'
-import WebFeed from '../components/WebFeed'
+import WebFeed from '../pages/WebFeed'
 import FacebookFeed from '../components/FacebookFeed'
 import TwitterFeed from '../components/TwitterFeed'
-
+import Feed from '../components/Feed'
 
 Vue.use(Router);
 
@@ -42,7 +42,14 @@ const router = new Router({
                 {
                     name: 'feeds_web',
                     path: '/feeds/web',
-                    component: WebFeed
+                    component: WebFeed,
+                    children: [
+                        {
+                            name: 'web-feed',
+                            path: '/feeds/web/:id',
+                            component: Feed
+                        }
+                    ]
                 },
                 {
                     name: 'feeds_facebook',

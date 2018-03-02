@@ -56,8 +56,10 @@ class Factory
                 $formAnnotation = $this->annotationReader->getPropertyAnnotation($property, Form::class);
                 if ($formAnnotation) {
                     $builder->add($property->getName(), $formAnnotation->type, $formAnnotation->options);
+                } else {
+                    $builder->add($property->getName());
                 }
-                $builder->add($property->getName());
+
             }
         }
 
@@ -78,8 +80,9 @@ class Factory
                 $formAnnotation = $this->annotationReader->getPropertyAnnotation($property, Form::class);
                 if ($formAnnotation) {
                     $builder->add($property->getName(), $formAnnotation->type, $formAnnotation->options);
+                } else {
+                    $builder->add($property->getName());
                 }
-                $builder->add($property->getName());
             }
         }
 

@@ -1,6 +1,5 @@
 <template lang="html">
     <section class="datatable">
-        <code>query: {{ query }}</code>
         <datatable
         v-bind="$data"
         :columns="columns"
@@ -37,9 +36,13 @@
         tblStyle: [String, Object, Array],
         fixHeaderAndSetBodyMaxHeight: Number,
         supportNested: [Boolean, String],
-        supportBackup: Boolean
+        supportBackup: Boolean,
+        filter: { type: Object , default: {}}
     },
     mounted() {
+        for(let i in this.filter) {
+            this.query[i] = this.filter[i];
+        }
         this.getData(this.query)
     },
     watch: {
@@ -49,6 +52,15 @@
           },
           deep: true
       },
+        filter: {
+            handler (filter) {
+                for(let i in this.filter) {
+                    this.query[i] = this.filter[i];
+                }
+                this.getData(this.query)
+            },
+            deep: true
+        }
     },
       methods: {
           getData(query) {

@@ -76,7 +76,8 @@ class WebsitePost
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER"})
-     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType", options={"widget": "single_text"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      */
     private $publishedAt;
 
@@ -245,6 +246,11 @@ class WebsitePost
      */
     public function setPublishedAt($publishedAt)
     {
+        if(!$publishedAt instanceof \DateTime) {
+            $this->publishedAt = \DateTime::createFromFormat('d-m-Y g:i:s', $publishedAt);
+
+            return $this;
+        }
         $this->publishedAt = $publishedAt;
 
         return $this;
