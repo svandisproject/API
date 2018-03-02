@@ -1,11 +1,12 @@
 <template>
-  <label name="PageSizeSelect">
-    <select class="form-control input-sm -page-size-select" v-model="query.limit"
-      @change="query.offset = 0 /* reset to the first page */">
+  <span name="PageSizeSelect" class="uk-label">
+     <select class="uk-select uk-form-width-xsmall" v-model="query.limit"
+             @change="query.offset = 0 /* reset to the first page */">
       <option v-for="i in pageSizeOptions" :value="i">{{ i }}</option>
+     <span>{{ $i18nForDatatable('items / page') }}</span>
     </select>
     {{ $i18nForDatatable('items / page') }}
-  </label>
+</span>
 </template>
 <script>
 export default {
