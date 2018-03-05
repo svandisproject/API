@@ -9,11 +9,10 @@ use Symfony\Component\HttpFoundation\Response;
 class FrontendController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/app{slash}{any}", requirements={"any":"(.+)?", "slash":"\/?"})
      */
-    public function indexAction()
+    public function userAction()
     {
-        sleep(3);
         return $this->render('@KamiFrontend/Default/index.html.twig');
     }
 

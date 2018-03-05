@@ -15,7 +15,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Table(name="website_post")
  * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\WebsitePostRepository")
  * @UniqueEntity("url")
- * @Api\Access({"ROLE_ADMIN"})
+ * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeCreatedBy({"ROLE_WORKER"})
  */
 class WebsitePost
@@ -34,7 +34,7 @@ class WebsitePost
      *
      * @ORM\Column(name="title", type="string", length=255)
      * @Assert\NotBlank()
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER"})
      */
     private $title;
@@ -44,7 +44,7 @@ class WebsitePost
      *
      * @ORM\Column(name="url", type="string", length=255, unique=true)
      * @Assert\Url()
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER"})
      */
     private $url;
@@ -54,7 +54,7 @@ class WebsitePost
      *
      * @ORM\Column(name="content", type="text")
      * @Assert\NotBlank()
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER"})
      */
     private $content;
@@ -64,7 +64,7 @@ class WebsitePost
      *
      * @ORM\Column(name="source", type="string", length=255)
      * @Assert\NotBlank()
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER"})
      */
     private $source;
@@ -75,7 +75,7 @@ class WebsitePost
      * @ORM\Column(name="publishedAt", type="datetime")
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_USER"})
      * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
      *     options={"widget": "single_text"})
      */
@@ -86,7 +86,7 @@ class WebsitePost
      *
      * @ORM\Column(name="createdAt", type="datetime")
      * @Gedmo\Timestampable(on="create")
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $createdAt;
 
@@ -95,7 +95,7 @@ class WebsitePost
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="websitePosts")
      * @ORM\JoinTable(name="website_post_tags")
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $tags;
 
