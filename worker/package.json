@@ -7,6 +7,7 @@
     "process-argv": "^1.0.0",
     "redis": "^2.8.0",
     "simplecrawler": "^1.1.6",
-    "socket.io-client": "^2.0.4"
+    "socket.io-client": "^2.0.4",
+    "twitter": "^1.7.1"
   }
 }

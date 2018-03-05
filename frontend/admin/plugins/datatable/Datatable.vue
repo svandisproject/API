@@ -37,7 +37,7 @@
         fixHeaderAndSetBodyMaxHeight: Number,
         supportNested: [Boolean, String],
         supportBackup: Boolean,
-        filter: { type: Object , default: {}}
+        filter: { type: Object , default() {return {}}}
     },
     mounted() {
         for(let i in this.filter) {

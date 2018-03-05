@@ -79,7 +79,10 @@ function executeTask(task, axios) {
     let crawler = false;
     switch (task.name) {
         case 'web':
-            crawler = require('./crawlers/web.js');
+            crawler = require('./crawlers/web');
+            break;
+        case 'twitter':
+            crawler = require('./crawlers/twitter');
             break;
         default:
             break;

@@ -2,7 +2,8 @@
   <section class="settings">
     <div uk-grid>
         <ui-tab position="left" class="uk-width-1-6">
-          <li><router-link :to="{name: 'settings_workers'}"><ui-icon i="server" />&nbsp;Workers</router-link></li>
+          <router-link tag="li" active-class="uk-active" :to="{name: 'settings_workers'}"><a><ui-icon i="server" />&nbsp;Workers</a></router-link>
+          <router-link tag="li" active-class="uk-active" :to="{name: 'settings_web_feeds'}"><a><ui-icon i="world" />&nbsp;Web Feeds</a></router-link>
         </ui-tab>
         <div class="feed uk-width-5-6">
             <router-view></router-view>

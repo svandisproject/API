@@ -5,7 +5,8 @@ import Login from '../pages/Login'
 import Tag from '../pages/Tag'
 import Feeds from '../pages/Feeds'
 import Settings from '../pages/Settings'
-import Workers from '../pages/Workers'
+import Workers from '../pages/settings/Workers'
+import WebFeeds from '../pages/settings/WebFeeds'
 import WebFeed from '../pages/WebFeed'
 import FacebookFeed from '../components/FacebookFeed'
 import TwitterFeed from '../components/TwitterFeed'
@@ -73,6 +74,18 @@ const router = new Router({
                     name: 'settings_workers',
                     path: '/settings/workers',
                     component: Workers
+                },
+                {
+                    name: 'settings_web_feeds',
+                    path: '/settings/web-feeds',
+                    component: WebFeeds,
+                    children: [
+                        {
+                            name: 'settings_web_feeds_new',
+                            path: '/settings/web-feeds/new',
+                            component: WebFeeds,
+                        }
+                    ]
                 }
             ]
         }

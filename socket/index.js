@@ -75,6 +75,7 @@ io.on('worker-finished-task', (secret) => {
     })
 });
 
+// Coindesk
 
 // setInterval(() => {
 //     console.log('Crawl task emitted');
@@ -96,19 +97,43 @@ io.on('worker-finished-task', (secret) => {
 //     }
 // }, 10000)
 
+// Cointelegraph
+
+// setInterval(() => {
+//     console.log('Crawl task emitted');
+//     for(let i in workerPool) {
+//         if(workerPool[i].status === STATUS_FREE) {
+//             console.log('Found free worker'.green)
+//             io.to(workerPool[i].id).emit('worker-crawl-task', {
+//                 name: 'web',
+//                 url: 'https://cointelegraph.com',
+//                 config: {
+//                     titleSelector: '.header',
+//                     contentSelector: '.post-full-text',
+//                     publishedAtSelector: '.date',
+//                     // dateFormat: 'MMM, D, YYYY at HH:mm'
+//                 }});
+//             workerPool[i].status = STATUS_BUSY;
+//             break;
+//         }
+//     }
+// }, 10000)
+
+// Twitter
+
 setInterval(() => {
     console.log('Crawl task emitted');
     for(let i in workerPool) {
         if(workerPool[i].status === STATUS_FREE) {
             console.log('Found free worker'.green)
             io.to(workerPool[i].id).emit('worker-crawl-task', {
-                name: 'web',
-                url: 'https://cointelegraph.com',
+                name: 'twitter',
                 config: {
-                    titleSelector: '.header',
-                    contentSelector: '.post-full-text',
-                    publishedAtSelector: '.date',
-                    // dateFormat: 'MMM, D, YYYY at HH:mm'
+                    mode: 'feed',
+                    consumerKey: 'WA2bp5AEDMUbSSzCti4hOHbRj',
+                    consumerSecret: 'x6ga3jkyOZ1QkzMqql6WvJRGzBKKn1sfdGGOw09KiNhHF4e16G',
+                    accessTokenKey: '969914826058235904-ly8qj1WkXLvBfXEv61AnGpWJaPaCXP2',
+                    accessTokenSecret: 'NGBOI5VuO5zxplcNF6meKN2jJ4Zbo4rsfBuQ1IOOJKRq1'
                 }});
             workerPool[i].status = STATUS_BUSY;
             break;

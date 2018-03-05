@@ -17,6 +17,7 @@ khepin_yaml_fixtures:
     resources:
         - KamiUserBundle
         - KamiContentBundle
+        - KamiWorkerBundle
     directory: Resources/fixtures
 
 monolog:
