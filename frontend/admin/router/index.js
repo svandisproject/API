@@ -11,6 +11,7 @@ import WebFeed from '../pages/WebFeed'
 import FacebookFeed from '../components/FacebookFeed'
 import TwitterFeed from '../components/TwitterFeed'
 import Feed from '../components/Feed'
+import WebFeedForm from '../pages/settings/WebFeedForm'
 
 Vue.use(Router);
 
@@ -79,13 +80,16 @@ const router = new Router({
                     name: 'settings_web_feeds',
                     path: '/settings/web-feeds',
                     component: WebFeeds,
-                    children: [
-                        {
-                            name: 'settings_web_feeds_new',
-                            path: '/settings/web-feeds/new',
-                            component: WebFeeds,
-                        }
-                    ]
+                },
+                {
+                    name: 'settings_web_feeds_new',
+                    path: '/settings/web-feeds/new',
+                    component: WebFeedForm
+                },
+                {
+                    name: 'settings_web_feeds_edit',
+                    path: '/settings/web-feeds/edit/:id',
+                    component: WebFeedForm
                 }
             ]
         }

@@ -1,6 +1,6 @@
 <template lang="html">
   <section class="worker-settings">
-    <h2>Web feeds <ui-button @click.prevent="createNew()" primary>New</ui-button></h2>
+    <h2>Web feeds <ui-button @click.native="$router.push({name: 'settings_web_feeds_new'})" primary>New</ui-button></h2>
     <ui-card>
         <k-datatable resource="web-feed" :columns="getColumns()"/>
     </ui-card>
@@ -20,11 +20,7 @@
             { title: 'Date format', field: 'date_format', sortable: true},
             { title: 'Actions', tdComp: 'table-actions'},
         ]
-      },
-        createNew() {
-          alert(123)
-          this.$router.push({name: 'settings_web_feeds_new'})
-        }
+      }
     }
 }
 </script>

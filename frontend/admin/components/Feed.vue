@@ -1,5 +1,7 @@
 <template lang="html">
-    <k-datatable resource="website-post" :columns="getColumns()" v-bind:filter="filter"></k-datatable>
+    <ui-card>
+        <k-datatable resource="website-post" :columns="getColumns()" v-bind:filter="filter"></k-datatable>
+    </ui-card>
 </template>
 <style scoped lang="scss">
 
@@ -19,15 +21,10 @@
         },
         computed: {
             filter() {
-                if(this.$route.params.id == '1') {
-                    return {'source': 'coindesk'};
-                } else {
-                    return {'source': 'cointelegraph'};
+                if(this.$route.params.id) {
+                    return {'source': this.$route.params.id};
                 }
             }
         }
-//        mounted() {
-//            this.query.source = 'coindesk'
-//        }
     }
 </script>

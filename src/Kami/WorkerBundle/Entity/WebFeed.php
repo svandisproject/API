@@ -3,12 +3,16 @@
 namespace Kami\WorkerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * WebFeed
  *
  * @ORM\Table(name="web_feed")
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\WebFeedRepository")
+ * @Api\Access({"ROLE_ADMIN"})
+ * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  */
 class WebFeed
 {
@@ -18,6 +22,9 @@ class WebFeed
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $id;
 
@@ -25,6 +32,9 @@ class WebFeed
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -32,6 +42,9 @@ class WebFeed
      * @var string
      *
      * @ORM\Column(name="url", type="string", length=255, unique=true)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $url;
 
@@ -39,6 +52,9 @@ class WebFeed
      * @var string
      *
      * @ORM\Column(name="titleSelector", type="string", length=255)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $titleSelector;
 
@@ -46,6 +62,9 @@ class WebFeed
      * @var string
      *
      * @ORM\Column(name="contentSelector", type="string", length=255)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $contentSelector;
 
@@ -53,6 +72,9 @@ class WebFeed
      * @var string
      *
      * @ORM\Column(name="publishedAtSelector", type="string", length=255)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $publishedAtSelector;
 
@@ -60,6 +82,9 @@ class WebFeed
      * @var string
      *
      * @ORM\Column(name="dateFormat", type="string", length=255, nullable=true)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $dateFormat;
 

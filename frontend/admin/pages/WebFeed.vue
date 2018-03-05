@@ -1,9 +1,9 @@
 <template lang="html">
     <section class="webfeeds">
         <ui-tab>
-            <router-link tag="li" active-class="uk-active" :to="{name: 'web-feed', params: {id: 1}}"><a><ui-icon i="world" />&nbsp;Coindesk</a></router-link>
-            <router-link tag="li" active-class="uk-active" :to="{name: 'web-feed', params:{id: 2}}"><a><ui-icon i="world" />&nbsp;Cointelegraph</a></router-link>
-
+            <template v-for="feed in feeds">
+                <router-link tag="li" active-class="uk-active" :to="{name: 'web-feed', params: {id: feed.title}}"><a><ui-icon i="world" />&nbsp;{{feed.title}}</a></router-link>
+            </template>
         </ui-tab>
     <router-view></router-view>
     </section>
@@ -12,7 +12,19 @@
 
 </style>
 <script lang="js">
+    import config from '../config';
     export default  {
         name: 'web-feed',
+        data() {
+            return {
+                feeds: []
+            }
+        },
+        mounted() {
+            this.$axios.get(config.API_URL + '/web-feed')
+                .then((response) => {
+                    this.feeds = response.data
+                })
+        }
     }
 </script>

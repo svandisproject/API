@@ -5,6 +5,7 @@
         <router-view v-show="!isLoading"></router-view>
         <preloader v-show="isLoading"></preloader>
         <notifications position="top center" group="auth"/>
+        <notifications position="top center" group="api"/>
     </ui-container>
   </section>
 </template>

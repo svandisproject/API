@@ -128,7 +128,7 @@ class AccessManager
 
     public function canEditResource(\ReflectionClass $entity)
     {
-        foreach ($this->annotationReader->getPropertyAnnotations($entity) as $annotation) {
+        foreach ($this->annotationReader->getClassAnnotations($entity) as $annotation) {
             if ($annotation instanceof AnonymousEdit) {
                 return true;
             }
