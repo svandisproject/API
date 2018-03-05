@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "axios": "^0.17.1",
+    "highcharts": "^6.0.7",
     "jquery": "^3.3.1",
     "jwt-decode": "^2.2.0",
     "moment": "^2.20.1",

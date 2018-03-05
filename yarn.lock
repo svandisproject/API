@@ -2763,7 +2763,7 @@ he@^1.1.0:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
-highcharts@^6.0.3:
+highcharts@^6.0.7:
   version "6.0.7"
   resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-6.0.7.tgz#fd5c4f24fdc61a04ae155a5b70830a96c8f70919"
 
@@ -5913,14 +5913,7 @@ vue-timeago@^3.4.4:
   version "3.4.4"
   resolved "https://registry.yarnpkg.com/vue-timeago/-/vue-timeago-3.4.4.tgz#a878c9ba5840816939a89659451902f84ebdf23f"
 
-vue2-highcharts@^1.1.8:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/vue2-highcharts/-/vue2-highcharts-1.1.8.tgz#17ae761275086d89646120566520ffafaebecb3a"
-  dependencies:
-    highcharts "^6.0.3"
-    vue "^2.1.0"
-
-vue@^2.1.0, vue@^2.5.13:
+vue@^2.5.13:
   version "2.5.13"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.13.tgz#95bd31e20efcf7a7f39239c9aa6787ce8cf578e1"
 

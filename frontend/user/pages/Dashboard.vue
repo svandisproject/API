@@ -36,12 +36,22 @@
 
     <ui-card>
         <h3 slot="header">News feed
-        <span>
-            <ui-icon i="settings"/>
-            <div uk-drop="mode: click">
-                <ui-card size="small"><input type="text" placeholder="Keyword" class="uk-input"></ui-card>
+            <div>
+                  <ui-icon i="settings"/>
+                  <div uk-drop="mode: click">
+                    <ui-card size="small">
+                        <div class="uk-inline">
+                            <form class="uk-form">
+                               <input
+                               placeholder="Keyword"
+                               v-model="keyword"
+                               class="uk-input uk-form-small"
+                               v-on:keyup.enter="filter()">
+                            </form>
+                        </div>
+                    </ui-card>
+                  </div>
             </div>
-        </span>
         </h3>
         <dl class="uk-description-list uk-description-list-divider">
             <template v-for="post in posts">
@@ -79,7 +89,6 @@
 </template>
 
 <script lang="js">
-  import VueHighcharts from 'vue2-highcharts'
   import fixtures from '../fixtures/data'
   import Logo from '../components/Logo'
   export default  {
@@ -121,6 +130,7 @@
                     }
                 }]
             },
+            keyword: '',
             posts: [],
             tags: [
                 'Bitcoin', 'Etherum', 'Altcoins', 'Svn'
@@ -129,15 +139,27 @@
     },
     props: [],
     methods: {
+        filter() {
+            this.$store.commit('SET_KEYWORD', this.keyword)
+            this.getData()
+        },
+        getData() {
+            let url = '/api/website-post/filter?sort=published_at&order=desc&limit=20'
+            if(this.$store.getters.getKeyword !== '') {
+                url += '&title=' + this.$store.getters.getKeyword
+            }
+            this.$axios.get(url)
+                .then((response) => {
+                    this.posts = response.data.rows
+                })
+        }
     },
     components: {
-        VueHighcharts, Logo
+        Logo
     },
     mounted() {
-        this.$axios.get('/api/website-post/filter?sort=published_at&order=desc&limit=20')
-            .then((response) => {
-                this.posts = response.data.rows
-            })
+        this.keyword = this.$store.getters.getKeyword
+        this.getData();
     }
 }
 </script>
@@ -145,7 +167,7 @@
 <style scoped lang="scss">
   .dashboard {
       h3 {
-         span {
+         div {
              float: right;
              cursor: pointer;
          }

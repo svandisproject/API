@@ -11,6 +11,7 @@ const state = {
        roles: []
    },
    token: null,
+   keyword: ''
 }
 
 const mutations = {
@@ -32,7 +33,10 @@ const mutations = {
             authenticated: false,
             roles: []
         }
-    }
+    },
+    SET_KEYWORD (state, keyword) {
+        state.keyword = keyword
+    },
 }
 
 const actions = {
@@ -47,6 +51,7 @@ const getters = {
     isLoading:      (state) => { return state.loading },
     getUser:        (state) => { return state.user },
     getToken:       (state) => { return state.token },
+    getKeyword:     (state) => { return state.keyword }
 }
 
 const store = new Vuex.Store({
