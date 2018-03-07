@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new Kami\FrontendBundle\KamiFrontendBundle(),
             new Kami\ContentBundle\KamiContentBundle(),
             new Kami\WorkerBundle\KamiWorkerBundle(),
+            new Kami\FacebookParserBundle\KamiFacebookParserBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

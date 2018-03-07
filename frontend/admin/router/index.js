@@ -12,6 +12,7 @@ import FacebookFeed from '../components/FacebookFeed'
 import TwitterFeed from '../components/TwitterFeed'
 import Feed from '../components/Feed'
 import WebFeedForm from '../pages/settings/WebFeedForm'
+import FacebookUser from '../pages/FacebookUser'
 
 Vue.use(Router);
 
@@ -90,6 +91,11 @@ const router = new Router({
                     name: 'settings_web_feeds_edit',
                     path: '/settings/web-feeds/edit/:id',
                     component: WebFeedForm
+                },
+                {
+                    name: 'settings_facebook-user',
+                    path: '/settings/facebook-user',
+                    component: FacebookUser
                 }
             ]
         }

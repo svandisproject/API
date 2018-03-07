@@ -84,6 +84,9 @@ function executeTask(task, axios) {
         case 'twitter':
             crawler = require('./crawlers/twitter');
             break;
+        case 'facebook':
+            crawler = require('./crawlers/facebook');
+            break;
         default:
             break;
     }
