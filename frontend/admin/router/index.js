@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Dashboard from '../pages/Dashboard'
 import Login from '../pages/Login'
 import Tag from '../pages/Tag'
+import TagForm from '../components/TagForm'
+import TagList from '../components/TagList'
 import Feeds from '../pages/Feeds'
 import Settings from '../pages/Settings'
 import Workers from '../pages/settings/Workers'
@@ -27,7 +29,25 @@ const router = new Router({
         {
             name: 'tag',
             path: '/tag',
-            component: Tag
+            props: {'access': ['ROLE_USER', 'ROLE_ADMIN']},
+            component: Tag,
+            children: [
+                {
+                    name: 'tags',
+                    path: '/tag/tags',
+                    component: TagList
+                },
+                {
+                    name: 'tag_new',
+                    path: '/tag/tags/new',
+                    component: TagForm
+                },
+                {
+                    name: 'tag_edit',
+                    path: '/tag/tags/edit/:id',
+                    component: TagForm
+                }
+            ]
         },
         {
             name: 'dashboard',
