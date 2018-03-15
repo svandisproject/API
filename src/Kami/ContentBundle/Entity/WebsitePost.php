@@ -16,7 +16,8 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\WebsitePostRepository")
  * @UniqueEntity("url")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
- * @Api\CanBeCreatedBy({"ROLE_WORKER"})
+ * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+ * @Api\CanBeEditedBy({"ROLE_ADMIN"})
  */
 class WebsitePost
 {
@@ -35,7 +36,8 @@ class WebsitePost
      * @ORM\Column(name="title", type="string", length=255)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -45,7 +47,8 @@ class WebsitePost
      * @ORM\Column(name="url", type="string", length=255, unique=true)
      * @Assert\Url()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      */
     private $url;
 
@@ -55,7 +58,8 @@ class WebsitePost
      * @ORM\Column(name="content", type="text")
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      */
     private $content;
 
@@ -65,7 +69,8 @@ class WebsitePost
      * @ORM\Column(name="source", type="string", length=255)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      */
     private $source;
 
@@ -75,7 +80,8 @@ class WebsitePost
      * @ORM\Column(name="publishedAt", type="datetime")
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
      *     options={"widget": "single_text"})
      */
@@ -275,6 +281,7 @@ class WebsitePost
      */
     public function addTag(\Kami\ContentBundle\Entity\Tag $tag)
     {
+        $tag->addWebsitePost($this);
         $this->tags[] = $tag;
 
         return $this;

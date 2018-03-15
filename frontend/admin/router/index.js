@@ -14,6 +14,8 @@ import FacebookFeed from '../components/FacebookFeed'
 import TwitterFeed from '../components/TwitterFeed'
 import Feed from '../components/Feed'
 import WebFeedForm from '../pages/settings/WebFeedForm'
+import WebsitePostForm from '../components/WebsitePostForm'
+import WebsitePosts from '../components/WebsitePosts'
 
 Vue.use(Router);
 
@@ -82,6 +84,16 @@ const router = new Router({
                     name: 'feeds_twitter',
                     path: '/feeds/twitter',
                     component: TwitterFeed
+                },
+                {
+                    name: 'website_posts',
+                    path: '/feeds/website-posts',
+                    component: WebsitePosts,
+                },
+                {
+                    name: 'website_post_edit',
+                    path: '/feeds/website-posts/edit/:id',
+                    component: WebsitePostForm
                 }
             ]
         },
