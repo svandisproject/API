@@ -102,6 +102,7 @@ class WebsitePost
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="websitePosts")
      * @ORM\JoinTable(name="website_post_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      */
     private $tags;
 
