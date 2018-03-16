@@ -14,6 +14,14 @@
                         </label>
                     </h3>
                 </div>
+                <div v-if="addTag">
+                    <button @click.prevent="addTag = !addTag">add tag</button>
+                </div>
+                <div v-else>
+                    <tag-add v-on:tagAdded="tagAdded"></tag-add>
+                    <button @click.prevent="addTag = !addTag">Hide form</button>
+                </div>
+
 
                 <div class="uk-margin">
                     <label class="uk-form-label">Title</label>
@@ -56,8 +64,10 @@
 
 <script lang="js">
     import config from '../config'
+    import TagAdd from './TagAdd'
     export default  {
         name: 'website-post-form',
+        components: { TagAdd },
         data () {
             return {
                 post: {
@@ -69,7 +79,8 @@
                     tags: [],
                 },
                 allTags: [],
-                action: config.API_URL + '/website-post/' + this.$route.params.id
+                action: config.API_URL + '/website-post/' + this.$route.params.id,
+                addTag: true,
             }
         },
         mounted() {
@@ -87,10 +98,11 @@
                         this.post.tags.push(response.data.tags[tag].id)
                     }
                 });
-            this.$axios.get(config.API_URL + '/tag').then((response) => {
-                this.allTags = response.data;
+            this.$axios.get(config.API_URL + '/tag/filter?limit=100').then((response) => {
+                this.allTags = response.data.rows;
             });
         },
+
         methods: {
             save() {
                 this.$axios.put(this.action, {'website_post': this.post})
@@ -112,6 +124,12 @@
                     this.post.tags.push(id)
                 }
                 console.log(this.post.publishedAt)
+            },
+            tagAdded(){
+                this.addTag = !this.addTag;
+                this.$axios.get(config.API_URL + '/tag/filter?limit=100').then((response) => {
+                    this.allTags = response.data.rows;
+                });
             }
         }
     }
