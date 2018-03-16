@@ -80,7 +80,7 @@
                         url: response.data.url,
                         content: response.data.content,
                         source: response.data.source,
-                        publishedAt: response.data.publishedAt,
+                        publishedAt: response.data.published_at,
                         tags: []
                     };
                     for(var tag in response.data.tags){
