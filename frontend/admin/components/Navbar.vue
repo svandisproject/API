@@ -6,6 +6,7 @@
    <ul class="uk-navbar-nav" slot="left">
         <li><router-link :to="{name: 'dashboard'}">Dashboard</router-link></li>
         <li><router-link :to="{name: 'feeds'}">Feeds</router-link></li>
+        <li><router-link :to="{name: 'tag'}">Tags</router-link></li>
     </ul>
 
     <ul class="uk-navbar-nav" slot="right">
