@@ -88,6 +88,15 @@ class WebFeed
      */
     private $dateFormat;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="interval", type="integer")
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     */
+    private $interval;
 
     /**
      * Get id.
@@ -235,6 +244,30 @@ class WebFeed
     public function getDateFormat()
     {
         return $this->dateFormat;
+    }
+
+    /**
+     * Set interval.
+     *
+     * @param string $interval
+     *
+     * @return WebFeed
+     */
+    public function setInterval($interval)
+    {
+        $this->interval = $interval;
+
+        return $this;
+    }
+
+    /**
+     * Get interval.
+     *
+     * @return string
+     */
+    public function getInterval()
+    {
+        return $this->interval;
     }
 
 }
