@@ -42,7 +42,7 @@ class TwitterUser
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="consumer_key", type="string", length=255)
+     * @ORM\Column(name="consumerKey", type="string", length=255)
      */
     private $consumerKey;
 
@@ -52,7 +52,7 @@ class TwitterUser
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="consumer_secret", type="string", length=255)
+     * @ORM\Column(name="consumerSecret", type="string", length=255)
      */
     private $consumerSecret;
 
@@ -62,7 +62,7 @@ class TwitterUser
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="access_token_key", type="string", length=255)
+     * @ORM\Column(name="accessTokenKey", type="string", length=255)
      */
     private $accessTokenKey;
 
@@ -72,19 +72,19 @@ class TwitterUser
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="access_token_secret", type="string", length=255)
+     * @ORM\Column(name="accessTokenSecret", type="string", length=255)
      */
     private $accessTokenSecret;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="interval", type="integer")
+     * @ORM\Column(name="timeInterval", type="integer")
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
-    private $interval;
+    private $timeInterval;
 
     /**
      * Get id.
@@ -151,7 +151,7 @@ class TwitterUser
      *
      * @return TwitterUser
      */
-    public function setonsumerSecret($consumerSecret)
+    public function setConsumerSecret($consumerSecret)
     {
         $this->consumerSecret = $consumerSecret;
 
@@ -217,26 +217,26 @@ class TwitterUser
     }
 
     /**
-     * Set interval.
+     * Set timeInterval.
      *
-     * @param string $interval
+     * @param string $timeInterval
      *
      * @return TwitterUser
      */
-    public function setInterval($interval)
+    public function setTimeInterval($timeInterval)
     {
-        $this->interval = $interval;
+        $this->timeInterval = $timeInterval;
 
         return $this;
     }
 
     /**
-     * Get interval.
+     * Get timeInterval.
      *
-     * @return string
+     * @return int
      */
-    public function getInterval()
+    public function getTimeInterval()
     {
-        return $this->interval;
+        return $this->timeInterval;
     }
 }

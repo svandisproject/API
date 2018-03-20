@@ -12,7 +12,10 @@ import FacebookFeed from '../components/FacebookFeed'
 import TwitterFeed from '../components/TwitterFeed'
 import Feed from '../components/Feed'
 import WebFeedForm from '../pages/settings/WebFeedForm'
-import FacebookUser from '../pages/FacebookUser'
+import FacebookUsers from '../pages/settings/FacebookUsers'
+import TwitterUsers from '../pages/settings/TwitterUsers'
+import FacebookUserForm from '../pages/settings/FacebookUserForm'
+import TwitterUserForm from '../pages/settings/TwitterUserForm'
 
 Vue.use(Router);
 
@@ -93,10 +96,35 @@ const router = new Router({
                     component: WebFeedForm
                 },
                 {
-                    name: 'settings_facebook-user',
-                    path: '/settings/facebook-user',
-                    component: FacebookUser
-                }
+                    name: 'settings_facebook_users',
+                    path: '/settings/facebook-users',
+                    component: FacebookUsers
+                },
+                {
+                    name: 'settings_facebook_users_new',
+                    path: '/settings/facebook-users/new',
+                    component: FacebookUserForm
+                },
+                {
+                    name: 'settings_facebook_users_edit',
+                    path: '/settings/facebook-users/edit/:id',
+                    component: FacebookUserForm
+                },
+                {
+                    name: 'settings_twitter_users',
+                    path: '/settings/twitter-users',
+                    component: TwitterUsers
+                },
+                {
+                    name: 'settings_twitter_users_new',
+                    path: '/settings/twitter-users/new',
+                    component: TwitterUserForm
+                },
+                {
+                    name: 'settings_twitter_users_edit',
+                    path: '/settings/twitter-users/edit/:id',
+                    component: TwitterUserForm
+                },
             ]
         }
     ]

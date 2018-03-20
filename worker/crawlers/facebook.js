@@ -1,8 +1,7 @@
 var casper  = require("casper").create();
 var config  = require('../config');
-var system  = require('system');
-var email   = system.args[4];
-var pass    = system.args[5];
+var email   = null;
+var pass    = null;
 
 var posts;
 var currentPage = 1;
@@ -10,10 +9,18 @@ var lastPostId  = "0";
 
 var instance = {
     execute(task, axios) {
-        casper.start(config.API_URL + '/api/facebook-post/filter?limit=1&sort=id', function() {
+        casper.start(config.API_URL + '/api/post/filter?source=facebook&limit=1&sort=id', function() {
             var page = JSON.parse(casper.getPageContent());
             if(page.total !== '0'){
                 lastPostId = page.rows[0].facebook_id;
+            }
+        });
+
+        casper.thenOpen(config.API_URL + '/api/facebook-user/filter?limit=1&sort=id', function() {
+            var page = JSON.parse(casper.getPageContent());
+            if(page.total !== '0'){
+                email = page.rows[0].email;
+                pass = page.rows[0].password;
             }
         });
 
@@ -38,7 +45,7 @@ var instance = {
         casper.run(function () {
             for(var i = (Object.size(posts) - 1); i >= 0; i--){
                 if(posts[i].facebookId && posts[i].author && posts[i].content) {
-                    axios.post(config.API_URL + '/api/facebook-post', { 'facebook-post': posts[i] });
+                    axios.post(config.API_URL + '/api/post', { 'post': posts[i] });
                 }
             }
         });
@@ -69,7 +76,10 @@ var instance = {
                                     break loop;
                                 }
                                 newPosts[count] = {};
-                                newPosts[count]['facebookId'] = fbIdPostValue;
+                                newPosts[count]['url'] = 'https://facebook.com/' + fbIdPostValue;
+                                newPosts[count]['source'] = 'facebook';
+                                //todo: publishedAt
+                                newPosts[count]['publishedAt'] = 'publishedAt';
                             }
                         }
 
@@ -77,9 +87,9 @@ var instance = {
                         for (var k = 0; k < postDivs.length; k++) {
                             var divClass = postDivs[k].getAttribute('class');
                             if (divClass === '_5x46 _1yz1 clearfix') {
-                                newPosts[count]['author'] = postDivs[k].innerText;
+                                newPosts[count]['title'] = postDivs[k].innerText;
                             } else if (divClass === '_5pbx userContent _3576') {
-                                newPosts[count]['author'] += postDivs[k].innerText;
+                                newPosts[count]['title'] += postDivs[k].innerText;
                             }else if (divClass === '_3x-2') {
                                 newPosts[count]['content'] = postDivs[k].innerHTML;
                             }

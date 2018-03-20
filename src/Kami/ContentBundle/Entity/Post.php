@@ -10,15 +10,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
- * WebsitePost
+ * Post
  *
- * @ORM\Table(name="website_post")
- * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\WebsitePostRepository")
+ * @ORM\Table(name="post")
+ * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\PostRepository")
  * @UniqueEntity("url")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeCreatedBy({"ROLE_WORKER"})
  */
-class WebsitePost
+class Post
 {
     /**
      * @var int
@@ -93,8 +93,8 @@ class WebsitePost
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="websitePosts")
-     * @ORM\JoinTable(name="website_post_tags")
+     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="posts")
+     * @ORM\JoinTable(name="post_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $tags;
@@ -122,7 +122,7 @@ class WebsitePost
      *
      * @param string $title
      *
-     * @return WebsitePost
+     * @return Post
      */
     public function setTitle($title)
     {
@@ -146,7 +146,7 @@ class WebsitePost
      *
      * @param string $url
      *
-     * @return WebsitePost
+     * @return Post
      */
     public function setUrl($url)
     {
@@ -170,7 +170,7 @@ class WebsitePost
      *
      * @param string $content
      *
-     * @return WebsitePost
+     * @return Post
      */
     public function setContent($content)
     {
@@ -194,7 +194,7 @@ class WebsitePost
      *
      * @param string $source
      *
-     * @return WebsitePost
+     * @return Post
      */
     public function setSource($source)
     {
@@ -218,7 +218,7 @@ class WebsitePost
      *
      * @param \DateTime $createdAt
      *
-     * @return WebsitePost
+     * @return Post
      */
     public function setCreatedAt($createdAt)
     {
@@ -242,7 +242,7 @@ class WebsitePost
      *
      * @param \DateTime $publishedAt
      *
-     * @return WebsitePost
+     * @return Post
      */
     public function setPublishedAt($publishedAt)
     {
@@ -271,7 +271,7 @@ class WebsitePost
      *
      * @param \Kami\ContentBundle\Entity\Tag $tag
      *
-     * @return WebsitePost
+     * @return Post
      */
     public function addTag(\Kami\ContentBundle\Entity\Tag $tag)
     {

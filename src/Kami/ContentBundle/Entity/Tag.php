@@ -47,19 +47,19 @@ class Tag
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\WebsitePost", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", mappedBy="tags")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @JMS\Expose(if="service('kami_api_core.access_manager').canAccessProperty(object, context, property_metadata)")
      */
-    private $websitePosts;
+    private $posts;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->websitePosts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -97,29 +97,29 @@ class Tag
     }
 
     /**
-     * Add websitePost.
+     * Add post.
      *
-     * @param \Kami\ContentBundle\Entity\WebsitePost $websitePost
+     * @param \Kami\ContentBundle\Entity\Post $post
      *
      * @return Tag
      */
-    public function addWebsitePost(\Kami\ContentBundle\Entity\WebsitePost $websitePost)
+    public function addPost(\Kami\ContentBundle\Entity\Post $post)
     {
-        $this->websitePosts[] = $websitePost;
+        $this->posts[] = $post;
 
         return $this;
     }
 
     /**
-     * Remove websitePost.
+     * Remove post.
      *
-     * @param \Kami\ContentBundle\Entity\WebsitePost $websitePost
+     * @param \Kami\ContentBundle\Entity\Post $post
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeWebsitePost(\Kami\ContentBundle\Entity\WebsitePost $websitePost)
+    public function removePost(\Kami\ContentBundle\Entity\Post $post)
     {
-        return $this->websitePosts->removeElement($websitePost);
+        return $this->posts->removeElement($post);
     }
 
     /**
@@ -127,8 +127,8 @@ class Tag
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getWebsitePosts()
+    public function getPosts()
     {
-        return $this->websitePosts;
+        return $this->posts;
     }
 }

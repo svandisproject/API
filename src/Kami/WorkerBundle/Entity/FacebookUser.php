@@ -49,12 +49,12 @@ class FacebookUser
     /**
      * @var int
      *
-     * @ORM\Column(name="interval", type="integer")
+     * @ORM\Column(name="timeInterval", type="integer")
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
-    private $interval;
+    private $timeInterval;
 
 
     /**
@@ -116,26 +116,26 @@ class FacebookUser
     }
 
     /**
-     * Set interval.
+     * Set timeInterval.
      *
-     * @param string $interval
+     * @param string $timeInterval
      *
      * @return FacebookUser
      */
-    public function setInterval($interval)
+    public function setTimeInterval($timeInterval)
     {
-        $this->interval = $interval;
+        $this->timeInterval = $timeInterval;
 
         return $this;
     }
 
     /**
-     * Get interval.
+     * Get timeInterval.
      *
-     * @return string
+     * @return int
      */
-    public function getInterval()
+    public function getTimeInterval()
     {
-        return $this->interval;
+        return $this->timeInterval;
     }
 }

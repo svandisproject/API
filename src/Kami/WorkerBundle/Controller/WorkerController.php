@@ -80,4 +80,34 @@ class WorkerController extends Controller
 
         return new JsonResponse(['host'=>$worker->getHost()]);
     }
+
+    /**
+     * @Route("/api/schedule", methods={"GET"}, name="worker.schedule")
+     */
+    public function scheduleAction()
+    {
+        $tasks = ['tasks' => [
+                [
+                    'name' => 'web',
+                    'config' => [
+                        'titleSelector', 'contentSelector', 'publishedAtSelector', 'dateFormat', 'timeInterval'
+                    ]
+                ],
+                [
+                    'name' => 'twitter',
+                    'config' => [
+                        'mode', 'consumerKey', 'consumerSecret', 'accessTokenKey', 'accessTokenSecret', 'timeInterval'
+                    ]
+                ],
+                [
+                    'name' => 'facebook',
+                    'config' => [
+                        'timeInterval'
+                    ]
+                ],
+            ],
+        ];
+
+        return new JsonResponse($tasks);
+    }
 }

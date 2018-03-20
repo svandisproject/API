@@ -41,6 +41,12 @@
                     <input class="uk-input" v-model="form.dateFormat" placeholder="Date format">
                 </div>
              </div>
+            <div class="uk-margin">
+                <label class="uk-form-label">Interval</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" v-model="form.timeInterval" placeholder="Interval">
+                </div>
+            </div>
              <div class="uk-margin">
                 <button @click.prevent="save" primary>Save</button>
              </div>
@@ -62,7 +68,8 @@
                 titleSelector: '',
                 contentSelector: '',
                 publishedAtSelector: '',
-                dateFormat: ''
+                dateFormat: '',
+                timeInterval: ''
             },
             method: 'post',
             action: config.API_URL + '/web-feed',
@@ -79,7 +86,8 @@
                        titleSelector: response.data.title_selector,
                        contentSelector: response.data.content_selector,
                        publishedAtSelector: response.data.published_at_selector,
-                       dateFormat: response.data.date_format
+                       dateFormat: response.data.date_format,
+                       timeInterval: response.data.time_interval
                    }
                 })
             this.action = config.API_URL + '/web-feed/' + this.$route.params.id;
