@@ -154,6 +154,8 @@ setInterval(() => {
             io.to(workerPool[i].id).emit('worker-crawl-task', {
                 name: 'facebook',
                 config: {
+                    email: '',
+                    password: '',
                     timeInterval: 60000
                 }});
             workerPool[i].status = STATUS_BUSY;

@@ -1,7 +1,5 @@
 var casper  = require("casper").create();
 var config  = require('../config');
-var email   = null;
-var pass    = null;
 
 var posts;
 var currentPage = 1;
@@ -9,18 +7,11 @@ var lastPostId  = "0";
 
 var instance = {
     execute(task, axios) {
+
         casper.start(config.API_URL + '/api/post/filter?source=facebook&limit=1&sort=id', function() {
             var page = JSON.parse(casper.getPageContent());
             if(page.total !== '0'){
                 lastPostId = page.rows[0].facebook_id;
-            }
-        });
-
-        casper.thenOpen(config.API_URL + '/api/facebook-user/filter?limit=1&sort=id', function() {
-            var page = JSON.parse(casper.getPageContent());
-            if(page.total !== '0'){
-                email = page.rows[0].email;
-                pass = page.rows[0].password;
             }
         });
 
@@ -30,8 +21,8 @@ var instance = {
 
         casper.then(function() {
             this.fillSelectors('#login_form', {
-                'input[name = email]' : email,
-                'input[name = pass]' : pass
+                'input[name = email]' : task.config.email,
+                'input[name = pass]' : task.config.password,
             }, true);
         });
 

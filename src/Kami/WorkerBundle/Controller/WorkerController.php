@@ -86,27 +86,7 @@ class WorkerController extends Controller
      */
     public function scheduleAction()
     {
-        $tasks = ['tasks' => [
-                [
-                    'name' => 'web',
-                    'config' => [
-                        'titleSelector', 'contentSelector', 'publishedAtSelector', 'dateFormat', 'timeInterval'
-                    ]
-                ],
-                [
-                    'name' => 'twitter',
-                    'config' => [
-                        'mode', 'consumerKey', 'consumerSecret', 'accessTokenKey', 'accessTokenSecret', 'timeInterval'
-                    ]
-                ],
-                [
-                    'name' => 'facebook',
-                    'config' => [
-                        'timeInterval'
-                    ]
-                ],
-            ],
-        ];
+        $tasks = $this->get('kami_worker.scheduler')->getScheduleIndex();
 
         return new JsonResponse($tasks);
     }
