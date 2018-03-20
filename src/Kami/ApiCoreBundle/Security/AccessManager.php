@@ -152,7 +152,7 @@ class AccessManager
             if ($annotation instanceof AnonymousCreate) {
                 return true;
             }
-            if ($annotation instanceof CanBeCreatedBy
+            if ($annotation instanceof CanBeEditedBy
                 && $this->tokenStorage->getToken()->getUser() instanceof UserInterface) {
                 return count(
                         array_intersect(
