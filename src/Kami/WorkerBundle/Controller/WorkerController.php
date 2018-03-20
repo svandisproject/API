@@ -80,4 +80,14 @@ class WorkerController extends Controller
 
         return new JsonResponse(['host'=>$worker->getHost()]);
     }
+
+    /**
+     * @Route("/api/schedule", methods={"GET"}, name="worker.schedule")
+     */
+    public function scheduleAction()
+    {
+        $tasks = $this->get('kami_worker.scheduler')->getScheduleIndex();
+
+        return new JsonResponse($tasks);
+    }
 }

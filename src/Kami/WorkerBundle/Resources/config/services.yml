@@ -1,6 +1,7 @@
 parameters:
     kami_worker.user_provider.class: Kami\WorkerBundle\Security\WorkerUserProvider
     kami_worker.authenticator.class: Kami\WorkerBundle\Security\WorkerAuthenticator
+    kami_worker.schedule.class: Kami\WorkerBundle\Scheduler\ScheduleManager
 
 services:
     kami_worker.user_provider:
@@ -12,3 +13,8 @@ services:
         class: "%kami_worker.authenticator.class%"
         arguments:
             - "@kami_worker.user_provider"
+
+    kami_worker.scheduler:
+         class: "%kami_worker.schedule.class%"
+         arguments:
+             - "@doctrine"

@@ -89,7 +89,8 @@ io.on('worker-finished-task', (secret) => {
 //                     titleSelector: '.article-top-title',
 //                     contentSelector: '.article-post-container',
 //                     publishedAtSelector: '.article-container-left-timestamp',
-//                     dateFormat: 'MMM, D, YYYY at HH:mm'
+//                     dateFormat: 'MMM, D, YYYY at HH:mm',
+//                     timeInterval: 60000
 //                 }});
 //             workerPool[i].status = STATUS_BUSY;
 //             break;
@@ -111,7 +112,8 @@ io.on('worker-finished-task', (secret) => {
 //                     titleSelector: '.header',
 //                     contentSelector: '.post-full-text',
 //                     publishedAtSelector: '.date',
-//                     // dateFormat: 'MMM, D, YYYY at HH:mm'
+//                     // dateFormat: 'MMM, D, YYYY at HH:mm',
+//                     timeInterval: 60000
 //                 }});
 //             workerPool[i].status = STATUS_BUSY;
 //             break;
@@ -125,7 +127,7 @@ setInterval(() => {
     console.log('Crawl task emitted');
     for(let i in workerPool) {
         if(workerPool[i].status === STATUS_FREE) {
-            console.log('Found free worker'.green)
+            console.log('Found free worker'.green);
             io.to(workerPool[i].id).emit('worker-crawl-task', {
                 name: 'twitter',
                 config: {
@@ -133,10 +135,31 @@ setInterval(() => {
                     consumerKey: 'WA2bp5AEDMUbSSzCti4hOHbRj',
                     consumerSecret: 'x6ga3jkyOZ1QkzMqql6WvJRGzBKKn1sfdGGOw09KiNhHF4e16G',
                     accessTokenKey: '969914826058235904-ly8qj1WkXLvBfXEv61AnGpWJaPaCXP2',
-                    accessTokenSecret: 'NGBOI5VuO5zxplcNF6meKN2jJ4Zbo4rsfBuQ1IOOJKRq1'
+                    accessTokenSecret: 'NGBOI5VuO5zxplcNF6meKN2jJ4Zbo4rsfBuQ1IOOJKRq1',
+                    timeInterval: 60000
                 }});
             workerPool[i].status = STATUS_BUSY;
             break;
         }
     }
-}, 10000)
+}, 10000);
+
+// Facebook
+
+setInterval(() => {
+    console.log('Crawl task emitted');
+    for(let i in workerPool) {
+        if(workerPool[i].status === STATUS_FREE) {
+            console.log('Found free worker'.green);
+            io.to(workerPool[i].id).emit('worker-crawl-task', {
+                name: 'facebook',
+                config: {
+                    email: '',
+                    password: '',
+                    timeInterval: 60000
+                }});
+            workerPool[i].status = STATUS_BUSY;
+            break;
+        }
+    }
+}, 10000);

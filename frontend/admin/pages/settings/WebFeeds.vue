@@ -18,6 +18,7 @@
             { title: 'Content selector', field: 'content_selector', sortable: true},
             { title: 'Published at selector', field: 'published_at_selector', sortable: true},
             { title: 'Date format', field: 'date_format', sortable: true},
+            { title: 'Interval', field: 'time_interval', sortable: true},
             { title: 'Actions', tdComp: 'table-actions'},
         ]
       }

@@ -10,6 +10,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  *
  * @ORM\Table(name="web_feed")
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\WebFeedRepository")
+ * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -88,6 +89,15 @@ class WebFeed
      */
     private $dateFormat;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="timeInterval", type="integer")
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     */
+    private $timeInterval;
 
     /**
      * Get id.
@@ -235,6 +245,30 @@ class WebFeed
     public function getDateFormat()
     {
         return $this->dateFormat;
+    }
+
+    /**
+     * Set timeInterval.
+     *
+     * @param string $timeInterval
+     *
+     * @return WebFeed
+     */
+    public function setTimeInterval($timeInterval)
+    {
+        $this->timeInterval = $timeInterval;
+
+        return $this;
+    }
+
+    /**
+     * Get timeInterval.
+     *
+     * @return int
+     */
+    public function getTimeInterval()
+    {
+        return $this->timeInterval;
     }
 
 }

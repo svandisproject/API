@@ -1,20 +1,18 @@
 <?php
 
-namespace Kami\FacebookParserBundle\Entity;
+namespace Kami\WorkerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
-use JMS\Serializer\Annotation as JMS;
 
 /**
  * FacebookUser
  *
  * @ORM\Table(name="facebook_user")
- * @ORM\Entity(repositoryClass="Kami\FacebookParserBundle\Repository\FacebookUserRepository")
+ * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\FacebookUserRepository")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})
- * @JMS\ExclusionPolicy("all")
  */
 class FacebookUser
 {
@@ -22,7 +20,6 @@ class FacebookUser
      * @var int
      *
      * @Api\Access({"ROLE_ADMIN"})
-     * @JMS\Expose
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -35,7 +32,6 @@ class FacebookUser
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @JMS\Expose(if="service('kami_api_core.access_manager').canAccessProperty(object, context, property_metadata)")
      * @ORM\Column(name="email", type="string", length=100, unique=true)
      */
     private $email;
@@ -46,10 +42,19 @@ class FacebookUser
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @JMS\Expose(if="service('kami_api_core.access_manager').canAccessProperty(object, context, property_metadata)")
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="timeInterval", type="integer")
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     */
+    private $timeInterval;
 
 
     /**
@@ -108,5 +113,29 @@ class FacebookUser
     public function getPassword()
     {
         return $this->password;
+    }
+
+    /**
+     * Set timeInterval.
+     *
+     * @param string $timeInterval
+     *
+     * @return FacebookUser
+     */
+    public function setTimeInterval($timeInterval)
+    {
+        $this->timeInterval = $timeInterval;
+
+        return $this;
+    }
+
+    /**
+     * Get timeInterval.
+     *
+     * @return int
+     */
+    public function getTimeInterval()
+    {
+        return $this->timeInterval;
     }
 }

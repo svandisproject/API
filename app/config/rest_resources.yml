@@ -1,9 +1,9 @@
 kami_api_core:
   locales: ['en', 'ru']
   resources:
-    - { name: website-post, entity: Kami\ContentBundle\Entity\WebsitePost }
+    - { name: post, entity: Kami\ContentBundle\Entity\Post }
     - { name: tag, entity: Kami\ContentBundle\Entity\Tag }
     - { name: worker, entity: Kami\WorkerBundle\Entity\Worker }
     - { name: web-feed, entity: Kami\WorkerBundle\Entity\WebFeed }
-    - { name: facebook-user, entity: Kami\FacebookParserBundle\Entity\FacebookUser }
-    - { name: facebook-post, entity: Kami\ContentBundle\Entity\FacebookPost }
+    - { name: facebook-user, entity: Kami\WorkerBundle\Entity\FacebookUser }
+    - { name: twitter-user, entity: Kami\WorkerBundle\Entity\TwitterUser }

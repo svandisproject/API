@@ -1,6 +1,6 @@
 <?php
 
-namespace Kami\FacebookParserBundle\Repository;
+namespace Kami\WorkerBundle\Repository;
 
 /**
  * FacebookUserRepository
