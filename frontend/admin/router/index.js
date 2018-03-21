@@ -18,7 +18,6 @@ import FacebookUsers from '../pages/settings/FacebookUsers'
 import TwitterUsers from '../pages/settings/TwitterUsers'
 import FacebookUserForm from '../pages/settings/FacebookUserForm'
 import TwitterUserForm from '../pages/settings/TwitterUserForm'
-import FacebookUser from '../pages/FacebookUser'
 import WebsitePostForm from '../components/WebsitePostForm'
 import WebsitePosts from '../components/WebsitePosts'
 
