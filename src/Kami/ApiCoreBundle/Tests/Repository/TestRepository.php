@@ -6,7 +6,7 @@
  * Time: 11:08
  */
 
-namespace Kami\ApiCoreBundle\Resources\Fixtures\Repository;
+namespace Kami\ApiCoreBundle\Tests\Repository;
 
 /**
  * TestRepository

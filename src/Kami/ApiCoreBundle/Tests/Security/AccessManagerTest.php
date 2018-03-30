@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\KamiApiCoreBundle\Security;
+namespace src\Kami\ApiCoreBundle\Security;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Annotations\Reader;
@@ -13,7 +13,6 @@ use Kami\ApiCoreBundle\Annotation\AnonymousEdit;
 use Kami\ApiCoreBundle\Annotation\CanBeCreatedBy;
 use Kami\ApiCoreBundle\Annotation\CanBeDeletedBy;
 use Kami\ApiCoreBundle\Annotation\CanBeEditedBy;
-use Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel;
 use Kami\ApiCoreBundle\Security\AccessManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Kami\ApiCoreBundle\Resources\Fixtures\Entity;
+namespace Kami\ApiCoreBundle\Tests\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -11,7 +11,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * MyModel
  *
  * @ORM\Table(name="test")
- * @ORM\Entity(repositoryClass="Kami\ApiCoreBundle\Resources\Fixtures\Repository\TestRepository")
+ * @ORM\Entity(repositoryClass="Kami\ApiCoreBundle\Tests\Repository\TestRepository")
  * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\KamiApiCoreBundle\Manager;
+namespace src\Kami\ApiCoreBundle\Manager;
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Doctrine\ORM\AbstractQuery;
@@ -10,12 +10,10 @@ use Doctrine\ORM\QueryBuilder;
 use JMS\Serializer\Serializer;
 use Kami\ApiCoreBundle\Form\Factory;
 use Kami\ApiCoreBundle\Manager\ApiManager;
-use Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel;
 use Kami\ApiCoreBundle\Security\AccessManager;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\RequestHandlerInterface;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -48,7 +46,7 @@ class ApiManagerTest extends WebTestCase
         $factoryMock = $this->mock(Factory::class);
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $apiManager = $this->getApiManager($registryMock, $accessManagerMock, $factoryMock);
@@ -79,7 +77,7 @@ class ApiManagerTest extends WebTestCase
         $factoryMock = $this->mock(Factory::class);
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class);
         $requestMock->attributes->expects($this->at(0))->method('get')->willReturn($entityName);
         $requestMock->attributes->expects($this->at(1))->method('get')->willReturn('json');
@@ -101,7 +99,7 @@ class ApiManagerTest extends WebTestCase
     public function testFilterMethodWithoutSort()
     {
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $getQuery = $this->mock(AbstractQuery::class, 'getSingleScalarResult', 1);
@@ -131,7 +129,7 @@ class ApiManagerTest extends WebTestCase
     {
         $requestMock = $this->mock(Request::class);
         $requestMock->expects($this->at(0))->method('get')->with('sort')->willReturn('ddddd');
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $getQuery = $this->mock(AbstractQuery::class, 'getSingleScalarResult', 1);
@@ -163,7 +161,7 @@ class ApiManagerTest extends WebTestCase
         $factoryMock = $this->mock(Factory::class);
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName, '_entity');
 
         $apiManager = $this->getApiManager($registryMock, $accessManagerMock, $factoryMock);
@@ -173,7 +171,7 @@ class ApiManagerTest extends WebTestCase
     public function testGetSingleResourceWithoutEntity()
     {
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName, '_entity');
 
         $repository = $this->mock(EntityRepository::class, 'find', null);
@@ -190,7 +188,7 @@ class ApiManagerTest extends WebTestCase
     public function testGetSingleResourceAccess()
     {
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
 
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
         $requestMock->query = $this->mock(ParameterBag::class, 'getInt', 1);
@@ -220,7 +218,7 @@ class ApiManagerTest extends WebTestCase
 
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $apiManager = $this->getApiManager($registryMock, $accessManagerMock, $factoryMock);
@@ -232,7 +230,7 @@ class ApiManagerTest extends WebTestCase
         $formInterfaceMock = $this->mock(FormInterface::class, 'isSubmitted', false);
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $registryMock = $this->mock(Registry::class);
@@ -249,7 +247,7 @@ class ApiManagerTest extends WebTestCase
         $formInterfaceMock = $this->mock(FormInterface::class, 'isValid', false);
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $registryMock = $this->mock(Registry::class);
@@ -267,7 +265,7 @@ class ApiManagerTest extends WebTestCase
         $formInterfaceMock->expects($this->any())->method('isSubmitted')->willReturn(true);
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $entityManagerMock = $this->mock(EntityManager::class);
@@ -292,7 +290,7 @@ class ApiManagerTest extends WebTestCase
 
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $apiManager = $this->getApiManager($registryMock, $accessManagerMock, $factoryMock);
@@ -310,7 +308,7 @@ class ApiManagerTest extends WebTestCase
 
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $apiManager = $this->getApiManager($registryMock, $accessManagerMock, $factoryMock);
@@ -329,7 +327,7 @@ class ApiManagerTest extends WebTestCase
 
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $apiManager = $this->getApiManager($registryMock, $accessManagerMock, $factoryMock);
@@ -349,7 +347,7 @@ class ApiManagerTest extends WebTestCase
 
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $apiManager = $this->getApiManager($registryMock, $accessManagerMock, $factoryMock);
@@ -370,7 +368,7 @@ class ApiManagerTest extends WebTestCase
 
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
 
         $apiManager = $this->getApiManager($registryMock, $accessManagerMock, $factoryMock);
@@ -388,7 +386,7 @@ class ApiManagerTest extends WebTestCase
         $factoryMock = $this->mock(Factory::class);
 
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName, '_entity');
 
         $apiManager = $this->getApiManager($registryMock, $accessManagerMock, $factoryMock);
@@ -398,7 +396,7 @@ class ApiManagerTest extends WebTestCase
     public function testDeleteResourceWithoutEntity()
     {
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName, '_entity');
 
         $repository = $this->mock(EntityRepository::class, 'find', null);
@@ -415,7 +413,7 @@ class ApiManagerTest extends WebTestCase
     public function testDeleteResourceAccess()
     {
         $requestMock = $this->mock(Request::class);
-        $entityName  = 'Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel';
+        $entityName  = 'Kami\ApiCoreBundle\Tests\Entity\MyModel';
 
         $requestMock->attributes = $this->mock(ParameterBag::class, 'get', $entityName);
         $requestMock->query = $this->mock(ParameterBag::class, 'getInt', 1);

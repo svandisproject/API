@@ -1,10 +1,10 @@
 <?php
 
-namespace tests\KamiApiCoreBundle\Form;
+namespace src\Kami\ApiCoreBundle\Form;
 
 use Doctrine\Common\Annotations\Reader;
 use Kami\ApiCoreBundle\Form\Factory;
-use Kami\ApiCoreBundle\Resources\Fixtures\Entity\MyModel;
+use Kami\ApiCoreBundle\Tests\Entity\MyModel;
 use Kami\ApiCoreBundle\Security\AccessManager;
 use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\Form\FormFactory;
