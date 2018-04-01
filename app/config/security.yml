@@ -22,6 +22,13 @@ security:
                 failure_handler:          lexik_jwt_authentication.handler.authentication_failure
                 require_previous_session: false
 
+        socket_server:
+            pattern: ^/api/schedule
+            stateless: true
+            guard:
+                authenticators:
+                    - kami_worker.socket_server_authenticator
+
         api:
             pattern:   ^/api
             stateless: true
@@ -35,10 +42,12 @@ security:
         worker:
             pattern:   ^/worker/heartbeat
             stateless: true
-            anonymous: true
             guard:
                 authenticators:
                     - kami_worker.authenticator
+
+
     access_control:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/worker/authenticate, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/api/schedule, roles: ROLE_SOCKET_SERVER }

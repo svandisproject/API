@@ -14,7 +14,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})
  */
-class FacebookUser
+class FacebookFeed
 {
     /**
      * @var int
@@ -72,7 +72,7 @@ class FacebookUser
      *
      * @param string $email
      *
-     * @return FacebookUser
+     * @return FacebookFeed
      */
     public function setEmail($email)
     {
@@ -96,7 +96,7 @@ class FacebookUser
      *
      * @param string $password
      *
-     * @return FacebookUser
+     * @return FacebookFeed
      */
     public function setPassword($password)
     {
@@ -120,7 +120,7 @@ class FacebookUser
      *
      * @param string $timeInterval
      *
-     * @return FacebookUser
+     * @return FacebookFeed
      */
     public function setTimeInterval($timeInterval)
     {

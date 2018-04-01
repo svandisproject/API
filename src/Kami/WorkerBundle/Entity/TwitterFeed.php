@@ -14,7 +14,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})
  */
-class TwitterUser
+class TwitterFeed
 {
     /**
      * @var int
@@ -101,7 +101,7 @@ class TwitterUser
      *
      * @param string $mode
      *
-     * @return TwitterUser
+     * @return TwitterFeed
      */
     public function setMode($mode)
     {
@@ -125,7 +125,7 @@ class TwitterUser
      *
      * @param string $consumerKey
      *
-     * @return TwitterUser
+     * @return TwitterFeed
      */
     public function setConsumerKey($consumerKey)
     {
@@ -149,7 +149,7 @@ class TwitterUser
      *
      * @param string $consumerSecret
      *
-     * @return TwitterUser
+     * @return TwitterFeed
      */
     public function setConsumerSecret($consumerSecret)
     {
@@ -173,7 +173,7 @@ class TwitterUser
      *
      * @param string $accessTokenKey
      *
-     * @return TwitterUser
+     * @return TwitterFeed
      */
     public function setAccessTokenKey($accessTokenKey)
     {
@@ -197,7 +197,7 @@ class TwitterUser
      *
      * @param string $accessTokenSecret
      *
-     * @return TwitterUser
+     * @return TwitterFeed
      */
     public function setAccessTokenSecret($accessTokenSecret)
     {
@@ -221,7 +221,7 @@ class TwitterUser
      *
      * @param string $timeInterval
      *
-     * @return TwitterUser
+     * @return TwitterFeed
      */
     public function setTimeInterval($timeInterval)
     {

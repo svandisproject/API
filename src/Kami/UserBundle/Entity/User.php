@@ -18,6 +18,12 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length="10")
+     */
+    private $token;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,6 +37,25 @@ class User extends BaseUser
     {
         parent::setEmail($email);
         $this->setUsername($email);
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getToken()
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param mixed $token
+     * @return User
+     */
+    public function setToken($token)
+    {
+        $this->token = $token;
 
         return $this;
     }

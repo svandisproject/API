@@ -10,8 +10,8 @@ use Kami\ApiCoreBundle\ApiCoreEvents;
 use Kami\ApiCoreBundle\Event\CrudEvent;
 use Kami\ApiCoreBundle\Form\Factory;
 use Kami\ApiCoreBundle\Security\AccessManager;
-use Kami\WorkerBundle\Entity\FacebookUser;
-use Kami\WorkerBundle\Entity\TwitterUser;
+use Kami\WorkerBundle\Entity\FacebookFeed;
+use Kami\WorkerBundle\Entity\TwitterFeed;
 use Kami\WorkerBundle\Entity\WebFeed;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -22,11 +22,11 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
- * Class ScheduleManager
+ * Class Scheduler
  *
  * @package Kami\WorkerBundle\Scheduler
  */
-class ScheduleManager
+class Scheduler
 {
     /**
      * @var Registry
@@ -43,15 +43,14 @@ class ScheduleManager
     }
 
     /**
-     * @param Request $request
-     * @return Response
+     * @return array
      */
     public function getScheduleIndex()
     {
         $data = [
             'web' => $this->doctrine->getRepository(WebFeed::class)->findAll(),
-            'facebook' => $this->doctrine->getRepository(FacebookUser::class)->findAll(),
-            'twitter' => $this->doctrine->getRepository(TwitterUser::class)->findAll(),
+            'facebook' => $this->doctrine->getRepository(FacebookFeed::class)->findAll(),
+            'twitter' => $this->doctrine->getRepository(TwitterFeed::class)->findAll(),
         ];
 
         $tasks = [];
