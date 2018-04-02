@@ -1,0 +1,10 @@
+{
+  "extends": ["airbnb", "plugin:vue/recommended"],
+  "rules": {
+    "jsx-a11y/anchor-has-content": "off",
+    "import/extensions": "off"
+  },
+  "plugins": [
+    "html"
+  ]
+}

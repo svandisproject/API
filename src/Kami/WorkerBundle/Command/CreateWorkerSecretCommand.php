@@ -50,10 +50,6 @@ class CreateWorkerSecretCommand extends ContainerAwareCommand
 
     private function generateNewWorkerSecret($io)
     {
-        $factory = new Factory;
-        $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
-
-        $secret = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
         $io->success(sprintf('New worker token is: %s', $secret));
 
         return $secret;

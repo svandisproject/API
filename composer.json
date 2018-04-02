@@ -58,16 +58,11 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile",
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::prepareDeploymentTarget"
         ],
-        "kami-scripts": [
-            "Kami\\WorkerBundle\\Composer\\ScriptHandler::createWorkerSecret"
-        ],
         "post-install-cmd": [
-            "@symfony-scripts",
-            "@kami-scripts"
+            "@symfony-scripts"
         ],
         "post-update-cmd": [
-            "@symfony-scripts",
-            "@kami-scripts"
+            "@symfony-scripts"
         ]
     },
     "config": {

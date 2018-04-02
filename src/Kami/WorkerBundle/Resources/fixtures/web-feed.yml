@@ -7,9 +7,11 @@ fixtures:
         contentSelector: .article-post-container
         publishedAtSelector: .article-container-left-timestamp
         dateFormat: MMM, D, YYYY at HH:mm
+        timeInterval: 1000
     cointelegraph:
         title: Cointelegraph
         url: https://cointelegraph.com
         titleSelector: .header
         contentSelector: .post-full-text
         publishedAtSelector: .date
+        timeInterval: 1000

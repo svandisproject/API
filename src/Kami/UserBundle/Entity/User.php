@@ -4,6 +4,8 @@ namespace Kami\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use RandomLib\Factory;
+use SecurityLib\Strength;
 
 /**
  * @ORM\Entity
@@ -20,13 +22,17 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(type="string", length="10")
+     * @ORM\Column(type="string", length=16)
      */
-    private $token;
+    private $workerToken;
 
     public function __construct()
     {
+        $factory = new Factory;
+        $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
+        $this->workerToken = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
         parent::__construct();
+
     }
 
     /**
@@ -44,19 +50,26 @@ class User extends BaseUser
     /**
      * @return mixed
      */
-    public function getToken()
+    public function getWorkerToken()
     {
-        return $this->token;
+        return $this->workerToken;
     }
 
     /**
      * @param mixed $token
      * @return User
      */
-    public function setToken($token)
+    public function setWorkerToken($workerToken)
     {
-        $this->token = $token;
+        $this->workerToken = $workerToken;
 
         return $this;
+    }
+
+    public function updateWorkerToken()
+    {
+        $factory = new Factory;
+        $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
+        $this->workerToken = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
     }
 }
