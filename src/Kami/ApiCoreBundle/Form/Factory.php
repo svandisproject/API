@@ -2,7 +2,7 @@
 
 namespace Kami\ApiCoreBundle\Form;
 
-use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Annotations\Reader;
 use Doctrine\Common\Util\Inflector;
 use Kami\ApiCoreBundle\Annotation\CanBeCreatedBy;
 use Kami\ApiCoreBundle\Annotation\CanBeEditedBy;
@@ -36,7 +36,7 @@ class Factory
      * @param CachedReader $annotationReader
      * @param AccessManager $accessManager
      */
-    public function __construct(FormFactory $formFactory, CachedReader $annotationReader, AccessManager $accessManager)
+    public function __construct(FormFactory $formFactory, Reader $annotationReader, AccessManager $accessManager)
     {
         $this->formFactory = $formFactory;
         $this->annotationReader = $annotationReader;

@@ -2,7 +2,7 @@
 
 namespace Kami\ApiCoreBundle\Security;
 
-use Doctrine\Common\Annotations\CachedReader;
+use Doctrine\Common\Annotations\Reader;
 use JMS\Serializer\Metadata\PropertyMetadata;
 use Kami\ApiCoreBundle\Annotation\Access;
 use Kami\ApiCoreBundle\Annotation\AnonymousAccess;
@@ -23,7 +23,8 @@ class AccessManager
     private $tokenStorage;
 
     /**
-     * @var CachedReader
+     * @var Reader
+
      */
     private $annotationReader;
 
@@ -31,9 +32,9 @@ class AccessManager
      * AccessManager constructor.
      *
      * @param TokenStorage $tokenStorage
-     * @param CachedReader $annotationReader
+     * @param Reader $annotationReader
      */
-    public function __construct(TokenStorage $tokenStorage, CachedReader $annotationReader)
+    public function __construct(TokenStorage $tokenStorage, Reader $annotationReader)
     {
         $this->tokenStorage = $tokenStorage;
         $this->annotationReader = $annotationReader;
@@ -142,14 +143,13 @@ class AccessManager
                     ) > 0;
             }
         }
-
         return false;
     }
 
     public function canEditProperty(\ReflectionProperty $property)
     {
         foreach ($this->annotationReader->getPropertyAnnotations($property) as $annotation) {
-            if ($annotation instanceof AnonymousCreate) {
+            if ($annotation instanceof AnonymousEdit) {
                 return true;
             }
             if ($annotation instanceof CanBeEditedBy
@@ -182,7 +182,6 @@ class AccessManager
                     ) > 0;
             }
         }
-
         return false;
     }
 }
