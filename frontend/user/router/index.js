@@ -4,6 +4,7 @@ import Dashboard from '../pages/Dashboard'
 import Login from '../pages/Login'
 import Settings from '../pages/Settings'
 import Workers from '../pages/settings/Workers'
+import WorkerForm from '../components/WorkerForm'
 Vue.use(Router);
 
 const router = new Router({
@@ -31,6 +32,16 @@ const router = new Router({
                     name: 'settings_workers',
                     path: '/settings/workers',
                     component: Workers
+                },
+                {
+                    name: 'worker_new',
+                    path: '/settings/workers/new',
+                    component: WorkerForm
+                },
+                {
+                    name: 'worker_edit',
+                    path: '/settings/workers/edit/:id',
+                    component: WorkerForm
                 }
                 ]
         }

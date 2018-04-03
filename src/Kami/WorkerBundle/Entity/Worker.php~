@@ -163,28 +163,4 @@ class Worker implements UserInterface
     {
         return $this->user_id;
     }
-
-    /**
-     * Set user.
-     *
-     * @param int $user
-     *
-     * @return Worker
-     */
-    public function setUser($user)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user.
-     *
-     * @return int
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }
