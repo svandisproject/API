@@ -1,7 +1,10 @@
 <template lang="html">
-    <ui-card>
-        To register new worker run <pre>$ ./worker register --secret {{secret}}</pre>
-    </ui-card>
+    <section>
+        <h2>Workers <ui-button @click.native="$router.push({name: 'worker_new'})" primary>New</ui-button></h2>
+        <ui-card>
+            To register new worker run <pre>$ ./worker register --secret {{secret}}</pre>
+        </ui-card>
+    </section>
 </template>
 
 <script lang="js">

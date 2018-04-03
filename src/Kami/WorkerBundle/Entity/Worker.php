@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="worker")
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\WorkerRepository")
- * @Api\Access({"ROLE_ADMIN"})
+ * @Api\Access({"ROLE_USER"})
  */
 class Worker implements UserInterface
 {
@@ -22,23 +22,26 @@ class Worker implements UserInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_USER"})
      */
     private $id;
 
     /**
-     * @var string
+     * @var int
      *
-     * @ORM\Column(name="host", type="string", length=255)
-     * @Api\Access({"ROLE_ADMIN"})
+     * @ORM\Column(name="user_id", type="integer")
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="workers")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     *
+     * @Api\Access({"ROLE_USER"})
      */
-    private $host;
+    private $user;
 
     /**
      * @var string
      *
      * @ORM\Column(name="secret", type="string", length=128, unique=true)
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_USER"})
      */
     private $secret;
 
@@ -46,7 +49,7 @@ class Worker implements UserInterface
      * @var \DateTime
      *
      * @ORM\Column(name="last_seen_at", type="datetime", nullable=true)
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_USER"})
      */
     private $lastSeenAt;
 
@@ -63,30 +66,6 @@ class Worker implements UserInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set host.
-     *
-     * @param string $host
-     *
-     * @return Worker
-     */
-    public function setHost($host)
-    {
-        $this->host = $host;
-
-        return $this;
-    }
-
-    /**
-     * Get рhost.
-     *
-     * @return string
-     */
-    public function getHost()
-    {
-        return $this->host;
     }
 
     /**
@@ -160,4 +139,52 @@ class Worker implements UserInterface
         return;
     }
 
+
+    /**
+     * Set userId.
+     *
+     * @param int $userId
+     *
+     * @return Worker
+     */
+    public function setUserId($userId)
+    {
+        $this->user_id = $userId;
+
+        return $this;
+    }
+
+    /**
+     * Get userId.
+     *
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->user_id;
+    }
+
+    /**
+     * Set user.
+     *
+     * @param int $user
+     *
+     * @return Worker
+     */
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user.
+     *
+     * @return int
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 }
