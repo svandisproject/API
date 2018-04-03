@@ -7,7 +7,6 @@ import TagForm from '../components/TagForm'
 import TagList from '../components/TagList'
 import Feeds from '../pages/Feeds'
 import Settings from '../pages/Settings'
-import Workers from '../pages/settings/Workers'
 import WebFeeds from '../pages/settings/WebFeeds'
 import WebFeed from '../pages/WebFeed'
 import FacebookFeed from '../components/FacebookFeed'
@@ -107,11 +106,11 @@ const router = new Router({
             component: Settings,
             props: {'access': ['ROLE_ADMIN']},
             children: [
-                {
-                    name: 'settings_workers',
-                    path: '/settings/workers',
-                    component: Workers
-                },
+                // {
+                //     name: 'settings_workers',
+                //     path: '/settings/workers',
+                //     component: Workers
+                // },
                 {
                     name: 'settings_web_feeds',
                     path: '/settings/web-feeds',

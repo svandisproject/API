@@ -26,13 +26,13 @@ class Worker implements UserInterface
      */
     private $id;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="host", type="string", length=255)
-     * @Api\Access({"ROLE_ADMIN"})
-     */
-    private $host;
+//    /**
+//     * @var string
+//     *
+//     * @ORM\Column(name="host", type="string", length=255)
+//     * @Api\Access({"ROLE_ADMIN"})
+//     */
+//    private $host;
 
     /**
      * @var string
