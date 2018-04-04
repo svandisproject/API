@@ -13,6 +13,8 @@
         methods: {
             getColumns() {
                 return [
+                    { title: 'Client id', field: 'client_id', sortable: true},
+                    { title: 'Client secret', field: 'client_secret', sortable: true},
                     { title: 'User name', field: 'user_name', sortable: true},
                     { title: 'User password', field: 'user_password', sortable: true},
                     { title: 'Time Interval', field: 'time_interval', sortable: true},
