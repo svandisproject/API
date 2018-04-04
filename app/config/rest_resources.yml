@@ -7,3 +7,4 @@ kami_api_core:
     - { name: web-feed, entity: Kami\WorkerBundle\Entity\WebFeed }
     - { name: facebook-user, entity: Kami\WorkerBundle\Entity\FacebookUser }
     - { name: twitter-user, entity: Kami\WorkerBundle\Entity\TwitterUser }
+    - { name: reddit-feed, entity: Kami\WorkerBundle\Entity\RedditFeed }
