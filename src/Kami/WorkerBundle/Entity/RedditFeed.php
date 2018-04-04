@@ -28,16 +28,6 @@ class RedditFeed
     private $id;
 
     /**
-     * @var string
-     *
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="user_agent", type="string")
-     */
-    private $userAgent;
-
-    /**
      * @var int
      *
      * @Api\Access({"ROLE_ADMIN"})
