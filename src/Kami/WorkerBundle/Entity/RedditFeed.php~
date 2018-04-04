@@ -33,6 +33,36 @@ class RedditFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @ORM\Column(name="user_agent", type="string")
+     */
+    private $userAgent;
+
+    /**
+     * @var int
+     *
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @ORM\Column(name="client_id", type="integer")
+     */
+    private $clientId;
+
+    /**
+     * @var string
+     *
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @ORM\Column(name="client_secret", type="string")
+     */
+    private $clientSecret;
+
+    /**
+     * @var string
+     *
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="user_name", type="string", length=100)
      */
     private $userName;
@@ -50,7 +80,7 @@ class RedditFeed
     /**
      * @var int
      *
-     * @ORM\Column(name="timeInterval", type="integer")
+     * @ORM\Column(name="time_interval", type="integer")
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -114,5 +144,29 @@ class RedditFeed
     public function getUserPassword()
     {
         return $this->userPassword;
+    }
+
+    /**
+     * Set timeInterval.
+     *
+     * @param int $timeInterval
+     *
+     * @return RedditFeed
+     */
+    public function setTimeInterval($timeInterval)
+    {
+        $this->timeInterval = $timeInterval;
+
+        return $this;
+    }
+
+    /**
+     * Get timeInterval.
+     *
+     * @return int
+     */
+    public function getTimeInterval()
+    {
+        return $this->timeInterval;
     }
 }
