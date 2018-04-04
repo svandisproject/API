@@ -5,6 +5,24 @@
     <ui-card>
         <form class="uk-form-stacked">
 
+             <div class="uk-margin">
+                <label class="uk-form-label">User agent</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" v-model="form.userAgent" placeholder="User agent">
+                </div>
+            </div>
+             <div class="uk-margin">
+                <label class="uk-form-label">Client ID</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" v-model="form.clientId" placeholder="Client ID">
+                </div>
+            </div>
+            <div class="uk-margin">
+                <label class="uk-form-label">Client secret</label>
+                <div class="uk-form-controls">
+                    <input class="uk-input" v-model="form.clientSecret" placeholder="Client secret">
+                </div>
+            </div>
             <div class="uk-margin">
                 <label class="uk-form-label">User name</label>
                 <div class="uk-form-controls">
@@ -39,6 +57,9 @@
     data () {
         return {
             form: {
+                userAgent: '',
+                clientId: '',
+                clientSecret: '',
                 userName: '',
                 userPassword: '',
                 timeInterval: ''
@@ -53,6 +74,9 @@
             this.$axios.get(config.API_URL + '/reddit-feed/'+this.$route.params.id)
                 .then((response) => {
                    this.form = {
+                       userAgent: response.data.user_agent,
+                       clientId: response.data.client_id,
+                       clientSecret: response.data.client_secret,
                        userName: response.data.user_name,
                        userPassword: response.data.user_password,
                        timeInterval: response.data.time_interval

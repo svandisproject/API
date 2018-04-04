@@ -33,6 +33,36 @@ class RedditFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @ORM\Column(name="user_agent", type="string")
+     */
+    private $userAgent;
+
+    /**
+     * @var int
+     *
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @ORM\Column(name="client_id", type="integer")
+     */
+    private $clientId;
+
+    /**
+     * @var string
+     *
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @ORM\Column(name="client_secret", type="string")
+     */
+    private $clientSecret;
+
+    /**
+     * @var string
+     *
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="user_name", type="string", length=100)
      */
     private $userName;
@@ -138,5 +168,77 @@ class RedditFeed
     public function getTimeInterval()
     {
         return $this->timeInterval;
+    }
+
+    /**
+     * Set userAgent.
+     *
+     * @param string $userAgent
+     *
+     * @return RedditFeed
+     */
+    public function setUserAgent($userAgent)
+    {
+        $this->userAgent = $userAgent;
+
+        return $this;
+    }
+
+    /**
+     * Get userAgent.
+     *
+     * @return string
+     */
+    public function getUserAgent()
+    {
+        return $this->userAgent;
+    }
+
+    /**
+     * Set clientId.
+     *
+     * @param int $clientId
+     *
+     * @return RedditFeed
+     */
+    public function setClientId($clientId)
+    {
+        $this->clientId = $clientId;
+
+        return $this;
+    }
+
+    /**
+     * Get clientId.
+     *
+     * @return int
+     */
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+
+    /**
+     * Set clientSecret.
+     *
+     * @param string $clientSecret
+     *
+     * @return RedditFeed
+     */
+    public function setClientSecret($clientSecret)
+    {
+        $this->clientSecret = $clientSecret;
+
+        return $this;
+    }
+
+    /**
+     * Get clientSecret.
+     *
+     * @return string
+     */
+    public function getClientSecret()
+    {
+        return $this->clientSecret;
     }
 }
