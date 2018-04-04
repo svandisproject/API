@@ -20,18 +20,19 @@ let instance = {
             if (!error) {
                 console.log(tweets);
                 const allTweets = JSON.parse(tweets);
-                for (const tweet in allTweets) {
+                allTweets.map((tweet) => {
                     if (allTweets[tweet].id && allTweets[tweet].text && allTweets[tweet].created_at) {
-                        const oneTweet = {
-                            url: `https://twitter.com/statuses/${allTweets[tweet].id}`,
-                            title: allTweets[tweet].text,
-                            content: allTweets[tweet].text,
-                            source: 'twitter',
-                            publishedAt: allTweets[tweet].created_at,
-                        };
-                        axios.post(`${config.API_URL}/api/post`, { post: oneTweet });
+                        axios.post(`${config.API_URL}/api/post`, {
+                            post: {
+                                url: `https://twitter.com/statuses/${allTweets[tweet].id}`,
+                                title: allTweets[tweet].text,
+                                content: allTweets[tweet].text,
+                                source: 'twitter',
+                                publishedAt: allTweets[tweet].created_at,
+                            },
+                        });
                     }
-                }
+                });
             }
         });
     }
