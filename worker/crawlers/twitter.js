@@ -18,19 +18,16 @@ let instance = {
                 console.log(error)
             }
             if (!error) {
-                console.log(tweets);
                 tweets.map((tweet) => {
-                    if (tweet.id && tweet.text && tweet.created_at) {
-                        axios.post(`${config.API_URL}/api/post`, {
-                            post: {
-                                url: `https://twitter.com/statuses/${tweet.id}`,
-                                title: tweet.text,
-                                content: tweet.text,
-                                source: 'twitter',
-                                publishedAt: tweet.created_at,
-                            },
-                        });
-                    }
+                    axios.post(`${config.API_URL}/api/post`, {
+                        post: {
+                            url: `https://twitter.com/statuses/${tweet.id}`,
+                            title: tweet.text,
+                            content: tweet.text,
+                            source: 'twitter',
+                            publishedAt: tweet.created_at,
+                        },
+                    });
                 });
             }
         });
