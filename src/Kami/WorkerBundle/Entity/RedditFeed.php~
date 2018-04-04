@@ -115,28 +115,4 @@ class RedditFeed
     {
         return $this->userPassword;
     }
-
-    /**
-     * Set timeInterval.
-     *
-     * @param int $timeInterval
-     *
-     * @return RedditFeed
-     */
-    public function setTimeInterval($timeInterval)
-    {
-        $this->timeInterval = $timeInterval;
-
-        return $this;
-    }
-
-    /**
-     * Get timeInterval.
-     *
-     * @return int
-     */
-    public function getTimeInterval()
-    {
-        return $this->timeInterval;
-    }
 }
