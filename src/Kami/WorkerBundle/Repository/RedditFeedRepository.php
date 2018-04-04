@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: vadim
- * Date: 04.04.18
- * Time: 13:09
- */
 
 namespace Kami\WorkerBundle\Repository;
 
