@@ -11,16 +11,7 @@ let instance = {
             password: task.config.userPassword
         });
 
-        let params = {screen_name: task.config.username};
 
-        client.get('statuses/user_timeline', params, function(error, tweets, response) {
-            if(error) {
-                console.log(error)
-            }
-            if (!error) {
-                console.log(tweets);
-            }
-        });
     }
 };
 
