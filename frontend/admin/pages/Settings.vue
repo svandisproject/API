@@ -6,6 +6,7 @@
           <router-link tag="li" active-class="uk-active" :to="{name: 'settings_web_feeds'}"><a><ui-icon i="world" />&nbsp;Web Feeds</a></router-link>
           <router-link tag="li" active-class="uk-active" :to="{name: 'settings_facebook_users'}"><a><ui-icon i="world" />&nbsp;Facebook Users</a></router-link>
           <router-link tag="li" active-class="uk-active" :to="{name: 'settings_twitter_users'}"><a><ui-icon i="world" />Twitter Users</a></router-link>
+          <router-link tag="li" active-class="uk-active" :to="{name: 'settings_reddit_feeds'}"><a><ui-icon i="world" />Reddit Feeds</a></router-link>
         </ui-tab>
         <div class="feed uk-width-5-6">
             <router-view></router-view>

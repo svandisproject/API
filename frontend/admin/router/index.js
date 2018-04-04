@@ -16,6 +16,8 @@ import Feed from '../components/Feed'
 import WebFeedForm from '../pages/settings/WebFeedForm'
 import FacebookUsers from '../pages/settings/FacebookUsers'
 import TwitterUsers from '../pages/settings/TwitterUsers'
+import RedditFeeds from '../pages/settings/RedditFeeds'
+import RedditFeedForm from '../pages/settings/RedditFeedForm'
 import FacebookUserForm from '../pages/settings/FacebookUserForm'
 import TwitterUserForm from '../pages/settings/TwitterUserForm'
 import WebsitePostForm from '../components/WebsitePostForm'
@@ -156,6 +158,21 @@ const router = new Router({
                     name: 'settings_twitter_users_edit',
                     path: '/settings/twitter-users/edit/:id',
                     component: TwitterUserForm
+                },
+                {
+                    name: 'settings_reddit_feeds',
+                    path: '/settings/reddit-feeds',
+                    component: RedditFeeds
+                },
+                {
+                    name: 'settings_reddit_feed_new',
+                    path: '/settings/reddit-feeds/new',
+                    component: RedditFeedForm
+                },
+                {
+                    name: 'settings_reddit_feed_edit',
+                    path: '/settings/reddit-feeds/edit/:id',
+                    component: RedditFeedForm
                 },
             ]
         }
