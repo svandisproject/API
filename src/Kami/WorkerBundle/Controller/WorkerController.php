@@ -19,9 +19,11 @@ class WorkerController extends Controller
      */
     public function registerAction(Request $request)
     {
-        $secret = $this->get('craue_config')->get('worker.secret');
+        $user = $this->getDoctrine()
+            ->getRepository('KamiUserBundle:User')
+            ->findOneByWorkerToken($request->get('secret'));
 
-        if ($secret !== $request->get('secret')) {
+        if (!$user) {
             throw new AccessDeniedHttpException('Worker secret is incorrect');
         }
 
@@ -65,7 +67,7 @@ class WorkerController extends Controller
      */
     public function getWorkerSecretAction()
     {
-        return new JsonResponse(['secret'=>$this->get('craue_config')->get('worker.secret')]);
+        return new JsonResponse(['secret'=>$this->getUser()->getWorkerToken()]);
     }
 
     /**

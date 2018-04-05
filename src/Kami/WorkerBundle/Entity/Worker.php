@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @ORM\Table(name="worker")
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\WorkerRepository")
- * @Api\Access({"ROLE_ADMIN"})
+ * @Api\Access({"ROLE_USER"})
  */
 class Worker implements UserInterface
 {
@@ -22,23 +22,15 @@ class Worker implements UserInterface
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_USER"})
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="host", type="string", length=255)
-     * @Api\Access({"ROLE_ADMIN"})
-     */
-    private $host;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="secret", type="string", length=128, unique=true)
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_USER"})
      */
     private $secret;
 
@@ -46,7 +38,7 @@ class Worker implements UserInterface
      * @var \DateTime
      *
      * @ORM\Column(name="last_seen_at", type="datetime", nullable=true)
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_USER"})
      */
     private $lastSeenAt;
 
@@ -63,30 +55,6 @@ class Worker implements UserInterface
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set host.
-     *
-     * @param string $host
-     *
-     * @return Worker
-     */
-    public function setHost($host)
-    {
-        $this->host = $host;
-
-        return $this;
-    }
-
-    /**
-     * Get рhost.
-     *
-     * @return string
-     */
-    public function getHost()
-    {
-        return $this->host;
     }
 
     /**
