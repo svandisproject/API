@@ -13,3 +13,8 @@ kami_frontend:
     resource: "@KamiFrontendBundle/Controller/"
     type:     annotation
     prefix:   /
+
+kami_user:
+    resource: "@KamiUserBundle/Controller/"
+    type:     annotation
+    prefix:   /

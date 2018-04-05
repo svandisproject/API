@@ -18,7 +18,7 @@
       getColumns() {
         return [
             { title: 'Id', field: 'id', sortable: true},
-            { title: 'Host', field: 'host', sortable: true},
+            { title: 'User', field: 'user', sortable: true},
             { title: 'Last seen', field: 'last_seen_at', tdComp: 'table-timeago',  sortable: true},
         ]
       }

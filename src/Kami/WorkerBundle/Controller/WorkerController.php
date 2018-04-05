@@ -80,7 +80,7 @@ class WorkerController extends Controller
                 'secret' => $request->get('secret')
             ]);
 
-        return new JsonResponse(['host'=>$worker->getHost()]);
+        return new JsonResponse(['host'=>$worker->getUser()]);
     }
 
     /**
