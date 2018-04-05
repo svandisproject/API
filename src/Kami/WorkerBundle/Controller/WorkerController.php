@@ -34,7 +34,7 @@ class WorkerController extends Controller
 
         $worker = new Worker();
         $worker
-            ->setHost($request->getClientIp())
+            ->setUser($user)
             ->setSecret($secret)
             ;
 
