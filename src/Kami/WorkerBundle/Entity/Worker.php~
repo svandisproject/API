@@ -133,28 +133,4 @@ class Worker implements UserInterface
     {
         return;
     }
-
-    /**
-     * Set user.
-     *
-     * @param \Kami\UserBundle\Entity\User $user
-     *
-     * @return Worker
-     */
-    public function setUser(\Kami\UserBundle\Entity\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user.
-     *
-     * @return \Kami\UserBundle\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 }

@@ -15,6 +15,7 @@ use SecurityLib\Strength;
  */
 class User extends BaseUser
 {
+
     /**
      * @ORM\OneToMany(targetEntity="Kami\WorkerBundle\Entity\Worker", mappedBy="user")
      */
@@ -80,41 +81,5 @@ class User extends BaseUser
         $factory = new Factory;
         $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
         $this->workerToken = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-    }
-
-    /**
-     * Add worker.
-     *
-     * @param \Kami\WorkerBundle\Entity\Worker $worker
-     *
-     * @return User
-     */
-    public function addWorker(\Kami\WorkerBundle\Entity\Worker $worker)
-    {
-        $this->workers[] = $worker;
-
-        return $this;
-    }
-
-    /**
-     * Remove worker.
-     *
-     * @param \Kami\WorkerBundle\Entity\Worker $worker
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeWorker(\Kami\WorkerBundle\Entity\Worker $worker)
-    {
-        return $this->workers->removeElement($worker);
-    }
-
-    /**
-     * Get workers.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getWorkers()
-    {
-        return $this->workers;
     }
 }
