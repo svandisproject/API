@@ -21,7 +21,7 @@ class WorkerController extends Controller
     {
         $user = $this->getDoctrine()
             ->getRepository('KamiUserBundle:User')
-            ->findOneByWorkerToken($request->get('secret'));
+            ->findOneBy(['workerToken'=>$request->get('secret')]);
 
         if (!$user) {
             throw new AccessDeniedHttpException('Worker secret is incorrect');
