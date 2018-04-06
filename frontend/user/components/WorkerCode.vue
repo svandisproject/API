@@ -1,7 +1,7 @@
 <template lang="html">
     <ui-card>
         To register new worker run <pre>$ ./worker register --secret {{secret}}</pre>
-        <button @click="regenerateSecret">regenerate</button>
+        <ui-button @click="regenerateSecret">regenerate</ui-button>
     </ui-card>
 </template>
 
@@ -19,10 +19,9 @@
     },
       methods: {
           regenerateSecret() {
-              this.$axios.post('/user/regenerate_worker_code')
+              this.$axios.post('/api/settings/worker/regenerate_user_token')
                   .then((response) => {
-                      console.log(response.data.secret)
-                      // this.secret = response.data.secret
+                      this.secret = response.data.secret
                   })
                   .catch((error) => {
                       console.error('Failed loading worker code')
