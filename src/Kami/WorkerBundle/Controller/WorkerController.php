@@ -92,4 +92,25 @@ class WorkerController extends Controller
 
         return new JsonResponse($tasks);
     }
+
+    /**
+     * @Route("/api/settings/worker/regenerate_user_token", methods={"POST"}, name="worker.regenerateUserToken")
+     */
+    public function regenerateWorkerCodeAction()
+    {
+        $user = $this->getUser();
+
+        $factory = new Factory;
+        $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
+        $newToken = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        $user->setWorkerToken($newToken);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return new JsonResponse([
+            'secret'=>$newToken
+        ]);
+    }
 }
