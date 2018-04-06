@@ -2,6 +2,8 @@ const snoowrap = require('snoowrap');
 const axios = require('axios');
 const config  = require('../config');
 
+// TODO "and reddit worker"
+
 var arrIssetIds = [];
 
     let r = new snoowrap({
