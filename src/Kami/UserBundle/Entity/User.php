@@ -11,7 +11,6 @@ use SecurityLib\Strength;
 /**
  * @ORM\Entity
  * @ORM\Table(name="`user`")
- * @ORM\Entity(repositoryClass="Kami\UserBundle\Repository\UserRepository")
  */
 class User extends BaseUser
 {
