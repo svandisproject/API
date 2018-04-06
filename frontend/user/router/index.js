@@ -25,7 +25,7 @@ const router = new Router({
             name: 'settings',
             path: '/settings',
             component: Settings,
-            props: {'access': ['ROLE_ADMIN']},
+            props: {'access': ['ROLE_USER']},
             children: [
                 {
                     name: 'settings_workers',
