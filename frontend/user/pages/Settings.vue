@@ -13,27 +13,6 @@
 
 <script lang="js">
   export default  {
-    name: 'settings',
-    props: [],
-    mounted() {
-    },
-    data() {
-      return {
-
-      }
-    },
-    methods: {
-
-    },
-    computed: {
-
-    }
+    name: 'settings'
 }
 </script>
-
-<style scoped lang="stylus">
-  .dashboard {
-
-  }
-
-</style>
