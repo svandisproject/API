@@ -107,15 +107,19 @@ class ApiManager
     public function filter(Request $request)
     {
         $entity = new \ReflectionClass($request->attributes->get('_entity'));
+        $this->eventDispatcher->dispatch(ApiCoreEvents::RESOURCE_FILTER_REQUEST, new CrudEvent($entity));
+        if (!$this->accessManager->canAccessResource($entity)) {
+            throw new AccessDeniedHttpException();
+        }
         $builder = $this->doctrine->getRepository($entity->getName())->createQueryBuilder('e');
 
         $sort = $request->get('sort');
-        if($sort) {
+        if ($sort) {
             $sort = lcfirst(implode('', array_map(function ($key) {
                 return ucfirst($key);
             }, explode('_', $sort))));
 
-            if(!$entity->hasProperty($sort)) {
+            if (!$entity->hasProperty($sort)) {
                 throw new BadRequestHttpException(sprintf('There is no such field %s', $sort));
             }
             $builder->orderBy(
@@ -124,9 +128,9 @@ class ApiManager
             );
         }
 
-        foreach($entity->getProperties() as $property) {
+        foreach ($entity->getProperties() as $property) {
             $name = $property->getName();
-            if($value = $request->get($name)) {
+            if ($value = $request->get($name)) {
                 $builder->andWhere($builder->expr()->orX(
                     $builder->expr()->like('e.'.$name, ':value')
                 ));
@@ -136,15 +140,17 @@ class ApiManager
 
         $countBuilder = clone $builder;
 
-        return $this->createResponse([
+        $data = [
             'total' => $countBuilder->select('count(e.id)')->getQuery()->getSingleScalarResult(),
             'rows' => $builder
                 ->setMaxResults($request->get('limit') ? $request->get('limit') : 20)
                 ->setFirstResult($request->get('offset') ? $request->get('offset') : 0)
                 ->getQuery()
                 ->getResult()
-        ], $request);
+        ];
+        $this->eventDispatcher->dispatch(ApiCoreEvents::RESOURCE_FILTER_RESPONSE, new CrudEvent($data));
 
+        return $this->createResponse($data, $request);
     }
 
 

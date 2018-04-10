@@ -16,5 +16,4 @@ namespace Kami\ApiCoreBundle\Tests\Repository;
  */
 class TestRepository extends \Doctrine\ORM\EntityRepository
 {
-
 }

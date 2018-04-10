@@ -32,7 +32,6 @@ class User extends BaseUser
         $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
         $this->workerToken = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
         parent::__construct();
-
     }
 
     /**

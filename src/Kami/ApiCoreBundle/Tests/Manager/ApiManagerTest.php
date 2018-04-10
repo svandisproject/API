@@ -152,7 +152,7 @@ class ApiManagerTest extends WebTestCase
         $this->getApiManager($registryMock, $accessManagerMock, $factoryMock)->filter($requestMock, $accessManagerMock);
     }
 
-// Get Single Resource
+    // Get Single Resource
 
     public function testGetSingleResource_WithoutAccess()
     {
@@ -442,13 +442,13 @@ class ApiManagerTest extends WebTestCase
             ->disableOriginalClone()
             ->getMock();
 
-        if($expectedMethod){
-            if($methodParameter){
+        if ($expectedMethod) {
+            if ($methodParameter) {
                 $mock->expects($this->any())
                     ->method($expectedMethod)
                     ->with($methodParameter)
                     ->willReturn($willReturn);
-            } else{
+            } else {
                 $mock->expects($this->any())
                     ->method($expectedMethod)
                     ->willReturn($willReturn);
