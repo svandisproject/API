@@ -19,9 +19,6 @@ matrix:
   fast_finish: true
   include:
     - php: 7.1
-    - php: hhvm
-  allow_failures:
-    - php: hhvm
 
 # Define an environment variable
 env:
