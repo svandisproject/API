@@ -4,7 +4,6 @@ const config  = require('../config');
 
 // TODO "and reddit worker"
 
-var arrIssetIds = [];
 
     let r = new snoowrap({
         userAgent: 'reddit-crawler-example-app',
@@ -14,36 +13,47 @@ var arrIssetIds = [];
         password: 24031982
     });
 
-    r.getNew().then(
-
+    r.getNew()
+        .then(
         listing => work(listing)
     );
 
     function work(listing){
-            getIssetIds();
-            console.log(arrIssetIds)
-            // listing.slice(0).reverse().map(submission => mainWork(submission));
+
+        console.log(getIssetIds());
+
+            // listing.slice(0).reverse().map(submission => mainWork(submission, 'sum str'));
         }
 
-        function getIssetIds() {
-            axios.get(config.API_URL + '/api/post/filter?source=reddit&sort=id')
-                .then(
-                    response=>{
-                        if(response.data.total > 0){
-                            response.data.rows.map(item => arrIssetIds.push(item.content))
-                        }
+    function getIssetIds() {
+        axios.get(config.API_URL + '/api/post/filter?source=reddit&sort=id')
+            .then(
+                response => {
+                    let arrIssetIds = [];
+                    if(response.data.total > 0){
+                        response.data.rows.map(item => arrIssetIds.push(item.content))
                     }
-                );
-        }
+                    return arrIssetIds;
+                }
+            )
+            .catch(
+                e => {
+                    console.error(e)
+                }
+            );
+    }
+
 
      function getIssetIdsArr(object){
 
      }
 
-    function mainWork(e) {
-            if(checkNewest(e.id)){
-                console.log({title: e.title, content: e.id, url: e.url, publishedAt: dateTimeConverter(e.created_utc), source: 'reddit', type: e.link_flair_text});
-            }
+    function mainWork(e, str) {
+         console.log(str)
+        // console.log({title: e.title, content: e.id, url: e.url, publishedAt: dateTimeConverter(e.created_utc), source: 'reddit', type: e.link_flair_text});
+            // if(checkNewest(e.id)){
+            //     console.log({title: e.title, content: e.id, url: e.url, publishedAt: dateTimeConverter(e.created_utc), source: 'reddit', type: e.link_flair_text});
+            // }
     }
     function checkNewest(redditIds) {
         let arrIssetIds = getIssetIdsArr();
