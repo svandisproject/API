@@ -41,3 +41,9 @@ cd worker
 
 * [KamiApiCoreBundle documentation](src/Kami/ApiCoreBundle/README.md)
 * [Symfony documentation](https://symfony.com)
+
+## Running tests
+
+```bash
+vendor/bin/simple-phpunit
+```
