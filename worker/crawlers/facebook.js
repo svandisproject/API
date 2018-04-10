@@ -11,7 +11,8 @@ var instance = {
         casper.start(config.API_URL + '/api/post/filter?source=facebook&limit=1&sort=id', function() {
             var page = JSON.parse(casper.getPageContent());
             if(page.total !== '0'){
-                lastPostId = page.rows[0].facebook_id;
+                var url = page.rows[0].url;
+                lastPostId = url.substr(url.lastIndexOf('/')+1);
             }
         });
 
