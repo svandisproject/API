@@ -26,7 +26,7 @@ let instance = {
 
         function getNewRedditArr(listing){
             let reditArr = [];
-            listing.slice(0).reverse().map(e => reditArr.push({title: e.title, url: e.url, content: e.id, source: 'reddit', publishedAt: dateTimeConverter(e.created_utc)}));
+            listing.map(e => reditArr.push({title: e.title, url: e.url, content: e.id, source: 'reddit', publishedAt: dateTimeConverter(e.created_utc)}));
             return reditArr;
         }
 
