@@ -70,6 +70,7 @@ let instance = {
                 );
         }
     }
+
 };
 
 module['exports'] = instance;
