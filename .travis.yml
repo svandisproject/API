@@ -33,7 +33,7 @@ before-install:
 install:
   - composer install
   - mkdir var/jwt
-  - openssl genrsa -out var/jwt/private.pem -aes256 4096
+  - openssl genrsa -out var/jwt/private.pem -aes256 4096 -passout pass:foobar
   - openssl rsa -pubout -in var/jwt/private.pem -out var/jwt/public.pem
   - cp app/config/parameters.yml.dist app/config/parameters.yml
   - php bin/console doctrine:database:create --env=test
