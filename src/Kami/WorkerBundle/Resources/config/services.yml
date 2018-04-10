@@ -3,12 +3,16 @@ parameters:
     kami_worker.authenticator.class:               Kami\WorkerBundle\Security\WorkerAuthenticator
     kami_worker.socket_server_authenticator.class: Kami\WorkerBundle\Security\SocketServerAuthenticator
     kami_worker.scheduler.class:                   Kami\WorkerBundle\Scheduler\Scheduler
+    kami_worker.socket_user_provider.class:        Kami\WorkerBundle\Security\SocketServerUserProvider
 
 services:
     kami_worker.user_provider:
         class: "%kami_worker.user_provider.class%"
         arguments:
             - "@doctrine"
+
+    kami_worker.socket_user_provider:
+        class: "%kami_worker.socket_user_provider.class%"
 
     kami_worker.authenticator:
         class: "%kami_worker.authenticator.class%"
@@ -18,7 +22,7 @@ services:
     kami_worker.socket_server_authenticator:
         class: "%kami_worker.socket_server_authenticator.class%"
         arguments:
-            - "@kami_worker.user_provider"
+            - "@kami_worker.socket_user_provider"
 
     kami_worker.scheduler:
          class: "%kami_worker.scheduler.class%"

@@ -38,7 +38,8 @@ class Scheduler
      *
      * @param Registry $doctrine
      */
-    public function __construct(Registry $doctrine) {
+    public function __construct(Registry $doctrine)
+    {
         $this->doctrine = $doctrine;
     }
 
@@ -54,18 +55,18 @@ class Scheduler
         ];
 
         $tasks = [];
-        foreach ($data as $task => $service){
-            foreach ($service as $item){
+        foreach ($data as $task => $service) {
+            foreach ($service as $item) {
                 $method = 'get'.ucfirst($task);
                 array_push($tasks, $this->$method($item));
             }
         }
 
         return $tasks;
-
     }
 
-    private function getWeb($item){
+    private function getWeb($item)
+    {
         $arr = [];
         $arr['name'] = 'web';
         $arr['config'] = [];
@@ -79,7 +80,8 @@ class Scheduler
         return $arr;
     }
 
-    private function getFacebook($item){
+    private function getFacebook($item)
+    {
         $arr = [];
         $arr['name'] = 'facebook';
         $arr['config'] = [];
@@ -91,7 +93,8 @@ class Scheduler
         return $arr;
     }
 
-    private function getTwitter($item){
+    private function getTwitter($item)
+    {
         $arr = [];
         $arr['name'] = 'twitter';
         $arr['config'] = [];
@@ -105,5 +108,4 @@ class Scheduler
         ];
         return $arr;
     }
-
 }

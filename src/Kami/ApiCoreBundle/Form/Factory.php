@@ -59,7 +59,6 @@ class Factory
                 } else {
                     $builder->add($property->getName());
                 }
-
             }
         }
 

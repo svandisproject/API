@@ -22,17 +22,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AccessManagerTest extends WebTestCase
 {
-// can be constructed with necessary params
+    // can be constructed with necessary params
 
     public function testCanBeConstructedWithNecessaryParams()
     {
         $accessManager = new AccessManager(
-            $this->mock(TokenStorage::class), new AnnotationReader()
+            $this->mock(TokenStorage::class),
+            new AnnotationReader()
         );
         $this->assertInstanceOf(AccessManager::class, $accessManager);
     }
 
-//  canAccessResource
+    //  canAccessResource
 
     public function testCanAccessResourceAnonymousAccess()
     {
@@ -105,7 +106,7 @@ class AccessManagerTest extends WebTestCase
     }
 
 
-//  canCreateResource
+    //  canCreateResource
 
     public function testCanCreateResourceAnonymous()
     {
@@ -173,7 +174,7 @@ class AccessManagerTest extends WebTestCase
         $this->assertFalse($accessManager->canCreateResource($reflection));
     }
 
-// canCreateProperty
+    // canCreateProperty
 
     public function testCanCreatePropertyAnonymous()
     {
@@ -186,7 +187,7 @@ class AccessManagerTest extends WebTestCase
         $accessManager = new AccessManager($tokenStorageMock, $annReader);
         $this->assertTrue($accessManager->canCreateProperty($reflection));
     }
-        public function testCanCreatePropertyWithUserInterfaceCurrentRole()
+    public function testCanCreatePropertyWithUserInterfaceCurrentRole()
     {
         $userMock = $this->mock(UserInterface::class, 'getRoles', ['ROLE_ADMIN']);
 
@@ -241,7 +242,7 @@ class AccessManagerTest extends WebTestCase
     }
 
 
-//  canEditResource
+    //  canEditResource
 
     public function testCanEditResourceAnonymous()
     {
@@ -311,7 +312,7 @@ class AccessManagerTest extends WebTestCase
         $this->assertFalse($accessManager->canEditResource($reflectionPropertyMock));
     }
 
-//  canEditProperty
+    //  canEditProperty
 
     public function testCanEditPropertyAnonymous()
     {
@@ -381,7 +382,7 @@ class AccessManagerTest extends WebTestCase
         $this->assertFalse($accessManager->canEditProperty($reflectionPropertyMock));
     }
 
-// canDeleteResource
+    // canDeleteResource
 
     public function testCanDeleteResourceAnonymous()
     {
@@ -463,13 +464,13 @@ class AccessManagerTest extends WebTestCase
     {
         $mock = $this->createMock($class);
 
-        if($expectedMethod){
-            if($methodParameter){
+        if ($expectedMethod) {
+            if ($methodParameter) {
                 $mock->expects($this->any())
                     ->method($expectedMethod)
                     ->with($methodParameter)
                     ->willReturn($willReturn);
-            } else{
+            } else {
                 $mock->expects($this->any())
                     ->method($expectedMethod)
                     ->willReturn($willReturn);
@@ -477,5 +478,4 @@ class AccessManagerTest extends WebTestCase
         }
         return $mock;
     }
-
 }

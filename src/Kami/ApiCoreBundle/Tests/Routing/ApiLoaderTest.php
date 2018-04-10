@@ -8,12 +8,14 @@ use Symfony\Component\Routing\RouteCollection;
 
 class ApiLoaderTest extends WebTestCase
 {
-// can be constructed with necessary params
+    // can be constructed with necessary params
 
     public function testCanBeConstructedWithNecessaryParams()
     {
         $apiLoader = new ApiLoader(
-            [], [], 'en'
+            [],
+            [],
+            'en'
         );
         $this->assertInstanceOf(ApiLoader::class, $apiLoader);
     }
