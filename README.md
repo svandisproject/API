@@ -37,6 +37,15 @@ cd worker
 ./worker register --secret <your-worker-secret>
 ```
 
+## KamiApiCoreBundleTests
+
+To run all tests for KamiApiCoreBundle run this from your root project directory
+```bash
+composer require --dev symfony/phpunit-bridge
+cd my-project/
+./vendor/bin/simple-phpunit src/Kami/ApiCoreBundle/Tests/
+```
+
 ## Additional Resourses
 
 * [KamiApiCoreBundle documentation](src/Kami/ApiCoreBundle/README.md)
