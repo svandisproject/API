@@ -26,7 +26,7 @@ let instance = {
 
         function getNewRedditArr(listing){
             let reditArr = [];
-            listing.slice(0).reverse().map(e => reditArr.push({title: e.title, content: e.id, url: e.url, publishedAt: dateTimeConverter(e.created_utc), source: 'reddit', type: e.link_flair_text}));
+            listing.slice(0).reverse().map(e => reditArr.push({title: e.title, url: e.url, content: e.id, source: 'reddit', publishedAt: dateTimeConverter(e.created_utc)}));
             return reditArr;
         }
 
@@ -51,19 +51,24 @@ let instance = {
                 response.data.rows.map(item => arrIssetIds.push(item.content))
             }
 
-            newRedditArr.map(item =>{
+            newRedditArr.map(post =>{
                 // console.log(item.content)
-                if(arrIssetIds.indexOf(item.content) === -1){
-                    console.log(item)
+                if(arrIssetIds.indexOf(post.content) === -1){
+                    // console.log(item)
+                    sendData(post);
                 }
             });
-
         }
 
         function dateTimeConverter(utc_format) {
             return new Date(utc_format * 1000);
         }
-
+        function sendData(obj) {
+            axios.post(config.API_URL + '/api/post', {'post': obj})
+                .catch(
+                  e => console.error(e)
+                );
+        }
     }
 };
 
