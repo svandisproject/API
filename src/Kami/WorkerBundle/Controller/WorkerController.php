@@ -94,7 +94,7 @@ class WorkerController extends Controller
     }
 
     /**
-     * @Route("/api/settings/worker/regenerate_user_token", methods={"POST"}, name="worker.regenerateUserToken")
+     * @Route("/api/settings/worker/regenerate-user-token", methods={"POST"}, name="worker.regenerateUserToken")
      */
     public function regenerateWorkerCodeAction()
     {
