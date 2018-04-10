@@ -46,6 +46,17 @@ kami_api_core:
 
 Now you are good to go.
 
+## KamiApiCoreBundleTests
+
+To run all tests for KamiApiCoreBundle just add it to dev-dependencies
+```bash
+composer require --dev symfony/phpunit-bridge
+```
+and run this from your root project directory
+```bash
+./vendor/bin/simple-phpunit src/Kami/ApiCoreBundle/Tests/
+```
+
 ## Workflow
 
 ### Routing loader
