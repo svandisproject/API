@@ -2,7 +2,6 @@
 
 namespace Kami\WorkerBundle\Security;
 
-
 use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -28,7 +27,7 @@ class WorkerUserProvider implements UserProviderInterface
             'secret' => $username
         ]);
 
-        if(!$worker)  {
+        if (!$worker) {
             throw new UsernameNotFoundException(
                 sprintf('Worker with secret "%s" does not exist.', $username)
             );
@@ -52,5 +51,4 @@ class WorkerUserProvider implements UserProviderInterface
     {
         return Worker::class === $class;
     }
-
 }
