@@ -59,4 +59,3 @@ tools:
 
 checks:
     php: true
-    javascript: false
