@@ -28,6 +28,7 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^2.3",
+        "kami/api-core-bundle": "dev-master",
         "khepin/yaml-fixtures-bundle": "^1.0",
         "knplabs/knp-gaufrette-bundle": "^0.5.2",
         "lexik/jwt-authentication-bundle": "^2.4",

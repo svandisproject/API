@@ -1,6 +1,6 @@
 <?php
 
-namespace Kami\ContentBundle\Tests\Entity;
+namespace Kami\ContentBundle\Tests\Controller;
 
 use Kami\TestCase\UserAwareTestCase;
 

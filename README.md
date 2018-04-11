@@ -30,7 +30,7 @@ cd worker
 
 ## Additional Resourses
 
-* [KamiApiCoreBundle documentation](src/Kami/ApiCoreBundle/README.md)
+* [KamiApiCoreBundle documentation](https://github.com/kamilabs/api-core-bundle/blob/master/README.md)
 * [Symfony documentation](https://symfony.com)
 
 ## Running tests
