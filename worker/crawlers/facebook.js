@@ -7,11 +7,12 @@ var lastPostId  = "0";
 
 var instance = {
     execute(task, axios) {
-
-        casper.start(config.API_URL + '/api/post/filter?source=facebook&limit=1&sort=id', function() {
+        var parameters = '?source=facebook&limit=1&sort=id';
+        casper.start(config.API_URL + '/api/post/filter' + parameters, function() {
             var page = JSON.parse(casper.getPageContent());
             if(page.total !== '0'){
-                lastPostId = page.rows[0].facebook_id;
+                var url = page.rows[0].url;
+                lastPostId = url.substr(url.lastIndexOf('/')+1);
             }
         });
 
