@@ -4,6 +4,13 @@ filter:
 
 before_commands:
     - 'composer install --no-interaction --no-scripts'
+    - 'mkdir var/jwt'
+    - 'openssl genrsa -passout pass:foobar -out var/jwt/private.pem -aes256 4096'
+    - 'openssl rsa -passin pass:foobar -pubout -in var/jwt/private.pem -out var/jwt/public.pem'
+    - 'cp app/config/parameters.yml.dist app/config/parameters.yml'
+    - 'php bin/console doctrine:database:create --env=test'
+    - 'php bin/console doctrine:schema:create --env=test'
+    - 'php bin/console khepin:yamlfixtures:load -n'
 
 tools:
     php_mess_detector:
