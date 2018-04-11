@@ -46,6 +46,12 @@ kami_api_core:
 
 Now you are good to go.
 
+## Running tests
+
+```bash
+./vendor/bin/simple-phpunit src/Kami/ApiCoreBundle/Tests/
+```
+
 ## Workflow
 
 ### Routing loader

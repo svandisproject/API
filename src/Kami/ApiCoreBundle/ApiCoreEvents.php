@@ -7,6 +7,9 @@ class ApiCoreEvents
     const RESOURCE_INDEX_REQUEST  = 'kami.api_core.resource_index_request';
     const RESOURCE_INDEX_RESPONSE = 'kami.api_core.resource_index_response';
 
+    const RESOURCE_FILTER_REQUEST  = 'kami.api_core.resource_filter_request';
+    const RESOURCE_FILTER_RESPONSE = 'kami.api_core.resource_filter_response';
+
     const RESOURCE_REQUEST        = 'kami.api_core.resource_request';
     const RESOURCE_RESPONSE       = 'kami.api_core.resource_response';
 

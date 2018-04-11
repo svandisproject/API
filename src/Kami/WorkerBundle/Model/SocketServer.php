@@ -2,7 +2,6 @@
 
 namespace Kami\WorkerBundle\Model;
 
-
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class SocketServer implements UserInterface
@@ -31,5 +30,4 @@ class SocketServer implements UserInterface
     {
         return '';
     }
-
 }

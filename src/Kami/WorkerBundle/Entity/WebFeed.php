@@ -270,5 +270,4 @@ class WebFeed
     {
         return $this->timeInterval;
     }
-
 }

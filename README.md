@@ -1,13 +1,4 @@
-Symfony KAMI Edition
-==========
-
-Starter template for KAMI Labs applications
-
-Under the hood:
-* KamiApiCoreBundle - For easy CRUD API resources generation
-* Vue.js with configured encore
-* UiKit an awesome frontend framework 
-
+# Svandis API [![Build Status](https://travis-ci.com/svandisproject/API.svg?token=5bX83yxPS5NXGDqxFHCw&branch=master)](https://travis-ci.com/svandisproject/API) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/svandisproject/API/badges/quality-score.png?b=master&s=6bbd504204acabc116010ba60e20dbc26da8f91f)](https://scrutinizer-ci.com/g/svandisproject/API/?branch=master)
 
 ## Installation
 Considering you have php, composer, mysql, node, npm and yarn installed
@@ -41,3 +32,9 @@ cd worker
 
 * [KamiApiCoreBundle documentation](src/Kami/ApiCoreBundle/README.md)
 * [Symfony documentation](https://symfony.com)
+
+## Running tests
+
+```bash
+vendor/bin/simple-phpunit
+```

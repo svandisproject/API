@@ -2,7 +2,6 @@
 
 namespace Kami\WorkerBundle\Security;
 
-
 use Kami\WorkerBundle\Model\SocketServer;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
@@ -23,5 +22,4 @@ class SocketServerUserProvider implements UserProviderInterface
     {
         return SocketServer::class === $class;
     }
-
 }

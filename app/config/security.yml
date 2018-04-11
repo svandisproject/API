@@ -7,6 +7,11 @@ security:
             id: fos_user.user_provider.username_email
         kami_workerbundle:
             id: kami_worker.user_provider
+        kami_socketserver:
+            id: kami_worker.socket_user_provider
+        chain_provider:
+            chain:
+                providers: [fos_userbundle, kami_workerbundle, kami_socketserver]
 
     firewalls:
         login:
@@ -25,6 +30,7 @@ security:
         socket_server:
             pattern: ^/api/schedule
             stateless: true
+            provider: kami_socketserver
             guard:
                 authenticators:
                     - kami_worker.socket_server_authenticator
@@ -33,6 +39,7 @@ security:
             pattern:   ^/api
             stateless: true
             anonymous: true
+            provider: chain_provider
             guard:
                 authenticators:
                     - lexik_jwt_authentication.jwt_token_authenticator
@@ -42,6 +49,7 @@ security:
         worker:
             pattern:   ^/worker/heartbeat
             stateless: true
+            provider: kami_workerbundle
             guard:
                 authenticators:
                     - kami_worker.authenticator
