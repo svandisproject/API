@@ -19,9 +19,11 @@ class WorkerController extends Controller
      */
     public function registerAction(Request $request)
     {
-        $secret = $this->get('craue_config')->get('worker.secret');
+        $user = $this->getDoctrine()
+            ->getRepository('KamiUserBundle:User')
+            ->findOneBy(['workerToken'=>$request->get('secret')]);
 
-        if ($secret !== $request->get('secret')) {
+        if (!$user) {
             throw new AccessDeniedHttpException('Worker secret is incorrect');
         }
 
@@ -32,7 +34,7 @@ class WorkerController extends Controller
 
         $worker = new Worker();
         $worker
-            ->setHost($request->getClientIp())
+            ->setUser($user)
             ->setSecret($secret)
             ;
 
@@ -65,7 +67,7 @@ class WorkerController extends Controller
      */
     public function getWorkerSecretAction()
     {
-        return new JsonResponse(['secret'=>$this->get('craue_config')->get('worker.secret')]);
+        return new JsonResponse(['secret'=>$this->getUser()->getWorkerToken()]);
     }
 
     /**
@@ -78,7 +80,7 @@ class WorkerController extends Controller
                 'secret' => $request->get('secret')
             ]);
 
-        return new JsonResponse(['host'=>$worker->getHost()]);
+        return new JsonResponse(['host'=>$worker->getUser()]);
     }
 
     /**
@@ -89,5 +91,26 @@ class WorkerController extends Controller
         $tasks = $this->get('kami_worker.scheduler')->getScheduleIndex();
 
         return new JsonResponse($tasks);
+    }
+
+    /**
+    +     * @Route("/api/settings/worker/regenerate-user-token", methods={"POST"}, name="worker.regenerateUserToken")
+    +     */
+    public function regenerateWorkerCodeAction()
+    {
+        $user = $this->getUser();
+
+        $factory = new Factory;
+        $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
+        $newToken = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        $user->setWorkerToken($newToken);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return new JsonResponse([
+            'secret'=>$newToken
+        ]);
     }
 }
