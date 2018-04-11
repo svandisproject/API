@@ -26,7 +26,7 @@ let instance = {
 
         function getNewRedditArr(listing){
             let reditArr = [];
-            listing.map(e => reditArr.push({title: e.title, url: e.url, content: e.id, source: 'reddit', publishedAt: dateTimeConverter(e.created_utc)}));
+            listing.map(e => reditArr.push({title: e.title, url: e.url, content: e.id, source: 'reddit', publishedAt: e.created_utc}));
             return reditArr;
         }
 
@@ -60,9 +60,6 @@ let instance = {
             });
         }
 
-        function dateTimeConverter(utc_format) {
-            return new Date(utc_format * 1000);
-        }
         function sendData(obj) {
             axios.post(config.API_URL + '/api/post', {'post': obj})
                 .catch(
