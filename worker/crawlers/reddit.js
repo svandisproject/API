@@ -30,12 +30,12 @@ let instance = {
             return reditArr;
         }
 
-        function mainWork(newRedditArr) {
+        function mainWork(lastPosts) {
             // get id list from DB
             axios.get(config.API_URL + '/api/post/filter?source=reddit&sort=id')
                 .then(
                     response => {
-                        getNewestRedditPosts(response, newRedditArr)
+                        getLastPosts(response, lastPosts)
                     }
                 )
                 .catch(
@@ -45,16 +45,12 @@ let instance = {
                 );
         }
 
-        function getNewestRedditPosts(response, newRedditArr){
-            let arrIssetIds = [];
-            if(response.data.total > 0){
-                response.data.rows.map(item => arrIssetIds.push(item.content))
-            }
+        function getLastPosts(response, lastPosts){
 
-            newRedditArr.map(post =>{
-                // console.log(item.content)
-                if(arrIssetIds.indexOf(post.content) === -1){
-                    // console.log(item)
+            let existingPosts =  response.data.rows.map(row => row.content);
+
+            lastPosts.map(post =>{
+                if(existingPosts.indexOf(post.content) === -1){
                     sendData(post);
                 }
             });
