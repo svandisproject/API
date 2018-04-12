@@ -251,7 +251,7 @@ class Post
      *
      * @return Post
      */
-    public function setPublishedAt($publishedAt = '01-01-2000 00:00:00')
+    public function setPublishedAt($publishedAt)
     {
         if (!$publishedAt instanceof \DateTime) {
             $this->publishedAt = \DateTime::createFromFormat('d-m-Y g:i:s', $publishedAt);
