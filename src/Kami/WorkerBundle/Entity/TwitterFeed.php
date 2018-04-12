@@ -219,7 +219,7 @@ class TwitterFeed
     /**
      * Set timeInterval.
      *
-     * @param string $timeInterval
+     * @param int $timeInterval
      *
      * @return TwitterFeed
      */
