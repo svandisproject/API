@@ -4,10 +4,6 @@ language: php
 # Allows use container-based infrastructure
 sudo: false
 
-# Start mysql service
-services:
-  - mysql
-
 # Cache composer packages so "composer install" is faster
 cache:
   directories:
@@ -22,7 +18,7 @@ matrix:
 
 # Define an environment variable
 env:
-  - SYMFONY_VERSION="3.4.*" DB=sqlite SYMFONY_ENV=test
+  - SYMFONY_VERSION="3.4.*" SYMFONY_ENV=test
 
 # Update composer
 before-install:
@@ -36,9 +32,6 @@ install:
   - openssl genrsa -passout pass:foobar -out var/jwt/private.pem -aes256 4096
   - openssl rsa -passin pass:foobar -pubout -in var/jwt/private.pem -out var/jwt/public.pem
   - cp app/config/parameters.yml.dist app/config/parameters.yml
-  - php bin/console doctrine:database:create --env=test
-  - php bin/console doctrine:schema:create --env=test
-  - php bin/console khepin:yamlfixtures:load -n
 
 # Run script
 script:
