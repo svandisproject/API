@@ -247,7 +247,7 @@ class Post
     /**
      * Set publishedAt.
      *
-     * @param \DateTime $publishedAt
+     * @param $publishedAt
      *
      * @return Post
      */
@@ -282,7 +282,7 @@ class Post
      */
     public function addTag(\Kami\ContentBundle\Entity\Tag $tag)
     {
-        $tag->addWebsitePost($this);
+        $tag->addPost($this);
         $this->tags[] = $tag;
 
         return $this;
