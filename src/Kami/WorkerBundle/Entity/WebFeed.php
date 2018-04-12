@@ -250,7 +250,7 @@ class WebFeed
     /**
      * Set timeInterval.
      *
-     * @param string $timeInterval
+     * @param int $timeInterval
      *
      * @return WebFeed
      */
