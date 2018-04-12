@@ -23,7 +23,6 @@ class AppKernel extends Kernel
             new Nelmio\CorsBundle\NelmioCorsBundle(),
             new Vich\UploaderBundle\VichUploaderBundle(),
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
-            new Craue\ConfigBundle\CraueConfigBundle(),
 
             new Kami\ApiCoreBundle\KamiApiCoreBundle(),
             new Kami\UserBundle\KamiUserBundle(),
