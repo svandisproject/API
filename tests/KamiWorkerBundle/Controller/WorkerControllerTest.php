@@ -28,7 +28,6 @@ class WorkerControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/api/schedule', [], [], ['HTTP_X-SOCKET-SERVER-TOKEN'=>'test']);
-        $response = $client->getResponse();
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
     }
@@ -37,7 +36,6 @@ class WorkerControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $client->request('GET', '/api/schedule');
-        $response = $client->getResponse();
 
         $this->assertEquals(401, $client->getResponse()->getStatusCode());
     }
