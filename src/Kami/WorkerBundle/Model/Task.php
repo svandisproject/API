@@ -40,6 +40,7 @@ class Task
         $task = new self;
         $task->type = 'web';
         $task->config = [
+            'url' => $webFeed->getUrl(),
             'titleSelector' => $webFeed->getTitleSelector(),
             'contentSelector' => $webFeed->getContentSelector(),
             'publishedAtSelector' => $webFeed->getPublishedAtSelector(),
