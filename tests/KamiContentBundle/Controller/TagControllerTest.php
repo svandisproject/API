@@ -137,6 +137,8 @@ class TagControllerTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('PUT', '/api/tag/1', ['tag' => ['title' => 'edit']]);
         $this->assertJsonResponse($response, 200);
+        $this->assertContainsKeys($response);
+        $this->assertEquals('edit', $this->getResponseData($response)['title']);
     }
 
     public function testEditNotExistedFieldLoggedInAsAdmin()
