@@ -9,7 +9,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * TwitterUser
  *
  * @ORM\Table(name="twitter_user")
- * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\TwitterUserRepository")
+ * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\TwitterFeedRepository")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})

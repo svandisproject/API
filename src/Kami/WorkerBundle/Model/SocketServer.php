@@ -23,7 +23,7 @@ class SocketServer implements UserInterface
 
     public function getUsername()
     {
-        return '';
+        return 'SOCKET_SERVER';
     }
 
     public function eraseCredentials()
