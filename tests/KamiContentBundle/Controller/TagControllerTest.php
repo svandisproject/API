@@ -80,6 +80,7 @@ class TagControllerTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('POST', '/api/tag', ['tag' => ['title' => 'test']]);
         $this->assertJsonResponse($response, 200);
+        $this->assertEquals('test', $this->getResponseData($response)['title']);
     }
 
     public function testCreateNotExistedFieldLoggedInAsAdmin()
