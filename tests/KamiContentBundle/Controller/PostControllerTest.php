@@ -51,7 +51,7 @@ class PostControllerTest extends ApiTestCase
 
     public function testFilterLoggedInAsUser()
     {
-        $this->logInAsWorker();
+        $this->requestAsWorker();
         $response = $this->request('POST', '/api/post', ['post' => [
             'title' => 'test',
             'url' => 'test',

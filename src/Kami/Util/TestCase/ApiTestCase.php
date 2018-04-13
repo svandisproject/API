@@ -2,8 +2,11 @@
 
 namespace Kami\Util\TestCase;
 
+use Kami\WorkerBundle\Security\WorkerUserProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Kami\WorkerBundle\Security\WorkerAuthenticator;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 abstract class ApiTestCase extends WebTestCase
 {
@@ -73,13 +76,27 @@ abstract class ApiTestCase extends WebTestCase
         $this->token = sprintf('Bearer %s', (json_decode($client->getResponse()->getContent()))->token);
     }
 
-    protected function logInAsWorker()
+    protected function requestAsWorker()
     {
         $client = static::createClient();
-        $client->request('POST', '/worker/register', ['secret' => '1234567890123456']);
+        $client->request(
+            'POST', '/worker/register', [
+            'secret' => '1234567890123456']);
+        $token = json_decode($client->getResponse()->getContent())->token;
 
-        $this->token = sprintf('Bearer %s', (json_decode($client->getResponse()->getContent()))->token);
-//        dump(json_decode($client->getResponse()->getContent()));die;
+//        dump($token); die;
+        $workerUserProviderMock = $this->getMockBuilder(WorkerUserProvider::class)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->getMock();
+        $userProviderMock = $this->getMockBuilder(UserProviderInterface::class)
+            ->disableOriginalConstructor()
+            ->disableOriginalClone()
+            ->getMock();
+        $workerAuth = new WorkerAuthenticator($workerUserProviderMock);
+        $worker = $workerAuth->getUser(['secret'=>$token], $userProviderMock);
+
+        dump('api_test '.$worker);die;
     }
 
     /**

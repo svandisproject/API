@@ -1,4 +1,0 @@
-model: Kami\WorkerBundle\Entity\Worker
-fixtures:
-    worker:
-        secret: 111
