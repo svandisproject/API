@@ -1,9 +1,10 @@
 parameters:
     kami_worker.user_provider.class:               Kami\WorkerBundle\Security\WorkerUserProvider
     kami_worker.authenticator.class:               Kami\WorkerBundle\Security\WorkerAuthenticator
+    kami_worker.socket_user_provider.class:        Kami\WorkerBundle\Security\SocketServerUserProvider
     kami_worker.socket_server_authenticator.class: Kami\WorkerBundle\Security\SocketServerAuthenticator
     kami_worker.scheduler.class:                   Kami\WorkerBundle\Scheduler\Scheduler
-    kami_worker.socket_user_provider.class:        Kami\WorkerBundle\Security\SocketServerUserProvider
+
 
 services:
     kami_worker.user_provider:
@@ -28,3 +29,4 @@ services:
          class: "%kami_worker.scheduler.class%"
          arguments:
              - "@doctrine"
+         public: true

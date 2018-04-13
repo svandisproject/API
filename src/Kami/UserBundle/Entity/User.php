@@ -4,12 +4,14 @@ namespace Kami\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use RandomLib\Factory;
-use SecurityLib\Strength;
+use Kami\Util\TokenGenerator;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="`user`")
+ * @UniqueEntity("workerToken")
  */
 class User extends BaseUser
 {
@@ -28,9 +30,7 @@ class User extends BaseUser
 
     public function __construct()
     {
-        $factory = new Factory;
-        $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
-        $this->workerToken = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        $this->workerToken = TokenGenerator::generate(16);
         parent::__construct();
     }
 
@@ -47,7 +47,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return mixed
+     * @return string
      */
     public function getWorkerToken()
     {
@@ -55,7 +55,7 @@ class User extends BaseUser
     }
 
     /**
-     * @param mixed $token
+     * @param string $workerToken
      * @return User
      */
     public function setWorkerToken($workerToken)
@@ -67,8 +67,6 @@ class User extends BaseUser
 
     public function updateWorkerToken()
     {
-        $factory = new Factory;
-        $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
-        $this->workerToken = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        $this->workerToken = TokenGenerator::generate(16);
     }
 }

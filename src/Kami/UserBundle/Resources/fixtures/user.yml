@@ -15,3 +15,10 @@ fixtures:
         email: user@apimonster.com
         plain_password: user
         enabled: true
+
+    worker_user:
+        email: worker@apimonster.com
+        plain_password: worker
+        enabled: true
+        worker_token: 1234567890123456
+
