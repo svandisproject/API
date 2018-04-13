@@ -60,6 +60,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
     {
         $webFeed = new WebFeed();
         $webFeed
+            ->setUrl('test')
             ->setContentSelector('test')
             ->setTitleSelector('test')
             ->setPublishedAtSelector('test')
@@ -70,6 +71,7 @@ class TaskTest extends \PHPUnit_Framework_TestCase
         $task
             ->setType('web')
             ->setConfig([
+                'url' => 'test',
                 'titleSelector' => 'test',
                 'contentSelector' => 'test',
                 'publishedAtSelector' => 'test',
