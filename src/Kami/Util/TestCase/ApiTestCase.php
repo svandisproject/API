@@ -75,7 +75,11 @@ abstract class ApiTestCase extends WebTestCase
 
     protected function logInAsWorker()
     {
-        $this->logInAsUser();
+        $client = static::createClient();
+        $client->request('POST', '/worker/register', ['secret' => '1234567890123456']);
+
+        $this->token = sprintf('Bearer %s', (json_decode($client->getResponse()->getContent()))->token);
+//        dump(json_decode($client->getResponse()->getContent()));die;
     }
 
     /**
