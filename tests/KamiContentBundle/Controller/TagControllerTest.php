@@ -101,6 +101,7 @@ class TagControllerTest extends ApiTestCase
         $this->logInAsUser();
         $response = $this->request('GET', '/api/tag/1');
         $this->assertJsonResponse($response, 200);
+        $this->assertContainsKeys($response);
     }
 
     public function testSingleLoggedInAsAdmin()
@@ -108,6 +109,7 @@ class TagControllerTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('GET', '/api/tag/1');
         $this->assertJsonResponse($response, 200);
+        $this->assertContainsKeys($response);
     }
 
     public function testSingleNotExistedIdLoggedInAsAdmin()
