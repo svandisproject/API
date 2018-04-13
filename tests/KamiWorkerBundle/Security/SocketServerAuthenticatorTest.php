@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: amazing
- * Date: 4/13/18
- * Time: 11:50 AM
- */
 
 namespace Tests\KamiWorkerBundle\Security;
 
