@@ -52,9 +52,9 @@ class RedditFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="user_name", type="string")
+     * @ORM\Column(name="username", type="string")
      */
-    private $userName;
+    private $username;
 
     /**
      * @var string
@@ -62,9 +62,9 @@ class RedditFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="user_password", type="string")
+     * @ORM\Column(name="password", type="string")
      */
-    private $userPassword;
+    private $password;
 
     /**
      * @var int
@@ -138,13 +138,13 @@ class RedditFeed
     /**
      * Set userName.
      *
-     * @param string $userName
+     * @param string $username
      *
      * @return RedditFeed
      */
-    public function setUserName($userName)
+    public function setUsername($username)
     {
-        $this->userName = $userName;
+        $this->username = $username;
 
         return $this;
     }
@@ -154,21 +154,21 @@ class RedditFeed
      *
      * @return string
      */
-    public function getUserName()
+    public function getUsername()
     {
-        return $this->userName;
+        return $this->username;
     }
 
     /**
      * Set userPassword.
      *
-     * @param string $userPassword
+     * @param string $password
      *
      * @return RedditFeed
      */
-    public function setUserPassword($userPassword)
+    public function setPassword($password)
     {
-        $this->userPassword = $userPassword;
+        $this->password = $password;
 
         return $this;
     }
@@ -178,9 +178,9 @@ class RedditFeed
      *
      * @return string
      */
-    public function getuUerPassword()
+    public function getPassword()
     {
-        return $this->userPassword;
+        return $this->password;
     }
 
     /**

@@ -11,6 +11,7 @@ use Kami\ApiCoreBundle\Event\CrudEvent;
 use Kami\ApiCoreBundle\Form\Factory;
 use Kami\ApiCoreBundle\Security\AccessManager;
 use Kami\WorkerBundle\Entity\FacebookFeed;
+use Kami\WorkerBundle\Entity\RedditFeed;
 use Kami\WorkerBundle\Entity\TwitterFeed;
 use Kami\WorkerBundle\Entity\WebFeed;
 use Kami\WorkerBundle\Model\Task;
@@ -52,7 +53,8 @@ class Scheduler
         $feeds = array_merge(
             $this->doctrine->getRepository(WebFeed::class)->findAll(),
             $this->doctrine->getRepository(FacebookFeed::class)->findAll(),
-            $this->doctrine->getRepository(TwitterFeed::class)->findAll()
+            $this->doctrine->getRepository(TwitterFeed::class)->findAll(),
+            $this->doctrine->getRepository(RedditFeed::class)->findAll()
         );
         $tasks = [];
 

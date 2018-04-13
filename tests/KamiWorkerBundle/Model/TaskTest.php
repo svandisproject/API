@@ -3,6 +3,7 @@
 namespace Tests\KamiWorkerBundle\Model;
 
 use Kami\WorkerBundle\Entity\FacebookFeed;
+use Kami\WorkerBundle\Entity\RedditFeed;
 use Kami\WorkerBundle\Entity\TwitterFeed;
 use Kami\WorkerBundle\Entity\WebFeed;
 use Kami\WorkerBundle\Model\Task;
@@ -78,4 +79,30 @@ class TaskTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals($task, Task::fromWebFeed($webFeed));
     }
+
+    public function testFromRedditFeed()
+    {
+        $redditFeed = new RedditFeed();
+        $redditFeed
+            ->setClientId('test')
+            ->setClientSecret('test')
+            ->setUsername('test')
+            ->setPassword('test')
+            ->setTimeInterval(1000);
+
+        $task = new Task();
+        $task
+            ->setType('reddit')
+            ->setConfig([
+                'clientId' => 'test',
+                'clientSecret' => 'test',
+                'username' => 'test',
+                'password' => 'test'
+            ])
+            ->setTimeInterval(1000);
+
+        $this->assertEquals($task, Task::fromRedditFeed($redditFeed));
+    }
+
+
 }

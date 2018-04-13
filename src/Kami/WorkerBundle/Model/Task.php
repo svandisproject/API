@@ -4,6 +4,7 @@ namespace Kami\WorkerBundle\Model;
 
 
 use Kami\WorkerBundle\Entity\FacebookFeed;
+use Kami\WorkerBundle\Entity\RedditFeed;
 use Kami\WorkerBundle\Entity\TwitterFeed;
 use Kami\WorkerBundle\Entity\WebFeed;
 use JMS\Serializer\Annotation as JMS;
@@ -74,6 +75,21 @@ class Task
             'accessTokenSecret' => $twitterFeed->getAccessTokenSecret(),
         ];
         $task->timeInterval = $twitterFeed->getTimeInterval();
+
+        return $task;
+    }
+
+    public static function fromRedditFeed(RedditFeed $redditFeed)
+    {
+        $task = new self;
+        $task->type = 'reddit';
+        $task->config = [
+            'clientId' => $redditFeed->getClientId(),
+            'clientSecret' => $redditFeed->getClientSecret(),
+            'username' => $redditFeed->getUsername(),
+            'password' => $redditFeed->getPassword()
+        ];
+        $task->setTimeInterval($redditFeed->getTimeInterval());
 
         return $task;
     }
