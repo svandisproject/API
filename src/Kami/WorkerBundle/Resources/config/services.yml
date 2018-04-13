@@ -22,7 +22,7 @@ services:
     kami_worker.socket_server_authenticator:
         class: "%kami_worker.socket_server_authenticator.class%"
         arguments:
-            - "@kami_worker.socket_user_provider"
+            - "%socket_server_secret%"
 
     kami_worker.scheduler:
          class: "%kami_worker.scheduler.class%"

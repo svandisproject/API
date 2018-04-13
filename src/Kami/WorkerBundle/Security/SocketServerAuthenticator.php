@@ -45,33 +45,56 @@ class SocketServerAuthenticator extends AbstractGuardAuthenticator
      */
     public function getCredentials(Request $request)
     {
-        return array(
-            'secret' => $request->headers->get('X-SOCKET-SERVER-TOKEN'),
-        );
+        return [
+            'username' => 'SOCKET_SERVER',
+            'secret'   => $request->headers->get('X-SOCKET-SERVER-TOKEN'),
+        ];
     }
 
+    /**
+     * @param array $credentials
+     * @param UserProviderInterface $userProvider
+     * @return null|UserInterface
+     */
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        $secret = $credentials['secret'];
-
-        if (null === $secret || $secret !== $this->socketServerSecret) {
-            return;
+        if (null === $credentials['secret'] || $credentials['secret'] !== $this->socketServerSecret) {
+            return null;
         }
 
         // if a User object, checkCredentials() is called
-        return new SocketServer();
+        return $userProvider->loadUserByUsername('SOCKET_SERVER');
     }
 
+    /**
+     * @param array $credentials
+     * @param UserInterface $user
+     * @return bool
+     */
     public function checkCredentials($credentials, UserInterface $user)
     {
-        return true;
+        return 'SOCKET_SERVER' === $credentials['username']
+            && $this->socketServerSecret === $credentials['secret']
+            && in_array('ROLE_SOCKET_SERVER', $user->getRoles())
+        ;
     }
 
+    /**
+     * @param Request $request
+     * @param TokenInterface $token
+     * @param string $providerKey
+     * @return null|Response
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
     {
         return null;
     }
 
+    /**
+     * @param Request $request
+     * @param AuthenticationException $exception
+     * @return JsonResponse
+     */
     public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
     {
         $data = array(
@@ -87,13 +110,15 @@ class SocketServerAuthenticator extends AbstractGuardAuthenticator
     public function start(Request $request, AuthenticationException $authException = null)
     {
         $data = array(
-            // you might translate this message
             'message' => 'Authentication Required'
         );
 
         return new JsonResponse($data, Response::HTTP_UNAUTHORIZED);
     }
 
+    /**
+     * @return bool
+     */
     public function supportsRememberMe()
     {
         return false;

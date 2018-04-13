@@ -11,7 +11,7 @@ security:
             id: kami_worker.socket_user_provider
         chain_provider:
             chain:
-                providers: [fos_userbundle, kami_workerbundle, kami_socketserver]
+                providers: [fos_userbundle, kami_workerbundle]
 
     firewalls:
         login:

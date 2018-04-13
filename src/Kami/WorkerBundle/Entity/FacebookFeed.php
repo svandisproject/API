@@ -9,7 +9,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * FacebookUser
  *
  * @ORM\Table(name="facebook_user")
- * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\FacebookUserRepository")
+ * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\FacebookFeedRepository")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})
