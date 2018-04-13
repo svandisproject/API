@@ -11,6 +11,11 @@ abstract class ApiTestCase extends WebTestCase
      * @var array
      */
     protected $token;
+
+    /**
+     * @var string
+     */
+    protected $workerCode;
     /**
      * @return array
      */
@@ -66,6 +71,11 @@ abstract class ApiTestCase extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->token = sprintf('Bearer %s', (json_decode($client->getResponse()->getContent()))->token);
+    }
+
+    protected function logInAsWorker()
+    {
+        $this->logInAsUser();
     }
 
     /**
