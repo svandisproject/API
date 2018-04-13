@@ -2,15 +2,14 @@
 
 namespace Kami\WorkerBundle\Controller;
 
+use Kami\Util\TokenGenerator;
 use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use RandomLib\Factory;
-use SecurityLib\Strength;
 
 class WorkerController extends Controller
 {
@@ -21,21 +20,16 @@ class WorkerController extends Controller
     {
         $user = $this->getDoctrine()
             ->getRepository('KamiUserBundle:User')
-            ->findOneBy(['workerToken'=>$request->get('secret')]);
+            ->findOneBy(['workerToken' => $request->get('secret')]);
 
         if (!$user) {
-            throw new AccessDeniedHttpException('Worker secret is incorrect');
+            throw new AccessDeniedHttpException('Worker token is incorrect');
         }
-
-        $factory = new Factory;
-        $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
-
-        $secret = $generator->generateString(128, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
 
         $worker = new Worker();
         $worker
             ->setUser($user)
-            ->setSecret($secret)
+            ->setSecret(TokenGenerator::generate(128))
             ;
 
         $manager = $this->getDoctrine()->getManager();
@@ -67,7 +61,7 @@ class WorkerController extends Controller
      */
     public function getWorkerSecretAction()
     {
-        return new JsonResponse(['secret'=>$this->getUser()->getWorkerToken()]);
+        return new JsonResponse(['secret' => $this->getUser()->getWorkerToken()]);
     }
 
     /**
@@ -88,29 +82,29 @@ class WorkerController extends Controller
      */
     public function scheduleAction()
     {
-        $tasks = $this->get('kami_worker.scheduler')->getScheduleIndex();
-
-        return new JsonResponse($tasks);
+        return new Response(
+            $this
+                ->get('jms_serializer')
+                ->serialize($this->get('kami_worker.scheduler')->getSchedule(), 'json'),
+            200,
+            ['content-type' => 'application/json']
+        );
     }
 
     /**
-    +     * @Route("/api/settings/worker/regenerate-user-token", methods={"POST"}, name="worker.regenerateUserToken")
-    +     */
+     * @Route("/api/settings/worker/regenerate-user-token", methods={"POST"}, name="worker.regenerate_user_token")
+     */
     public function regenerateWorkerCodeAction()
     {
         $user = $this->getUser();
-
-        $factory = new Factory;
-        $generator = $factory->getGenerator(new Strength(Strength::MEDIUM));
-        $newToken = $generator->generateString(16, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-        $user->setWorkerToken($newToken);
+        $user->updateWorkerToken();
 
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($user);
         $entityManager->flush();
 
         return new JsonResponse([
-            'secret'=>$newToken
+            'secret' => $user->getWorkerToken()
         ]);
     }
 }

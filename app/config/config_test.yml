@@ -1,3 +1,6 @@
+parameters:
+    socket_server_secret: test
+
 imports:
     - { resource: config_dev.yml }
 

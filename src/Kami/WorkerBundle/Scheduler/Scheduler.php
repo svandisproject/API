@@ -11,8 +11,10 @@ use Kami\ApiCoreBundle\Event\CrudEvent;
 use Kami\ApiCoreBundle\Form\Factory;
 use Kami\ApiCoreBundle\Security\AccessManager;
 use Kami\WorkerBundle\Entity\FacebookFeed;
+use Kami\WorkerBundle\Entity\RedditFeed;
 use Kami\WorkerBundle\Entity\TwitterFeed;
 use Kami\WorkerBundle\Entity\WebFeed;
+use Kami\WorkerBundle\Model\Task;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -34,7 +36,7 @@ class Scheduler
     private $doctrine;
 
     /**
-     * ApiManager constructor.
+     * Scheduler constructor.
      *
      * @param Registry $doctrine
      */
@@ -46,66 +48,32 @@ class Scheduler
     /**
      * @return array
      */
-    public function getScheduleIndex()
+    public function getSchedule()
     {
-        $data = [
-            'web' => $this->doctrine->getRepository(WebFeed::class)->findAll(),
-            'facebook' => $this->doctrine->getRepository(FacebookFeed::class)->findAll(),
-            'twitter' => $this->doctrine->getRepository(TwitterFeed::class)->findAll(),
-        ];
-
+        $feeds = array_merge(
+            $this->doctrine->getRepository(WebFeed::class)->findAll(),
+            $this->doctrine->getRepository(FacebookFeed::class)->findAll(),
+            $this->doctrine->getRepository(TwitterFeed::class)->findAll(),
+            $this->doctrine->getRepository(RedditFeed::class)->findAll()
+        );
         $tasks = [];
-        foreach ($data as $task => $service) {
-            foreach ($service as $item) {
-                $method = 'get'.ucfirst($task);
-                array_push($tasks, $this->$method($item));
+
+        foreach ($feeds as $feed) {
+            switch (get_class($feed)) {
+                case WebFeed::class:
+                    $tasks[] = Task::fromWebFeed($feed);
+                    break;
+                case FacebookFeed::class:
+                    $tasks[] = Task::fromFacebookFeed($feed);
+                    break;
+                case TwitterFeed::class:
+                    $tasks[] = Task::fromTwitterFeed($feed);
+                    break;
+                default:
+                    break;
             }
         }
 
         return $tasks;
-    }
-
-    private function getWeb($item)
-    {
-        $arr = [];
-        $arr['name'] = 'web';
-        $arr['config'] = [];
-        $arr['config'] = [
-            'titleSelector' => $item->getTitleSelector(),
-            'contentSelector' => $item->getContentSelector(),
-            'publishedAtSelector' => $item->getPublishedAtSelector(),
-            'dateFormat' => $item->getDateFormat(),
-            'timeInterval' => $item->getTimeInterval(),
-        ];
-        return $arr;
-    }
-
-    private function getFacebook($item)
-    {
-        $arr = [];
-        $arr['name'] = 'facebook';
-        $arr['config'] = [];
-        $arr['config'] = [
-            'email' => $item->getEmail(),
-            'password' => $item->getPassword(),
-            'timeInterval' => $item->getTimeInterval(),
-        ];
-        return $arr;
-    }
-
-    private function getTwitter($item)
-    {
-        $arr = [];
-        $arr['name'] = 'twitter';
-        $arr['config'] = [];
-        $arr['config'] = [
-            'mode' => $item->getMode(),
-            'consumerKey' => $item->getConsumerKey(),
-            'consumerSecret' => $item->getConsumerSecret(),
-            'accessTokenKey' => $item->getAccessTokenKey(),
-            'accessTokenSecret' => $item->getAccessTokenSecret(),
-            'timeInterval' => $item->getTimeInterval(),
-        ];
-        return $arr;
     }
 }
