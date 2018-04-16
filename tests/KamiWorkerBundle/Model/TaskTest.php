@@ -7,8 +7,9 @@ use Kami\WorkerBundle\Entity\RedditFeed;
 use Kami\WorkerBundle\Entity\TwitterFeed;
 use Kami\WorkerBundle\Entity\WebFeed;
 use Kami\WorkerBundle\Model\Task;
+use PHPUnit\Framework\TestCase;
 
-class TaskTest extends \PHPUnit_Framework_TestCase
+class TaskTest extends TestCase
 {
 
     public function testFromFacebookFeed()
