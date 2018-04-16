@@ -18,6 +18,11 @@ abstract class ApiTestCase extends WebTestCase
     /**
      * @var string
      */
+    protected $workerToken = 111;
+
+    /**
+     * @var string
+     */
     protected $workerCode;
     /**
      * @return array
@@ -76,27 +81,31 @@ abstract class ApiTestCase extends WebTestCase
         $this->token = sprintf('Bearer %s', (json_decode($client->getResponse()->getContent()))->token);
     }
 
-    protected function requestAsWorker()
+    /**
+     * Calls a URI.
+     *
+     * @param string $method        The request method
+     * @param string $uri           The URI to fetch
+     * @param array  $parameters    The Request parameters
+     * @param array  $files         The files
+     * @param array  $server        The server parameters (HTTP headers are referenced with a HTTP_ prefix as PHP does)
+     * @param string $content       The raw body data
+     * @param bool   $changeHistory Whether to update the history or not (only used internally for back(), forward(), and reload())
+     *
+     * @return Response
+     */
+    protected function requestByWorker($method, $uri, array $parameters = [], array $files = [], array $server = [], $content = null, $changeHistory = true)
     {
         $client = static::createClient();
-        $client->request(
-            'POST', '/worker/register', [
-            'secret' => '1234567890123456']);
-        $token = json_decode($client->getResponse()->getContent())->token;
-
-//        dump($token); die;
-        $workerUserProviderMock = $this->getMockBuilder(WorkerUserProvider::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
-        $userProviderMock = $this->getMockBuilder(UserProviderInterface::class)
-            ->disableOriginalConstructor()
-            ->disableOriginalClone()
-            ->getMock();
-        $workerAuth = new WorkerAuthenticator($workerUserProviderMock);
-        $worker = $workerAuth->getUser(['secret'=>$token], $userProviderMock);
-
-        dump('api_test '.$worker);die;
+        $client->followRedirects();
+        $client->insulate(false);
+        if($this->workerToken) {
+            $server = array_merge($server, [
+                'X-WORKER-TOKEN' => $this->workerToken,
+            ]);
+        }
+        $client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
+        return $client->getResponse();
     }
 
     /**
