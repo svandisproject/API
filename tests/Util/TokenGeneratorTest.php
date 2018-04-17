@@ -3,8 +3,9 @@
 namespace Tests\Util;
 
 use Kami\Util\TokenGenerator;
+use PHPUnit\Framework\TestCase;
 
-class TokenGeneratorTest extends \PHPUnit_Framework_TestCase
+class TokenGeneratorTest extends TestCase
 {
     public function testGenerate()
     {
