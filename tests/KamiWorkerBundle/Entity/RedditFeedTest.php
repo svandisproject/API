@@ -104,7 +104,7 @@ class RedditFeedTest extends ApiTestCase
                 'password' => 'test',
                 'timeInterval' => 1000
             ]]);
-        $this->assertJsonResponse($response, 500);
+        $this->assertJsonResponse($response, 400);
     }
 
     public function testFilterLimitLoggedInAsAdmin()

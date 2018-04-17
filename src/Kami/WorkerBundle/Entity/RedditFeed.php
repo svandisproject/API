@@ -4,12 +4,14 @@ namespace Kami\WorkerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * RedditFeed
  *
  * @ORM\Table(name="reddit_feed")
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\RedditFeedRepository")
+ * @UniqueEntity("clientId")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})
