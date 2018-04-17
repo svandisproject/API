@@ -2,25 +2,23 @@
 
 namespace Kami\WorkerBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Kami\Util\TestCase\ApiTestCase;
 
-class WorkerControllerTest extends WebTestCase
+class WorkerControllerTest extends ApiTestCase
 {
     public function testRegisterWithCorrectToken()
     {
-        $client = static::createClient();
-        $client->request('POST', '/worker/register', ['secret' => '1234567890123456']);
-        $response = $client->getResponse();
+        $response = $this->request('POST', '/worker/register', ['secret' => '1234567890123456']);
+
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertArrayHasKey('token', json_decode($response->getContent(), true));
-        $this->assertEquals(128, strlen(json_decode($response->getContent())->token));
+        $this->assertArrayHasKey('token', $this->getResponseData($response));
+        $this->assertEquals(128, strlen($this->getResponseData($response)['token']));
     }
 
     public function testRegisterWithIncorrectToken()
     {
-        $client = static::createClient();
-        $client->request('POST', '/worker/register', ['secret' => 'incorrect']);
-        $response = $client->getResponse();
+        $response = $this->request('POST', '/worker/register', ['secret' => 'incorrect']);
+
         $this->assertEquals(403, $response->getStatusCode());
     }
 
@@ -34,9 +32,55 @@ class WorkerControllerTest extends WebTestCase
 
     public function testScheduleActionWithoutCredentials()
     {
-        $client = static::createClient();
-        $client->request('GET', '/api/schedule');
+        $response = $this->request('GET', '/api/schedule');
 
-        $this->assertEquals(401, $client->getResponse()->getStatusCode());
+        $this->assertEquals(401, $response->getStatusCode());
+    }
+
+    public function testHeartbeatNotAuth()
+    {
+        $response = $this->request('POST', '/worker/heartbeat');
+
+        $this->assertEquals(401, $response->getStatusCode());
+    }
+
+    public function testHeartbeatAuth()
+    {
+        $response = $this->requestByWorker('POST', '/worker/heartbeat');
+
+        $this->assertEquals(204, $response->getStatusCode());
+    }
+
+    public function testGetWorkerSecretAuth()
+    {
+        $this->logInAsUser();
+        $response = $this->request('GET', '/api/settings/worker/secret');
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('secret', json_decode($response->getContent(), true));
+        $this->assertEquals(16, strlen($this->getResponseData($response)['secret']));
+    }
+
+    public function testAuthenticateForSocketActionWithCorrectSecret()
+    {
+        $response = $this->request('POST', '/worker/authenticate', ['secret' => 111]);
+
+        $this->assertArrayHasKey('host', json_decode($response->getContent(), true));
+        $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testRegenerateWorkerCodeAction()
+    {
+        $this->logInAsUser();
+        $response = $this->request('POST', '/api/settings/worker/regenerate-user-token');
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertArrayHasKey('secret', json_decode($response->getContent(), true));
+        $this->assertEquals(16, strlen($this->getResponseData($response)['secret']));
+    }
+
+    public function getModelKeys()
+    {
+        return [];
     }
 }
