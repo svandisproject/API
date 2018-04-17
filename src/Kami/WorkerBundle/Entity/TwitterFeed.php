@@ -8,11 +8,12 @@ use Kami\ApiCoreBundle\Annotation as Api;
 /**
  * TwitterUser
  *
- * @ORM\Table(name="twitter_user")
+ * @ORM\Table(name="twitter_feed")
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\TwitterFeedRepository")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class TwitterFeed
 {
@@ -32,6 +33,7 @@ class TwitterFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="mode", type="string", length=100)
      */
     private $mode;
@@ -42,6 +44,7 @@ class TwitterFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="consumerKey", type="string", length=255)
      */
     private $consumerKey;
@@ -52,6 +55,7 @@ class TwitterFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="consumerSecret", type="string", length=255)
      */
     private $consumerSecret;
@@ -62,6 +66,7 @@ class TwitterFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="accessTokenKey", type="string", length=255)
      */
     private $accessTokenKey;
@@ -72,6 +77,7 @@ class TwitterFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="accessTokenSecret", type="string", length=255)
      */
     private $accessTokenSecret;
@@ -83,6 +89,7 @@ class TwitterFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $timeInterval;
 

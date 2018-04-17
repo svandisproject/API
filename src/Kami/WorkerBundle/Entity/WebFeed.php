@@ -4,16 +4,19 @@ namespace Kami\WorkerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * WebFeed
  *
  * @ORM\Table(name="web_feed")
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\WebFeedRepository")
- * @Api\AnonymousAccess()
+ * @UniqueEntity("title")
+ * @UniqueEntity("url")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class WebFeed
 {
@@ -26,6 +29,7 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $id;
 
@@ -36,6 +40,7 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -46,6 +51,7 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $url;
 
@@ -56,6 +62,7 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $titleSelector;
 
@@ -66,6 +73,7 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $contentSelector;
 
@@ -76,6 +84,7 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $publishedAtSelector;
 
@@ -86,6 +95,7 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $dateFormat;
 
@@ -96,6 +106,7 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $timeInterval;
 
