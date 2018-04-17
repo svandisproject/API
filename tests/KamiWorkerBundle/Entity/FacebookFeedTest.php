@@ -93,6 +93,19 @@ class FacebookFeedTest extends ApiTestCase
         $this->assertContainsKeys($response);
     }
 
+    public function testCreateExistedEmailLoggedInAsAdmin()
+    {
+        $this->logInAsAdmin();
+        $response = $this->request('POST', '/api/facebook-feed', [
+            'facebook_feed' => [
+                'email' => 'test',
+                'password' => 'test',
+                'timeInterval' => 10000,
+            ]
+        ]);
+        $this->assertJsonResponse($response, 400);
+    }
+
     public function testFilterLimitLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
