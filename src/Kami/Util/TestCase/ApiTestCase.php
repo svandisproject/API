@@ -2,8 +2,11 @@
 
 namespace Kami\Util\TestCase;
 
+use Kami\WorkerBundle\Security\WorkerUserProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Kami\WorkerBundle\Security\WorkerAuthenticator;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 abstract class ApiTestCase extends WebTestCase
 {
@@ -11,6 +14,16 @@ abstract class ApiTestCase extends WebTestCase
      * @var array
      */
     protected $token;
+
+    /**
+     * @var string
+     */
+    protected $workerToken = 111;
+
+    /**
+     * @var string
+     */
+    protected $workerCode;
     /**
      * @return array
      */
@@ -66,6 +79,33 @@ abstract class ApiTestCase extends WebTestCase
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
 
         $this->token = sprintf('Bearer %s', (json_decode($client->getResponse()->getContent()))->token);
+    }
+
+    /**
+     * Calls a URI.
+     *
+     * @param string $method        The request method
+     * @param string $uri           The URI to fetch
+     * @param array  $parameters    The Request parameters
+     * @param array  $files         The files
+     * @param array  $server        The server parameters (HTTP headers are referenced with a HTTP_ prefix as PHP does)
+     * @param string $content       The raw body data
+     * @param bool   $changeHistory Whether to update the history or not (only used internally for back(), forward(), and reload())
+     *
+     * @return Response
+     */
+    protected function requestByWorker($method, $uri, array $parameters = [], array $files = [], array $server = [], $content = null, $changeHistory = true)
+    {
+        $client = static::createClient();
+        $client->followRedirects();
+        $client->insulate(false);
+        if($this->workerToken) {
+            $server = array_merge($server, [
+                'HTTP_X-WORKER-TOKEN' => $this->workerToken,
+            ]);
+        }
+        $client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);
+        return $client->getResponse();
     }
 
     /**

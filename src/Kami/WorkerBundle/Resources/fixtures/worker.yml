@@ -1,0 +1,5 @@
+model: Kami\WorkerBundle\Entity\Worker
+fixtures:
+    worker:
+      secret: 111
+      user: worker_user
