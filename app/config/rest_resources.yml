@@ -5,6 +5,6 @@ kami_api_core:
     - { name: tag, entity: Kami\ContentBundle\Entity\Tag }
     - { name: worker, entity: Kami\WorkerBundle\Entity\Worker }
     - { name: web-feed, entity: Kami\WorkerBundle\Entity\WebFeed }
-    - { name: facebook-user, entity: Kami\WorkerBundle\Entity\FacebookUser }
-    - { name: twitter-user, entity: Kami\WorkerBundle\Entity\TwitterUser }
+    - { name: facebook-feed, entity: Kami\WorkerBundle\Entity\FacebookFeed }
+    - { name: twitter-feed, entity: Kami\WorkerBundle\Entity\TwitterFeed }
     - { name: reddit-feed, entity: Kami\WorkerBundle\Entity\RedditFeed }

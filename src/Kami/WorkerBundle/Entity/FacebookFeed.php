@@ -8,11 +8,12 @@ use Kami\ApiCoreBundle\Annotation as Api;
 /**
  * FacebookUser
  *
- * @ORM\Table(name="facebook_user")
+ * @ORM\Table(name="facebook_feed")
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\FacebookFeedRepository")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class FacebookFeed
 {
@@ -32,6 +33,7 @@ class FacebookFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="email", type="string", length=100, unique=true)
      */
     private $email;
@@ -42,6 +44,7 @@ class FacebookFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="password", type="string", length=255)
      */
     private $password;
@@ -53,6 +56,7 @@ class FacebookFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeEditedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $timeInterval;
 
