@@ -101,7 +101,7 @@ abstract class ApiTestCase extends WebTestCase
         $client->insulate(false);
         if($this->workerToken) {
             $server = array_merge($server, [
-                'X-WORKER-TOKEN' => $this->workerToken,
+                'HTTP_X-WORKER-TOKEN' => $this->workerToken,
             ]);
         }
         $client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);

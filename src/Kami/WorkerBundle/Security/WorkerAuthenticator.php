@@ -27,7 +27,7 @@ class WorkerAuthenticator extends AbstractGuardAuthenticator
      */
     public function supports(Request $request)
     {
-        return $request->server->has('X-WORKER-TOKEN');
+        return $request->headers->has('X-WORKER-TOKEN');
     }
 
     /**
@@ -37,7 +37,7 @@ class WorkerAuthenticator extends AbstractGuardAuthenticator
     public function getCredentials(Request $request)
     {
         return array(
-            'secret' => $request->server->get('X-WORKER-TOKEN'),
+            'secret' => $request->headers->get('X-WORKER-TOKEN'),
         );
     }
 
