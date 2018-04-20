@@ -5,6 +5,7 @@ namespace Kami\ContentBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
@@ -80,6 +81,18 @@ class Post
     private $source;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="source_id", type="string", length=255, nullable=true)
+     * @Assert\NotBlank()
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $sourceId;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="publishedAt", type="datetime")
@@ -114,11 +127,27 @@ class Post
     private $tags;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="createdPosts")
+     *  @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     */
+    private $createdBy;
+
+
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="validatedPosts")
+     * @ORM\JoinTable(name="validPosts_validatedWorkers")
+     *
+     */
+    private $validatedBy;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->workers = new ArrayCollection();
     }
 
     /**
@@ -228,6 +257,30 @@ class Post
     }
 
     /**
+     * Set sourceId.
+     *
+     * @param string $sourceId
+     *
+     * @return Post
+     */
+    public function setSourceId($sourceId)
+    {
+        $this->sourceId = $sourceId;
+
+        return $this;
+    }
+
+    /**
+     * Get sourceId.
+     *
+     * @return string
+     */
+    public function getSourceId()
+    {
+        return $this->sourceId;
+    }
+
+    /**
      * Set createdAt.
      *
      * @param \DateTime $createdAt
@@ -315,5 +368,42 @@ class Post
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Add createdBy.
+     *
+     * @param \Kami\WorkerBundle\Entity\Worker $worker
+     *
+     * @return Post
+     */
+    public function addCreatedBy($worker)
+    {
+        $worker->addValidatedPosts($this);
+        $this->createdBy[] = $worker;
+
+        return $this;
+    }
+
+    /**
+     * Remove validatedBy.
+     *
+     * @param \Kami\WorkerBundle\Entity\Worker $worker
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeValidatedBy($worker)
+    {
+        return $this->validatedBy->removeElement($worker);
+    }
+
+    /**
+     * Get createdBy.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 }
