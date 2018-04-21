@@ -107,7 +107,7 @@ stof_doctrine_extensions:
 vich_uploader:
     db_driver: orm
 
-# KhepinYamlFixturesConfiguration
+# KhepinYamlFixtures Configuration
 khepin_yaml_fixtures:
     resources:
         - KamiUserBundle
