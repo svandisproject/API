@@ -62,6 +62,13 @@
         ],
         "post-update-cmd": [
             "@symfony-scripts"
+        ],
+        "warmup" : [
+            "Incenteev\\ParameterHandler\\ScriptHandler::buildParameters",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
+        ],
+        "compile": [
+            "rm web/app_dev.php"
         ]
     },
     "config": {

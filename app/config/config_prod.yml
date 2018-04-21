@@ -6,6 +6,10 @@ imports:
 #        metadata_cache_driver: apc
 #        result_cache_driver: apc
 #        query_cache_driver: apc
+doctrine:
+    dbal:
+        driver: pdo_pgsql
+        url: "%env(DATABASE_URL)%"
 
 monolog:
     handlers:
@@ -14,8 +18,8 @@ monolog:
             action_level: error
             handler: nested
         nested:
-            type: stream
-            path: '%kernel.logs_dir%/%kernel.environment%.log'
+            type:  stream
+            path:  "php://stderr"
             level: debug
         console:
             type: console

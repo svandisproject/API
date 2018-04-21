@@ -1,5 +1,15 @@
 <?php
 
+if (isset($_ENV['BOOTSTRAP_CLEAR_CACHE_ENV'])) {
+    exec(sprintf(
+        'php "%s/../bin/console" cache:clear --env=%s --no-warmup',
+        __DIR__,
+        $_ENV['BOOTSTRAP_CLEAR_CACHE_ENV']
+    ));
+
+    echo "Cache cleared\n\n";
+}
+
 if (isset($_ENV['BOOTSTRAP_REFRESH_DATABASE_ENV'])) {
     // Refresh test database
     exec(sprintf(
