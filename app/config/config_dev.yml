@@ -13,13 +13,6 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
-khepin_yaml_fixtures:
-    resources:
-        - KamiUserBundle
-        - KamiContentBundle
-        - KamiWorkerBundle
-    directory: Resources/fixtures
-
 monolog:
     handlers:
         main:
