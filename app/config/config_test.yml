@@ -1,5 +1,6 @@
 parameters:
     socket_server_secret: test
+    jwt_key_pass_phrase: foobar
 
 imports:
     - { resource: config_dev.yml }

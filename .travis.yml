@@ -29,8 +29,7 @@ before-install:
 install:
   - composer install
   - mkdir var/jwt
-  - openssl genrsa -passout pass:foobar -out var/jwt/private.pem -aes256 4096
-  - openssl rsa -passin pass:foobar -pubout -in var/jwt/private.pem -out var/jwt/public.pem
+  - bin/generate_token.sh
   - cp app/config/parameters.yml.dist app/config/parameters.yml
 
 # Run script

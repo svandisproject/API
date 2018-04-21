@@ -1,2 +1,2 @@
 parameters:
-    jwt_key_pass_phrase: test
+    jwt_key_pass_phrase: ~
