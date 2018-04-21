@@ -11,6 +11,7 @@
         <ini name="error_reporting" value="-1" />
         <server name="KERNEL_CLASS" value="AppKernel" />
         <env name="BOOTSTRAP_REFRESH_DATABASE_ENV" value="test" />
+        <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test" />
     </php>
 
     <testsuites>
