@@ -68,7 +68,8 @@
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache"
         ],
         "compile": [
-            "rm web/app_dev.php"
+            "rm web/app_dev.php",
+            "bin/generate_token.sh"
         ]
     },
     "config": {
