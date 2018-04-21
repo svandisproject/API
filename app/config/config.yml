@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: rest_resources.yml }
+    - { resource: jwt.yml }
     - { resource: "@KamiContentBundle/Resources/config/services.yml" }
     - { resource: "@KamiWorkerBundle/Resources/config/services.yml" }
 
