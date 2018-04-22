@@ -1,5 +1,35 @@
 model: Kami\WorkerBundle\Entity\Worker
 fixtures:
-    worker:
-      secret: 111
-      user: worker_user
+    worker0:
+        secret: 111
+        user: worker_user
+    worker1:
+        secret: 121
+        user: worker_user
+    worker2:
+        secret: 123
+        user: worker_user
+    worker3:
+        secret: 321
+        user: worker_user
+    worker4:
+        secret: 144
+        user: worker_user
+    worker5:
+        secret: 343
+        user: worker_user
+    worker6:
+        secret: 222
+        user: worker_user
+    worker7:
+        secret: 333
+        user: worker_user
+    worker8:
+        secret: 133
+        user: worker_user
+    worker9:
+        secret: 122
+        user: worker_user
+    worker10:
+        secret: 311
+        user: worker_user

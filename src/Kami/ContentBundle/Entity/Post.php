@@ -81,18 +81,6 @@ class Post
     private $source;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="source_id", type="string", length=255, nullable=true)
-     * @Assert\NotBlank()
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $sourceId;
-
-    /**
      * @var \DateTime
      *
      * @ORM\Column(name="publishedAt", type="datetime")
@@ -128,16 +116,16 @@ class Post
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="createdPosts")
-     *  @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     private $createdBy;
 
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="validatedPosts")
-     * @ORM\JoinTable(name="validPosts_validatedWorkers")
      *
+     * @ORM\ManyToMany(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="validatedPosts")
+     * @ORM\JoinTable(name="worker_validated_posts")
      */
     private $validatedBy;
 
@@ -146,8 +134,8 @@ class Post
      */
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
-        $this->workers = new ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->validatedBy = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -257,27 +245,31 @@ class Post
     }
 
     /**
-     * Set sourceId.
+     * Set publishedAt.
      *
-     * @param string $sourceId
+     * @param \DateTime $publishedAt
      *
      * @return Post
      */
-    public function setSourceId($sourceId)
+    public function setPublishedAt($publishedAt)
     {
-        $this->sourceId = $sourceId;
+        if (!$publishedAt instanceof \DateTime) {
+            $this->publishedAt = \DateTime::createFromFormat('d-m-Y g:i:s', $publishedAt);
+            return $this;
+        }
+        $this->publishedAt = $publishedAt;
 
         return $this;
     }
 
     /**
-     * Get sourceId.
+     * Get publishedAt.
      *
-     * @return string
+     * @return \DateTime
      */
-    public function getSourceId()
+    public function getPublishedAt()
     {
-        return $this->sourceId;
+        return $this->publishedAt;
     }
 
     /**
@@ -305,35 +297,6 @@ class Post
     }
 
     /**
-     * Set publishedAt.
-     *
-     * @param $publishedAt
-     *
-     * @return Post
-     */
-    public function setPublishedAt($publishedAt)
-    {
-        if (!$publishedAt instanceof \DateTime) {
-            $this->publishedAt = \DateTime::createFromFormat('d-m-Y g:i:s', $publishedAt);
-
-            return $this;
-        }
-        $this->publishedAt = $publishedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get publishedAt.
-     *
-     * @return \DateTime
-     */
-    public function getPublishedAt()
-    {
-        return $this->publishedAt;
-    }
-
-    /**
      * Add tag.
      *
      * @param \Kami\ContentBundle\Entity\Tag $tag
@@ -342,7 +305,6 @@ class Post
      */
     public function addTag(\Kami\ContentBundle\Entity\Tag $tag)
     {
-        $tag->addPost($this);
         $this->tags[] = $tag;
 
         return $this;
@@ -371,16 +333,46 @@ class Post
     }
 
     /**
-     * Add createdBy.
+     * Set createdBy.
      *
-     * @param \Kami\WorkerBundle\Entity\Worker $worker
+     * @param \Kami\WorkerBundle\Entity\Worker|null $createdBy
      *
      * @return Post
      */
-    public function addCreatedBy($worker)
+    public function setCreatedBy(\Kami\WorkerBundle\Entity\Worker $createdBy = null)
     {
-        $worker->addValidatedPosts($this);
-        $this->createdBy[] = $worker;
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy.
+     *
+     * @return \Kami\WorkerBundle\Entity\Worker|null
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    public function setValidatedBy(array $validatedBy)
+    {
+        $this->validatedBy = $validatedBy;
+
+        return $this;
+    }
+
+    /**
+     * Add validatedBy.
+     *
+     * @param \Kami\WorkerBundle\Entity\Worker $validatedBy
+     *
+     * @return Post
+     */
+    public function addValidatedBy(\Kami\WorkerBundle\Entity\Worker $validatedBy)
+    {
+        $this->validatedBy[] = $validatedBy;
 
         return $this;
     }
@@ -388,22 +380,22 @@ class Post
     /**
      * Remove validatedBy.
      *
-     * @param \Kami\WorkerBundle\Entity\Worker $worker
+     * @param \Kami\WorkerBundle\Entity\Worker $validatedBy
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeValidatedBy($worker)
+    public function removeValidatedBy(\Kami\WorkerBundle\Entity\Worker $validatedBy)
     {
-        return $this->validatedBy->removeElement($worker);
+        return $this->validatedBy->removeElement($validatedBy);
     }
 
     /**
-     * Get createdBy.
+     * Get validatedBy.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCreatedBy()
+    public function getValidatedBy()
     {
-        return $this->createdBy;
+        return $this->validatedBy;
     }
 }
