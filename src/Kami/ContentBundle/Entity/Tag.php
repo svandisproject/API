@@ -129,7 +129,7 @@ class Tag
     }
 
     /**
-     * Get websitePosts.
+     * Get Posts.
      *
      * @return \Doctrine\Common\Collections\Collection
      */

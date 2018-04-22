@@ -4,7 +4,7 @@ parameters:
     kami_worker.socket_user_provider.class:        Kami\WorkerBundle\Security\SocketServerUserProvider
     kami_worker.socket_server_authenticator.class: Kami\WorkerBundle\Security\SocketServerAuthenticator
     kami_worker.scheduler.class:                   Kami\WorkerBundle\Scheduler\Scheduler
-
+    kami_worker.post_creation_listener.class:      Kami\WorkerBundle\Listener\PostCreationListener
 
 services:
     kami_worker.user_provider:
@@ -30,3 +30,11 @@ services:
          arguments:
              - "@doctrine"
          public: true
+
+    kami_worker.post_creation_listener:
+         class: "%kami_worker.post_creation_listener.class%"
+         arguments:
+            - "@doctrine"
+            - "@security.token_storage"
+         tags:
+             - { name: kernel.event_listener, event: kami.api_core.resource_create }

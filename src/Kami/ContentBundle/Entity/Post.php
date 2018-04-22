@@ -5,6 +5,7 @@ namespace Kami\ContentBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
@@ -114,11 +115,27 @@ class Post
     private $tags;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="createdPosts")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     */
+    private $createdBy;
+
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="validatedPosts")
+     * @ORM\JoinTable(name="worker_validated_posts")
+     */
+    private $validatedBy;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tags = new ArrayCollection();
+        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->validatedBy = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -228,6 +245,34 @@ class Post
     }
 
     /**
+     * Set publishedAt.
+     *
+     * @param \DateTime $publishedAt
+     *
+     * @return Post
+     */
+    public function setPublishedAt($publishedAt)
+    {
+        if (!$publishedAt instanceof \DateTime) {
+            $this->publishedAt = \DateTime::createFromFormat('d-m-Y g:i:s', $publishedAt);
+            return $this;
+        }
+        $this->publishedAt = $publishedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get publishedAt.
+     *
+     * @return \DateTime
+     */
+    public function getPublishedAt()
+    {
+        return $this->publishedAt;
+    }
+
+    /**
      * Set createdAt.
      *
      * @param \DateTime $createdAt
@@ -252,35 +297,6 @@ class Post
     }
 
     /**
-     * Set publishedAt.
-     *
-     * @param $publishedAt
-     *
-     * @return Post
-     */
-    public function setPublishedAt($publishedAt)
-    {
-        if (!$publishedAt instanceof \DateTime) {
-            $this->publishedAt = \DateTime::createFromFormat('d-m-Y g:i:s', $publishedAt);
-
-            return $this;
-        }
-        $this->publishedAt = $publishedAt;
-
-        return $this;
-    }
-
-    /**
-     * Get publishedAt.
-     *
-     * @return \DateTime
-     */
-    public function getPublishedAt()
-    {
-        return $this->publishedAt;
-    }
-
-    /**
      * Add tag.
      *
      * @param \Kami\ContentBundle\Entity\Tag $tag
@@ -289,7 +305,6 @@ class Post
      */
     public function addTag(\Kami\ContentBundle\Entity\Tag $tag)
     {
-        $tag->addPost($this);
         $this->tags[] = $tag;
 
         return $this;
@@ -315,5 +330,72 @@ class Post
     public function getTags()
     {
         return $this->tags;
+    }
+
+    /**
+     * Set createdBy.
+     *
+     * @param \Kami\WorkerBundle\Entity\Worker|null $createdBy
+     *
+     * @return Post
+     */
+    public function setCreatedBy(\Kami\WorkerBundle\Entity\Worker $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy.
+     *
+     * @return \Kami\WorkerBundle\Entity\Worker|null
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
+    }
+
+    public function setValidatedBy(array $validatedBy)
+    {
+        $this->validatedBy = $validatedBy;
+
+        return $this;
+    }
+
+    /**
+     * Add validatedBy.
+     *
+     * @param \Kami\WorkerBundle\Entity\Worker $validatedBy
+     *
+     * @return Post
+     */
+    public function addValidatedBy(\Kami\WorkerBundle\Entity\Worker $validatedBy)
+    {
+        $this->validatedBy[] = $validatedBy;
+
+        return $this;
+    }
+
+    /**
+     * Remove validatedBy.
+     *
+     * @param \Kami\WorkerBundle\Entity\Worker $validatedBy
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeValidatedBy(\Kami\WorkerBundle\Entity\Worker $validatedBy)
+    {
+        return $this->validatedBy->removeElement($validatedBy);
+    }
+
+    /**
+     * Get validatedBy.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getValidatedBy()
+    {
+        return $this->validatedBy;
     }
 }
