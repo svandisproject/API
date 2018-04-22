@@ -6,6 +6,18 @@ fixtures:
         content: post content 1
         source: facebook
         publishedAt: 01-01-2001 00:00:00
+        createdBy: worker0
+        validatedBy:
+            - worker1
+            - worker2
+            - worker3
+            - worker4
+            - worker5
+            - worker6
+            - worker7
+            - worker8
+            - worker9
+            - worker10
 
     post2:
         title: Test post 2

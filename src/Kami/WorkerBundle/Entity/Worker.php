@@ -5,7 +5,9 @@ namespace Kami\WorkerBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Kami\ContentBundle\Entity\Post;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Worker
@@ -16,6 +18,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class Worker implements UserInterface
 {
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->validatedPosts = new ArrayCollection();
+
+    }
+
     /**
      * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="workers")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -31,7 +43,6 @@ class Worker implements UserInterface
      * @Api\Access({"ROLE_USER"})
      */
     private $id;
-
 
 
     /**
@@ -54,6 +65,12 @@ class Worker implements UserInterface
      * @var array
      */
     private $roles = ['ROLE_WORKER'];
+
+    /**
+     * @var ArrayCollection
+     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", mappedBy="validatedBy")
+     */
+    private $validatedPosts;
 
     /**
      * Get id.
@@ -130,6 +147,42 @@ class Worker implements UserInterface
     public function getUser()
     {
         return $this->user;
+    }
+
+    /**
+     * Add validatedPost
+     *
+     * @param \Kami\ContentBundle\Entity\Post $post
+     *
+     * @return \Worker
+     */
+    public function addValidatedPosts(\Kami\ContentBundle\Entity\Post $post)
+    {
+        $this->validatedPosts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove validatedPost.
+     *
+     * @param \Kami\ContentBundle\Entity\Post $post
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeValidatedPost(\Kami\ContentBundle\Entity\Post $post)
+    {
+        return $this->validatedPosts->removeElement($post);
+    }
+
+    /**
+     * Get validatedPosts.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getValidatedPosts()
+    {
+        return $this->validatedPosts;
     }
 
     /**
