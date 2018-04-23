@@ -12,7 +12,7 @@ class PostControllerTest extends ApiTestCase
     public function testIndexLoggedInAsAnonymous()
     {
         $response = $this->request('GET', '/api/post');
-        $this->assertJsonResponse($response, 403);
+        $this->assertJsonResponse($response, 200);
     }
 
     public function testIndexLoggedInAsAdmin()
@@ -32,7 +32,7 @@ class PostControllerTest extends ApiTestCase
     public function testFilterLoggedInAsAnonymous()
     {
         $response = $this->request('GET', '/api/post/filter');
-        $this->assertJsonResponse($response, 403);
+        $this->assertJsonResponse($response, 200);
     }
 
     public function testFilterLoggedInAsAdmin()
@@ -53,7 +53,7 @@ class PostControllerTest extends ApiTestCase
     public function testFilterLimitLoggedInAsAnonymous()
     {
         $response = $this->request('GET', '/api/post/filter?limit=1');
-        $this->assertJsonResponse($response, 403);
+        $this->assertJsonResponse($response, 200);
     }
 
     public function testFilterByExistingParameterLoggedInAsUser()
