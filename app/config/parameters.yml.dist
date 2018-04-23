@@ -25,3 +25,14 @@ parameters:
     # Socket servers
     socket_server_url: http://localhost:1337
     socket_server_secret: testSocketSecret
+
+    # Pusher configuration
+    pusher_scheme: https
+    pusher_host: api-eu.pusher.com
+    pusher_port: 443
+    pusher_cluster: eu
+    pusher_timeout: 30
+    pusher_debug: "%kernel.debug%"
+    pusher_app_id: 513696
+    pusher_key: 139ee335d6ffa4609ca9
+    pusher_secret: 4eb1eacb7beb23571c99

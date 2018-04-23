@@ -7,41 +7,30 @@ namespace Kami\WorkerBundle\Listener;
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Kami\ApiCoreBundle\Event\CrudEvent;
 use Kami\ContentBundle\Entity\Post;
-use Kami\WorkerBundle\Entity\Worker;
+use Pusher\Pusher;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 
 class PostCreationListener
 {
-    private $doctrine;
+    private $pusher;
 
-    private $worker;
-
-    public function __construct(Registry $doctrine, TokenStorage $tokenStorage)
+    public function __construct(Pusher $pusher)
     {
-        $this->doctrine = $doctrine;
-        if ($tokenStorage->getToken()->getUser() instanceof Worker) {
-            $this->worker = $tokenStorage->getToken()->getUser();
-        }
+        $this->pusher = $pusher;
     }
 
-    public function onKamiApiCoreResourceCreate(CrudEvent $event)
+    public function onKamiApiCoreResourcecreated(CrudEvent $event)
     {
-        if (Post::class === $event->getReflection()->getName()) {
-            $submittedPost = $event->getRequest()->get('post');
-            $existingPost = $this->doctrine->getRepository(Post::class)->findOneBy([
-                'url' => $submittedPost['url']
+        if ($event->getData() instanceof Post) {
+            $this->pusher->trigger('news-feed', 'new-post', [
+                'message' => [
+                    'title' => $event->getData()->getTitle(),
+                    'content' => $event->getData()->getContent(),
+                    'source' => $event->getData()->getSource(),
+                    'publishedAt' => $event->getData()->getPublishedAt()->getTimestamp(),
+                    'tags' => $event->getData()->getTags()
+                ]
             ]);
-
-            if ($existingPost) {
-                if ($existingPost->getTitle() == $submittedPost['title']
-                    && $existingPost->getContent() == $submittedPost['content']) {
-                    if ($this->worker) {
-                       $existingPost->addValidatedBy($this->worker);
-                       $this->doctrine->getManager()->persist($existingPost);
-                       $this->doctrine->getManager()->flush();
-                    }
-                }
-            }
         }
     }
 }
