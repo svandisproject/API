@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Knp\Bundle\GaufretteBundle\KnpGaufretteBundle(),
             new Khepin\YamlFixturesBundle\KhepinYamlFixturesBundle(),
             new Doctrine\Bundle\MigrationsBundle\DoctrineMigrationsBundle(),
+            new Lopi\Bundle\PusherBundle\LopiPusherBundle(),
 
             new Kami\ApiCoreBundle\KamiApiCoreBundle(),
             new Kami\UserBundle\KamiUserBundle(),

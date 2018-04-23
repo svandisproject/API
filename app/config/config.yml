@@ -115,3 +115,16 @@ khepin_yaml_fixtures:
         - KamiWorkerBundle
         - KamiContentBundle
     directory: Resources/fixtures
+
+# LopiPusher Configuration
+lopi_pusher:
+    # Default configuration
+    scheme: "%pusher_scheme%"
+    host: "%pusher_host%"
+    port: "%pusher_port%"
+    cluster: "%pusher_cluster%"
+    timeout: "%pusher_timeout%"
+    debug: "%pusher_debug%"
+    app_id: "%pusher_app_id%"
+    key: "%pusher_key%"
+    secret: "%pusher_secret%"

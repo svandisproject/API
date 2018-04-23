@@ -34,7 +34,6 @@ services:
     kami_worker.post_creation_listener:
          class: "%kami_worker.post_creation_listener.class%"
          arguments:
-            - "@doctrine"
-            - "@security.token_storage"
+            - "@lopi_pusher.pusher"
          tags:
-             - { name: kernel.event_listener, event: kami.api_core.resource_create }
+             - { name: kernel.event_listener, event: kami.api_core.resource_created }
