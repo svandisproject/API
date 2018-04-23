@@ -15,3 +15,11 @@ fixtures:
         contentSelector: .post-full-text
         publishedAtSelector: .date
         timeInterval: 1000
+    cryptocurrencynews:
+        title: Cryptocurrencynews
+        url: https://cryptocurrencynews.com/
+        titleSelector: .entry-title
+        contentSelector: .entry-content
+        publishedAtSelector: .entry-meta-date
+        dateFormat: MMM, D, YYYY
+        timeInterval: 1000
