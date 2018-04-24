@@ -5,6 +5,7 @@ namespace Kami\ContentBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Kami\AssetBundle\Entity\Asset;
 use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -138,12 +139,54 @@ class Post
     private $validatedBy;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="posts")
+     */
+    private $assets;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->tags = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->validatedBy = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->validatedBy = new ArrayCollection();
+        $this->assets = new ArrayCollection();
+    }
+
+    /**
+     * Add asset.
+     *
+     * @param Asset $asset
+     *
+     * @return Post
+     */
+    public function addAsset(Asset $asset)
+    {
+        $this->assets[] = $asset;
+
+        return $this;
+    }
+
+    /**
+     * Remove asset.
+     *
+     * @param Asset $asset
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAsset(Asset $asset)
+    {
+        return $this->assets->removeElement($asset);
+    }
+
+    /**
+     * Get assets.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAssets()
+    {
+        return $this->assets;
     }
 
     /**
