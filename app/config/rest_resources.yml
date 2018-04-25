@@ -8,3 +8,4 @@ kami_api_core:
     - { name: facebook-feed, entity: Kami\WorkerBundle\Entity\FacebookFeed }
     - { name: twitter-feed, entity: Kami\WorkerBundle\Entity\TwitterFeed }
     - { name: reddit-feed, entity: Kami\WorkerBundle\Entity\RedditFeed }
+    - { name: asset, entity: Kami\AssetBundle\Entity\Asset }
