@@ -6,6 +6,7 @@ use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\Util\TokenGenerator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation as JMS;
 
 
 /**
@@ -25,6 +26,7 @@ class User extends BaseUser
     /**
      * @var string
      * @ORM\Column(type="string", length=16)
+     * @JMS\Exclude()
      */
     private $workerToken;
 
