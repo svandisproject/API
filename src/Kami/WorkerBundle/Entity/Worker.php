@@ -50,6 +50,7 @@ class Worker implements UserInterface
      *
      * @ORM\Column(name="secret", type="string", length=128, unique=true)
      * @Api\Access({"ROLE_USER"})
+     * @JMS\Exclude()
      */
     private $secret;
 
@@ -63,6 +64,7 @@ class Worker implements UserInterface
 
     /**
      * @var array
+     * @JMS\Exclude()
      */
     private $roles = ['ROLE_WORKER'];
 
