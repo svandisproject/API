@@ -63,6 +63,7 @@ class Worker implements UserInterface
 
     /**
      * @var array
+     * @JMS\Exclude()
      */
     private $roles = ['ROLE_WORKER'];
 

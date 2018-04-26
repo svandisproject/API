@@ -128,3 +128,11 @@ lopi_pusher:
     app_id: "%pusher_app_id%"
     key: "%pusher_key%"
     secret: "%pusher_secret%"
+
+# JMS Metadata for User Entity
+jms_serializer:
+    metadata:
+        directories:
+            FOSUserBundle:
+                namespace_prefix: FOS\UserBundle
+                path: "%kernel.root_dir%/serializer/FOSUserBundle"
