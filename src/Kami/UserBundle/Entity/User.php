@@ -7,12 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 use Kami\Util\TokenGenerator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use JMS\Serializer\Annotation as JMS;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="`user`")
  * @UniqueEntity("workerToken")
+ * @Api\Access({"ROLE_WORKER")
  */
 class User extends BaseUser
 {
@@ -26,7 +28,7 @@ class User extends BaseUser
     /**
      * @var string
      * @ORM\Column(type="string", length=16)
-     * @JMS\Exclude()
+     * @JMS\Expose(if="service('kami_api_core.access_manager').canAccessProperty(object, context, property_metadata)")
      */
     private $workerToken;
 
