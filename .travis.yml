@@ -29,7 +29,7 @@ before-install:
 install:
   - composer install
   - mkdir var/jwt
-  - bin/generate_token.sh
+  - bin/generate-token
   - cp app/config/parameters.yml.dist app/config/parameters.yml
 
 # Run script
