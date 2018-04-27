@@ -73,7 +73,7 @@
         "compile": [
             "rm web/app_dev.php",
             "bin/refresh",
-            "bin/generate_token.sh"
+            "bin/generate-token"
         ]
     },
     "config": {
