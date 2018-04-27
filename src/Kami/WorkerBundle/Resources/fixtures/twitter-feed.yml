@@ -1,0 +1,65 @@
+model: Kami\WorkerBundle\Entity\TwitterFeed
+fixtures:
+    VitalikButerin:
+        username: '@VitalikButerin'
+        consumerKey: uV45gJssy31kzcdY1w4vMptTd
+        consumerSecret: xMF6zPF1fvzdCVHT11bqqVxWaZ8f8mfTgC9aJGLX2svVxPdiH2
+        accessTokenKey: 940144148610461696-B97z8hMUIFEnc5mWIPLNPWI1e44WRHF
+        accessTokenSecret: kRQSpfMw58z21pyrGQS2Yqw6tFoAQ66jCQbb9ReO3AZYh
+        timeInterval: 1000
+    VitalikButerin:
+            username: '@creditscom'
+            consumerKey: uV45gJssy31kzcdY1w4vMptTd
+            consumerSecret: xMF6zPF1fvzdCVHT11bqqVxWaZ8f8mfTgC9aJGLX2svVxPdiH2
+            accessTokenKey: 940144148610461696-B97z8hMUIFEnc5mWIPLNPWI1e44WRHF
+            accessTokenSecret: kRQSpfMw58z21pyrGQS2Yqw6tFoAQ66jCQbb9ReO3AZYh
+            timeInterval: 1000
+    VitalikButerin:
+            username: '@PowerLedger_io'
+            consumerKey: uV45gJssy31kzcdY1w4vMptTd
+            consumerSecret: xMF6zPF1fvzdCVHT11bqqVxWaZ8f8mfTgC9aJGLX2svVxPdiH2
+            accessTokenKey: 940144148610461696-B97z8hMUIFEnc5mWIPLNPWI1e44WRHF
+            accessTokenSecret: kRQSpfMw58z21pyrGQS2Yqw6tFoAQ66jCQbb9ReO3AZYh
+            timeInterval: 1000
+    VitalikButerin:
+            username: '@omise_go'
+            consumerKey: uV45gJssy31kzcdY1w4vMptTd
+            consumerSecret: xMF6zPF1fvzdCVHT11bqqVxWaZ8f8mfTgC9aJGLX2svVxPdiH2
+            accessTokenKey: 940144148610461696-B97z8hMUIFEnc5mWIPLNPWI1e44WRHF
+            accessTokenSecret: kRQSpfMw58z21pyrGQS2Yqw6tFoAQ66jCQbb9ReO3AZYh
+            timeInterval: 1000
+    VitalikButerin:
+            username: '@Ripple'
+            consumerKey: uV45gJssy31kzcdY1w4vMptTd
+            consumerSecret: xMF6zPF1fvzdCVHT11bqqVxWaZ8f8mfTgC9aJGLX2svVxPdiH2
+            accessTokenKey: 940144148610461696-B97z8hMUIFEnc5mWIPLNPWI1e44WRHF
+            accessTokenSecret: kRQSpfMw58z21pyrGQS2Yqw6tFoAQ66jCQbb9ReO3AZYh
+            timeInterval: 1000
+    VitalikButerin:
+            username: '@gnosisPM'
+            consumerKey: uV45gJssy31kzcdY1w4vMptTd
+            consumerSecret: xMF6zPF1fvzdCVHT11bqqVxWaZ8f8mfTgC9aJGLX2svVxPdiH2
+            accessTokenKey: 940144148610461696-B97z8hMUIFEnc5mWIPLNPWI1e44WRHF
+            accessTokenSecret: kRQSpfMw58z21pyrGQS2Yqw6tFoAQ66jCQbb9ReO3AZYh
+            timeInterval: 1000
+    VitalikButerin:
+            username: '@AugurProject'
+            consumerKey: uV45gJssy31kzcdY1w4vMptTd
+            consumerSecret: xMF6zPF1fvzdCVHT11bqqVxWaZ8f8mfTgC9aJGLX2svVxPdiH2
+            accessTokenKey: 940144148610461696-B97z8hMUIFEnc5mWIPLNPWI1e44WRHF
+            accessTokenSecret: kRQSpfMw58z21pyrGQS2Yqw6tFoAQ66jCQbb9ReO3AZYh
+            timeInterval: 1000
+    VitalikButerin:
+            username: '@StellarOrg'
+            consumerKey: uV45gJssy31kzcdY1w4vMptTd
+            consumerSecret: xMF6zPF1fvzdCVHT11bqqVxWaZ8f8mfTgC9aJGLX2svVxPdiH2
+            accessTokenKey: 940144148610461696-B97z8hMUIFEnc5mWIPLNPWI1e44WRHF
+            accessTokenSecret: kRQSpfMw58z21pyrGQS2Yqw6tFoAQ66jCQbb9ReO3AZYh
+            timeInterval: 1000
+    VitalikButerin:
+            username: '@golemproject'
+            consumerKey: uV45gJssy31kzcdY1w4vMptTd
+            consumerSecret: xMF6zPF1fvzdCVHT11bqqVxWaZ8f8mfTgC9aJGLX2svVxPdiH2
+            accessTokenKey: 940144148610461696-B97z8hMUIFEnc5mWIPLNPWI1e44WRHF
+            accessTokenSecret: kRQSpfMw58z21pyrGQS2Yqw6tFoAQ66jCQbb9ReO3AZYh
+            timeInterval: 1000
