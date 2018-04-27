@@ -24,7 +24,7 @@ class FilterSettings
 
     /**
      * @var string
-     *  @ORM\Column(name="searchQuery", type="string", length=255)
+     *  @ORM\Column(name="search_query", type="string", length=255)
      */
     private $searchQuery;
 
@@ -53,6 +53,12 @@ class FilterSettings
      */
     private $votingFilters;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="workers")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
 
     public function __construct()
     {
@@ -62,6 +68,85 @@ class FilterSettings
         $this->importanceFilters = new ArrayCollection();
         $this->votingFilters = new ArrayCollection();
 
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set searchQuery.
+     *
+     * @param string $searchQuery
+     *
+     * @return FilterSettings
+     */
+    public function setSearchQuery($searchQuery)
+    {
+        $this->searchQuery = $searchQuery;
+
+        return $this;
+    }
+
+    /**
+     * Get searchQuery.
+     *
+     * @return string
+     */
+    public function getSecret()
+    {
+        return $this->searchQuery;
+    }
+
+    /**
+     * @return ArrayCollection|GenericOptions[]
+     */
+
+    public function getAssets()
+    {
+        return $this->assets;
+    }
+
+    /**
+     * @return ArrayCollection|GenericOptions[]
+     */
+
+    public function getRegion()
+    {
+        return $this->region;
+    }
+
+    /**
+     * @return ArrayCollection|GenericCheckbox[]
+     */
+
+    public function getActivityFields()
+    {
+        return $this->activityFields;
+    }
+
+    /**
+     * @return ArrayCollection|GenericCheckbox[]
+     */
+
+    public function getImportanceFilters()
+    {
+        return $this->importanceFilters;
+    }
+
+    /**
+     * @return ArrayCollection|GenericCheckbox[]
+     */
+
+    public function getVotingFilters ()
+    {
+        return $this->votingFilters;
     }
 
 
