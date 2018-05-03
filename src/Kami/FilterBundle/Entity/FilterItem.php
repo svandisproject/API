@@ -5,13 +5,14 @@ namespace Kami\FilterBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use const null;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
 
-class GenericOptions
+class FilterItem
 {
-
     /**
      * @var string
      *
@@ -32,32 +33,25 @@ class GenericOptions
 
     /**
      * @var string
-     *
      * @ORM\Column(name="value", type="string", length=255)
-     * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      */
-    private $value;
+    private $value = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\FilterBundle\Entity\FiltersSettings", inversedBy="assets")
-     * @ORM\JoinColumn(name="filter_assets", referencedColumnName="id")
+     * @var bool
+     *
+     * @ORM\Column(name="selected", type="boolean")
      */
-    private $filterAssets;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Kami\FilterBundle\Entity\FiltersSettings", inversedBy="region")
-     * @ORM\JoinColumn(name="filter_region", referencedColumnName="id")
-     */
-    private $filterRegion;
+    private $selected;
 
 
     /**
-     * Set id.
+     * Set id
      *
      * @param string $id
      *
-     * @return GenericOptions
+     * @return FilterItem
      */
     public function setId($id)
     {
@@ -67,7 +61,7 @@ class GenericOptions
     }
 
     /**
-     * Get id.
+     * Get id
      *
      * @return string
      */
@@ -77,11 +71,11 @@ class GenericOptions
     }
 
     /**
-     * Set label.
+     * Set label
      *
      * @param string $label
      *
-     * @return GenericOptions
+     * @return FilterItem
      */
     public function setLabel($label)
     {
@@ -91,7 +85,7 @@ class GenericOptions
     }
 
     /**
-     * Get label.
+     * Get label
      *
      * @return string
      */
@@ -101,11 +95,11 @@ class GenericOptions
     }
 
     /**
-     * Set value.
+     * Set value
      *
      * @param string $value
      *
-     * @return GenericOptions
+     * @return FilterItem
      */
     public function setValue($value)
     {
@@ -115,7 +109,7 @@ class GenericOptions
     }
 
     /**
-     * Get value.
+     * Get value
      *
      * @return string
      */
@@ -125,49 +119,28 @@ class GenericOptions
     }
 
     /**
-     * Set filterAssets
+     * Set selected
      *
-     * @param \Kami\FilterBundle\Entity\FilterSettings|null $filterAssets
-     * @return GenericOptions
+     * @param boolean $selected
+     *
+     * @return FilterItem
      */
-    public function setFilterVoting(\Kami\FilterBundle\Entity\FilterSettings $filterAssets = null)
+    public function setSelected($selected)
     {
-        $this->filterAssets = $filterAssets;
+        $this->selected = $selected;
 
         return $this;
     }
 
     /**
-     * Get filterVoting
+     * Get selected
      *
-     * @return \Kami\FilterBundle\Entity\FilterSettings|null
+     * @return boolean
      */
-    public function getFilterVoting()
+    public function getSelected()
     {
-        return $this->filterAssets;
+        return $this->selected;
     }
 
-    /**
-     * Set filterRegion
-     *
-     * @param \Kami\FilterBundle\Entity\FilterSettings|null $filterRegion
-     * @return GenericOptions
-     */
-    public function setFilterRegion(\Kami\FilterBundle\Entity\FilterSettings $filterRegion = null)
-    {
-        $this->filterRegion = $filterRegion;
-
-        return $this;
-    }
-
-    /**
-     * Get $filterRegion
-     *
-     * @return \Kami\FilterBundle\Entity\FilterSettings|null
-     */
-    public function getFilterRegion()
-    {
-        return $this->filterRegion;
-    }
 
 }

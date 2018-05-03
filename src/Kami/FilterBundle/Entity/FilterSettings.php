@@ -29,32 +29,32 @@ class FilterSettings
     private $searchQuery;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\GenericOptions", mappedBy="filterAssets")
+     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
      */
     private $assets;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\GenericOptions", mappedBy="filterRegion")
+     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
      */
     private $region;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\GenericCheckbox", mappedBy="filterFields")
+     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
      */
    private $activityFields;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\GenericCheckbox", mappedBy="filterImportance")
+     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id"))
      */
     private $importanceFilters;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\GenericCheckbox", mappedBy="filterVoting")
+     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
      */
     private $votingFilters;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="workers")
+     * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="filterSettings")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -99,13 +99,13 @@ class FilterSettings
      *
      * @return string
      */
-    public function getSecret()
+    public function getSearchQuery()
     {
         return $this->searchQuery;
     }
 
     /**
-     * @return ArrayCollection|GenericOptions[]
+     * @return ArrayCollection|FilterItem[]
      */
 
     public function getAssets()
@@ -114,7 +114,7 @@ class FilterSettings
     }
 
     /**
-     * @return ArrayCollection|GenericOptions[]
+     * @return ArrayCollection|FilterItem[]
      */
 
     public function getRegion()
@@ -123,7 +123,7 @@ class FilterSettings
     }
 
     /**
-     * @return ArrayCollection|GenericCheckbox[]
+     * @return ArrayCollection|FilterItem[]
      */
 
     public function getActivityFields()
@@ -132,7 +132,7 @@ class FilterSettings
     }
 
     /**
-     * @return ArrayCollection|GenericCheckbox[]
+     * @return ArrayCollection|FilterItem[]
      */
 
     public function getImportanceFilters()
@@ -141,7 +141,7 @@ class FilterSettings
     }
 
     /**
-     * @return ArrayCollection|GenericCheckbox[]
+     * @return ArrayCollection|FilterItem[]
      */
 
     public function getVotingFilters ()
@@ -149,5 +149,14 @@ class FilterSettings
         return $this->votingFilters;
     }
 
+    /**
+     * Get user.
+     *
+     * @return \Kami\UserBundle\Entity\User
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
 
 }
