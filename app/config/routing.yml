@@ -4,7 +4,7 @@ kami_worker:
     prefix:   /
 
 kami_api_core:
-    resource: "@KamiApiCoreBundle/Resources/config/routing.yml"
+    resource: "@KamiApiCoreBundle/Resources/config/routing.xml"
 
 api_login_check:
     path: /api/login_check
