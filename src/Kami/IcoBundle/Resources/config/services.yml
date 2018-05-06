@@ -1,0 +1,9 @@
+services:
+    ico.normalizer:
+        class: Kami\IcoBundle\Normalizer\IcoNormalizer
+        arguments:
+            - "@doctrine.orm.entity_manager"
+    ico.bench:
+        class: Kami\IcoBundle\Normalizer\IcoBench
+        arguments:
+            - "@doctrine.orm.entity_manager"

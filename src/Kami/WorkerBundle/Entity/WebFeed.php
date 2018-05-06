@@ -37,7 +37,6 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -48,7 +47,6 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $url;
 
@@ -59,7 +57,6 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $titleSelector;
 
@@ -70,7 +67,6 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $contentSelector;
 
@@ -81,7 +77,6 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $publishedAtSelector;
 
@@ -92,7 +87,6 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $dateFormat;
 
@@ -103,7 +97,6 @@ class WebFeed
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $timeInterval;
 

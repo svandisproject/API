@@ -35,6 +35,7 @@ class TwitterFeed
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="username", type="string", length=100)
+     * @ORM\Column(name="username", type="string", length=100)
      */
     private $username;
 

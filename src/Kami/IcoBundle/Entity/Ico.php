@@ -5,11 +5,13 @@ namespace Kami\IcoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\AssetBundle\Entity\Asset;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IcoRepository")
  * @ORM\Table(name="`ico`")
+ * @UniqueEntity({"remoteId"})
  */
 class Ico
 {
@@ -18,33 +20,85 @@ class Ico
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\TokenType")
+     * @ORM\Column(name="rating", type="decimal")
+     */
+    private $rating;
+
+    /**
+     * @ORM\Column(name="rating_team", type="decimal", nullable=true)
+     */
+    private $ratingTeam;
+
+    /**
+     * @ORM\Column(name="rating_profile", type="decimal", nullable=true)
+     */
+    private $ratingProfile;
+    /**
+     * @ORM\Column(name="rating_vision", type="decimal", nullable=true)
+     */
+    private $ratingVision;
+
+    /**
+     * @ORM\Column(name="rating_product", type="decimal", nullable=true)
+     */
+    private $ratingProduct;
+
+    /**
+     *@ORM\Column(type="integer", unique=true)
+     */
+    private $remoteId;
+
+    /**
+     * @ORM\Column(name="ico_url", type="string", length=255, nullable=true)
+     */
+    private $icoUrl;
+
+    /**
+     * @ORM\Column(name="ico_tagline", type="string", length=255, nullable=true)
+     */
+    private $icoTagline;
+
+    /**
+     * @ORM\Column(name="ico_intro", type="text", nullable=true)
+     */
+    private $icoIntro;
+
+    /**
+     * @ORM\Column(name="ico_about", type="text", nullable=true)
+     */
+    private $icoAbout;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\TokenType", inversedBy="icos")
      * @ORM\JoinColumn(name="token_type_id", referencedColumnName="id")
      */
     private $tokenType;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      */
     private $restrictedCountries;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="icos")
+     * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Asset")
+     * @ORM\JoinTable(name="ico_asset",
+     *     joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="asset_id", referencedColumnName="id")})
      */
-    private $assets;
+    private $acceptingAssets;
 
     /**
      *
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
-     * @ORM\JoinTable(name="ico_blockhain_advisors",
+     * @ORM\JoinTable(name="ico_blockchain_advisors",
      *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
      *      )
      */
-    private $blockhainAdvisors;
+    private $blockchainAdvisors;
 
     /**
      *@ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
@@ -65,30 +119,92 @@ class Ico
     private $legalPartners;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Product", inversedBy="ico")
-     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     * @ORM\Column(name="ico_token", type="string", length=100)
      */
-    private $product;
+    private $icoToken;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="ico")
-     * @ORM\JoinColumn(name="industry_id", referencedColumnName="id")
+     * @ORM\Column(name="ico_platform", type="string", length=100)
      */
-    private $industry;
+    private $platform;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="competitorsIco")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="icos")
+     * @ORM\JoinTable(name="icos_industies")
      */
-    private $competitorForIco;
+    private $industries;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="competitorForIco")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="competitorsIcos")
+     */
+    private $competitorForIcos;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="competitorForIcos")
      * @ORM\JoinTable(name="competitors",
      *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="competitor_ico_id", referencedColumnName="id")}
      *      )
      */
-    private $competitorsIco;
+    private $competitorsIcos;
+
+    /**
+     * @ORM\Column(type="string", name="ico_token_price", nullable=true)
+     */
+    protected $icoTokenPrice;
+
+    /**
+     * @ORM\Column(type="string", name="hard_cap", nullable=true)
+     */
+    private $hardCap;
+
+    /**
+     * @ORM\Column(type="string", name="min_cap", nullable=true)
+     */
+    private $minCap;
+
+    /**
+     * @ORM\Column(type="string", name="raised")
+     */
+    private $raised;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Kyc")
+     * @ORM\JoinTable(name="kyc_icos",
+     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="kyc_id", referencedColumnName="id")}
+     *      )
+     */
+    private $kyc;
+
+    /**
+     * @ORM\Column(type="boolean", name="bonus", nullable=true)
+     */
+    private $bonus;
+
+    /**
+     * @ORM\Column(type="datetime", name="open_presale", nullable=true)
+     */
+    private $openPresale;
+
+    /**
+     * @ORM\Column(type="integer", name="team_tokens", nullable=true)
+     */
+    private $teamTokens;
+
+    /**
+     * @ORM\Column(type="boolean", name="smart_contract_audit", nullable=true)
+     */
+    private $smartContractAudit;
+
+    /**
+     *@ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
+     *@ORM\JoinTable(name="ico_member",
+     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="member_id", referencedColumnName="id")}
+     *      )
+     */
+    private $teamMembers;
 
     /**
      * @ORM\Column(type="string")
@@ -96,31 +212,193 @@ class Ico
     private $country;
 
     public function __construct() {
-        $this->countryRestrictions = new ArrayCollection();
-        $this->assets = new ArrayCollection();
-        $this->blockhainAdvisors = new ArrayCollection();
+        $this->acceptingAssets = new ArrayCollection();
+        $this->blockchainAdvisors = new ArrayCollection();
         $this->industryAdvisors = new ArrayCollection();
         $this->legalPartners = new ArrayCollection();
-        $this->competitorForIco = new ArrayCollection();
-        $this->competitorsIco = new ArrayCollection();
+        $this->competitorForIcos = new ArrayCollection();
+        $this->competitorsIcos = new ArrayCollection();
+        $this->industries = new ArrayCollection();
+        $this->teamMembers = new ArrayCollection();
+        $this->kyc = new ArrayCollection();
     }
 
     /**
-     * Add asset.
+     * Add blockchainAdvisor.
+     * @param Person $blockchainAdvisor
+     *
+     * @return Ico
+     */
+    public function addBlockhainAdvisor(Person $blockchainAdvisor)
+    {
+        $this->blockchainAdvisors[] = $blockchainAdvisor;
+        return $this;
+    }
+
+    /**
+     * Remove blockchainAdvisor
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeBlockchainAdvisor(Person $blockchainAdvisor)
+    {
+       return $this->blockchainAdvisors->removeElement($blockchainAdvisor);
+    }
+
+    /**
+     *
+     *  @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBlockchainAdvisors()
+    {
+        return $this->blockchainAdvisors;
+    }
+
+    /**
+     * Add industryAdvisor.
+     * @param Person $industryAdvisor
+     *
+     * @return Ico
+     */
+    public function addIndustryAdvisor(Person $industryAdvisor)
+    {
+        $this->industryAdvisors[] = $industryAdvisor;
+        return $this;
+    }
+
+    /**
+     * Remove industryAdvisor
+     *
+     * @param Person $industryAdvisor
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeIndustryAdvisor(Person $industryAdvisor)
+    {
+        return $this->industryAdvisors->removeElement($industryAdvisor);
+    }
+
+    /**
+     *
+     *  @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIndustryAdvisor()
+    {
+        return $this->industryAdvisors;
+    }
+
+    /**
+     * Add legalPartner.
+     * @param Person $legalPartner
+     *
+     * @return Ico
+     */
+    public function addLegalPartner(Person $legalPartner)
+    {
+        $this->legalPartners[] = $legalPartner;
+        return $this;
+    }
+
+    /**
+     * Remove legalPartner
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeLegalPartner(Person $legalPartner)
+    {
+        return $this->legalPartners->removeElement($legalPartner);
+    }
+
+    /**
+     * Get legalPartners
+     *
+     *  @return \Doctrine\Common\Collections\Collection
+     */
+    public function getLegalPartners()
+    {
+        return $this->legalPartners;
+    }
+
+    /**
+     * Add teamMember.
+     * @param Person $teamMember
+     *
+     * @return Ico
+     */
+    public function addTeamMember(Person $teamMember)
+    {
+        if($this->teamMembers->contains($teamMember)){
+                return;
+        }
+        $this->teamMembers[] = $teamMember;
+        return $this;
+    }
+
+    /**
+     * Remove teamMember
+     *
+     * @param Person $teamMember
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTeamMember(Person $teamMember)
+    {
+        return $this->teamMembers->removeElement($teamMember);
+    }
+
+    /**
+     * Add kyc.
+     * @param Kyc $kyc
+     *
+     * @return Ico
+     */
+    public function addKyc(Kyc $kyc)
+    {
+        if($this->kyc->contains($kyc)){
+            return;
+        }
+        $this->kyc[] = $kyc;
+        return $this;
+    }
+
+    /**
+     * Remove kyc
+     *
+     * @param Kyc $kyc
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeKyc(Kyc $kyc)
+    {
+        return $this->kyc->removeElement($kyc);
+    }
+
+    /**
+     * Get kyc
+     *
+     *  @return \Doctrine\Common\Collections\Collection
+     */
+    public function getKyc()
+    {
+        return $this->kyc;
+    }
+
+    /**
+     * Add acceptingAsset.
      *
      * @param Asset $asset
      *
      * @return Ico
      */
-    public function addAsset(Asset $asset)
+    public function addAcceptingAsset(Asset $asset)
     {
-        $this->assets[] = $asset;
-
+        $asset->addIco($this);
+        $this->acceptingAssets[] = $asset;
         return $this;
     }
 
     /**
-     * Remove asset.
+     * Remove acceptingAsset.
      *
      * @param Asset $asset
      *
@@ -128,65 +406,208 @@ class Ico
      */
     public function removeAsset(Asset $asset)
     {
-        return $this->assets->removeElement($asset);
+        return $this->acceptingAssets->removeElement($asset);
     }
 
     /**
-     * Get assets.
+     * Get acceptingAssets.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getAssets()
+    public function getAcceptingAssets()
     {
-        return $this->assets;
+        return $this->acceptingAssets;
     }
 
     /**
-     * Set product.
+     * Set icoToken.
      *
-     * @param Product $product
+     * @param string $token
      *
      * @return Ico
      */
-    public function setProduct($product)
+    public function setIcoToken($token)
     {
-        $this->product = $product;
+        $this->icoToken = $token;
 
         return $this;
     }
 
     /**
-     * Get product.
+     * Get icoToken.
      *
-     * @return Product
+     * @return string
      */
-    public function getProduct()
+    public function getIcoToken()
     {
-        return $this->product;
+        return $this->icoToken;
     }
 
     /**
-     * Set industry.
+     * @param string $icoAbout
+     *
+     * @return Ico
+     */
+    public function setIcoAbout($icoAbout)
+    {
+        $this->icoAbout = $icoAbout;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcoAbout()
+    {
+        return $this->icoAbout;
+    }
+
+    /**
+     * @param string $icoIntro
+     *
+     * @return Ico
+     */
+    public function setIcoIntro($icoIntro)
+    {
+        $this->icoIntro = $icoIntro;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcoIntro()
+    {
+        return $this->icoIntro;
+    }
+
+    /**
+     * @param string $icoTagline
+     *
+     * @return Ico
+     */
+    public function setIcoTagline($icoTagline)
+    {
+        $this->icoTagline = $icoTagline;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcoTagline()
+    {
+        return $this->icoTagline;
+    }
+
+    /**
+     * @param string $icoUrl
+     *
+     * @return Ico
+     */
+    public function setIcoUrl($icoUrl)
+    {
+        $this->icoUrl = $icoUrl;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIcoUrl()
+    {
+        return $this->icoUrl;
+    }
+
+    /**
+     * Set platform.
+     *
+     * @param string $platform
+     *
+     * @return Ico
+     */
+    public function setPlatform($platform)
+    {
+        $this->platform = $platform;
+
+        return $this;
+    }
+
+    /**
+     * Get platform.
+     *
+     * @return string
+     */
+    public function getPlatform()
+    {
+        return $this->platform;
+    }
+
+    /**
+     * Set remoteId.
+     *
+     * @param int $remoteId
+     *
+     * @return Ico
+     */
+    public function setRemoteId($remoteId)
+    {
+        $this->remoteId = $remoteId;
+
+        return $this;
+    }
+
+    /**
+     * Get remoteId.
+     *
+     * @return int
+     */
+    public function getRemoteId()
+    {
+        return $this->remoteId;
+    }
+
+    /**
+     * Add industries.
      *
      * @param Industry $industry
      *
      * @return Ico
      */
-    public function setIndustry(industry $industry)
+    public function addIndustry(Industry $industry)
     {
-        $this->industry = $industry;
+        if($this->industries->contains($industry)){
+            return;
+        }
+        $this->industries[] = $industry;
 
         return $this;
     }
 
     /**
-     * Get industry.
+     * Get industries.
      *
-     * @return Industry
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getIndustry()
     {
-        return $this->industry;
+        return $this->industries;
+    }
+
+    /**
+     * Remove industry
+     *
+     * @param Industry $industry
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeIco($industry)
+    {
+        $industry->removeIco($this);
+        return $this->industries->removeElement($industry);
+
     }
 
      /**
@@ -213,11 +634,11 @@ class Ico
     }
 
     /**
-     * Set restrictedCountry.
+     * Add restrictedCountry.
      *
      * @param string $restrictedCountry
      */
-    public function addRestrictionCountry($restrictedCountry)
+    public function addRestrictedCountry($restrictedCountry)
     {
         $this->restrictedCountries[] = $restrictedCountry;
     }
@@ -230,127 +651,6 @@ class Ico
     public function getRestrictedCountry()
     {
         return $this->restrictedCountries;
-    }
-
-    /**
-     * Set tokenType.
-     *
-     * @param string $tokenType
-     *
-     * @return Ico
-     */
-    public function setTokenType($tokenType)
-    {
-        $this->tokenType = $tokenType;
-
-        return $this;
-    }
-
-    /**
-     * Get tokenType.
-     *
-     * @return TokenType
-     */
-    public function getTokenType()
-    {
-        return $this->tokenType;
-    }
-
-    /**
-     * @ORM\Column(type="decimal", name="ico_token_price_usd")
-     */
-    protected $icoTokenPriceUsd;
-
-    /**
-     * @ORM\Column(type="decimal", name="ico_token_price_eth")
-     */
-    protected $icoTokenPriceEth;
-
-    /**
-     * @ORM\Column(type="decimal", name="hard_cap_usd")
-     */
-    protected $hardCapUsd;
-
-    /**
-     * @ORM\Column(type="decimal", name="hard_cap_eth")
-     */
-    protected $hardCapEth;
-
-    /**
-     * @ORM\Column(type="decimal", name="min_cap_usd")
-     */
-    protected $minCapUsd;
-
-    /**
-     * @ORM\Column(type="decimal", name="already_raised")
-     */
-    protected $alreadyRaised;
-
-    /**
-     * @ORM\Column(type="boolean", name="whitelist")
-     */
-    protected $whitelist;
-
-    /**
-     * @ORM\Column(type="boolean", name="kyc")
-     */
-    protected $kyc;
-
-    /**
-     * @ORM\Column(type="integer", name="bonus1")
-     */
-    protected $bonus1;
-
-    /**
-     * @ORM\Column(type="integer", name="bonus2")
-     */
-    protected $bonus2;
-
-    /**
-     * @ORM\Column(type="integer", name="bonus3")
-     */
-    protected $bonus3;
-
-    /**
-     * @ORM\Column(type="boolean", name="open_presale")
-     */
-    protected $openPresale;
-
-    /**
-     * @ORM\Column(type="integer", name="team_tokens")
-     */
-    protected $teamTokens;
-
-    /**
-     * @ORM\Column(type="boolean", name="smart_contract_audit")
-     */
-    protected $smartContractAudit;
-
-    /**
-     * @ORM\Column(type="integer", name="team")
-     */
-    protected $team;
-
-    /**
-     * Set team.
-     *
-     * @param $team
-     *
-     * @return Ico
-     */
-    public function setTeam($team)
-    {
-        $this->team = $team;
-
-        return $this;
-    }
-
-    /**
-     * Get team.
-     */
-    public function getTeam()
-    {
-        return $this->team;
     }
 
     /**
@@ -408,7 +708,13 @@ class Ico
      */
     public function setOpenPresale($openPresale)
     {
-        $this->openPresale = $openPresale;
+        if (!$openPresale instanceof \DateTime) {
+            $this->$openPresale = ($openPresale != '0000-00-00 00:00:00') ?
+                \DateTime::createFromFormat('Y-m-d H:i:s', $openPresale) :
+                null;
+            return $this;
+        }
+        $this->$openPresale = $openPresale;
 
         return $this;
     }
@@ -423,250 +729,139 @@ class Ico
         return $this->openPresale;
     }
 
+
     /**
-     * Set bonus3.
+     * Set bonus.
      *
-     * @param $bonus3
+     * @param $bonus
      *
      * @return Ico
      */
-    public function setBonus3($bonus3)
+    public function setBonus($bonus)
     {
-        $this->bonus3 = $bonus3;
+        $this->bonus = $bonus;
+
+        return $this;
+    }
+
+    /*
+     * Get bonus.
+     */
+    public function getBonus()
+    {
+        return $this->bonus;
+    }
+
+
+    /**
+     * Set raised.
+     *
+     * @param $raised
+     *
+     * @return Ico
+     */
+    public function setRaised($raised)
+    {
+        $this->raised = $raised;
 
         return $this;
     }
 
     /**
-     * Get bonus3.
+     * Get raised.
      */
-    public function getBonus3()
+    public function getRaised()
     {
-        return $this->bonus3;
+        return $this->raised;
     }
 
     /**
-     * Set bonus2.
+     * Set minCap.
      *
-     * @param $bonus2
+     * @param $minCap
      *
      * @return Ico
      */
-    public function setBonus2($bonus2)
+    public function setMinCap($minCap)
     {
-        $this->bonus2 = $bonus2;
+        $this->minCap = $minCap;
 
         return $this;
     }
 
     /**
-     * Get bonus2.
+     * Get minCap.
      */
-    public function getBonus2()
+    public function getMinCap()
     {
-        return $this->bonus2;
+        return $this->minCap;
     }
 
     /**
-     * Set bonus1.
+     * Set tokenType.
      *
-     * @param $bonus1
+     * @param TokenType $tokenType
      *
      * @return Ico
      */
-    public function setBonus1($bonus1)
+    public function setTokenType(TokenType $tokenType)
     {
-        $this->bonus1 = $bonus1;
+        $tokenType->addIco($this);
+        $this->tokenType = $tokenType;
 
         return $this;
     }
 
     /**
-     * Get bonus1.
+     * Get tokenType.
      */
-    public function getBonus1()
+    public function getTokenType()
     {
-        return $this->bonus1;
+        return $this->tokenType;
     }
 
     /**
-     * Set kyc.
+     * Set hardCap.
      *
-     * @param $kyc
+     * @param $hardCap
      *
      * @return Ico
      */
-    public function setKyc($kyc)
+    public function setHardCap($hardCap)
     {
-        $this->kyc = $kyc;
+        $this->hardCap = $hardCap;
 
         return $this;
     }
 
     /**
-     * Get kyc.
-     *
-     * @return boolean
+     * Get hardCap.
      */
-    public function getKyc()
+    public function getHardCap()
     {
-        return $this->kyc;
+        return $this->hardCap;
     }
 
     /**
-     * Set whitelist.
+     * Set icoTokenPrice.
      *
-     * @param $whitelist
+     * @param $icoTokenPrice
      *
      * @return Ico
      */
-    public function setWhitelist($whitelist)
+    public function setIcoTokenPrice($icoTokenPrice)
     {
-        $this->whitelist = $whitelist;
+        $this->icoTokenPrice = $icoTokenPrice;
 
         return $this;
     }
 
     /**
-     * Get whitelist.
-     *
-     * @return boolean
+     * Get icoTokenPrice.
      */
-    public function getWhitelist()
+    public function getIcoTokenPrice()
     {
-        return $this->whitelist;
-    }
-
-    /**
-     * Set alreadyRaised.
-     *
-     * @param $alreadyRaised
-     *
-     * @return Ico
-     */
-    public function setAlreadyRaised($alreadyRaised)
-    {
-        $this->alreadyRaised = $alreadyRaised;
-
-        return $this;
-    }
-
-    /**
-     * Get alreadyRaised.
-     */
-    public function getAlreadyRaised()
-    {
-        return $this->alreadyRaised;
-    }
-
-    /**
-     * Set minCapUsd.
-     *
-     * @param $minCapUsd
-     *
-     * @return Ico
-     */
-    public function setMinCapUsd($minCapUsd)
-    {
-        $this->minCapUsd = $minCapUsd;
-
-        return $this;
-    }
-
-    /**
-     * Get minCapUsd.
-     */
-    public function getMinCapUsd()
-    {
-        return $this->minCapUsd;
-    }
-
-    /**
-     * Set hardCapEth.
-     *
-     * @param $hardCapEth
-     *
-     * @return Ico
-     */
-    public function setHardCapEth($hardCapEth)
-    {
-        $this->hardCapEth = $hardCapEth;
-
-        return $this;
-    }
-
-    /**
-     * Get hardCapEth.
-     */
-    public function getHardCapEth()
-    {
-        return $this->hardCapEth;
-    }
-
-    /**
-     * Set hardCapUsd.
-     *
-     * @param $hardCapUsd
-     *
-     * @return Ico
-     */
-    public function setHardCapUsd($hardCapUsd)
-    {
-        $this->hardCapUsd = $hardCapUsd;
-
-        return $this;
-    }
-
-    /**
-     * Get hardCapUsd.
-     */
-    public function getHardCapUsd()
-    {
-        return $this->hardCapUsd;
-    }
-
-    /**
-     * Set icoTokenPriceEth.
-     *
-     * @param $icoTokenPriceEth
-     *
-     * @return Ico
-     */
-    public function setIcoTokenPriceEth($icoTokenPriceEth)
-    {
-        $this->icoTokenPriceEth = $icoTokenPriceEth;
-
-        return $this;
-    }
-
-    /**
-     * Get icoTokenPriceEth.
-     */
-    public function getIcoTokenPriceEth()
-    {
-        return $this->icoTokenPriceEth;
-    }
-
-    /**
-     * Set icoTokenPriceUsd.
-     *
-     * @param $icoTokenPriceUsd
-     *
-     * @return Ico
-     */
-    public function setIcoTokenPriceUsd($icoTokenPriceUsd)
-    {
-        $this->icoTokenPriceUsd = $icoTokenPriceUsd;
-
-        return $this;
-    }
-
-    /**
-     * Get icoTokenPriceUsd.
-     */
-    public function getIcoTokenPriceUsd()
-    {
-        return $this->icoTokenPriceUsd;
+        return $this->icoTokenPrice;
     }
 
     /**
@@ -677,6 +872,106 @@ class Ico
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param integer $rating
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+    }
+
+    /**
+     * Get ratingProduct
+     *
+     * @return integer
+     */
+    public function getRatingProduct()
+    {
+        return $this->ratingProduct;
+    }
+
+    /**
+     * Set ratingProduct
+     *
+     * @param integer $ratingProduct
+     */
+    public function setRatingProduct($ratingProduct)
+    {
+        $this->ratingProduct = $ratingProduct;
+    }
+
+    /**
+     * Get ratingProfile
+     *
+     * @return integer $ratingProfile
+     */
+    public function getRatingProfile()
+    {
+        return $this->ratingProfile;
+    }
+
+    /**
+     * Set ratingProfile
+     *
+     * @param integer $ratingProfile
+     */
+    public function setRatingProfile($ratingProfile)
+    {
+        $this->ratingProfile = $ratingProfile;
+    }
+
+    /**
+     * Get ratingTeam
+     *
+     * @return integer $ratingTeam
+     */
+    public function getRatingTeam()
+    {
+        return $this->ratingTeam;
+    }
+
+    /**
+     * Set ratingTeam
+     *
+     * @param integer $ratingTeam
+     */
+    public function setRatingTeam($ratingTeam)
+    {
+        $this->ratingTeam = $ratingTeam;
+    }
+
+    /**
+     * Get ratingVision
+     *
+     * @return integer $ratingVision
+     */
+    public function getRatingVision()
+    {
+        return $this->ratingVision;
+    }
+
+    /**
+     * Set ratingVision
+     *
+     * @param integer $ratingVision
+     */
+    public function setRatingVision($ratingVision)
+    {
+        $this->ratingVision = $ratingVision;
     }
 
 

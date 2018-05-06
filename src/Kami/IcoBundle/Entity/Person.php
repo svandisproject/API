@@ -29,6 +29,27 @@ class Person
     private $name;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string", nullable=true)
+     */
+    private $title;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="subdivision", type="string", nullable=true)
+     */
+    private $subdivision;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="link", type="string", length=255)
+     */
+    private $link;
+
+    /**
      * Get id.
      *
      * @return int
@@ -60,5 +81,61 @@ class Person
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @param mixed $title
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param mixed $subdivision
+     */
+    public function setSubdivision($subdivision)
+    {
+        $this->subdivision = $subdivision;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubdivision()
+    {
+        return $this->subdivision;
+    }
+
+    /**
+     * Set link.
+     *
+     * @param string $link
+     *
+     * @return Person
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get link.
+     *
+     * @return string
+     */
+    public function getLink()
+    {
+        return $this->link;
     }
 }

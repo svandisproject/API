@@ -1,0 +1,827 @@
+{
+  "id": 3192,
+  "name": "Datablockchain",
+  "rating": 4.7,
+  "ratingTeam": 4.7,
+  "ratingVision": 4.8,
+  "ratingProduct": 4.5,
+  "ratingProfile": 5,
+  "url": "https://icobench.com/ico/datablockchain",
+  "tagline": "Merging Big Data, AI And Blockchain",
+  "intro": "DataBlockChain.io is a revolutionary data platform that stands to disrupt the way that companies and individuals gather premium data. Our product will democratize data, making it more readily available and less expensive than the current methods of data gathering and vetting. The result is that clients can access specific data sets in a cost-effective and transparent way, collecting exactly what they need without paying for extraneous data. MVP is LIVE! \r\n\r\nWe will merge our own proprietary data with many of the world’s largest databases ranging from government data, industry-specific data, voting records, business to business data, property data, credit bureau data, etc. to create a comprehensive variety of data sets valuable to individuals and businesses looking to both attract and retain clients.\r\n\r\nAs a result of our platform, all participants will be able to obtain the exact, nuanced data they are seeking. Because DataBlockChain.io removes the middlemen in the data industry.",
+  "about": "While BigData has traditionally been available only to big companies, DataBlockChain.io lowers the barrier for entry and expands our potential client base to include small, medium and large businesses around the globe as well as ICOs seeking data for their new ventures.\r\nDataBlockChain.io will collaborate with a network of diverse data partners contributing billions of data points from thousands of sources.DataBlockChain.io will manage and help monetize their data helping those data partners reach a broader global audience of potential customers.&nbsp;\r\nWhen a customer places an order on DataBlockChain.io that uses the data partners data both DataBlockChain.io and the data partner will get a percentage of the data that was purchased. The DataBlockChain.io approach will streamline and maximize profits for all parties involved.\r\n<strong>MVP is LIVE!</strong>\r\nOur main objectives are:\r\n&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To empower Data Source Providers to provide access to their data and monetize it\r\n&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To provide full transparency, traceability, and auditability to the data providers\r\n&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To build confidence between the end user and data sources\r\n&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To give Businesses and Consumers quality verified data\r\n&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; To give End Users a simplified easy-to-use interface with a quick payment system",
+  "logo": "https://icobench.com/images/icos/icons/datablockchain.jpg",
+  "country": "Cayman Islands",
+  "milestones": [
+    {
+      "title": "Q4 2017",
+      "content": "Datablockchain.io Founded"
+    },
+    {
+      "title": "Q1 2018",
+      "content": "UI Alpha, With Access To Media Direct Data.\r\nData Source Acquisition Phase I."
+    },
+    {
+      "title": "Q2 2018",
+      "content": " MVP* Demo Release. Smart Indexing Engine Development. Data Source Acquisition Phase II."
+    },
+    {
+      "title": "Q3 2018",
+      "content": "DBCcoin Wallet Development. \r\nOnboard Data Source Partners Phase I."
+    },
+    {
+      "title": "Q4 2018",
+      "content": "DBCOracles And Smart Contract Integration. UI Beta."
+    },
+    {
+      "title": "Q1 2019",
+      "content": "Full System Beta Test. Onboard Data Source Partners Phase II."
+    },
+    {
+      "title": "Q2 2019",
+      "content": " Live Release."
+    },
+    {
+      "title": "Q3 2019",
+      "content": "DBCCoin Rewards Program. Airdrop Promotion to Appsbar Users."
+    }
+  ],
+  "teamIntro": "",
+  "notification": "",
+  "registration": "kyc and whitelist",
+  "restrictions": [],
+  "links": {
+    "twitter": "https://twitter.com/DBC_IO",
+    "slack": "",
+    "telegram": "https://t.me/DBCIO",
+    "facebook": "https://www.facebook.com/datablockchainio-210421122875853/",
+    "medium": "https://medium.com/dbc-io",
+    "bitcointalk": "https://bitcointalk.org/index.php?topic=3361166.0",
+    "github": "https://github.com/DataBlockChainIO",
+    "reddit": "www.reddit.com/r/DataBlockChain_IO",
+    "discord": "",
+    "youtube": "https://www.youtube.com/embed/0ookiiMcc5k",
+    "www": "https://www.datablockchain.io",
+    "bounty": "",
+    "whitepaper": "https://www.datablockchain.io/pdf/whitepaper.pdf"
+  },
+  "finance": {
+    "token": "DBCCoin",
+    "price": "1 DBCCoin = 0.12 USD",
+    "bonus": false,
+    "tokens": 591600000,
+    "tokentype": "ERC20",
+    "hardcap": "50,000,000 USD",
+    "softcap": "10,000,000 USD",
+    "raised": 0,
+    "platform": "Ethereum",
+    "distributed": "",
+    "minimum": "1 ETH pre-ICO, 0.1 ETH ICO",
+    "accepting": "ETH"
+  },
+  "dates": {
+    "preIcoStart": "2018-05-27 00:00:00",
+    "preIcoEnd": "2018-06-21 00:00:00",
+    "icoStart": "2018-06-27 00:00:00",
+    "icoEnd": "2018-07-21 00:00:00"
+  },
+  "team": [
+    {
+      "name": "Scott Hirsch",
+      "title": "CEO",
+      "links": "https://www.linkedin.com/in/scott-hirsch-8162066",
+      "url": "scott-hirsch",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/scott-hirsch-8162066"
+        }
+      ],
+      "group": "",
+      "photo": "https://icobench.com/images/icos/team/3192-36038.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Jesse Brown",
+      "title": "CTO",
+      "links": "https://www.linkedin.com/in/blockchain-architect/",
+      "url": "blockchain-architect",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/blockchain-architect/"
+        }
+      ],
+      "group": "",
+      "photo": "https://icobench.com/images/icos/team/3192-36039.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Sunny Rajpal",
+      "title": "CIO",
+      "links": "https://www.linkedin.com/in/sunny-rajpal-692821160/",
+      "url": "sunny-dbc",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/sunny-rajpal-692821160/"
+        }
+      ],
+      "group": "",
+      "photo": "https://icobench.com/images/icos/team/3192-36040.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Dennis John",
+      "title": "CDO",
+      "links": "https://www.linkedin.com/in/internetconsultantdennisjohn/",
+      "url": "dennis+john",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/internetconsultantdennisjohn/"
+        }
+      ],
+      "group": "",
+      "photo": "https://icobench.com/images/icos/team/3192-36041.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Adam Mittelberg",
+      "title": "CMO",
+      "links": "https://www.linkedin.com/in/adammittelberg/",
+      "url": "adam-mittelberg",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/adammittelberg/"
+        }
+      ],
+      "group": "",
+      "photo": "https://icobench.com/images/icos/team/3192-36042.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Brad Mitchell",
+      "title": "Analytics",
+      "links": "https://www.linkedin.com/in/brad-mitchell-8aa4902/",
+      "url": "brad-mitchell",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/brad-mitchell-8aa4902/"
+        }
+      ],
+      "group": "",
+      "photo": "https://icobench.com/images/icos/team/3192-36043.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Kate Webster",
+      "title": "Statistician",
+      "links": "https://www.linkedin.com/in/kate-webster-ph-d-52217345/",
+      "url": "kate+webster",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/kate-webster-ph-d-52217345/"
+        }
+      ],
+      "group": "",
+      "photo": "https://icobench.com/images/icos/team/3192-36044.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Peter Surprenant",
+      "title": "Data Aggregation",
+      "links": "https://www.linkedin.com/in/peter-surprenant-43b70915/",
+      "url": "peter+surprenant",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/peter-surprenant-43b70915/"
+        }
+      ],
+      "group": "",
+      "photo": "https://icobench.com/images/icos/team/3192-36045.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Joshua Hirsch",
+      "title": "Database Development",
+      "links": "",
+      "url": "joshua+hirsch",
+      "socials": [],
+      "group": "",
+      "photo": "https://icobench.com/images/icos/team/3192-36046.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Jeff Wilkins",
+      "title": "",
+      "links": "https://www.linkedin.com/in/jeffkwilkins/",
+      "url": "jeff+wilkins",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/jeffkwilkins/"
+        }
+      ],
+      "group": "Advisors",
+      "photo": "https://icobench.com/images/icos/team/3192-36048.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Nathan Christian",
+      "title": "",
+      "links": "https://www.linkedin.com/in/nathan-christian-90365414a/",
+      "url": "nathanchristian",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/nathan-christian-90365414a/"
+        }
+      ],
+      "group": "Advisors",
+      "photo": "https://icobench.com/images/icos/team/3192-36050.jpg",
+      "iss": "78.4"
+    },
+    {
+      "name": "Tyler Sanford",
+      "title": "",
+      "links": "https://www.linkedin.com/in/tylersanford/",
+      "url": "tyler-wayne",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/tylersanford/"
+        }
+      ],
+      "group": "Advisors",
+      "photo": "https://icobench.com/images/icos/team/3192-36051.jpg",
+      "iss": "54.9"
+    },
+    {
+      "name": "Rick Tapia",
+      "title": "",
+      "links": "https://www.linkedin.com/in/brad-mitchell-8aa4902/",
+      "url": "rick-tapia",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/brad-mitchell-8aa4902/"
+        }
+      ],
+      "group": "Advisors",
+      "photo": "https://icobench.com/images/icos/team/3192-36053.jpg",
+      "iss": "39"
+    },
+    {
+      "name": "P.B. Stanton Esq.",
+      "title": "",
+      "links": "https://www.linkedin.com/in/p-b-stanton-esq-620883152/",
+      "url": "pbsstanton",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/p-b-stanton-esq-620883152/"
+        }
+      ],
+      "group": "Advisors",
+      "photo": "https://icobench.com/images/icos/team/3192-36054.jpg",
+      "iss": "17"
+    },
+    {
+      "name": "James Whelan",
+      "title": "",
+      "links": "",
+      "url": "james+whelan",
+      "socials": [],
+      "group": "Advisors",
+      "photo": "https://icobench.com/images/icos/team/3192-36056.jpg",
+      "iss": "4.7"
+    },
+    {
+      "name": "Preston Junger",
+      "title": "",
+      "links": "https://www.linkedin.com/in/prestonjunger/",
+      "url": "preston-junger",
+      "socials": [
+        {
+          "site": "linkedin",
+          "url": "https://www.linkedin.com/in/prestonjunger/"
+        }
+      ],
+      "group": "Advisors",
+      "photo": "https://icobench.com/images/icos/team/3192-36058.jpg",
+      "iss": "21.6"
+    }
+  ],
+  "ratings": [
+    {
+      "date": "2018-04-24",
+      "name": "Mofassair Hossain",
+      "url": "shovon96",
+      "title": "CEO and Founder Perhalic, ICO Advisor, Investor, PR and Marketing Expert",
+      "photo": "https://icobench.com/images/users/mofassair-hossain-1524759413.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Very experienced advisory board and team members..... will suggest to pass kyc quickly ...... great Vision .... looking forward to see success\r\n\r\nUpdate:\r\nTeam passed kyc",
+      "weight": "4%",
+      "agree": 7
+    },
+    {
+      "date": "2018-04-27",
+      "name": "Fanjiang Zeng",
+      "url": "fanjiang-zeng",
+      "title": "Cryptocurrency Speciallist, ICO Advisor &amp; Angel Investor",
+      "photo": "https://icobench.com/images/users/fanjiang-zeng-1525714630.jpg",
+      "team": 4,
+      "vision": 4,
+      "product": 3,
+      "profile": 0,
+      "review": "",
+      "weight": "1%",
+      "agree": 0
+    },
+    {
+      "date": "2018-04-24",
+      "name": "Shaf Madina Zaman",
+      "url": "shaf-madina-zaman",
+      "title": "Founder - Crypto Society, ICO Advisor, Marketing Consultant, DayTrader, BlockChain Enthusiast,",
+      "photo": "https://icobench.com/images/users/shaf-madina-zaman-1519779817.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "",
+      "weight": "1%",
+      "agree": 0
+    },
+    {
+      "date": "2018-05-28",
+      "name": "Nikolay Shkilev",
+      "url": "nikolay-shkilev",
+      "title": "Entrepreneur | CEO | ICO Advisor | Crypto enthusiast | Blockchain expert | Public speaker | Mentor",
+      "photo": "https://icobench.com/images/users/nikolay-shkilev-1517921581.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Very strong and big team.\r\nMVP is available. \r\nGreat vision.\r\nGood product.\r\nKYC passed. It's very good.\r\nI see a big perspective in this project\r\nGood luck, guys!",
+      "weight": "4%",
+      "agree": 0
+    },
+    {
+      "date": "2018-04-23",
+      "name": "Vladimir Nikitin",
+      "url": "vladimir-nikitin",
+      "title": "ICO ADVISOR | CONSULTING | EXCHANGES Listing",
+      "photo": "https://icobench.com/images/users/vladimir-nikitin-1522590617.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "",
+      "weight": "2%",
+      "agree": 0
+    },
+    {
+      "date": "2018-04-24",
+      "name": "Jason Hung",
+      "url": "jason-hung",
+      "title": "Serial Entrepreneur | Inventor | ICO advisor | China Market | Exchange",
+      "photo": "https://icobench.com/images/users/jason-hung-1516678740.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Leverage blockchain technology in big data, remove the cost of middle man, increase the transparency is a good idea.   Looking forward to see the product and service.",
+      "weight": "4%",
+      "agree": 9
+    },
+    {
+      "date": "2018-04-24",
+      "name": "Amarpreet Singh",
+      "url": "amar",
+      "title": "Blockchain &amp; ICO Advisor | Fintech | Innovation | Machine Learning | AI | Speaker &amp; mentor",
+      "photo": "https://icobench.com/images/users/amarpreet-singh-mba-1516976836.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Interesting data!",
+      "weight": "4%",
+      "agree": 7
+    },
+    {
+      "date": "2018-04-24",
+      "name": "Daniil Morozov",
+      "url": "dmoroz0v",
+      "title": "Co-Founder Node, ICO&amp;Business Advisor, Investor",
+      "photo": "https://icobench.com/images/users/daniil-morozov-1520969171.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "experienced team and strong experts. In-demand service, the project has every chance to succeed",
+      "weight": "4%",
+      "agree": 6
+    },
+    {
+      "date": "2018-04-24",
+      "name": "Aly Madhavji",
+      "url": "aly-madhavji",
+      "title": "Co-Founder of Global DCX | Top ICO Advisor | Angel Investor | Blockchain Entrepreneur",
+      "photo": "https://icobench.com/images/users/aly-madhavji-1517135559.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Very strong team and advisors - looking forward to seeing this product develop.",
+      "weight": "4%",
+      "agree": 5
+    },
+    {
+      "date": "2018-05-28",
+      "name": "Igor Karavaev",
+      "url": "igorkaravaev",
+      "title": "ico advisor and investor",
+      "photo": "https://icobench.com/images/users/karavaev-1512904655.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "A professional team and savvy advisors. Bigdata and blockchain technologies have a good well-known synergy. And the project owns clear vision how to achieve it. The whitepaper is quite well done.",
+      "weight": "4%",
+      "agree": 0
+    },
+    {
+      "date": "2018-04-24",
+      "name": "Bonnie Normile",
+      "url": "bonnienormile",
+      "title": "Business Development Manager",
+      "photo": "https://icobench.com/images/users/bonnie-normile-1510219687.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Amazing all around :) ",
+      "weight": "3%",
+      "agree": 4
+    },
+    {
+      "date": "2018-05-16",
+      "name": "Ian Scarffe",
+      "url": "ianscarffe",
+      "title": "Blockchain ICO Consultant / Advisor. Founder at Crypto Consulting and Investments LTD.",
+      "photo": "https://icobench.com/images/users/ian-scarffe-1511612030.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "A very good vision which is backed up by a strong team. The idea itself is extremely interesting and a great example of how blockchain can be used to eliminate the middle man, and make things more transparent.",
+      "weight": "4%",
+      "agree": 6
+    },
+    {
+      "date": "2018-05-04",
+      "name": "Graham Doggart",
+      "url": "grahamdoggart",
+      "title": "Blockchain Advisor and ICO Growth Consultant.  Founder at Dynamic Abundance Advisory",
+      "photo": "https://icobench.com/images/users/graham-doggart-1517230936.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "I love this one.",
+      "weight": "4%",
+      "agree": 4
+    },
+    {
+      "date": "2018-05-05",
+      "name": "Anders Larsson",
+      "url": "anders-larsson",
+      "title": "ICO Advisor. Investor in Crypto and Blockchain. Founder, CTO.",
+      "photo": "https://icobench.com/images/users/anders-larsson-1515471776.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 4,
+      "profile": 0,
+      "review": "Data business is very suitable for blockchain.\r\nGreat team. \r\nI'd like to see a more detailed go-to-market plan for a full score. Overall, looks good!",
+      "weight": "3%",
+      "agree": 4
+    },
+    {
+      "date": "2018-05-07",
+      "name": "VAKEESAN MAHALINGAM",
+      "url": "vakeesan-6ixmeetsworld",
+      "title": "ICO Analyst|Content Writer|Trader| CFA Charterholder|Consultant",
+      "photo": "https://icobench.com/images/users/vakeesan-mahalingam-1520562820.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 4,
+      "profile": 0,
+      "review": "looks very promising and i'm excited to see the progress. Team looks very strong with complementary backgrounds to make this project successful. \r\n\r\nThat being said, i don't feel you need a hard cap of $50million, it should be lower. There is no need for that much money on the top end, especially when there have been other highly successful projects created for far less. $50 million hard cap on a  capital raise with only an MVP in Q2 doesn't make any sense.\r\n\r\n (This is after i have attended EDCON and too much money being raised for projects was a concern that was discussed)",
+      "weight": "3%",
+      "agree": 6
+    },
+    {
+      "date": "2018-05-12",
+      "name": "Sanket Agrawal",
+      "url": "sanket-agrawal",
+      "title": "ICO Advisor, ICO Management &amp; Strategies, Blockchain Technology, DLT, Digital Transformation",
+      "photo": "https://icobench.com/images/users/sanket-agrawal-1518152701.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "",
+      "weight": "1%",
+      "agree": 0
+    },
+    {
+      "date": "2018-05-12",
+      "name": "George Han",
+      "url": "georgehan",
+      "title": "ICO Advisor",
+      "photo": "https://icobench.com/images/users/george-han-1517159371.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "I like the clarity of the Whitepaper and one pager. The tokenomics makes sense. \r\n\r\nMost importantly the vision is well crafted and excites people. ",
+      "weight": "3%",
+      "agree": 4
+    },
+    {
+      "date": "2018-05-13",
+      "name": "Karnika Yashwant",
+      "url": "key",
+      "title": "ICO Marketing Expert | Launch Strategist | Global Branding &amp; Fundraising Master",
+      "photo": "https://icobench.com/images/users/karnika-yashwant-1527514638.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 4,
+      "profile": 0,
+      "review": "",
+      "weight": "1%",
+      "agree": 0
+    },
+    {
+      "date": "2018-05-13",
+      "name": "Joseph Lowe",
+      "url": "josephlowe",
+      "title": "ICO Advisor | Integration Strategy l Certified Cryptocurrency Expert | realicons.io",
+      "photo": "https://icobench.com/images/users/joseph-lowe-1523983150.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 4,
+      "profile": 0,
+      "review": "",
+      "weight": "2%",
+      "agree": 0
+    },
+    {
+      "date": "2018-05-14",
+      "name": "Himanshu Chander",
+      "url": "himanshu-kumar",
+      "title": "CEO of AMBCrypto |ICO advisor | Serial Entrepreneur | Inventor |  Marketing Service |",
+      "photo": "https://icobench.com/images/users/himanshu-kumar-1522142545.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Good explanation in the white paper. Using big data AI and Blockchain together is a great idea. ",
+      "weight": "1%",
+      "agree": 4
+    },
+    {
+      "date": "2018-05-14",
+      "name": "Farooq A Rahim",
+      "url": "farooqarahim",
+      "title": "Founder - HeapX . Entrepreneur . Investor .  ICO Advisor . BlockChain Strategist",
+      "photo": "https://icobench.com/images/users/farooq-a-rahim-1522272359.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Strong team, Interesting project, Keep watching it.",
+      "weight": "4%",
+      "agree": 3
+    },
+    {
+      "date": "2018-05-14",
+      "name": "Dmitry Pshenin ",
+      "url": "dmitry-pshenin",
+      "title": "Investor in Crypto currency | Mining | ICO Marketing |Social Media Strategist |",
+      "photo": "https://icobench.com/images/users/dmitry-pshenin-1515286437.jpg",
+      "team": 4,
+      "vision": 4,
+      "product": 4,
+      "profile": 0,
+      "review": "",
+      "weight": "1%",
+      "agree": 0
+    },
+    {
+      "date": "2018-05-15",
+      "name": "Michael Williamson",
+      "url": "ny",
+      "title": "Blockchain Consultant, MBA, LSSGB, Former USA Financial Advisor, Insurance Agent",
+      "photo": "https://icobench.com/images/users/michael-williamson-1511229984.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "In my opinion, I think the team and advisors are good, concept makes sense and should be a very interesting project indeed!\r\n\r\n\r\n*Please see my profile for disclosures  ",
+      "weight": "3%",
+      "agree": 4
+    },
+    {
+      "date": "2018-05-15",
+      "name": "Michele Zilocchi",
+      "url": "michele-zilocchi",
+      "title": "Engineer, Business Developer and Crypto Expert",
+      "photo": "https://icobench.com/images/users/michele-zilocchi-1518349964.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "A good team, plus a great vision and a disruptive technology that can really improve the market!\r\nWaiting for the success of these guys",
+      "weight": "2%",
+      "agree": 3
+    },
+    {
+      "date": "2018-05-17",
+      "name": "Yaroslav Belkin",
+      "url": "yaroslav-belkin",
+      "title": "Ex Cointelegraph and NewsBTC Media Group | Founder &amp; CEO at Belkin Marketing",
+      "photo": "https://icobench.com/images/users/yaroslav-belkin-1511515553.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Very promising product, clear vision and the idea itself and a strong team to implement it. Can't wait to see how their enhanced transparency solution turn out.",
+      "weight": "2%",
+      "agree": 4
+    },
+    {
+      "date": "2018-05-19",
+      "name": "Stephanos Constantinou",
+      "url": "stefcon",
+      "title": "Chief Executive Officer | Blockchain | ICO Expert",
+      "photo": "https://icobench.com/images/users/stephanos-constantinou-1516740348.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Great team and product. \r\n\r\nThis rating was provided based on the information available at the time of the evaluation. This is not investment advice or a recommendation to invest in this or any other ICO. Investment decisions should not be made based upon ratings, but upon performing your own research.",
+      "weight": "3%",
+      "agree": 4
+    },
+    {
+      "date": "2018-05-20",
+      "name": "Joao Reis",
+      "url": "mrjootta",
+      "title": "Investor",
+      "photo": "https://icobench.com/images/users/joao-reis-1509875456.jpg",
+      "team": 3,
+      "vision": 5,
+      "product": 4,
+      "profile": 0,
+      "review": "FIrst of all the vision is good but...\r\nTeam i don't see any developers there, it have a lot of 5-5-5 reviews that can be easly bought  and Advisors are not your team, packing your group with big advisors name it does not mean will be a good ICO,\r\n\r\nMy advice is add some developers to your team because they will be the key to your product, since this a tech product developers are very important to make a good review, they will transmite to investors a safety feeling that the product will be delivered.",
+      "weight": "2%",
+      "agree": 1
+    },
+    {
+      "date": "2018-05-21",
+      "name": "Gary Chan",
+      "url": "garychan",
+      "title": "Community Manager",
+      "photo": "https://icobench.com/images/users/gary-chan-1520006015.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 5,
+      "profile": 0,
+      "review": "Big data and A.I had always been a hot area of technology development. For Datablockchain, there is a strong team that is able to develop it and the product will be very attractive and low cost due to the fact that it cuts out the middleman. ",
+      "weight": "1%",
+      "agree": 2
+    },
+    {
+      "date": "2018-05-21",
+      "name": "Phillip Nunn",
+      "url": "phillipnunn",
+      "title": "Entrepreneur | CEO | ICO Advisor | Cryptocurrency Evangelist | Global Speaker | Blockchain Influencer",
+      "photo": "https://icobench.com/images/users/phillip-nunn-1521567644.jpg",
+      "team": 5,
+      "vision": 5,
+      "product": 4,
+      "profile": 0,
+      "review": "Data is huge - The Blockchain is huge, I would be keen to hear more about this product. \r\n\r\nData is one of the biggest issues that face big corporations to the point where they are scared of it and have no idea how to manage. This is where the focus for disruption should be ",
+      "weight": "3%",
+      "agree": 3
+    },
+    {
+      "date": "2018-05-22",
+      "name": "Alexander Sverdlov",
+      "url": "security",
+      "title": "Cyber Security Advisor for ICO startups",
+      "photo": "https://icobench.com/images/users/alexander-sverdlov-1512882162.jpg",
+      "team": 2,
+      "vision": 2,
+      "product": 2,
+      "profile": 0,
+      "review": "lots of big words, not that much execution. I have no idea how they got 4.9 as rating here - (except I may have a slight idea) - but this ICO has very little merit as a startup by the rules of most startups. ",
+      "weight": "3%",
+      "agree": 2
+    },
+    {
+      "date": "2018-05-24",
+      "name": "Floyd DCosta",
+      "url": "floyd",
+      "title": "Management Consultant - Blockchain Technology  | Co-founder @BlockArmour, @BlockchainWorx | Advisor, Chief Blockchain Officer @GBX",
+      "photo": "https://icobench.com/images/users/floyd-dcosta-1520856599.jpg",
+      "team": 5,
+      "vision": 4,
+      "product": 4,
+      "profile": 0,
+      "review": "A great way to leverage Blockchain technology (combined with AI) for Big Data; making it cost-effectively available to folks beyond large enterprises. \r\n\r\nThe platform should help pull together data from various public and private silos, organize relevant data sets and democratize its availability.\r\n\r\nDisintermediation is always welcome and will help keep costs in check while the token will provide the incentive.\r\n\r\nA team of seasoned execs lead the project. Would love to see a prototype.",
+      "weight": "1%",
+      "agree": 1
+    },
+    {
+      "date": "2018-05-26",
+      "name": "Eric Stone",
+      "url": "stoneric",
+      "title": "20+ year entrepreneur &amp; tech veteren",
+      "photo": "https://icobench.com/images/users/eric-stone-1520016195.jpg",
+      "team": 3,
+      "vision": 3,
+      "product": 3,
+      "profile": 0,
+      "review": "The concept of doing Big Data on Blockchain, creating data marketplaces and economies is not very unique, but the utility presented in the Whitepaper could prove to be interesting.  The MVP is very light, seemingly just transaction based.  Would love to see more in terms of smart contracts or actual blockchain development beyond paying for leads using crypto.",
+      "weight": "2%",
+      "agree": 0
+    },
+    {
+      "date": "2018-05-25",
+      "name": "Paul Mears",
+      "url": "paulmears",
+      "title": "ICO investor, cryto trader and ex angel investor",
+      "photo": "https://icobench.com/images/users/paul-mears-1517780392.jpg",
+      "team": 2,
+      "vision": 3,
+      "product": 2,
+      "profile": 0,
+      "review": "20m USD of tokens to team and advisors at hard cap to vest over twelve months ?  50m is a lot fo funding to spend on a roughly 12 month roadmap with 15m on dev in roughly 12 months ?  The numbers here seem excessive. Its states a lot of patents , are these being transferred to the token issuing company as curently in companies owned by founders and if not being transferred it is misleading and woudl need to see the royalty structure . Business model not clear and how revenue is split with the ICO company and any existing company, looks like foudners getting a truckload of tokens so if they are double dipping on the equity as well its not a great token model for me . A lot of uncertainties for me ",
+      "weight": "4%",
+      "agree": 0
+    },
+    {
+      "date": "2018-05-29",
+      "name": "Benchy",
+      "url": "paulmears",
+      "title": "ICO Analyzer Bot",
+      "photo": "https://icobench.com/images/benchy.jpg",
+      "team": 0,
+      "vision": 0,
+      "product": 0,
+      "profile": 5,
+      "review": "",
+      "weight": "10%",
+      "agree": 0
+    }
+  ],
+  "categories": [
+    {
+      "id": 26,
+      "name": "Artificial Intelligence"
+    },
+    {
+      "id": 27,
+      "name": "Big Data"
+    },
+    {
+      "id": 17,
+      "name": "Platform"
+    }
+  ],
+  "exchanges": [],
+  "kyc": {
+    "invited": [
+      {
+        "name": "Scott Hirsch",
+        "status": "passed"
+      },
+      {
+        "name": "Jesse Brown",
+        "status": "passed"
+      }
+    ],
+    "succeed": 2,
+    "failed": 0
+  }
+}
