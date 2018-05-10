@@ -72,7 +72,7 @@
         ],
         "compile": [
             "rm web/app_dev.php",
-            "bin/refresh",
+            "bin/production-update",
             "bin/generate-token"
         ]
     },
