@@ -28,7 +28,7 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^2.3",
-        "kami/api-core-bundle": "dev-request-processor",
+        "kami/api-core-bundle": "^0.2",
         "khepin/yaml-fixtures-bundle": "^1.0",
         "knplabs/knp-gaufrette-bundle": "^0.5.2",
         "laupifrpar/pusher-bundle": "^2.0",
@@ -90,5 +90,7 @@
             "file": "app/config/parameters.yml"
         },
         "branch-alias": null
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
