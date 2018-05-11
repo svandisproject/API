@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "content-hash": "d0612d540d72dd2d6e3c8244f9437ecc",
@@ -1791,12 +1791,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/api-core-bundle.git",
-                "reference": "a5fc0af3dba3e111fc1540f4a099cd6974c1964a"
+                "reference": "a98974f174f6a31c1f5ab67c58204e50d66643ec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/a5fc0af3dba3e111fc1540f4a099cd6974c1964a",
-                "reference": "a5fc0af3dba3e111fc1540f4a099cd6974c1964a",
+                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/a98974f174f6a31c1f5ab67c58204e50d66643ec",
+                "reference": "a98974f174f6a31c1f5ab67c58204e50d66643ec",
                 "shasum": ""
             },
             "require": {
@@ -1846,7 +1846,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-            "time": "2018-05-11T10:18:24+00:00"
+            "time": "2018-05-11T14:57:54+00:00"
         },
         {
             "name": "khepin/yaml-fixtures-bundle",
