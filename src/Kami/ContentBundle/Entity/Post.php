@@ -121,7 +121,7 @@ class Post
     private $tags;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="createdPosts")
+     * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker")
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     private $createdBy;
