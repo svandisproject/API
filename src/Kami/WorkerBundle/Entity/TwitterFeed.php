@@ -12,7 +12,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\TwitterFeedRepository")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
- * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class TwitterFeed
@@ -32,7 +32,7 @@ class TwitterFeed
      *
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="mode", type="string", length=100)
      */
@@ -43,7 +43,7 @@ class TwitterFeed
      *
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="consumerKey", type="string", length=255)
      */
@@ -54,7 +54,7 @@ class TwitterFeed
      *
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="consumerSecret", type="string", length=255)
      */
@@ -65,7 +65,7 @@ class TwitterFeed
      *
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="accessTokenKey", type="string", length=255)
      */
@@ -76,7 +76,7 @@ class TwitterFeed
      *
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="accessTokenSecret", type="string", length=255)
      */
@@ -87,7 +87,7 @@ class TwitterFeed
      *
      * @ORM\Column(name="timeInterval", type="integer")
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */

@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("title")
  * @UniqueEntity("url")
  * @Api\Access({"ROLE_ADMIN"})
- * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
@@ -27,7 +27,7 @@ class WebFeed
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
@@ -38,7 +38,7 @@ class WebFeed
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
@@ -49,7 +49,7 @@ class WebFeed
      *
      * @ORM\Column(name="url", type="string", length=255, unique=true)
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
@@ -60,7 +60,7 @@ class WebFeed
      *
      * @ORM\Column(name="titleSelector", type="string", length=255)
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
@@ -71,7 +71,7 @@ class WebFeed
      *
      * @ORM\Column(name="contentSelector", type="string", length=255)
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
@@ -82,7 +82,7 @@ class WebFeed
      *
      * @ORM\Column(name="publishedAtSelector", type="string", length=255)
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
@@ -93,7 +93,7 @@ class WebFeed
      *
      * @ORM\Column(name="dateFormat", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
@@ -104,7 +104,7 @@ class WebFeed
      *
      * @ORM\Column(name="timeInterval", type="integer")
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */

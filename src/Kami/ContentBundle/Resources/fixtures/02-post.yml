@@ -7,6 +7,7 @@ fixtures:
         source: facebook
         publishedAt: 01-01-2001 00:00:00
         createdBy: worker0
+        tags: [tag1, tag2]
         validatedBy:
             - worker1
             - worker2
@@ -24,10 +25,12 @@ fixtures:
         url: post/test/2
         content:  post content 2
         source: twitter
+        tags: [tag2, tag3]
         publishedAt:  02-01-2001 00:00:00
     post3:
         title: Test post 3
         url: post/test/3
         content:  post content 3
         source: reddit
+        tags: [tag1, tag6]
         publishedAt:  03-01-2001 00:00:00
