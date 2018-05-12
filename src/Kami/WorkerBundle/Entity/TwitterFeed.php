@@ -45,6 +45,17 @@ class TwitterFeed
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @ORM\Column(name="username", type="string", length=100)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="consumerKey", type="string", length=255)
      */
     private $consumerKey;
@@ -245,5 +256,23 @@ class TwitterFeed
     public function getTimeInterval()
     {
         return $this->timeInterval;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     * @return TwitterFeed
+     */
+    public function setUsername(string $username)
+    {
+        $this->username = $username;
+        return $this;
     }
 }
