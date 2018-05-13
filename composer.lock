@@ -1791,12 +1791,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/api-core-bundle.git",
-                "reference": "5e10bb3dca30b1770ac1246e7211467c5c22210c"
+                "reference": "fcbc7058959d2ca507fa801a83efb528b6cc8202"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/5e10bb3dca30b1770ac1246e7211467c5c22210c",
-                "reference": "5e10bb3dca30b1770ac1246e7211467c5c22210c",
+                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/fcbc7058959d2ca507fa801a83efb528b6cc8202",
+                "reference": "fcbc7058959d2ca507fa801a83efb528b6cc8202",
                 "shasum": ""
             },
             "require": {
@@ -1846,7 +1846,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-            "time": "2018-05-13T11:35:47+00:00"
+            "time": "2018-05-13T12:14:41+00:00"
         },
         {
             "name": "khepin/yaml-fixtures-bundle",
