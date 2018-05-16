@@ -43,10 +43,48 @@ class IcoScreener
      */
     private $blockhainAdvisors;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\IndustryAdvisor", inversedBy="icoScreeners")
+     * @ORM\JoinTable(name="industry_advisors_ico_screeners")
+     */
+    private $industryAdvisors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\LegalPartner", inversedBy="icoScreeners")
+     * @ORM\JoinTable(name="legal_partners_ico_screeners")
+     */
+    private $legalPartners;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Product", inversedBy="icoScreeners")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
+     */
+    private $product;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="icoScreeners")
+     * @ORM\JoinColumn(name="industry_id", referencedColumnName="id")
+     */
+    private $industry;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Competitor", inversedBy="icoScreeners")
+     * @ORM\JoinColumn(name="competitor_id", referencedColumnName="id")
+     */
+    private $competitor;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="icoScreeners")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     */
+    private $country;
+
     public function __construct() {
         $this->countryRestrictions = new ArrayCollection();
         $this->acceptedCurrencies = new ArrayCollection();
         $this->blockhainAdvisors = new ArrayCollection();
+        $this->industryAdvisors = new ArrayCollection();
+        $this->legalPartners = new ArrayCollection();
     }
 
     /**
@@ -70,6 +108,148 @@ class IcoScreener
     public function removeBlockhainAdvisor(BlockchainAdvisor $blockhainAdvisor)
     {
         return $this->blockhainAdvisors->removeElement($blockhainAdvisor);
+    }
+
+    /**
+     * Add industryAdvisor.
+     *
+     * @param IndustryAdvisor $industryAdvisor
+     */
+    public function addIndustryAdvisor(IndustryAdvisor $industryAdvisor)
+    {
+        $industryAdvisor->addIcoScreener($this);
+        $this->industryAdvisors[] = $industryAdvisor;
+    }
+
+    /**
+     * Remove industryAdvisor.
+     *
+     * @param IndustryAdvisor $industryAdvisor
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeIndustryAdvisor(IndustryAdvisor $industryAdvisor)
+    {
+        return $this->industryAdvisors->removeElement($industryAdvisor);
+    }
+
+    /**
+     * Add legalPartner.
+     *
+     * @param LegalPartner $legalPartner
+     */
+    public function addLegalPartner(LegalPartner $legalPartner)
+    {
+        $legalPartner->addIcoScreener($this);
+        $this->legalPartners[] = $legalPartner;
+    }
+
+    /**
+     * Remove legalPartner.
+     *
+     * @param LegalPartner $legalPartner
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeLegalPartner (LegalPartner $legalPartner)
+    {
+        return $this->legalPartners->removeElement($legalPartner);
+    }
+
+    /**
+     * Set product.
+     *
+     * @param Product $product
+     *
+     * @return IcoScreener
+     */
+    public function setProduct($product)
+    {
+        $this->product = $product;
+
+        return $this;
+    }
+
+    /**
+     * Get product.
+     *
+     * @return Product
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
+     * Set industry.
+     *
+     * @param Industry $industry
+     *
+     * @return IcoScreener
+     */
+    public function setIndustry(industry $industry)
+    {
+        $this->industry = $industry;
+
+        return $this;
+    }
+
+    /**
+     * Get industry.
+     *
+     * @return Industry
+     */
+    public function getIndustry()
+    {
+        return $this->industry;
+    }
+
+    /**
+     * Set competitor.
+     *
+     * @param Competitor $competitor
+     *
+     * @return IcoScreener
+     */
+    public function setCompetitor(Competitor $competitor)
+    {
+        $this->competitor = $competitor;
+
+        return $this;
+    }
+
+    /**
+     * Get competitor.
+     *
+     * @return Competitor
+     */
+    public function getCompetitor()
+    {
+        return $this->competitor;
+    }
+
+    /**
+     * Set country.
+     *
+     * @param Country $country
+     *
+     * @return IcoScreener
+     */
+    public function setCountry(Country $country)
+    {
+        $this->country = $country;
+
+        return $this;
+    }
+
+    /**
+     * Get country.
+     *
+     * @return Country
+     */
+    public function getCountry()
+    {
+        return $this->country;
     }
 
     /**
