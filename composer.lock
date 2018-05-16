@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "33aefff7d47e79fd940ad0e5b913f004",
+    "content-hash": "d0612d540d72dd2d6e3c8244f9437ecc",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -991,16 +991,16 @@
         },
         {
             "name": "doctrine/migrations",
-            "version": "v1.7.0",
+            "version": "v1.7.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/doctrine/migrations.git",
-                "reference": "bb942dfc9364d97662325678ef6ba0e8fc6ff4df"
+                "reference": "3e7656c5adfd9b7d0d8757aa1e9e8daf43a6f200"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/migrations/zipball/bb942dfc9364d97662325678ef6ba0e8fc6ff4df",
-                "reference": "bb942dfc9364d97662325678ef6ba0e8fc6ff4df",
+                "url": "https://api.github.com/repos/doctrine/migrations/zipball/3e7656c5adfd9b7d0d8757aa1e9e8daf43a6f200",
+                "reference": "3e7656c5adfd9b7d0d8757aa1e9e8daf43a6f200",
                 "shasum": ""
             },
             "require": {
@@ -1060,7 +1060,7 @@
                 "database",
                 "migrations"
             ],
-            "time": "2018-05-05T22:46:31+00:00"
+            "time": "2018-05-09T21:04:56+00:00"
         },
         {
             "name": "doctrine/orm",
@@ -1315,16 +1315,16 @@
         },
         {
             "name": "gedmo/doctrine-extensions",
-            "version": "v2.4.34",
+            "version": "v2.4.35",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Atlantic18/DoctrineExtensions.git",
-                "reference": "f61d14436c30d0faa35b1e7f53b3855597c46c5a"
+                "reference": "1e400fbd05b7e5f912f55fe95805450f7d3bed60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/f61d14436c30d0faa35b1e7f53b3855597c46c5a",
-                "reference": "f61d14436c30d0faa35b1e7f53b3855597c46c5a",
+                "url": "https://api.github.com/repos/Atlantic18/DoctrineExtensions/zipball/1e400fbd05b7e5f912f55fe95805450f7d3bed60",
+                "reference": "1e400fbd05b7e5f912f55fe95805450f7d3bed60",
                 "shasum": ""
             },
             "require": {
@@ -1392,7 +1392,7 @@
                 "tree",
                 "uploadable"
             ],
-            "time": "2018-04-13T13:49:18+00:00"
+            "time": "2018-05-08T12:28:40+00:00"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -1787,23 +1787,23 @@
         },
         {
             "name": "kami/api-core-bundle",
-            "version": "dev-request-processor",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/api-core-bundle.git",
-                "reference": "f655bf2a2cd78cad63fbe1b596bc396f625834ac"
+                "reference": "fcbc7058959d2ca507fa801a83efb528b6cc8202"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/f655bf2a2cd78cad63fbe1b596bc396f625834ac",
-                "reference": "f655bf2a2cd78cad63fbe1b596bc396f625834ac",
+                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/fcbc7058959d2ca507fa801a83efb528b6cc8202",
+                "reference": "fcbc7058959d2ca507fa801a83efb528b6cc8202",
                 "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "^1.3",
                 "doctrine/orm": "^2.5 || ^2.7",
-                "jms/serializer-bundle": "^2.3@dev",
-                "php": "^5.6 || ^7.0",
+                "jms/serializer-bundle": "^2.3",
+                "php": "^7.0",
                 "symfony/form": "^2.8 || ^3.0 || ^4.0",
                 "symfony/framework-bundle": "^2.8 || ^3.0 || ^4.0",
                 "symfony/security-bundle": "^2.8 || ^3.0 || ^4.0",
@@ -1824,7 +1824,7 @@
             "type": "symfony-bundle",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "0.1.x-dev"
+                    "dev-master": "0.2.x-dev"
                 }
             },
             "autoload": {
@@ -1846,7 +1846,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-            "time": "2018-05-05 19:52:24"
+            "time": "2018-05-13T12:14:41+00:00"
         },
         {
             "name": "khepin/yaml-fixtures-bundle",
@@ -5000,11 +5000,9 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": {
-        "kami/api-core-bundle": 20
-    },
-    "prefer-stable": false,
+    "minimum-stability": "dev",
+    "stability-flags": [],
+    "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "~7.1"

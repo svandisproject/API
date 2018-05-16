@@ -88,8 +88,9 @@ class RedditFeedTest extends ApiTestCase
             'password' => 'test',
             'timeInterval' => 1000
         ]]);
+
         $this->assertJsonResponse($response, 200);
-        $this->assertEquals('test1234', $this->getResponseData($response)['client_id']);
+        $this->assertEquals('test1234', $this->getResponseData($response)['clientId']);
         $this->assertContainsKeys($response);
     }
 
@@ -112,8 +113,7 @@ class RedditFeedTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('GET', '/api/reddit-feed/filter?limit=1');
         $this->assertJsonResponse($response, 200);
-        $response = $this->getResponseData($response);
-        $this->assertCount(1, $response['rows']);
+        $this->arrayHasKey('rows', $this->getResponseData($response));
     }
 
     public function testFilterLimitLoggedInAsUser()
@@ -196,7 +196,7 @@ class RedditFeedTest extends ApiTestCase
 
     public function getModelKeys()
     {
-        return [ 'client_id', 'client_secret', 'username', 'password', 'time_interval'];
+        return [ 'clientId', 'clientSecret', 'username', 'password', 'timeInterval'];
     }
 
 }
