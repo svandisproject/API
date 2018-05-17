@@ -30,13 +30,13 @@ class Industry
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\IcoScreener", mappedBy="industry")
+     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="industry")
      */
-    private $icoScreeners;
+    private $ico;
 
     public function __construct()
     {
-        $this->icoScreeners = new ArrayCollection();
+        $this->ico= new ArrayCollection();
     }
 
     /**

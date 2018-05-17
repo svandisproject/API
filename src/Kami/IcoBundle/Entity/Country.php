@@ -30,13 +30,13 @@ class Country
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\IcoScreener", mappedBy="country")
+     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="country")
      */
-    private $icoScreeners;
+    private $ico;
 
     public function __construct()
     {
-        $this->icoScreeners = new ArrayCollection();
+        $this->ico = new ArrayCollection();
     }
 
     /**

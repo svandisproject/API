@@ -30,35 +30,35 @@ class AcceptedCurrency
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\IcoScreener", mappedBy="acceptedCurrencies")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="acceptedCurrencies")
      */
-    private $icoScreeners;
+    private $ico;
 
     public function __construct() {
-        $this->icoScreeners = new ArrayCollection();
+        $this->ico = new ArrayCollection();
     }
 
     /**
-     * Add icoScreener.
+     * Add ico.
      *
-     * @param IcoScreener $icoScreener
+     * @param Ico $ico
      */
-    public function addIcoScreener(IcoScreener $icoScreener)
+    public function addIco(Ico $ico)
     {
-        $icoScreener->addAcceptedCurrency($this);
-        $this->icoScreeners[] = $icoScreener;
+        $ico->addAcceptedCurrency($this);
+        $this->ico[] = $ico;
     }
 
     /**
-     * Remove icoScreener.
+     * Remove ico.
      *
-     * @param IcoScreener $icoScreener
+     * @param Ico $ico
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeIcoScreener(IcoScreener $icoScreener)
+    public function removeIco(Ico $ico)
     {
-        return $this->icoScreeners->removeElement($icoScreener);
+        return $this->ico->removeElement($ico);
     }
 
 

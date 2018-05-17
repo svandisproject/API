@@ -43,7 +43,7 @@ class Person
      *
      * @param string $name
      *
-     * @return IndustryAdvisor
+     * @return Person
      */
     public function setName($name)
     {

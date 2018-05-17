@@ -30,35 +30,35 @@ class CountryRestriction
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\IcoScreener", mappedBy="countryRestrictions")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="countryRestrictions")
      */
-    private $icoScreeners;
+    private $ico;
 
     public function __construct() {
-        $this->icoScreeners = new ArrayCollection();
+        $this->ico = new ArrayCollection();
     }
 
     /**
-     * Add icoScreener.
+     * Add ico.
      *
-     * @param IcoScreener $icoScreener
+     * @param Ico $ico
      */
-    public function addIcoScreener(IcoScreener $icoScreener)
+    public function addIcoScreener(Ico $ico)
     {
-        $icoScreener->addCountryRestriction($this);
-        $this->icoScreeners[] = $icoScreener;
+        $ico->addCountryRestriction($this);
+        $this->ico[] = $ico;
     }
 
     /**
-     * Remove icoScreener.
+     * Remove ico.
      *
-     * @param IcoScreener $icoScreener
+     * @param Ico $ico
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeIcoScreener(IcoScreener $icoScreener)
+    public function removeIco(Ico $ico)
     {
-        return $this->icoScreeners->removeElement($icoScreener);
+        return $this->ico->removeElement($ico);
     }
 
 

@@ -8,9 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="`ico_screener`")
+ * @ORM\Table(name="`ico`")
  */
-class IcoScreener
+class Ico
 {
     /**
      * @ORM\Id
@@ -26,14 +26,14 @@ class IcoScreener
     private $tokenType;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\CountryRestriction", inversedBy="icoScreeners")
-     * @ORM\JoinTable(name="country_restrictions_ico_screeners")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\CountryRestriction", inversedBy="ico")
+     * @ORM\JoinTable(name="country_restrictions_ico")
      */
     private $countryRestrictions;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\AcceptedCurrency", inversedBy="icoScreeners")
-     * @ORM\JoinTable(name="accepted_currencies_ico_screeners")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\AcceptedCurrency", inversedBy="ico")
+     * @ORM\JoinTable(name="accepted_currencies_ico")
      */
     private $acceptedCurrencies;
 
@@ -66,25 +66,33 @@ class IcoScreener
     private $legalPartners;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Product", inversedBy="icoScreeners")
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Product", inversedBy="ico")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="id")
      */
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="icoScreeners")
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="ico")
      * @ORM\JoinColumn(name="industry_id", referencedColumnName="id")
      */
     private $industry;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Competitor", inversedBy="icoScreeners")
-     * @ORM\JoinColumn(name="competitor_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="competitorsIco")
      */
-    private $competitor;
+    private $competitorForIco;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="icoScreeners")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="competitorForIco")
+     * @ORM\JoinTable(name="competitors",
+     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="competitor_ico_id", referencedColumnName="id")}
+     *      )
+     */
+    private $competitorsIco;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="ico")
      * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      */
     private $country;
@@ -95,75 +103,8 @@ class IcoScreener
         $this->blockhainAdvisors = new ArrayCollection();
         $this->industryAdvisors = new ArrayCollection();
         $this->legalPartners = new ArrayCollection();
-    }
-
-    /**
-     * Add blockhainAdvisor.
-     *
-     * @param BlockchainAdvisor $blockchainAdvisor
-     */
-    public function addBlockhainAdvisor(BlockchainAdvisor $blockchainAdvisor)
-    {
-        $blockchainAdvisor->addIcoScreener($this);
-        $this->blockhainAdvisors[] = $blockchainAdvisor;
-    }
-
-    /**
-     * Remove blockhainAdvisor.
-     *
-     * @param BlockchainAdvisor $blockhainAdvisor
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeBlockhainAdvisor(BlockchainAdvisor $blockhainAdvisor)
-    {
-        return $this->blockhainAdvisors->removeElement($blockhainAdvisor);
-    }
-
-    /**
-     * Add industryAdvisor.
-     *
-     * @param IndustryAdvisor $industryAdvisor
-     */
-    public function addIndustryAdvisor(IndustryAdvisor $industryAdvisor)
-    {
-        $industryAdvisor->addIcoScreener($this);
-        $this->industryAdvisors[] = $industryAdvisor;
-    }
-
-    /**
-     * Remove industryAdvisor.
-     *
-     * @param IndustryAdvisor $industryAdvisor
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeIndustryAdvisor(IndustryAdvisor $industryAdvisor)
-    {
-        return $this->industryAdvisors->removeElement($industryAdvisor);
-    }
-
-    /**
-     * Add legalPartner.
-     *
-     * @param LegalPartner $legalPartner
-     */
-    public function addLegalPartner(LegalPartner $legalPartner)
-    {
-        $legalPartner->addIcoScreener($this);
-        $this->legalPartners[] = $legalPartner;
-    }
-
-    /**
-     * Remove legalPartner.
-     *
-     * @param LegalPartner $legalPartner
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeLegalPartner (LegalPartner $legalPartner)
-    {
-        return $this->legalPartners->removeElement($legalPartner);
+        $this->competitorForIco = new ArrayCollection();
+        $this->competitorsIco = new ArrayCollection();
     }
 
     /**
@@ -171,7 +112,7 @@ class IcoScreener
      *
      * @param Product $product
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setProduct($product)
     {
@@ -195,7 +136,7 @@ class IcoScreener
      *
      * @param Industry $industry
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setIndustry(industry $industry)
     {
@@ -219,7 +160,7 @@ class IcoScreener
      *
      * @param Competitor $competitor
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setCompetitor(Competitor $competitor)
     {
@@ -243,7 +184,7 @@ class IcoScreener
      *
      * @param Country $country
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setCountry(Country $country)
     {
@@ -313,7 +254,7 @@ class IcoScreener
      *
      * @param string $tokenType
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setTokenType($tokenType)
     {
@@ -412,7 +353,7 @@ class IcoScreener
      *
      * @param $team
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setTeam($team)
     {
@@ -434,7 +375,7 @@ class IcoScreener
      *
      * @param $smartContractAudit
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setSmartContractAudit($smartContractAudit)
     {
@@ -458,7 +399,7 @@ class IcoScreener
      *
      * @param $teamTokens
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setTeamTokens($teamTokens)
     {
@@ -480,7 +421,7 @@ class IcoScreener
      *
      * @param $openPresale
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setOpenPresale($openPresale)
     {
@@ -504,7 +445,7 @@ class IcoScreener
      *
      * @param $bonus3
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setBonus3($bonus3)
     {
@@ -526,7 +467,7 @@ class IcoScreener
      *
      * @param $bonus2
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setBonus2($bonus2)
     {
@@ -548,7 +489,7 @@ class IcoScreener
      *
      * @param $bonus1
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setBonus1($bonus1)
     {
@@ -570,7 +511,7 @@ class IcoScreener
      *
      * @param $kyc
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setKyc($kyc)
     {
@@ -594,7 +535,7 @@ class IcoScreener
      *
      * @param $whitelist
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setWhitelist($whitelist)
     {
@@ -618,7 +559,7 @@ class IcoScreener
      *
      * @param $alreadyRaised
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setAlreadyRaised($alreadyRaised)
     {
@@ -640,7 +581,7 @@ class IcoScreener
      *
      * @param $minCapUsd
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setMinCapUsd($minCapUsd)
     {
@@ -662,7 +603,7 @@ class IcoScreener
      *
      * @param $hardCapEth
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setHardCapEth($hardCapEth)
     {
@@ -684,7 +625,7 @@ class IcoScreener
      *
      * @param $hardCapUsd
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setHardCapUsd($hardCapUsd)
     {
@@ -706,7 +647,7 @@ class IcoScreener
      *
      * @param $icoTokenPriceEth
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setIcoTokenPriceEth($icoTokenPriceEth)
     {
@@ -728,7 +669,7 @@ class IcoScreener
      *
      * @param $icoTokenPriceUsd
      *
-     * @return IcoScreener
+     * @return Ico
      */
     public function setIcoTokenPriceUsd($icoTokenPriceUsd)
     {

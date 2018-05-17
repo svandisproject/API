@@ -30,13 +30,13 @@ class Product
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\IcoScreener", mappedBy="product")
+     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="product")
      */
-    private $icoScreeners;
+    private $ico;
 
     public function __construct()
     {
-        $this->icoScreeners = new ArrayCollection();
+        $this->ico = new ArrayCollection();
     }
 
     /**
