@@ -38,20 +38,30 @@ class IcoScreener
     private $acceptedCurrencies;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\BlockchainAdvisor", inversedBy="icoScreeners")
-     * @ORM\JoinTable(name="blockchain_advisors_ico_screeners")
+     *
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
+     * @ORM\JoinTable(name="ico_blockhain_advisors",
+     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
+     *      )
      */
     private $blockhainAdvisors;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\IndustryAdvisor", inversedBy="icoScreeners")
-     * @ORM\JoinTable(name="industry_advisors_ico_screeners")
+     *@ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
+     *@ORM\JoinTable(name="ico_industry_advisors",
+     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
+     *      )
      */
     private $industryAdvisors;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\LegalPartner", inversedBy="icoScreeners")
-     * @ORM\JoinTable(name="legal_partners_ico_screeners")
+     *@ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
+     *@ORM\JoinTable(name="ico_legal_partners",
+     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
+     *      )
      */
     private $legalPartners;
 
