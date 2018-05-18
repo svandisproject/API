@@ -34,9 +34,16 @@ class Country
      */
     private $ico;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="restrictedCountries")
+     */
+    private $restrictedIco;
+
+
     public function __construct()
     {
         $this->ico = new ArrayCollection();
+        $this->restrictedIco = new ArrayCollection();
     }
 
     /**
@@ -71,5 +78,15 @@ class Country
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * add restrictedIco
+     * @param Ico $restrictedIco
+     */
+    public function addRestrictedIco(Ico $restrictedIco)
+    {
+        $restrictedIco->addRestrictionCountry($this);
+        $this->restrictedIco[] = $restrictedIco;
     }
 }

@@ -26,16 +26,16 @@ class Ico
     private $tokenType;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\CountryRestriction", inversedBy="ico")
-     * @ORM\JoinTable(name="country_restrictions_ico")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="restrictedIco")
+     * @ORM\JoinTable(name="countries_restrictions_ico")
      */
-    private $countryRestrictions;
+    private $restrictedCountries;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\AcceptedCurrency", inversedBy="ico")
-     * @ORM\JoinTable(name="accepted_currencies_ico")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Currency", inversedBy="ico")
+     * @ORM\JoinTable(name="currencies_ico")
      */
-    private $acceptedCurrencies;
+    private $currencies;
 
     /**
      *
@@ -99,12 +99,13 @@ class Ico
 
     public function __construct() {
         $this->countryRestrictions = new ArrayCollection();
-        $this->acceptedCurrencies = new ArrayCollection();
+        $this->currencies = new ArrayCollection();
         $this->blockhainAdvisors = new ArrayCollection();
         $this->industryAdvisors = new ArrayCollection();
         $this->legalPartners = new ArrayCollection();
         $this->competitorForIco = new ArrayCollection();
         $this->competitorsIco = new ArrayCollection();
+        $this->restrictedCountries = new ArrayCollection();
     }
 
     /**
@@ -155,31 +156,7 @@ class Ico
         return $this->industry;
     }
 
-    /**
-     * Set competitor.
-     *
-     * @param Competitor $competitor
-     *
-     * @return Ico
-     */
-    public function setCompetitor(Competitor $competitor)
-    {
-        $this->competitor = $competitor;
-
-        return $this;
-    }
-
-    /**
-     * Get competitor.
-     *
-     * @return Competitor
-     */
-    public function getCompetitor()
-    {
-        return $this->competitor;
-    }
-
-    /**
+     /**
      * Set country.
      *
      * @param Country $country
@@ -204,49 +181,51 @@ class Ico
     }
 
     /**
-     * Add acceptedCurrency.
+     * Add currency.
      *
-     * @param AcceptedCurrency $acceptedCurrency
+     * @param Currency $currency
      */
-    public function addAcceptedCurrency(AcceptedCurrency $acceptedCurrency)
+    public function addCurrency(Currency $currency)
     {
-        $acceptedCurrency->addIcoScreener($this);
-        $this->acceptedCurrencies[] = $acceptedCurrency;
+        $currency->addIco($this);
+        $this->currencies[] = $currency;
     }
 
     /**
-     * Remove acceptedCurrency.
+     * Remove currency.
      *
-     * @param AcceptedCurrency $acceptedCurrency
+     * @param Currency $currency
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeAcceptedCurrency(AcceptedCurrency $acceptedCurrency)
+    public function removeCurrency(Currency $currency)
     {
-        return $this->acceptedCurrencies->removeElement($acceptedCurrency);
+        return $this->currencies->removeElement($currency);
     }
 
+
+
     /**
-     * Add countryRestriction.
+     * Add restrictedInCountry.
      *
-     * @param CountryRestriction $countryRestriction
+     * @param Country $restrictedCountry
      */
-    public function addCountryRestriction(CountryRestriction $countryRestriction)
+    public function addRestrictionCountry(Country $restrictedCountry)
     {
-        $countryRestriction->addIcoScreener($this);
-        $this->countryRestrictions[] = $countryRestriction;
+        $restrictedCountry->addRestrictedIco($this);
+        $this->restrictedCountries[] = $restrictedCountry;
     }
 
     /**
-     * Remove countryRestriction.
+     * Remove restrictionCountry.
      *
-     * @param CountryRestriction $countryRestriction
+     * @param Country $restrictionCountry
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeCountryRestriction(CountryRestriction $countryRestriction)
+    public function removeRestrictionCountry(Country $restrictionCountry)
     {
-        return $this->countryRestrictions->removeElement($countryRestriction);
+        return $this->restrictedCountries->removeElement($restrictionCountry);
     }
 
     /**

@@ -9,9 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
  * AcceptedCurrency
  *
  * @ORM\Table(name="accepted_currency")
- * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\AcceptedCurrencyRepository")
+ * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\CurrencyRepository")
  */
-class AcceptedCurrency
+class Currency
 {
     /**
      * @var int
@@ -30,7 +30,7 @@ class AcceptedCurrency
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="acceptedCurrencies")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="currencies")
      */
     private $ico;
 
@@ -45,7 +45,7 @@ class AcceptedCurrency
      */
     public function addIco(Ico $ico)
     {
-        $ico->addAcceptedCurrency($this);
+        $ico->addCurrency($this);
         $this->ico[] = $ico;
     }
 
@@ -77,7 +77,7 @@ class AcceptedCurrency
      *
      * @param string $title
      *
-     * @return AcceptedCurrency
+     * @return Currency
      */
     public function setTitle($title)
     {
