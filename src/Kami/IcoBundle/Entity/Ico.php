@@ -4,6 +4,7 @@ namespace Kami\IcoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Kami\AssetBundle\Entity\Asset;
 
 
 /**
@@ -26,16 +27,14 @@ class Ico
     private $tokenType;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="restrictedIco")
-     * @ORM\JoinTable(name="countries_restrictions_ico")
+     * @ORM\Column(type="array")
      */
     private $restrictedCountries;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Currency", inversedBy="ico")
-     * @ORM\JoinTable(name="currencies_ico")
+     * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="icos")
      */
-    private $currencies;
+    private $assets;
 
     /**
      *
@@ -92,20 +91,54 @@ class Ico
     private $competitorsIco;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="ico")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * @ORM\Column(type="string")
      */
     private $country;
 
     public function __construct() {
         $this->countryRestrictions = new ArrayCollection();
-        $this->currencies = new ArrayCollection();
+        $this->assets = new ArrayCollection();
         $this->blockhainAdvisors = new ArrayCollection();
         $this->industryAdvisors = new ArrayCollection();
         $this->legalPartners = new ArrayCollection();
         $this->competitorForIco = new ArrayCollection();
         $this->competitorsIco = new ArrayCollection();
-        $this->restrictedCountries = new ArrayCollection();
+    }
+
+    /**
+     * Add asset.
+     *
+     * @param Asset $asset
+     *
+     * @return Ico
+     */
+    public function addAsset(Asset $asset)
+    {
+        $this->assets[] = $asset;
+
+        return $this;
+    }
+
+    /**
+     * Remove asset.
+     *
+     * @param Asset $asset
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAsset(Asset $asset)
+    {
+        return $this->assets->removeElement($asset);
+    }
+
+    /**
+     * Get assets.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAssets()
+    {
+        return $this->assets;
     }
 
     /**
@@ -158,12 +191,11 @@ class Ico
 
      /**
      * Set country.
-     *
-     * @param Country $country
-     *
+     * @param string $country
      * @return Ico
+      *
      */
-    public function setCountry(Country $country)
+    public function setCountry($country)
     {
         $this->country = $country;
 
@@ -173,7 +205,7 @@ class Ico
     /**
      * Get country.
      *
-     * @return Country
+     * @return string
      */
     public function getCountry()
     {
@@ -181,51 +213,23 @@ class Ico
     }
 
     /**
-     * Add currency.
+     * Set restrictedCountry.
      *
-     * @param Currency $currency
+     * @param string $restrictedCountry
      */
-    public function addCurrency(Currency $currency)
+    public function addRestrictionCountry($restrictedCountry)
     {
-        $currency->addIco($this);
-        $this->currencies[] = $currency;
-    }
-
-    /**
-     * Remove currency.
-     *
-     * @param Currency $currency
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeCurrency(Currency $currency)
-    {
-        return $this->currencies->removeElement($currency);
-    }
-
-
-
-    /**
-     * Add restrictedInCountry.
-     *
-     * @param Country $restrictedCountry
-     */
-    public function addRestrictionCountry(Country $restrictedCountry)
-    {
-        $restrictedCountry->addRestrictedIco($this);
         $this->restrictedCountries[] = $restrictedCountry;
     }
 
     /**
-     * Remove restrictionCountry.
+     * Get restrictedCountries.
      *
-     * @param Country $restrictionCountry
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return array
      */
-    public function removeRestrictionCountry(Country $restrictionCountry)
+    public function getRestrictedCountry()
     {
-        return $this->restrictedCountries->removeElement($restrictionCountry);
+        return $this->restrictedCountries;
     }
 
     /**
