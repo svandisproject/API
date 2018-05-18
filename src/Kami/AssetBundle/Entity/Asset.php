@@ -32,6 +32,12 @@ class Asset
     private $title;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="assets")
+     * @ORM\JoinTable(name="assets_icos")
+     */
+    private $icos;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="assets")
      * @ORM\JoinTable(name="assets_posts")
      */
@@ -39,6 +45,7 @@ class Asset
 
     public function __construct() {
         $this->posts = new ArrayCollection();
+        $this->icos = new ArrayCollection();
     }
 
     /**
@@ -75,6 +82,42 @@ class Asset
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Add ico.
+     *
+     * @param Ico $ico
+     *
+     * @return Asset
+     */
+    public function addIco(Ico $ico)
+    {
+        $this->icos[] = $ico;
+
+        return $this;
+    }
+
+    /**
+     * Remove ico.
+     *
+     * @param Ico $ico
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeIco(Ico $ico)
+    {
+        return $this->icos->removeElement($ico);
+    }
+
+    /**
+     * Get icos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIcos()
+    {
+        return $this->icos;
     }
 
     /**
