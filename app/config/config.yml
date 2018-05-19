@@ -134,3 +134,8 @@ nelmio_api_doc:
     areas:
         path_patterns:
             - ^/api(?!/doc$)
+
+kami_ico_bench:
+    private_key: ""
+    public_key: ""
+    guzzle_options: ~
