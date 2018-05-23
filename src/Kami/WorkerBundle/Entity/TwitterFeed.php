@@ -34,17 +34,6 @@ class TwitterFeed
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="mode", type="string", length=100, nullable=true)
-     */
-    private $mode;
-
-    /**
-     * @var string
-     *
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="username", type="string", length=100)
      */
     private $username;
@@ -56,7 +45,7 @@ class TwitterFeed
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="consumerKey", type="string", length=255)
+     * @ORM\Column(name="consumer_key", type="string", length=255)
      */
     private $consumerKey;
 
@@ -67,7 +56,7 @@ class TwitterFeed
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="consumerSecret", type="string", length=255)
+     * @ORM\Column(name="consumer_secret", type="string", length=255)
      */
     private $consumerSecret;
 
@@ -78,7 +67,7 @@ class TwitterFeed
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="accessTokenKey", type="string", length=255)
+     * @ORM\Column(name="access_token_key", type="string", length=255)
      */
     private $accessTokenKey;
 
@@ -89,14 +78,14 @@ class TwitterFeed
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @ORM\Column(name="accessTokenSecret", type="string", length=255)
+     * @ORM\Column(name="access_token_secret", type="string", length=255)
      */
     private $accessTokenSecret;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="timeInterval", type="integer")
+     * @ORM\Column(name="time_interval", type="integer")
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -112,30 +101,6 @@ class TwitterFeed
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set mode.
-     *
-     * @param string $mode
-     *
-     * @return TwitterFeed
-     */
-    public function setMode($mode)
-    {
-        $this->mode = $mode;
-
-        return $this;
-    }
-
-    /**
-     * Get mode.
-     *
-     * @return string
-     */
-    public function getMode()
-    {
-        return $this->mode;
     }
 
     /**

@@ -54,7 +54,7 @@ class FacebookFeed
     /**
      * @var int
      *
-     * @ORM\Column(name="timeInterval", type="integer")
+     * @ORM\Column(name="time_interval", type="integer")
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
