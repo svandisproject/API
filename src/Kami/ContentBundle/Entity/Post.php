@@ -43,7 +43,6 @@ class Post
      * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -56,7 +55,6 @@ class Post
      * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $url;
 

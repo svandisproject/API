@@ -29,34 +29,30 @@ class RedditFeedTest extends ApiTestCase
 
     public function testFilterLoggedInAsAnonymous()
     {
-        $response = $this->request('GET', '/api/reddit-feed/filter');
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "clientId", "value": "test1234"}]'));
+        $response = $this->request('GET', '/api/reddit-feed/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 403);
     }
 
     public function testFilterLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('GET', '/api/reddit-feed/filter');
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "clientId", "value": "test1234"}]'));
+        $response = $this->request('GET', '/api/reddit-feed/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 403);
-    }
-
-    public function testFilterLoggedInAsAdmin()
-    {
-        $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/reddit-feed/filter');
-        $this->assertJsonResponse($response, 200);
     }
 
     public function testCreateLoggedInAsAnonymous()
     {
         $response = $this->request('POST', '/api/reddit-feed', [
             'reddit_feed' => [
-                'clientId' => 'test1234',
-                'clientSecret' => 'test123',
+                'client_id' => 'test1234',
+                'client_secret' => 'test123',
                 'username' => 'test',
                 'password' => 'test',
-                'timeInterval' => 1000
-            ]]);
+                'time_interval' => 1000
+            ]
+        ]);
         $this->assertJsonResponse($response, 403);
     }
 
@@ -64,15 +60,15 @@ class RedditFeedTest extends ApiTestCase
     {
         $this->logInAsUser();
 
-        $response = $this->request('POST',  '/api/reddit-feed',
-            [
-                'reddit_feed' => [
-                    'clientId' => 'test1234',
-                    'clientSecret' => 'test123',
-                    'username' => 'test',
-                    'password' => 'test',
-                    'timeInterval' => 1000
-                ]]);
+        $response = $this->request('POST',  '/api/reddit-feed', [
+            'reddit_feed' => [
+                'client_id' => 'test1234',
+                'client_secret' => 'test123',
+                'username' => 'test',
+                'password' => 'test',
+                'time_interval' => 1000
+            ]
+        ]);
         $this->assertJsonResponse($response, 403);
     }
 
@@ -82,16 +78,25 @@ class RedditFeedTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('POST', '/api/reddit-feed', [
             'reddit_feed' => [
-            'clientId' => 'test1234',
-            'clientSecret' => 'test123',
-            'username' => 'test',
-            'password' => 'test',
-            'timeInterval' => 1000
-        ]]);
+                'client_id' => 'test1234',
+                'client_secret' => 'test123',
+                'username' => 'test',
+                'password' => 'test',
+                'time_interval' => 1000
+            ]
+        ]);
 
         $this->assertJsonResponse($response, 200);
-        $this->assertEquals('test1234', $this->getResponseData($response)['clientId']);
+        $this->assertEquals('test1234', $this->getResponseData($response)['client_id']);
         $this->assertContainsKeys($response);
+    }
+
+    public function testFilterLoggedInAsAdmin()
+    {
+        $this->logInAsAdmin();
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "clientId", "value": "test1234"}]'));
+        $response = $this->request('GET', '/api/reddit-feed/filter?filter=' . $filter);
+        $this->assertJsonResponse($response, 200);
     }
 
     public function testCreateLoggedInAsAdminWithNotUniqueClientId()
@@ -99,40 +104,27 @@ class RedditFeedTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('POST', '/api/reddit-feed', [
             'reddit_feed' => [
-                'clientId' => 'test1234',
-                'clientSecret' => 'test123',
+                'client_id' => 'test1234',
+                'client_secret' => 'test123',
                 'username' => 'test',
                 'password' => 'test',
-                'timeInterval' => 1000
-            ]]);
+                'time_interval' => 1000
+            ]
+        ]);
         $this->assertJsonResponse($response, 400);
-    }
-
-    public function testFilterLimitLoggedInAsAdmin()
-    {
-        $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/reddit-feed/filter?limit=1');
-        $this->assertJsonResponse($response, 200);
-        $this->arrayHasKey('rows', $this->getResponseData($response));
-    }
-
-    public function testFilterLimitLoggedInAsUser()
-    {
-        $this->logInAsUser();
-        $response = $this->request('GET', '/api/reddit-feed/filter?limit=1');
-        $this->assertJsonResponse($response, 403);
     }
 
     public function testEditLoggedInAsAnonymous()
     {
         $response = $this->request('PUT', '/api/reddit-feed/1', [
             'reddit_feed' => [
-                'clientId' => 'test1235',
-                'clientSecret' => 'test124',
+                'client_id' => 'test1235',
+                'client_secret' => 'test124',
                 'username' => 'test',
                 'password' => 'test',
-                'timeInterval' => 100
-            ]]);
+                'time_interval' => 100
+            ]
+        ]);
         $this->assertJsonResponse($response, 403);
     }
 
@@ -141,12 +133,13 @@ class RedditFeedTest extends ApiTestCase
         $this->logInAsUser();
         $response = $this->request('PUT', '/api/reddit-feed/1', [
             'reddit_feed' => [
-                'clientId' => 'test1235',
-                'clientSecret' => 'test124',
+                'client_id' => 'test1235',
+                'client_secret' => 'test124',
                 'username' => 'test',
                 'password' => 'test',
-                'timeInterval' => 100
-            ]]);
+                'time_interval' => 100
+            ]
+        ]);
         $this->assertJsonResponse($response, 403);
     }
 
@@ -155,12 +148,13 @@ class RedditFeedTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('PUT', '/api/reddit-feed/1', [
             'reddit_feed' => [
-                'clientId' => 'test1235',
-                'clientSecret' => 'test124',
+                'client_id' => 'test1235',
+                'client_secret' => 'test124',
                 'username' => 'test',
                 'password' => 'test',
-                'timeInterval' => 100
-            ]]);
+                'time_interval' => 100
+            ]
+        ]);
         $this->assertJsonResponse($response, 200);
         $this->assertContainsKeys($response);
         $this->assertEquals('test1235', $this->getResponseData($response)['client_id']);
@@ -171,7 +165,6 @@ class RedditFeedTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('PUT', '/api/reddit-feed/1', ['reddit_feed' => ['name' => 'edit']]);
         $this->assertJsonResponse($response, 400);
-        $this->assertEquals('This form should not contain extra fields.', $this->getResponseData($response)['form']['errors'][0]);
     }
 
     public function testDeleteLoggedInAsAnonymous()
@@ -191,12 +184,12 @@ class RedditFeedTest extends ApiTestCase
     {
         $this->logInAsAdmin();
         $response = $this->request('DELETE', '/api/reddit-feed/1');
-        $this->assertJsonResponse($response, 201);
+        $this->assertEquals(204, $response->getStatusCode());
     }
 
     public function getModelKeys()
     {
-        return [ 'clientId', 'clientSecret', 'username', 'password', 'timeInterval'];
+        return [ 'client_id', 'client_secret', 'username', 'password', 'time_interval'];
     }
 
 }

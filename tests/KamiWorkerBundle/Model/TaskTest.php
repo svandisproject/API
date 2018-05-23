@@ -37,7 +37,6 @@ class TaskTest extends TestCase
     {
         $twitterFeed = new TwitterFeed();
         $twitterFeed
-            ->setMode('test')
             ->setAccessTokenKey('test')
             ->setAccessTokenSecret('test')
             ->setConsumerKey('test')
@@ -47,7 +46,6 @@ class TaskTest extends TestCase
         $task = new Task();
         $task->setType('twitter')
             ->setConfig([
-                'mode' => 'test',
                 'consumerKey' => 'test',
                 'consumerSecret' => 'test',
                 'accessTokenKey' => 'test',

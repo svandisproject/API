@@ -16,6 +16,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  * @UniqueEntity({"title"})
  */
 class Tag
@@ -26,7 +27,6 @@ class Tag
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Api\AnonymousAccess
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $id;
@@ -36,7 +36,6 @@ class Tag
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
      * @Assert\NotBlank()
-     * @Api\AnonymousAccess
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
