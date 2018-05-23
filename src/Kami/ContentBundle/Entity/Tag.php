@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Symfony\Component\Validator\Constraints as Assert;
-use JMS\Serializer\Annotation as JMS;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -16,9 +15,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\TagRepository")
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
- * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
- * @JMS\ExclusionPolicy("all")
  * @UniqueEntity({"title"})
  */
 class Tag
@@ -30,8 +28,6 @@ class Tag
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @JMS\Expose
      */
     private $id;
 
@@ -42,9 +38,7 @@ class Tag
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @JMS\Expose(if="service('kami_api_core.access_manager').canAccessProperty(object, context, property_metadata)")
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -52,11 +46,8 @@ class Tag
     /**
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", mappedBy="tags")
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @JMS\Expose(if="service('kami_api_core.access_manager').canAccessProperty(object, context, property_metadata)")
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $posts;
 

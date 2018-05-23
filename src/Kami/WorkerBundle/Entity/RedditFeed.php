@@ -14,7 +14,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @UniqueEntity("clientId")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
- * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class RedditFeed
@@ -34,7 +34,7 @@ class RedditFeed
      *
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="client_id", type="string", unique=true)
      */
@@ -45,7 +45,7 @@ class RedditFeed
      *
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="client_secret", type="string")
      */
@@ -56,7 +56,7 @@ class RedditFeed
      *
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="username", type="string")
      */
@@ -67,7 +67,7 @@ class RedditFeed
      *
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @ORM\Column(name="password", type="string")
      */
@@ -76,9 +76,9 @@ class RedditFeed
     /**
      * @var int
      *
-     * @ORM\Column(name="timeInterval", type="integer")
+     * @ORM\Column(name="time_interval", type="integer")
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */

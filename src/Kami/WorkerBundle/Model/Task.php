@@ -69,7 +69,6 @@ class Task
         $task = new self;
         $task->type = 'twitter';
         $task->config = [
-            'mode' => $twitterFeed->getMode(),
             'consumerKey' => $twitterFeed->getConsumerKey(),
             'consumerSecret' => $twitterFeed->getConsumerSecret(),
             'accessTokenKey' => $twitterFeed->getAccessTokenKey(),

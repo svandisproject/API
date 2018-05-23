@@ -26,40 +26,13 @@ class FacebookFeedTest extends ApiTestCase
         $this->assertJsonResponse($response, 403);
     }
 
-    public function testFilterLoggedInAsAnonymous()
-    {
-        $response = $this->request('GET', '/api/facebook-feed/filter');
-        $this->assertJsonResponse($response, 403);
-    }
-
-    public function testFilterLoggedInAsAdmin()
-    {
-        $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/facebook-feed/filter');
-        $this->assertJsonResponse($response, 200);
-    }
-
-    public function testFilterLoggedInAsUser()
-    {
-        $this->logInAsUser();
-        $response = $this->request('GET', '/api/facebook-feed/filter');
-        $this->assertJsonResponse($response, 403);
-    }
-
-    public function testFilterByExistingParameterLoggedInAsAdmin()
-    {
-        $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/facebook-feed/filter?email=test');
-        $this->assertJsonResponse($response, 200);
-    }
-
     public function testCreateLoggedInAsAnonymous()
     {
         $response = $this->request('POST', '/api/facebook-feed', [
             'facebook_feed' => [
                 'email' => 'test@test.test',
                 'password' => 'test',
-                'timeInterval' => 10000,
+                'time_interval' => 10000,
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -72,7 +45,7 @@ class FacebookFeedTest extends ApiTestCase
             'facebook_feed' => [
                 'email' => 'test@test.test',
                 'password' => 'test',
-                'timeInterval' => 10000,
+                'time_interval' => 10000,
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -83,13 +56,21 @@ class FacebookFeedTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('POST', '/api/facebook-feed', [
             'facebook_feed' => [
-                'email' => 'test',
+                'email' => 'test@test.test',
                 'password' => 'test',
-                'timeInterval' => 10000,
+                'time_interval' => 10000,
             ]
         ]);
         $this->assertJsonResponse($response, 200);
-        $this->assertEquals('test', $this->getResponseData($response)['email']);
+        $this->assertEquals('test@test.test', $this->getResponseData($response)['email']);
+        $this->assertContainsKeys($response);
+    }
+
+    public function testSingleLoggedInAsAdmin()
+    {
+        $this->logInAsAdmin();
+        $response = $this->request('GET', '/api/facebook-feed/1');
+        $this->assertJsonResponse($response, 200);
         $this->assertContainsKeys($response);
     }
 
@@ -98,33 +79,44 @@ class FacebookFeedTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('POST', '/api/facebook-feed', [
             'facebook_feed' => [
-                'email' => 'test',
+                'email' => 'test@test.test',
                 'password' => 'test',
-                'timeInterval' => 10000,
+                'time_interval' => 10000,
             ]
         ]);
         $this->assertJsonResponse($response, 400);
     }
 
-    public function testFilterLimitLoggedInAsAdmin()
+    public function testFilterLoggedInAsAnonymous()
+    {
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "email", "value": "test@test.test"}]'));
+        $response = $this->request('GET', '/api/facebook-feed/filter?filter=' . $filter);
+        $this->assertJsonResponse($response, 403);
+    }
+
+    public function testFilterLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/facebook-feed/filter?limit=1');
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "email", "value": "test@test.test"}]'));
+        $response = $this->request('GET', '/api/facebook-feed/filter?filter=' . $filter);
+        $this->assertEquals('test@test.test', $this->getResponseData($response)['content'][0]['email']);
         $this->assertJsonResponse($response, 200);
-        $response = $this->getResponseData($response);
-        $this->assertCount(1, $response['rows']);
+    }
+
+    public function testFilterLoggedInAsUser()
+    {
+        $this->logInAsUser();
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "email", "value": "test@test.test"}]'));
+        $response = $this->request('GET', '/api/facebook-feed/filter?filter=' . $filter);
+        $this->assertJsonResponse($response, 403);
     }
 
     public function testCreateNotExistedFieldLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('POST', '/api/facebook-feed', [
-            'facebook_feed' => [
-                'name' => 'test'
-            ]
-        ]);
-        $this->assertJsonResponse($response, 400);
-        $this->assertEquals('This form should not contain extra fields.', $this->getResponseData($response)['form']['errors'][0]);
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "name", "value": "test"}]'));
+        $response = $this->request('POST', '/api/facebook-feed/filter?filter=' . $filter);
+        $this->assertEquals(405, $response->getStatusCode());
     }
 
     public function testSingleLoggedInAsAnonymous()
@@ -140,13 +132,6 @@ class FacebookFeedTest extends ApiTestCase
         $this->assertJsonResponse($response, 403);
     }
 
-    public function testSingleLoggedInAsAdmin()
-    {
-        $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/facebook-feed/1');
-        $this->assertJsonResponse($response, 200);
-        $this->assertContainsKeys($response);
-    }
 
     public function testSingleNotExistedIdLoggedInAsAdmin()
     {
@@ -183,7 +168,7 @@ class FacebookFeedTest extends ApiTestCase
             'facebook_feed' => [
                 'email' => 'edited',
                 'password' => 'edited',
-                'timeInterval' => 1000,
+                'time_interval' => 1000,
             ]
         ]);
         $this->assertJsonResponse($response, 200);
@@ -202,7 +187,6 @@ class FacebookFeedTest extends ApiTestCase
             ]
         ]);
         $this->assertJsonResponse($response, 400);
-        $this->assertEquals('This form should not contain extra fields.', $this->getResponseData($response)['form']['errors'][0]);
     }
 
     public function testDeleteLoggedInAsAnonymous()
@@ -222,7 +206,7 @@ class FacebookFeedTest extends ApiTestCase
     {
         $this->logInAsAdmin();
         $response = $this->request('DELETE', '/api/facebook-feed/1');
-        $this->assertJsonResponse($response, 201);
+        $this->assertEquals(204, $response->getStatusCode());
     }
 
 

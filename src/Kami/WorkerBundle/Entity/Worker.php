@@ -29,7 +29,7 @@ class Worker implements UserInterface
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="workers")
+     * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;

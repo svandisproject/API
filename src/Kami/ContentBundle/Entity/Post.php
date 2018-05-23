@@ -20,7 +20,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\AnonymousAccess
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
- * @Api\CanBeEditedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class Post
@@ -42,8 +42,7 @@ class Post
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -55,8 +54,7 @@ class Post
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $url;
 
@@ -68,8 +66,7 @@ class Post
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $content;
 
@@ -81,8 +78,7 @@ class Post
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $source;
 
@@ -94,8 +90,7 @@ class Post
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
      *     options={"widget": "single_text"})
      */
@@ -118,13 +113,13 @@ class Post
      * @ORM\JoinTable(name="post_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\AnonymousAccess
-     * @Api\CanBeEditedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $tags;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="createdPosts")
+     * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker")
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     private $createdBy;
@@ -449,4 +444,14 @@ class Post
     {
         return $this->validatedBy;
     }
+
+    /**
+     * @param array $tags
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
+    }
+
+
 }

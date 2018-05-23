@@ -3,11 +3,11 @@ kami_worker:
     type:     annotation
     prefix:   /
 
-kami_api_core:
-    resource: "@KamiApiCoreBundle/Resources/config/routing.yml"
-
 api_login_check:
     path: /api/login_check
+
+kami_api_core:
+    resource: "@KamiApiCoreBundle/Resources/config/routing.xml"
 
 app.swagger_ui:
     path: /api/doc
