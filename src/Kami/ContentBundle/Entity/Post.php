@@ -31,6 +31,7 @@ class Post
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $id;
 
