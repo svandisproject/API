@@ -135,7 +135,7 @@ class Asset
     /**
      * @var float
      *
-     * @ORM\Column(name="percent_change_hour", type="float", nullable=true)
+     * @ORM\Column(name="percent_change_hour_usd", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -146,7 +146,7 @@ class Asset
     /**
      * @var float
      *
-     * @ORM\Column(name="percent_change_day", type="float", nullable=true)
+     * @ORM\Column(name="percent_change_day_usd", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -157,7 +157,7 @@ class Asset
     /**
      * @var float
      *
-     * @ORM\Column(name="percent_change_week", type="float", nullable=true)
+     * @ORM\Column(name="percent_change_week_usd", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
