@@ -42,16 +42,15 @@ class AssetTest extends ApiTestCase
                 'name' => 'test',
                 'symbol' => 'test',
                 'rank' => 1,
-                'price_usd' => 1.0,
-                'price_btc' => 1.0,
                 'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
-                'available_supply' => 1.0,
+                'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change_hour' => 1.0,
-                'percent_change_day' => 1.0,
-                'percent_change_week' => 1.0,
+                'price_usd' => 1.0,
+                'percent_change_hour_usd' => 1.0,
+                'percent_change_day_usd' => 1.0,
+                'percent_change_week_usd' => 1.0,
                 'last_updated' => 1525137271
             ]
         ]);
@@ -66,16 +65,15 @@ class AssetTest extends ApiTestCase
                 'name' => 'test',
                 'symbol' => 'test',
                 'rank' => 1,
-                'price_usd' => 1.0,
-                'price_btc' => 1.0,
                 'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
-                'available_supply' => 1.0,
+                'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change_hour' => 1.0,
-                'percent_change_day' => 1.0,
-                'percent_change_week' => 1.0,
+                'price_usd' => 1.0,
+                'percent_change_hour_usd' => 1.0,
+                'percent_change_day_usd' => 1.0,
+                'percent_change_week_usd' => 1.0,
                 'last_updated' => 1525137271
             ]
         ]);
@@ -90,16 +88,15 @@ class AssetTest extends ApiTestCase
                 'name' => 'test',
                 'symbol' => 'test',
                 'rank' => 1,
-                'price_usd' => 1.0,
-                'price_btc' => 1.0,
                 'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
-                'available_supply' => 1.0,
+                'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change_hour' => 1.0,
-                'percent_change_day' => 1.0,
-                'percent_change_week' => 1.0,
+                'price_usd' => 1.0,
+                'percent_change_hour_usd' => 1.0,
+                'percent_change_day_usd' => 1.0,
+                'percent_change_week_usd' => 1.0,
                 'last_updated' => 1525137271
             ]
         ]);
@@ -115,16 +112,15 @@ class AssetTest extends ApiTestCase
                 'name' => 'test_worker',
                 'symbol' => 'test_worker',
                 'rank' => 1,
-                'price_usd' => 1.0,
-                'price_btc' => 1.0,
                 'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
-                'available_supply' => 1.0,
+                'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change_hour' => 1.0,
-                'percent_change_day' => 1.0,
-                'percent_change_week' => 1.0,
+                'price_usd' => 1.0,
+                'percent_change_hour_usd' => 1.0,
+                'percent_change_day_usd' => 1.0,
+                'percent_change_week_usd' => 1.0,
                 'last_updated' => 1525137271
             ]
         ]);
@@ -156,16 +152,15 @@ class AssetTest extends ApiTestCase
                 'name' => 'edit',
                 'symbol' => 'edit',
                 'rank' => 1,
-                'price_usd' => 1.0,
-                'price_btc' => 1.0,
                 'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
-                'available_supply' => 1.0,
+                'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change_hour' => 1.0,
-                'percent_change_day' => 1.0,
-                'percent_change_week' => 1.0,
+                'price_usd' => 1.0,
+                'percent_change_hour_usd' => 1.0,
+                'percent_change_day_usd' => 1.0,
+                'percent_change_week_usd' => 1.0,
                 'last_updated' => 1525137271
             ]
         ]);
@@ -180,16 +175,15 @@ class AssetTest extends ApiTestCase
                 'name' => 'edit',
                 'symbol' => 'edit',
                 'rank' => 1,
-                'price_usd' => 1.0,
-                'price_btc' => 1.0,
                 'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
-                'available_supply' => 1.0,
+                'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change_hour' => 1.0,
-                'percent_change_day' => 1.0,
-                'percent_change_week' => 1.0,
+                'price_usd' => 1.0,
+                'percent_change_hour_usd' => 1.0,
+                'percent_change_day_usd' => 1.0,
+                'percent_change_week_usd' => 1.0,
                 'last_updated' => 1525137271
             ]
         ]);
@@ -204,16 +198,15 @@ class AssetTest extends ApiTestCase
                 'name' => 'edit',
                 'symbol' => 'edit',
                 'rank' => 1,
-                'price_usd' => 1.0,
-                'price_btc' => 1.0,
                 'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
-                'available_supply' => 1.0,
+                'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change_hour' => 1.0,
-                'percent_change_day' => 1.0,
-                'percent_change_week' => 1.0,
+                'price_usd' => 1.0,
+                'percent_change_hour_usd' => 1.0,
+                'percent_change_day_usd' => 1.0,
+                'percent_change_week_usd' => 1.0,
                 'last_updated' => 1525137271
             ]
         ]);
@@ -251,7 +244,8 @@ class AssetTest extends ApiTestCase
 
     public function getModelKeys()
     {
-        return ['name', 'symbol', 'rank', 'price_usd', 'price_usd', 'price_btc', 'volume_usd_day', 'market_cap_usd',
-            'available_supply', 'total_supply', 'max_supply', 'percent_change_hour', 'percent_change_day', 'percent_change_week', 'last_updated'];
+        return ['name', 'symbol', 'rank', 'price_usd', 'volume_usd_day', 'market_cap_usd',
+            'circulating_supply', 'total_supply', 'max_supply', 'percent_change_hour_usd', 'percent_change_day_usd',
+            'percent_change_week_usd', 'last_updated'];
     }
 }

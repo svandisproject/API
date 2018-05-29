@@ -69,57 +69,13 @@ class Asset
     /**
      * @var float
      *
-     * @ORM\Column(name="price_usd", type="float", nullable=true)
+     * @ORM\Column(name="circulating_supply", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $priceUsd;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="price_btc", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $priceBtc;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="volume_usd_day", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $volumeUsdDay;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="market_cap_usd", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $marketCapUsd;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="available_supply", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $availableSupply;
+    private $circulatingSupply;
 
     /**
      * @var float
@@ -146,13 +102,46 @@ class Asset
     /**
      * @var float
      *
+     * @ORM\Column(name="price_usd", type="float", nullable=true)
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $priceUsd;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="volume_usd_day", type="float", nullable=true)
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $volumeUsdDay;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="market_cap_usd", type="float", nullable=true)
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $marketCapUsd;
+
+    /**
+     * @var float
+     *
      * @ORM\Column(name="percent_change_hour", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $percentChangeHour;
+    private $percentChangeHourUsd;
 
     /**
      * @var float
@@ -163,7 +152,7 @@ class Asset
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $percentChangeDay;
+    private $percentChangeDayUsd;
 
     /**
      * @var float
@@ -174,7 +163,7 @@ class Asset
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $percentChangeWeek;
+    private $percentChangeWeekUsd;
 
     /**
      * @var \DateTime
@@ -342,30 +331,6 @@ class Asset
     }
 
     /**
-     * Set priceBtc.
-     *
-     * @param float $priceBtc
-     *
-     * @return Asset
-     */
-    public function setPriceBtc($priceBtc)
-    {
-        $this->priceBtc = $priceBtc;
-
-        return $this;
-    }
-
-    /**
-     * Get priceBtc.
-     *
-     * @return float
-     */
-    public function getPriceBtc()
-    {
-        return $this->priceBtc;
-    }
-
-    /**
      * Set volumeUsdDay.
      *
      * @param float $volumeUsdDay
@@ -414,27 +379,27 @@ class Asset
     }
 
     /**
-     * Set availableSupply.
+     * Set circulatingSupply.
      *
-     * @param float $availableSupply
+     * @param float $circulatingSupply
      *
      * @return Asset
      */
-    public function setAvailableSupply($availableSupply)
+    public function setCirculatingSupply($circulatingSupply)
     {
-        $this->availableSupply = $availableSupply;
+        $this->circulatingSupply = $circulatingSupply;
 
         return $this;
     }
 
     /**
-     * Get availableSupply.
+     * Get circulatingSupply.
      *
      * @return float
      */
-    public function getAvailableSupply()
+    public function getCirculatingSupply()
     {
-        return $this->availableSupply;
+        return $this->circulatingSupply;
     }
 
     /**
@@ -486,75 +451,75 @@ class Asset
     }
 
     /**
-     * Set percentChangeHour.
+     * Set percentChangeHourUsd.
      *
-     * @param float $percentChangeHour
+     * @param float $percentChangeHourUsd
      *
      * @return Asset
      */
-    public function setPercentChangeHour($percentChangeHour)
+    public function setPercentChangeHourUsd($percentChangeHourUsd)
     {
-        $this->percentChangeHour = $percentChangeHour;
+        $this->percentChangeHourUsd = $percentChangeHourUsd;
 
         return $this;
     }
 
     /**
-     * Get percentChangeHour.
+     * Get percentChangeHourUsd.
      *
      * @return float
      */
-    public function getPercentChangeHour()
+    public function getPercentChangeHourUsd()
     {
-        return $this->percentChangeHour;
+        return $this->percentChangeHourUsd;
     }
 
     /**
-     * Set percentChangeDay.
+     * Set percentChangeDayUsd.
      *
-     * @param float $percentChangeDay
+     * @param float $percentChangeDayUsd
      *
      * @return Asset
      */
-    public function setPercentChangeDay($percentChangeDay)
+    public function setPercentChangeDayUsd($percentChangeDayUsd)
     {
-        $this->percentChangeDay = $percentChangeDay;
+        $this->percentChangeDayUsd = $percentChangeDayUsd;
 
         return $this;
     }
 
     /**
-     * Get percentChangeDay.
+     * Get percentChangeDayUsd.
      *
      * @return float
      */
-    public function getPercentChangeDay()
+    public function getPercentChangeDayUsd()
     {
-        return $this->percentChangeDay;
+        return $this->percentChangeDayUsd;
     }
 
     /**
-     * Set percentChangeWeek.
+     * Set percentChangeWeekUsd.
      *
-     * @param float $percentChangeWeek
+     * @param float $percentChangeWeekUsd
      *
      * @return Asset
      */
-    public function setPercentChangeWeek($percentChangeWeek)
+    public function setPercentChangeWeekUsd($percentChangeWeekUsd)
     {
-        $this->percentChangeWeek = $percentChangeWeek;
+        $this->percentChangeWeekUsd = $percentChangeWeekUsd;
 
         return $this;
     }
 
     /**
-     * Get percentChangeWeek.
+     * Get percentChangeWeekUsd.
      *
      * @return float
      */
-    public function getPercentChangeWeek()
+    public function getPercentChangeWeekUsd()
     {
-        return $this->percentChangeWeek;
+        return $this->percentChangeWeekUsd;
     }
 
     /**
