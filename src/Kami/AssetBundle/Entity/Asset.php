@@ -12,8 +12,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Asset
  *
- * @Api\AnonymousAccess()
- * @Api\AnonymousCreate()
  * @ORM\Entity
  * @ORM\Table(name="asset")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
@@ -35,8 +33,6 @@ class Asset
     /**
      * @var string
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
@@ -49,8 +45,6 @@ class Asset
     /**
      * @var string
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="symbol", type="string", length=255)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
@@ -63,8 +57,6 @@ class Asset
     /**
      * @var int
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="rank", type="integer", nullable=true)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
@@ -77,8 +69,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="price_usd", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -90,8 +80,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="price_btc", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -103,8 +91,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="volume_usd_day", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -116,8 +102,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="market_cap_usd", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -129,8 +113,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="available_supply", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -142,8 +124,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousCreate()
-     * @Api\AnonymousAccess()
      * @ORM\Column(name="total_supply", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -155,8 +135,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="max_supply", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -168,8 +146,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="percent_change_hour", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -181,8 +157,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="percent_change_day", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -194,8 +168,6 @@ class Asset
     /**
      * @var float
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="percent_change_week", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -207,8 +179,6 @@ class Asset
     /**
      * @var \DateTime
      *
-     * @Api\AnonymousAccess()
-     * @Api\AnonymousCreate()
      * @ORM\Column(name="last_updated", type="datetime")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})

@@ -44,15 +44,15 @@ class AssetTest extends ApiTestCase
                 'rank' => 1,
                 'price_usd' => 1.0,
                 'price_btc' => 1.0,
-                'volume_usd24h' => 1.0,
+                'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
                 'available_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change1h' => 1.0,
-                'percent_change24h' => 1.0,
-                'percent_change7d' => 1.0,
-                'last_updated' => '2000-00-00 10:00:00'
+                'percent_change_hour' => 1.0,
+                'percent_change_day' => 1.0,
+                'percent_change_week' => 1.0,
+                'last_updated' => 1525137271
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -68,15 +68,15 @@ class AssetTest extends ApiTestCase
                 'rank' => 1,
                 'price_usd' => 1.0,
                 'price_btc' => 1.0,
-                'volume_usd24h' => 1.0,
+                'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
                 'available_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change1h' => 1.0,
-                'percent_change24h' => 1.0,
-                'percent_change7d' => 1.0,
-                'last_updated' => '2000-00-00 10:00:00'
+                'percent_change_hour' => 1.0,
+                'percent_change_day' => 1.0,
+                'percent_change_week' => 1.0,
+                'last_updated' => 1525137271
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -92,44 +92,20 @@ class AssetTest extends ApiTestCase
                 'rank' => 1,
                 'price_usd' => 1.0,
                 'price_btc' => 1.0,
-                'volume_usd24h' => 1.0,
+                'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
                 'available_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change1h' => 1.0,
-                'percent_change24h' => 1.0,
-                'percent_change7d' => 1.0,
-                'last_updated' => '2000-00-00 10:00:00'
+                'percent_change_hour' => 1.0,
+                'percent_change_day' => 1.0,
+                'percent_change_week' => 1.0,
+                'last_updated' => 1525137271
             ]
         ]);
         $this->assertJsonResponse($response, 200);
         $this->assertEquals('test', $this->getResponseData($response)['name']);
         $this->assertContainsKeys($response);
-    }
-
-    public function testCreateLoggedInAsAdminWithNotUniqueName()
-    {
-        $this->logInAsAdmin();
-        $response = $this->request('POST', '/api/asset', [
-            'asset' => [
-                'name' => 'test',
-                'symbol' => 'test',
-                'rank' => 1,
-                'price_usd' => 1.0,
-                'price_btc' => 1.0,
-                'volume_usd24h' => 1.0,
-                'market_cap_usd' => 1.0,
-                'available_supply' => 1.0,
-                'total_supply' => 1.0,
-                'max_supply' => 1.0,
-                'percent_change1h' => 1.0,
-                'percent_change24h' => 1.0,
-                'percent_change7d' => 1.0,
-                'last_updated' => '2000-00-00 10:00:00'
-            ]
-        ]);
-        $this->assertJsonResponse($response, 400);
     }
 
     public function testCreateByWorker()
@@ -141,41 +117,18 @@ class AssetTest extends ApiTestCase
                 'rank' => 1,
                 'price_usd' => 1.0,
                 'price_btc' => 1.0,
-                'volume_usd24h' => 1.0,
+                'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
                 'available_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change1h' => 1.0,
-                'percent_change24h' => 1.0,
-                'percent_change7d' => 1.0,
-                'last_updated' => '2000-00-00 10:00:00'
+                'percent_change_hour' => 1.0,
+                'percent_change_day' => 1.0,
+                'percent_change_week' => 1.0,
+                'last_updated' => 1525137271
             ]
         ]);
         $this->assertJsonResponse($response, 200);
-    }
-
-    public function testCreateByWorkerWithNotUniqueName()
-    {
-        $response = $this->requestByWorker('POST', '/api/asset', [
-            'asset' => [
-                'name' => 'test_worker',
-                'symbol' => 'test',
-                'rank' => 1,
-                'price_usd' => 1.0,
-                'price_btc' => 1.0,
-                'volume_usd24h' => 1.0,
-                'market_cap_usd' => 1.0,
-                'available_supply' => 1.0,
-                'total_supply' => 1.0,
-                'max_supply' => 1.0,
-                'percent_change1h' => 1.0,
-                'percent_change24h' => 1.0,
-                'percent_change7d' => 1.0,
-                'last_updated' => '2000-00-00 10:00:00'
-            ]
-        ]);
-        $this->assertJsonResponse($response, 400);
     }
 
     public function testFilterLoggedInAsAdmin()
@@ -205,15 +158,15 @@ class AssetTest extends ApiTestCase
                 'rank' => 1,
                 'price_usd' => 1.0,
                 'price_btc' => 1.0,
-                'volume_usd24h' => 1.0,
+                'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
                 'available_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change1h' => 1.0,
-                'percent_change24h' => 1.0,
-                'percent_change7d' => 1.0,
-                'last_updated' => '2000-00-00 10:00:00'
+                'percent_change_hour' => 1.0,
+                'percent_change_day' => 1.0,
+                'percent_change_week' => 1.0,
+                'last_updated' => 1525137271
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -229,15 +182,15 @@ class AssetTest extends ApiTestCase
                 'rank' => 1,
                 'price_usd' => 1.0,
                 'price_btc' => 1.0,
-                'volume_usd24h' => 1.0,
+                'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
                 'available_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change1h' => 1.0,
-                'percent_change24h' => 1.0,
-                'percent_change7d' => 1.0,
-                'last_updated' => '2000-00-00 10:00:00'
+                'percent_change_hour' => 1.0,
+                'percent_change_day' => 1.0,
+                'percent_change_week' => 1.0,
+                'last_updated' => 1525137271
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -253,15 +206,15 @@ class AssetTest extends ApiTestCase
                 'rank' => 1,
                 'price_usd' => 1.0,
                 'price_btc' => 1.0,
-                'volume_usd24h' => 1.0,
+                'volume_usd_day' => 1.0,
                 'market_cap_usd' => 1.0,
                 'available_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'percent_change1h' => 1.0,
-                'percent_change24h' => 1.0,
-                'percent_change7d' => 1.0,
-                'last_updated' => '2000-00-00 10:00:00'
+                'percent_change_hour' => 1.0,
+                'percent_change_day' => 1.0,
+                'percent_change_week' => 1.0,
+                'last_updated' => 1525137271
             ]
         ]);
         $this->assertJsonResponse($response, 200);
@@ -298,7 +251,7 @@ class AssetTest extends ApiTestCase
 
     public function getModelKeys()
     {
-        return ['name', 'symbol', 'rank', 'price_usd', 'price_usd', 'price_btc', 'volume_usd24h', 'market_cap_usd',
-            'available_supply', 'total_supply', 'max_supply', 'percent_change1h', 'percent_change24h', 'percent_change7d', 'last_updated'];
+        return ['name', 'symbol', 'rank', 'price_usd', 'price_usd', 'price_btc', 'volume_usd_day', 'market_cap_usd',
+            'available_supply', 'total_supply', 'max_supply', 'percent_change_hour', 'percent_change_day', 'percent_change_week', 'last_updated'];
     }
 }
