@@ -11,10 +11,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Asset
+ *
+ * @Api\AnonymousAccess()
+ * @Api\AnonymousCreate()
  * @ORM\Entity
  * @ORM\Table(name="asset")
- * @UniqueEntity("name")
- * @UniqueEntity("symbol")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -34,7 +35,9 @@ class Asset
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
+     * @ORM\Column(name="name", type="string", length=255)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -46,7 +49,9 @@ class Asset
     /**
      * @var string
      *
-     * @ORM\Column(name="symbol", type="string", length=255, unique=true)
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
+     * @ORM\Column(name="symbol", type="string", length=255)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -58,6 +63,8 @@ class Asset
     /**
      * @var int
      *
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
      * @ORM\Column(name="rank", type="integer", nullable=true)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
@@ -70,6 +77,8 @@ class Asset
     /**
      * @var float
      *
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
      * @ORM\Column(name="price_usd", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -81,6 +90,8 @@ class Asset
     /**
      * @var float
      *
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
      * @ORM\Column(name="price_btc", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -92,17 +103,21 @@ class Asset
     /**
      * @var float
      *
-     * @ORM\Column(name="volume_usd24h", type="float", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
+     * @ORM\Column(name="volume_usd_day", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $volumeUsd24h;
+    private $volumeUsdDay;
 
     /**
      * @var float
      *
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
      * @ORM\Column(name="market_cap_usd", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -114,6 +129,8 @@ class Asset
     /**
      * @var float
      *
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
      * @ORM\Column(name="available_supply", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -138,6 +155,8 @@ class Asset
     /**
      * @var float
      *
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
      * @ORM\Column(name="max_supply", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -149,39 +168,47 @@ class Asset
     /**
      * @var float
      *
-     * @ORM\Column(name="percent_change1h", type="float", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
+     * @ORM\Column(name="percent_change_hour", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $percentChange1h;
+    private $percentChangeHour;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="percent_change24h", type="float", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
+     * @ORM\Column(name="percent_change_day", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $percentChange24h;
+    private $percentChangeDay;
 
     /**
      * @var float
      *
-     * @ORM\Column(name="percent_change7d", type="float", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
+     * @ORM\Column(name="percent_change_week", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $percentChange7d;
+    private $percentChangeWeek;
 
     /**
      * @var \DateTime
      *
+     * @Api\AnonymousAccess()
+     * @Api\AnonymousCreate()
      * @ORM\Column(name="last_updated", type="datetime")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -369,27 +396,27 @@ class Asset
     }
 
     /**
-     * Set volumeUsd24h.
+     * Set volumeUsdDay.
      *
-     * @param float $volumeUsd24h
+     * @param float $volumeUsdDay
      *
      * @return Asset
      */
-    public function setVolumeUsd24h($volumeUsd24h)
+    public function setVolumeUsdDay($volumeUsdDay)
     {
-        $this->volumeUsd24h = $volumeUsd24h;
+        $this->volumeUsdDay = $volumeUsdDay;
 
         return $this;
     }
 
     /**
-     * Get volumeUsd24h.
+     * Get volumeUsdDay.
      *
      * @return float
      */
-    public function getVolumeUsd24h()
+    public function getVolumeUsdDay()
     {
-        return $this->volumeUsd24h;
+        return $this->volumeUsdDay;
     }
 
     /**
@@ -489,92 +516,87 @@ class Asset
     }
 
     /**
-     * Set percentChange1h.
+     * Set percentChangeHour.
      *
-     * @param float $percentChange1h
+     * @param float $percentChangeHour
      *
      * @return Asset
      */
-    public function setPercentChange1h($percentChange1h)
+    public function setPercentChangeHour($percentChangeHour)
     {
-        $this->percentChange1h = $percentChange1h;
+        $this->percentChangeHour = $percentChangeHour;
 
         return $this;
     }
 
     /**
-     * Get percentChange1h.
+     * Get percentChangeHour.
      *
      * @return float
      */
-    public function getPercentChange1h()
+    public function getPercentChangeHour()
     {
-        return $this->percentChange1h;
+        return $this->percentChangeHour;
     }
 
     /**
-     * Set percentChange24h.
+     * Set percentChangeDay.
      *
-     * @param float $percentChange24h
+     * @param float $percentChangeDay
      *
      * @return Asset
      */
-    public function setPercentChange24h($percentChange24h)
+    public function setPercentChangeDay($percentChangeDay)
     {
-        $this->percentChange24h = $percentChange24h;
+        $this->percentChangeDay = $percentChangeDay;
 
         return $this;
     }
 
     /**
-     * Get percentChange24h.
+     * Get percentChangeDay.
      *
      * @return float
      */
-    public function getPercentChange24h()
+    public function getPercentChangeDay()
     {
-        return $this->percentChange24h;
+        return $this->percentChangeDay;
     }
 
     /**
-     * Set percentChange7d.
+     * Set percentChangeWeek.
      *
-     * @param float $percentChange7d
+     * @param float $percentChangeWeek
      *
      * @return Asset
      */
-    public function setPercentChange7d($percentChange7d)
+    public function setPercentChangeWeek($percentChangeWeek)
     {
-        $this->percentChange7d = $percentChange7d;
+        $this->percentChangeWeek = $percentChangeWeek;
 
         return $this;
     }
 
     /**
-     * Get percentChange7d.
+     * Get percentChangeWeek.
      *
      * @return float
      */
-    public function getPercentChange7d()
+    public function getPercentChangeWeek()
     {
-        return $this->percentChange7d;
+        return $this->percentChangeWeek;
     }
 
     /**
      * Set lastUpdated.
      *
-     * @param \DateTime $lastUpdated
+     * @param int $lastUpdated
      *
      * @return Asset
      */
     public function setLastUpdated($lastUpdated)
     {
-        if (!$lastUpdated instanceof \DateTime) {
-            $this->lastUpdated = \DateTime::createFromFormat('Y-m-d H:i:s', $lastUpdated);
-            return $this;
-        }
-        $this->lastUpdated = $lastUpdated;
-
+        $this->lastUpdated = (new \DateTime())->setTimestamp($lastUpdated);
         return $this;
     }
 
