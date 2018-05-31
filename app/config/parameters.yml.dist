@@ -3,6 +3,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
     database_driver: pdo_sqlite
+    path: '%kernel.project_dir%/var/cache/test/data.sqlite'
     database_host: ~
     database_port: ~
     database_name: ~
