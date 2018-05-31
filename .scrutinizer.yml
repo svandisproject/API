@@ -142,10 +142,13 @@ build:
     tests:
         override:
             -
-                command: 'vendor/bin/simple-phpunit --coverage-clover=coverage --env=test'
+                command: 'vendor/bin/simple-phpunit --coverage-clover=coverage'
                 coverage:
                     file: 'coverage'
                     format: 'clover'
+    environment:
+            variables:
+                SYMFONY_ENV: 'test'
 
 build_failure_conditions:
     - 'issues.severity(= CRITICAL).exists'
