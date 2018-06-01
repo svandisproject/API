@@ -100,15 +100,13 @@ class Asset
     private $maxSupply;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="price_usd", type="float", nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Price", mappedBy="asset", cascade={"persist", "remove"})
      */
-    private $priceUsd;
+    private $prices;
 
     /**
      * @var float
@@ -186,6 +184,7 @@ class Asset
 
     public function __construct() {
         $this->posts = new ArrayCollection();
+        $this->prices = new ArrayCollection();
     }
 
     /**
@@ -307,27 +306,39 @@ class Asset
     }
 
     /**
-     * Set priceUsd.
+     * Add price.
      *
-     * @param float $priceUsd
+     * @param Price $price
      *
      * @return Asset
      */
-    public function setPriceUsd($priceUsd)
+    public function addPrice(Price $price)
     {
-        $this->priceUsd = $priceUsd;
+        $this->prices[] = $price;
 
         return $this;
     }
 
     /**
-     * Get priceUsd.
+     * Remove price.
      *
-     * @return float
+     * @param Price $price
+     *
+     * @return boolean
      */
-    public function getPriceUsd()
+    public function removePrice(Price $price)
     {
-        return $this->priceUsd;
+        return $this->prices->removeElement($price);
+    }
+
+    /**
+     * Get prices.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPrices()
+    {
+        return $this->prices;
     }
 
     /**
