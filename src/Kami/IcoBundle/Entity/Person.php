@@ -3,12 +3,14 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Person
  *
  * @ORM\Table(name="person")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\PersonRepository")
+ * @UniqueEntity({"link"})
  */
 class Person
 {

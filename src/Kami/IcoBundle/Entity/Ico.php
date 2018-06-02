@@ -6,12 +6,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\AssetBundle\Entity\Asset;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IcoRepository")
- * @ORM\Table(name="`ico`")
+ * @ORM\Table(name="ico")
  * @UniqueEntity({"remoteId"})
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\AnonymousAccess()
  */
 class Ico
 {
@@ -19,66 +21,89 @@ class Ico
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $id;
 
     /**
      * @ORM\Column(name="rating", type="decimal")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $rating;
 
     /**
      * @ORM\Column(name="rating_team", type="decimal", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $ratingTeam;
 
     /**
      * @ORM\Column(name="rating_profile", type="decimal", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $ratingProfile;
     /**
      * @ORM\Column(name="rating_vision", type="decimal", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $ratingVision;
 
     /**
      * @ORM\Column(name="rating_product", type="decimal", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $ratingProduct;
 
     /**
-     *@ORM\Column(type="integer", unique=true)
+     * @ORM\Column(type="integer", unique=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $remoteId;
 
     /**
      * @ORM\Column(name="ico_url", type="string", length=255, nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $icoUrl;
 
     /**
      * @ORM\Column(name="ico_tagline", type="string", length=255, nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $icoTagline;
 
     /**
      * @ORM\Column(name="ico_intro", type="text", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $icoIntro;
 
     /**
      * @ORM\Column(name="ico_about", type="text", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $icoAbout;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\TokenType", inversedBy="icos")
      * @ORM\JoinColumn(name="token_type_id", referencedColumnName="id")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $tokenType;
 
     /**
      * @ORM\Column(type="array", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $restrictedCountries;
 
@@ -87,6 +112,8 @@ class Ico
      * @ORM\JoinTable(name="ico_asset",
      *     joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="asset_id", referencedColumnName="id")})
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $acceptingAssets;
 
@@ -97,6 +124,8 @@ class Ico
      *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
      *      )
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $blockchainAdvisors;
 
@@ -106,6 +135,8 @@ class Ico
      *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
      *      )
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $industryAdvisors;
 
@@ -115,27 +146,36 @@ class Ico
      *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
      *      )
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $legalPartners;
 
     /**
      * @ORM\Column(name="ico_token", type="string", length=100)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $icoToken;
 
     /**
      * @ORM\Column(name="ico_platform", type="string", length=100)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $platform;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="icos")
      * @ORM\JoinTable(name="icos_industies")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $industries;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="competitorsIcos")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $competitorForIcos;
 
@@ -150,21 +190,25 @@ class Ico
 
     /**
      * @ORM\Column(type="string", name="ico_token_price", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     protected $icoTokenPrice;
 
     /**
      * @ORM\Column(type="string", name="hard_cap", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $hardCap;
 
     /**
      * @ORM\Column(type="string", name="min_cap", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $minCap;
 
     /**
      * @ORM\Column(type="string", name="raised")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $raised;
 
@@ -174,26 +218,32 @@ class Ico
      *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="kyc_id", referencedColumnName="id")}
      *      )
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $kyc;
 
     /**
      * @ORM\Column(type="boolean", name="bonus", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $bonus;
 
     /**
      * @ORM\Column(type="datetime", name="open_presale", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $openPresale;
 
     /**
      * @ORM\Column(type="integer", name="team_tokens", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $teamTokens;
 
     /**
      * @ORM\Column(type="boolean", name="smart_contract_audit", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $smartContractAudit;
 
@@ -203,11 +253,14 @@ class Ico
      *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="member_id", referencedColumnName="id")}
      *      )
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $teamMembers;
 
     /**
      * @ORM\Column(type="string")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $country;
 

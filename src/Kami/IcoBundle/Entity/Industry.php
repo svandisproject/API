@@ -4,12 +4,14 @@ namespace Kami\IcoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Industry
  *
  * @ORM\Table(name="industry")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IndustryRepository")
+ * @UniqueEntity({"title"})
  */
 class Industry
 {

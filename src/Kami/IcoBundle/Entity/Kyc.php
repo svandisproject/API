@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\KycRepository")
- * @ORM\Table(name="`kyc`")
+ * @ORM\Table(name="kyc")
  */
 class Kyc
 {
@@ -42,10 +42,13 @@ class Kyc
 
     /**
      * @param string $name
+     * @return $this
      */
     public function setName($name)
     {
         $this->name = $name;
+
+        return $this;
     }
 
     /**
@@ -58,10 +61,13 @@ class Kyc
 
     /**
      * @param string $status
+     * @return $this
      */
     public function setStatus($status)
     {
         $this->status = $status;
+
+        return $this;
     }
 
     /**
