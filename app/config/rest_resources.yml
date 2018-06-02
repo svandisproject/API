@@ -9,3 +9,4 @@ kami_api_core:
     - { name: twitter-feed, entity: Kami\WorkerBundle\Entity\TwitterFeed }
     - { name: reddit-feed, entity: Kami\WorkerBundle\Entity\RedditFeed }
     - { name: asset, entity: Kami\AssetBundle\Entity\Asset }
+    - { name: ico, entity: Kami\IcoBundle\Entity\Ico }

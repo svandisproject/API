@@ -36,3 +36,5 @@ parameters:
     pusher_app_id: 513696
     pusher_key: 139ee335d6ffa4609ca9
     pusher_secret: 4eb1eacb7beb23571c99
+    ico_bench_private_key: ~
+    ico_bench_public_key: ~

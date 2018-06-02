@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "802fc6ef3a1c28e0dd71302721f23b2d",
+    "content-hash": "d5a5fc6a63fce6e46903c649d625a3a0",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -1810,22 +1810,22 @@
         },
         {
             "name": "jms/serializer",
-            "version": "1.12.0",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/schmittjoh/serializer.git",
-                "reference": "1ea5e0ba68b6b38c327eb3adf5888ac74b587e9c"
+                "reference": "93d6e03fcb71d45854cc44b5a84d645c02c5d763"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/1ea5e0ba68b6b38c327eb3adf5888ac74b587e9c",
-                "reference": "1ea5e0ba68b6b38c327eb3adf5888ac74b587e9c",
+                "url": "https://api.github.com/repos/schmittjoh/serializer/zipball/93d6e03fcb71d45854cc44b5a84d645c02c5d763",
+                "reference": "93d6e03fcb71d45854cc44b5a84d645c02c5d763",
                 "shasum": ""
             },
             "require": {
                 "doctrine/annotations": "^1.0",
                 "doctrine/instantiator": "^1.0.3",
-                "jms/metadata": "~1.1",
+                "jms/metadata": "^1.3",
                 "jms/parser-lib": "1.*",
                 "php": "^5.5|^7.0",
                 "phpcollection/phpcollection": "~0.1",
@@ -1890,7 +1890,7 @@
                 "serialization",
                 "xml"
             ],
-            "time": "2018-05-25T17:01:33+00:00"
+            "time": "2018-06-01T12:10:12+00:00"
         },
         {
             "name": "jms/serializer-bundle",
@@ -2074,12 +2074,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/icobench-client.git",
-                "reference": "2977f4674a1cd6e569cfb987898a64e70257e745"
+                "reference": "373d8cac7cee05031d7108ced30662a2e0e62c67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/icobench-client/zipball/2977f4674a1cd6e569cfb987898a64e70257e745",
-                "reference": "2977f4674a1cd6e569cfb987898a64e70257e745",
+                "url": "https://api.github.com/repos/kamilabs/icobench-client/zipball/373d8cac7cee05031d7108ced30662a2e0e62c67",
+                "reference": "373d8cac7cee05031d7108ced30662a2e0e62c67",
                 "shasum": ""
             },
             "require": {
@@ -2105,7 +2105,7 @@
                 }
             ],
             "description": "ICOBench API Client",
-            "time": "2018-06-01T10:37:51+00:00"
+            "time": "2018-06-02T15:02:29+00:00"
         },
         {
             "name": "kami/request-processor",
@@ -5483,7 +5483,8 @@
     "minimum-stability": "dev",
     "stability-flags": {
         "kami/api-core-bundle": 20,
-        "kami/icobench-bundle": 20
+        "kami/icobench-bundle": 20,
+        "kami/request-processor": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

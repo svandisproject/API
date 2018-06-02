@@ -4,12 +4,14 @@ namespace Kami\IcoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Industry
  *
  * @ORM\Table(name="industry")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IndustryRepository")
+ * @UniqueEntity({"title"})
  */
 class Industry
 {
@@ -25,18 +27,18 @@ class Industry
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100)
+     * @ORM\Column(name="title", type="string", length=100)
      */
-    private $name;
+    private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="industry")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="industries")
      */
-    private $ico;
+    private $icos;
 
     public function __construct()
     {
-        $this->ico= new ArrayCollection();
+        $this->icos= new ArrayCollection();
     }
 
     /**
@@ -50,26 +52,49 @@ class Industry
     }
 
     /**
-     * Set name.
+     * Set title.
      *
-     * @param string $name
+     * @param string $title
      *
      * @return Industry
      */
-    public function setName($name)
+    public function setTitle($title)
     {
-        $this->name = $name;
+        $this->title= $title;
 
         return $this;
     }
 
     /**
-     * Get name.
+     * Get title.
      *
      * @return string
      */
-    public function getName()
+    public function getTitle()
     {
-        return $this->name;
+        return $this->title;
+    }
+
+    /**
+     * Add ico
+     * @param Ico $ico
+     * @return Industry
+     */
+    public function addIco(Ico $ico){
+
+        $this->icos[] = $ico;
+        return $this;
+    }
+
+    /**
+     * Remove ico
+     * @param Ico $ico
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeIco($ico)
+    {
+        return $this->icos->removeElement($ico);
+
     }
 }

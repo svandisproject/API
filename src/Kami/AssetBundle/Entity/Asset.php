@@ -33,12 +33,6 @@ class Asset
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="assets")
-     * @ORM\JoinTable(name="assets_icos")
-     */
-    private $icos;
-
-    /**
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="assets")
      * @ORM\JoinTable(name="assets_posts")
      */
@@ -90,15 +84,11 @@ class Asset
      *
      * @param Ico $ico
      *
-     * @return Asset
      */
     public function addIco(Ico $ico)
     {
         $this->icos[] = $ico;
-
-        return $this;
     }
-
     /**
      * Remove ico.
      *
