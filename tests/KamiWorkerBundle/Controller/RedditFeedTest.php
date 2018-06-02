@@ -1,6 +1,6 @@
 <?php
 
-namespace Kami\WorkerBundle\Tests\Entity;
+namespace Kami\WorkerBundle\Tests\Controller;
 
 use Kami\Util\TestCase\ApiTestCase;
 
