@@ -104,9 +104,10 @@ class Asset
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Price", mappedBy="asset", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Price", mappedBy="asset", cascade={"persist"})
+     * @ORM\JoinColumn(name="price_id", referencedColumnName="id")
      */
-    private $prices;
+    private $price;
 
     /**
      * @var float
@@ -184,7 +185,6 @@ class Asset
 
     public function __construct() {
         $this->posts = new ArrayCollection();
-        $this->prices = new ArrayCollection();
     }
 
     /**
@@ -306,39 +306,27 @@ class Asset
     }
 
     /**
-     * Add price.
+     * set price.
      *
-     * @param Price $price
+     * @param $price
      *
      * @return Asset
      */
-    public function addPrice(Price $price)
+    public function setPrice($price)
     {
-        $this->prices[] = $price;
+        $this->price = $price;
 
         return $this;
     }
 
     /**
-     * Remove price.
+     * Get price.
      *
-     * @param Price $price
-     *
-     * @return boolean
+     * @return Price
      */
-    public function removePrice(Price $price)
+    public function getPrice()
     {
-        return $this->prices->removeElement($price);
-    }
-
-    /**
-     * Get prices.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPrices()
-    {
-        return $this->prices;
+        return $this->price;
     }
 
     /**

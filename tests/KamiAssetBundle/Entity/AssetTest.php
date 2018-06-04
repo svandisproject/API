@@ -47,7 +47,6 @@ class AssetTest extends ApiTestCase
                 'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'price_usd' => 1.0,
                 'percent_change_hour_usd' => 1.0,
                 'percent_change_day_usd' => 1.0,
                 'percent_change_week_usd' => 1.0,
@@ -70,7 +69,6 @@ class AssetTest extends ApiTestCase
                 'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'price_usd' => 1.0,
                 'percent_change_hour_usd' => 1.0,
                 'percent_change_day_usd' => 1.0,
                 'percent_change_week_usd' => 1.0,
@@ -93,7 +91,6 @@ class AssetTest extends ApiTestCase
                 'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'price_usd' => 1.0,
                 'percent_change_hour_usd' => 1.0,
                 'percent_change_day_usd' => 1.0,
                 'percent_change_week_usd' => 1.0,
@@ -117,7 +114,6 @@ class AssetTest extends ApiTestCase
                 'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'price_usd' => 1.0,
                 'percent_change_hour_usd' => 1.0,
                 'percent_change_day_usd' => 1.0,
                 'percent_change_week_usd' => 1.0,
@@ -157,7 +153,6 @@ class AssetTest extends ApiTestCase
                 'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'price_usd' => 1.0,
                 'percent_change_hour_usd' => 1.0,
                 'percent_change_day_usd' => 1.0,
                 'percent_change_week_usd' => 1.0,
@@ -180,7 +175,6 @@ class AssetTest extends ApiTestCase
                 'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'price_usd' => 1.0,
                 'percent_change_hour_usd' => 1.0,
                 'percent_change_day_usd' => 1.0,
                 'percent_change_week_usd' => 1.0,
@@ -203,7 +197,6 @@ class AssetTest extends ApiTestCase
                 'circulating_supply' => 1.0,
                 'total_supply' => 1.0,
                 'max_supply' => 1.0,
-                'price_usd' => 1.0,
                 'percent_change_hour_usd' => 1.0,
                 'percent_change_day_usd' => 1.0,
                 'percent_change_week_usd' => 1.0,
@@ -244,7 +237,7 @@ class AssetTest extends ApiTestCase
 
     public function getModelKeys()
     {
-        return ['name', 'symbol', 'rank', 'price_usd', 'volume_usd_day', 'market_cap_usd',
+        return ['name', 'symbol', 'rank', 'volume_usd_day', 'market_cap_usd',
             'circulating_supply', 'total_supply', 'max_supply', 'percent_change_hour_usd', 'percent_change_day_usd',
             'percent_change_week_usd', 'last_updated'];
     }

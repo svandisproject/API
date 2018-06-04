@@ -27,8 +27,7 @@ class Price
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\AssetBundle\Entity\Asset", inversedBy="prices")
-     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="price")
      */
     private $asset;
 
