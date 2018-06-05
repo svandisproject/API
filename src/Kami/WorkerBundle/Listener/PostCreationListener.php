@@ -4,33 +4,57 @@
 namespace Kami\WorkerBundle\Listener;
 
 
-use Doctrine\Bundle\DoctrineBundle\Registry;
-use Kami\ApiCoreBundle\Event\CrudEvent;
+use Doctrine\ORM\Event\LifecycleEventArgs;
 use Kami\ContentBundle\Entity\Post;
+use Psr\Log\LoggerInterface;
 use Pusher\Pusher;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Pusher\PusherException;
 
 class PostCreationListener
 {
+    /**
+     * @var Pusher
+     */
     private $pusher;
 
-    public function __construct(Pusher $pusher)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * PostCreationListener constructor.
+     * @param Pusher $pusher
+     * @param LoggerInterface $logger
+     */
+    public function __construct(Pusher $pusher, LoggerInterface $logger)
     {
         $this->pusher = $pusher;
+        $this->logger = $logger;
     }
 
-    public function onKamiApiCoreResourcecreated(CrudEvent $event)
+    public function postPersist(LifecycleEventArgs $args)
     {
-        if ($event->getData() instanceof Post) {
+        $entity = $args->getEntity();
+
+        if (!$entity instanceof Post) {
+           return;
+        }
+
+        try {
             $this->pusher->trigger('news-feed', 'new-post', [
                 'message' => [
-                    'title' => $event->getData()->getTitle(),
-                    'content' => $event->getData()->getContent(),
-                    'source' => $event->getData()->getSource(),
-                    'publishedAt' => $event->getData()->getPublishedAt()->getTimestamp(),
-                    'tags' => $event->getData()->getTags()
+                    'title' => $entity->getTitle(),
+                    'content' => $entity->getContent(),
+                    'source' => $entity->getSource(),
+                    'publishedAt' => $entity->getPublishedAt()->getTimestamp(),
+                    'tags' => $entity->getTags()
                 ]
             ]);
+        } catch (PusherException $exception) {
+            $this->logger->error(
+                sprintf('Failed to send pusher notifications with exception: "%s"', $exception->getMessage())
+            );
         }
     }
 }
