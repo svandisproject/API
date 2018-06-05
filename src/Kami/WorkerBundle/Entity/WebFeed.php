@@ -75,7 +75,7 @@ class WebFeed
      *
      * @return int
      */
-    public function getId() : int
+    public function getId() : ?int
     {
         return $this->id;
     }
@@ -87,7 +87,7 @@ class WebFeed
      *
      * @return WebFeed
      */
-    public function setTitle(string $title) : string
+    public function setTitle(string $title) : WebFeed
     {
         $this->title = $title;
 
@@ -99,7 +99,7 @@ class WebFeed
      *
      * @return string
      */
-    public function getTitle() : string
+    public function getTitle() : ?string
     {
         return $this->title;
     }
@@ -123,7 +123,7 @@ class WebFeed
      *
      * @return string
      */
-    public function getUrl() : string
+    public function getUrl() : ?string
     {
         return $this->url;
     }
@@ -147,7 +147,7 @@ class WebFeed
      *
      * @return string
      */
-    public function getLinkSelector() : string
+    public function getLinkSelector() : ?string
     {
         return $this->linkSelector;
     }
@@ -155,7 +155,7 @@ class WebFeed
     /**
      * @return int
      */
-    public function getTimeInterval(): int
+    public function getTimeInterval(): ?int
     {
         return $this->timeInterval;
     }

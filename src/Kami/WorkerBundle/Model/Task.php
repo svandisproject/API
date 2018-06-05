@@ -41,10 +41,7 @@ class Task
         $task->type = 'web';
         $task->config = [
             'url' => $webFeed->getUrl(),
-            'titleSelector' => $webFeed->getTitleSelector(),
-            'contentSelector' => $webFeed->getContentSelector(),
-            'publishedAtSelector' => $webFeed->getPublishedAtSelector(),
-            'dateFormat' => $webFeed->getDateFormat(),
+            'linkSelector' => $webFeed->getLinkSelector()
         ];
         $task->timeInterval = $webFeed->getTimeInterval();
 
