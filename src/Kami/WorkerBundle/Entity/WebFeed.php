@@ -58,37 +58,7 @@ class WebFeed
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
-    private $titleSelector;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="content_selector", type="string", length=255)
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     */
-    private $contentSelector;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="published_at_selector", type="string", length=255)
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     */
-    private $publishedAtSelector;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="date_format", type="string", length=255, nullable=true)
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     */
-    private $dateFormat;
+    private $linkSelector;
 
     /**
      * @var int
@@ -105,7 +75,7 @@ class WebFeed
      *
      * @return int
      */
-    public function getId()
+    public function getId() : int
     {
         return $this->id;
     }
@@ -117,7 +87,7 @@ class WebFeed
      *
      * @return WebFeed
      */
-    public function setTitle($title)
+    public function setTitle(string $title) : string
     {
         $this->title = $title;
 
@@ -129,146 +99,77 @@ class WebFeed
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle() : string
     {
         return $this->title;
     }
 
     /**
+     * Set url.
+     *
+     * @param string $url
+     *
+     * @return WebFeed
+     */
+    public function setUrl($url) : WebFeed
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
+     * Get url.
+     *
      * @return string
      */
-    public function getUrl()
+    public function getUrl() : string
     {
         return $this->url;
     }
 
     /**
-     * @param string $url
-     * @return WebFeed
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-        return $this;
-    }
-
-    /**
-     * Set titleSelector.
+     * Set linkSelector.
      *
-     * @param string $titleSelector
+     * @param string $linkSelector
      *
      * @return WebFeed
      */
-    public function setTitleSelector($titleSelector)
+    public function setLinkSelector($linkSelector) : WebFeed
     {
-        $this->titleSelector = $titleSelector;
+        $this->linkSelector = $linkSelector;
 
         return $this;
     }
 
     /**
-     * Get titleSelector.
+     * Get linkSelector.
      *
      * @return string
      */
-    public function getTitleSelector()
+    public function getLinkSelector() : string
     {
-        return $this->titleSelector;
+        return $this->linkSelector;
     }
 
     /**
-     * Set contentSelector.
-     *
-     * @param string $contentSelector
-     *
-     * @return WebFeed
+     * @return int
      */
-    public function setContentSelector($contentSelector)
+    public function getTimeInterval(): int
     {
-        $this->contentSelector = $contentSelector;
-
-        return $this;
+        return $this->timeInterval;
     }
 
     /**
-     * Get contentSelector.
-     *
-     * @return string
-     */
-    public function getContentSelector()
-    {
-        return $this->contentSelector;
-    }
-
-    /**
-     * Set publishedAtSelector.
-     *
-     * @param string $publishedAtSelector
-     *
-     * @return WebFeed
-     */
-    public function setPublishedAtSelector($publishedAtSelector)
-    {
-        $this->publishedAtSelector = $publishedAtSelector;
-
-        return $this;
-    }
-
-    /**
-     * Get publishedAtSelector.
-     *
-     * @return string
-     */
-    public function getPublishedAtSelector()
-    {
-        return $this->publishedAtSelector;
-    }
-
-    /**
-     * Set dateFormat.
-     *
-     * @param string $dateFormat
-     *
-     * @return WebFeed
-     */
-    public function setDateFormat($dateFormat)
-    {
-        $this->dateFormat = $dateFormat;
-
-        return $this;
-    }
-
-    /**
-     * Get dateFormat.
-     *
-     * @return string
-     */
-    public function getDateFormat()
-    {
-        return $this->dateFormat;
-    }
-
-    /**
-     * Set timeInterval.
-     *
      * @param int $timeInterval
-     *
      * @return WebFeed
      */
-    public function setTimeInterval($timeInterval)
+    public function setTimeInterval(int $timeInterval): WebFeed
     {
         $this->timeInterval = $timeInterval;
 
         return $this;
     }
 
-    /**
-     * Get timeInterval.
-     *
-     * @return int
-     */
-    public function getTimeInterval()
-    {
-        return $this->timeInterval;
-    }
+
 }
