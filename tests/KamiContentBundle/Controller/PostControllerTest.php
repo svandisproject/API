@@ -11,7 +11,7 @@ class PostControllerTest extends ApiTestCase
     public function testIndexLoggedInAsAnonymous()
     {
         $response = $this->request('GET', '/api/post');
-        $this->assertJsonResponse($response, 200);
+        $this->assertJsonResponse($response, 403);
     }
 
     public function testIndexLoggedInAsAdmin()
@@ -30,16 +30,16 @@ class PostControllerTest extends ApiTestCase
 
     public function testFilterLoggedInAsAnonymous()
     {
-        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]'));
+        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]');
         $response = $this->request('GET', '/api/post/filter?filter=' . $filter);
-        $this->assertEquals('Test post 1', $this->getResponseData($response)['content'][0]['title']);
-        $this->assertJsonResponse($response, 200);
+        $this->assertJsonResponse($response, 403);
+
     }
 
     public function testFilterLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]'));
+        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]');
         $response = $this->request('GET', '/api/post/filter?filter=' . $filter);
         $this->assertEquals('Test post 1', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
@@ -127,8 +127,7 @@ class PostControllerTest extends ApiTestCase
             ]
         ]);
         $this->assertJsonResponse($response, 200);
-        $this->assertEquals('test', $this->getResponseData($response)['title']);
-        $this->assertContainsKeys($response);
+        $this->assertEquals('http://test.com', $this->getResponseData($response)['url']);
     }
 
     public function testCreatePostByWorkerWithNotUniqueUrl()

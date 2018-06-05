@@ -238,7 +238,6 @@ class Asset
      *
      * @param string $name
      *
-     * @return Asset
      */
     public function setName($name)
     {
@@ -246,7 +245,6 @@ class Asset
 
         return $this;
     }
-
     /**
      * Get name.
      *

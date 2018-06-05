@@ -35,5 +35,6 @@ services:
          class: "%kami_worker.post_creation_listener.class%"
          arguments:
             - "@lopi_pusher.pusher"
+            - "@logger"
          tags:
-             - { name: kernel.event_listener, event: kami.api_core.resource_created }
+            - { name: doctrine.event_listener, event: postPersist }

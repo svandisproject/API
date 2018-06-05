@@ -1,6 +1,6 @@
 <?php
 
-namespace ami\WorkerBundle\Tests\Entity;
+namespace Kami\WorkerBundle\Tests\Controller;
 
 use Kami\Util\TestCase\ApiTestCase;
 
@@ -29,7 +29,7 @@ class WebFeedTest extends ApiTestCase
 
     public function testFilterLoggedInAsAnonymous()
     {
-        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "Coindesk"}]'));
+        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Coindesk"}]');
         $response = $this->request('GET', '/api/web-feed/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 403);
     }
@@ -37,7 +37,7 @@ class WebFeedTest extends ApiTestCase
     public function testFilterLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "Coindesk"}]'));
+        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Coindesk"}]');
         $response = $this->request('GET', '/api/web-feed/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 200);
     }
@@ -45,7 +45,7 @@ class WebFeedTest extends ApiTestCase
     public function testFilterLoggedInAsUser()
     {
         $this->logInAsUser();
-        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "Coindesk"}]'));
+        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Coindesk"}]');
         $response = $this->request('GET', '/api/web-feed/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 403);
     }
@@ -56,9 +56,7 @@ class WebFeedTest extends ApiTestCase
             'web_feed' => [
                 'title' => 'test',
                 'url' => 'test',
-                'title_selector' => 'test',
-                'content_selector' => 'test',
-                'published_at_selector' => 'test',
+                'link_selector' => 'test',
                 'time_interval' => 1000
             ]
         ]);
@@ -72,9 +70,7 @@ class WebFeedTest extends ApiTestCase
             'web_feed' => [
                 'title' => 'test',
                 'url' => 'test',
-                'title_selector' => 'test',
-                'content_selector' => 'test',
-                'published_at_selector' => 'test',
+                'link_selector' => 'test',
                 'time_interval' => 1000
             ]
         ]);
@@ -88,9 +84,7 @@ class WebFeedTest extends ApiTestCase
             'web_feed' => [
                 'title' => 'test',
                 'url' => 'test',
-                'title_selector' => 'test',
-                'content_selector' => 'test',
-                'published_at_selector' => 'test',
+                'link_selector' => 'test',
                 'time_interval' => 1000
             ]
         ]);
@@ -106,9 +100,7 @@ class WebFeedTest extends ApiTestCase
             'web_feed' => [
                 'title' => 'test',
                 'url' => 'test2',
-                'title_selector' => 'test',
-                'content_selector' => 'test',
-                'published_at_selector' => 'test',
+                'link_selector' => 'test',
                 'time_interval' => 1000
             ]
         ]);
@@ -122,9 +114,7 @@ class WebFeedTest extends ApiTestCase
             'web_feed' => [
                 'title' => 'test2',
                 'url' => 'test',
-                'title_selector' => 'test',
-                'content_selector' => 'test',
-                'published_at_selector' => 'test',
+                'link_selector' => 'test',
                 'time_interval' => 1000
             ]
         ]);
@@ -138,9 +128,7 @@ class WebFeedTest extends ApiTestCase
             'web_feed' => [
                 'name' => 'test',
                 'url' => 'test',
-                'title_selector' => 'test',
-                'content_selector' => 'test',
-                'published_at_selector' => 'test',
+                'link_selector' => 'test',
                 'time_interval' => 1000
             ]
         ]);
@@ -181,9 +169,7 @@ class WebFeedTest extends ApiTestCase
             'web_feed' => [
                 'title' => 'test1',
                 'url' => 'test1',
-                'title_selector' => 'test1',
-                'content_selector' => 'test1',
-                'published_at_selector' => 'test1',
+                'link_selector' => 'test1',
                 'time_interval' => 1010
             ]
         ]);
@@ -197,9 +183,7 @@ class WebFeedTest extends ApiTestCase
             'web_feed' => [
                 'title' => 'test1',
                 'url' => 'test1',
-                'title_selector' => 'test1',
-                'content_selector' => 'test1',
-                'published_at_selector' => 'test1',
+                'link_selector' => 'test1',
                 'time_interval' => 1010
             ]
         ]);
@@ -213,9 +197,7 @@ class WebFeedTest extends ApiTestCase
             'web_feed' => [
                 'title' => 'test1',
                 'url' => 'test1',
-                'title_selector' => 'test1',
-                'content_selector' => 'test1',
-                'published_at_selector' => 'test1',
+                'link_selector' => 'test1',
                 'time_interval' => 1010
             ]
         ]);
@@ -255,6 +237,6 @@ class WebFeedTest extends ApiTestCase
 
     public function getModelKeys()
     {
-        return ['title', 'url', 'title_selector', 'content_selector', 'published_at_selector', 'time_interval'];
+        return ['title', 'url', 'link_selector', 'time_interval'];
     }
 }

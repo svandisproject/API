@@ -39,3 +39,7 @@ monolog:
 
 #swiftmailer:
 #    delivery_addresses: ['me@example.com']
+kami_ico_bench:
+    private_key: "%ico_bench_private_key%"
+    public_key: "%ico_bench_public_key%"
+    guzzle_options: ~

@@ -17,8 +17,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Table(name="post")
  * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\PostRepository")
  * @UniqueEntity("url")
- * @Api\AnonymousAccess
- * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+ * @Api\Access({"ROLE_ADMIN", "ROLE_USER", "ROLE_WORKER"})
  * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
@@ -31,6 +30,7 @@ class Post
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $id;
 
@@ -40,9 +40,9 @@ class Post
      * @ORM\Column(name="title", type="string", length=255)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -51,10 +51,10 @@ class Post
      *
      * @ORM\Column(name="url", type="string", length=255, unique=true)
      * @Assert\Url()
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\AnonymousAccess
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER", "ROLE_WORKER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      */
     private $url;
 
@@ -64,7 +64,6 @@ class Post
      * @ORM\Column(name="content", type="text")
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
@@ -76,7 +75,6 @@ class Post
      * @ORM\Column(name="source", type="string", length=255)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
@@ -88,7 +86,6 @@ class Post
      * @ORM\Column(name="publishedAt", type="datetime")
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN"})
-     * @Api\AnonymousAccess
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
@@ -112,7 +109,6 @@ class Post
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="posts")
      * @ORM\JoinTable(name="post_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\AnonymousAccess
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation
      */

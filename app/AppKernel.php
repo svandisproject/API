@@ -28,13 +28,14 @@ class AppKernel extends Kernel
             new Lopi\Bundle\PusherBundle\LopiPusherBundle(),
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Kami\IcoBenchBundle\KamiIcoBenchBundle(),
-
             new Kami\ApiCoreBundle\KamiApiCoreBundle(),
+
             new Kami\UserBundle\KamiUserBundle(),
             new Kami\ContentBundle\KamiContentBundle(),
             new Kami\WorkerBundle\KamiWorkerBundle(),
             new Kami\AssetBundle\KamiAssetBundle(),
             new Kami\IcoBundle\KamiIcoBundle(),
+
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

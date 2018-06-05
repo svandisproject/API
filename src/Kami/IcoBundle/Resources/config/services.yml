@@ -1,0 +1,51 @@
+parameters:
+    kami.ico_normalizer.abstract.class: Kami\IcoBundle\Normalizer\AbstractIcoNormalizer
+
+services:
+
+    kami.sync_icos.command:
+        class: Kami\IcoBundle\Command\SyncIcosCommand
+        arguments:
+            - "@kami.icobench.client"
+            - "@kami.ico_normalizer.icobench"
+            - "@doctrine.orm.entity_manager"
+            - "@logger"
+        tags:
+            - { name: 'console.command' }
+
+    kami.ico_normalizer.abstract:
+        class: "%kami.ico_normalizer.abstract.class%"
+        abstract: true
+        arguments:
+            - "@doctrine.orm.entity_manager"
+
+    kami.ico_normalizer.icobench:
+        class: Kami\IcoBundle\Normalizer\IcoBench\IcoBenchNormalizer
+        arguments:
+            - "@doctrine.orm.entity_manager"
+            - ["@kami.ico_normalizer.icobench.industry", "@kami.ico_normalizer.icobench.kyc", "@kami.ico_normalizer.icobench.team_members", "@kami.ico_normalizer.icobench.token_type", "@kami.ico_normalizer.icobench.restricted_countries"]
+#                - "@kami.ico_normalizer.icobench.kyc"
+#                -
+#                - "@kami.ico_normalizer.icobench.team_members"
+#                -
+
+
+    kami.ico_normalizer.icobench.industry:
+        class: Kami\IcoBundle\Normalizer\IcoBench\IndustryNormalizer
+        parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.kyc:
+        class: Kami\IcoBundle\Normalizer\IcoBench\KycNormalizer
+        parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.restricted_countries:
+        class: Kami\IcoBundle\Normalizer\IcoBench\RestrictedCountriesNormalizer
+        parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.team_members:
+        class: Kami\IcoBundle\Normalizer\IcoBench\TeamMembersNormalizer
+        parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.token_type:
+         class: Kami\IcoBundle\Normalizer\IcoBench\TokenTypeNormalizer
+         parent: "kami.ico_normalizer.abstract"

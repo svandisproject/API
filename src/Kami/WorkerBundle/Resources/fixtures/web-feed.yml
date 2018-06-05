@@ -3,23 +3,15 @@ fixtures:
     coindesk:
         title: Coindesk
         url: https://coindesk.com
-        titleSelector: .article-top-title
-        contentSelector: .article-post-container
-        publishedAtSelector: .article-container-left-timestamp
-        dateFormat: MMM, D, YYYY at HH:mm
-        timeInterval: 1000
+        linkSelector: .article-top-title
+        timeInterval: 60000
     cointelegraph:
         title: Cointelegraph
         url: https://cointelegraph.com
-        titleSelector: .header
-        contentSelector: .post-full-text
-        publishedAtSelector: .date
-        timeInterval: 1000
+        linkSelector: .header
+        timeInterval: 60000
     cryptocurrencynews:
         title: Cryptocurrencynews
         url: https://cryptocurrencynews.com/
-        titleSelector: .entry-title
-        contentSelector: .entry-content
-        publishedAtSelector: .entry-meta-date
-        dateFormat: MMM, D, YYYY
+        linkSelector: .entry-title
         timeInterval: 1000
