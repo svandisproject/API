@@ -108,10 +108,8 @@ class Ico
     private $restrictedCountries;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Asset")
-     * @ORM\JoinTable(name="ico_asset",
-     *     joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="asset_id", referencedColumnName="id")})
+     * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Asset", inversedBy="acceptingInIcos")
+     * @ORM\JoinTable(name="icos_assets")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\Relation
      */
@@ -445,21 +443,18 @@ class Ico
      */
     public function addAcceptingAsset(Asset $asset)
     {
-        $asset->addIco($this);
+//        $asset->addIco($this);
         $this->acceptingAssets[] = $asset;
         return $this;
     }
 
     /**
-     * Remove acceptingAsset.
+     * Remove acceptingAssets.
      *
-     * @param Asset $asset
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeAsset(Asset $asset)
+    public function removeAssets()
     {
-        return $this->acceptingAssets->removeElement($asset);
+        return $this->acceptingAssets = [];
     }
 
     /**
