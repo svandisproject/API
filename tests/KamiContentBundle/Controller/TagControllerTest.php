@@ -6,6 +6,7 @@ use Kami\Util\TestCase\ApiTestCase;
 
 class TagControllerTest extends ApiTestCase
 {
+
     public function testIndexLoggedInAsAnonymous()
     {
         $response = $this->request('GET', '/api/tag');
@@ -28,38 +29,25 @@ class TagControllerTest extends ApiTestCase
 
     public function testFilterLoggedInAsAnonymous()
     {
-        $response = $this->request('GET', '/api/tag/filter');
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "Bitcoin"}]'));
+        $response = $this->request('GET', '/api/tag/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 403);
     }
 
     public function testFilterLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/tag/filter');
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "Bitcoin"}]'));
+        $response = $this->request('GET', '/api/tag/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 200);
     }
 
     public function testFilterLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('GET', '/api/tag/filter');
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "Bitcoin"}]'));
+        $response = $this->request('GET', '/api/tag/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 200);
-    }
-
-    public function testFilterByExistingParameterLoggedInAsUser()
-    {
-        $this->logInAsUser();
-        $response = $this->request('GET', '/api/tag/filter?title=bitcoin');
-        $this->assertJsonResponse($response, 200);
-    }
-
-    public function testFilterLimitLoggedInAsUser()
-    {
-        $this->logInAsUser();
-        $response = $this->request('GET', '/api/tag/filter?limit=1');
-        $this->assertJsonResponse($response, 200);
-        $response = $this->getResponseData($response);
-        $this->assertCount(1, $response['rows']);
     }
 
     public function testCreateLoggedInAsAnonymous()
@@ -89,7 +77,6 @@ class TagControllerTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('POST', '/api/tag', ['tag' => ['name' => 'test']]);
         $this->assertJsonResponse($response, 400);
-        $this->assertEquals('This form should not contain extra fields.', $this->getResponseData($response)['form']['errors'][0]);
     }
 
     public function testSingleLoggedInAsAnonymous()
@@ -148,7 +135,6 @@ class TagControllerTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('PUT', '/api/tag/1', ['tag' => ['name' => 'edit']]);
         $this->assertJsonResponse($response, 400);
-        $this->assertEquals('This form should not contain extra fields.', $this->getResponseData($response)['form']['errors'][0]);
     }
 
     public function testDeleteLoggedInAsAnonymous()
@@ -168,10 +154,8 @@ class TagControllerTest extends ApiTestCase
     {
         $this->logInAsAdmin();
         $response = $this->request('DELETE', '/api/tag/1');
-        $this->assertJsonResponse($response, 201);
+        $this->assertEquals(204, $response->getStatusCode());
     }
-
-
 
     public function getModelKeys()
     {

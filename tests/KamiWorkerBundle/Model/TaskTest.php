@@ -37,7 +37,6 @@ class TaskTest extends TestCase
     {
         $twitterFeed = new TwitterFeed();
         $twitterFeed
-            ->setMode('test')
             ->setAccessTokenKey('test')
             ->setAccessTokenSecret('test')
             ->setConsumerKey('test')
@@ -47,7 +46,6 @@ class TaskTest extends TestCase
         $task = new Task();
         $task->setType('twitter')
             ->setConfig([
-                'mode' => 'test',
                 'consumerKey' => 'test',
                 'consumerSecret' => 'test',
                 'accessTokenKey' => 'test',
@@ -62,10 +60,7 @@ class TaskTest extends TestCase
         $webFeed = new WebFeed();
         $webFeed
             ->setUrl('test')
-            ->setContentSelector('test')
-            ->setTitleSelector('test')
-            ->setPublishedAtSelector('test')
-            ->setDateFormat('test')
+            ->setLinkSelector('test')
             ->setTimeInterval(1000);
 
         $task = new Task();
@@ -73,10 +68,7 @@ class TaskTest extends TestCase
             ->setType('web')
             ->setConfig([
                 'url' => 'test',
-                'titleSelector' => 'test',
-                'contentSelector' => 'test',
-                'publishedAtSelector' => 'test',
-                'dateFormat' => 'test',
+                'linkSelector' => 'test',
             ])
             ->setTimeInterval(1000);
 

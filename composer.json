@@ -28,7 +28,9 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "jms/serializer-bundle": "^2.3",
-        "kami/api-core-bundle": "dev-master",
+        "kami/api-core-bundle": "dev-external-request-processor",
+        "kami/icobench-bundle": "dev-master",
+        "kami/request-processor": "dev-master",
         "khepin/yaml-fixtures-bundle": "^1.0",
         "knplabs/knp-gaufrette-bundle": "^0.5.2",
         "laupifrpar/pusher-bundle": "^2.0",
@@ -72,7 +74,7 @@
         ],
         "compile": [
             "rm web/app_dev.php",
-            "bin/refresh",
+            "bin/production-update",
             "bin/generate-token"
         ]
     },
@@ -90,5 +92,7 @@
             "file": "app/config/parameters.yml"
         },
         "branch-alias": null
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
