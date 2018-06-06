@@ -3,15 +3,15 @@ fixtures:
     coindesk:
         title: Coindesk
         url: https://coindesk.com
-        linkSelector: .article-top-title
+        linkSelector: .post-info a
         timeInterval: 60000
     cointelegraph:
         title: Cointelegraph
         url: https://cointelegraph.com
-        linkSelector: .header
+        linkSelector: .post a
         timeInterval: 60000
     cryptocurrencynews:
         title: Cryptocurrencynews
         url: https://cryptocurrencynews.com/
-        linkSelector: .entry-title
+        linkSelector: article a
         timeInterval: 1000
