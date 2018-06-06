@@ -66,10 +66,14 @@ class IcoBenchNormalizer extends AbstractIcoNormalizer
                 'normalizer'=>'Kami\IcoBundle\Normalizer\IcoBench\IndustryNormalizer',
                 'method' => 'addIndustry'
             ],
+            'acceptingAssets' => [
+                'property' => 'finance.accepting',
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\AcceptingAssetsNormalizer'
+            ],
             'restrictedCountries' => [
                 'property'=>'restrictions',
                 'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\RestrictedCountriesNormalizer'
-            ]
+            ],
         ];
     }
 }

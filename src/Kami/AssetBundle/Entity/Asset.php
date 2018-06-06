@@ -5,6 +5,7 @@ namespace Kami\AssetBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ContentBundle\Entity\Post;
+use Kami\IcoBundle\Entity\Ico;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -104,7 +105,7 @@ class Asset
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Price", mappedBy="asset", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Price", inversedBy="asset", cascade={"persist"})
      * @ORM\JoinColumn(name="price_id", referencedColumnName="id")
      */
     private $price;
@@ -175,7 +176,10 @@ class Asset
      */
     private $lastUpdated;
 
-
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="acceptingAssets")
+     */
+    private $acceptingInIcos;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="assets")
@@ -185,6 +189,7 @@ class Asset
 
     public function __construct() {
         $this->posts = new ArrayCollection();
+        $this->acceptingInIcos = new ArrayCollection();
     }
 
     /**
@@ -221,6 +226,42 @@ class Asset
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Add ico
+     *
+     * @param Ico $ico
+     *
+     * @return Asset
+     */
+    public function addIco(Ico $ico)
+    {
+        $this->acceptingInIcos[] = $ico;
+
+        return $this;
+    }
+
+    /**
+     * Remove ico
+     *
+     * @param Ico $ico
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeIco(Ico $ico)
+    {
+        $this->acceptingInIcos->removeElement($ico);
+    }
+
+    /**
+     * Get accepting in icos
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIcos()
+    {
+        return $this->acceptingInIcos;
     }
 
     /**
