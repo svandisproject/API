@@ -48,7 +48,7 @@ class PostCreationListener
                     'content' => $entity->getContent(),
                     'source' => $entity->getSource(),
                     'publishedAt' => $entity->getPublishedAt()->getTimestamp(),
-                    'tags' => $entity->getTags()
+                    'tags' => $entity->getTags()->toArray()
                 ]
             ]);
         } catch (PusherException $exception) {
