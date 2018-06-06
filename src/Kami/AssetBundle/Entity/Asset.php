@@ -104,7 +104,7 @@ class Asset
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Price", mappedBy="asset", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Price", inversedBy="asset", cascade={"persist"})
      * @ORM\JoinColumn(name="price_id", referencedColumnName="id")
      */
     private $price;
