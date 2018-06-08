@@ -15,3 +15,189 @@ fixtures:
         url: https://cryptocurrencynews.com/
         linkSelector: article a
         timeInterval: 1000
+    247cryptonews:
+        title: 247cryptonews
+        url: https://247cryptonews.com/
+        linkSelector: .jeg_postblock_content a
+        timeInterval: 1000
+    99bitcoins:
+        title: 99bitcoins
+        url: https://99bitcoins.com/
+        linkSelector: .post-wrap a
+        timeInterval: 1000
+    altcointoday:
+        title: Altcointoday
+        url: https://altcointoday.com/
+        linkSelector: .wf-cell a
+        timeInterval: 1000
+    bitcoinist:
+        title: Bitcoinist
+        url: https://bitcoinist.com/
+        linkSelector: .bm-card a
+        timeInterval: 1000
+    bitcoinwarrior:
+        title: Bitcoinwarrior
+        url: https://bitcoinwarrior.net/
+        linkSelector: .td_module_wrap a
+        timeInterval: 1000
+    coinspectator:
+        title: Coinspectator
+        url: https://blog.coinspectator.com/
+        linkSelector: article a
+        timeInterval: 1000
+    coinspectator:
+        title: Coinspectator
+        url: https://coinspectator.com/
+        linkSelector: .post-thumbnail a
+        timeInterval: 1000
+    cryptoclarified:
+         title: Cryptoclarified
+         url: https://cryptoclarified.com/
+         linkSelector: .post a
+         timeInterval: 1000
+    cryptonewsmonitor:
+         title: Cryptonewsmonitor
+         url: https://cryptonewsmonitor.com
+         linkSelector: .mh-loop-content a
+         timeInterval: 1000
+    cryptopanic:
+          title: Cryptopanic
+          url: https://cryptopanic.com/
+          linkSelector: .news-cells a
+          timeInterval: 1000
+    cryptoslate:
+          title: Cryptoslate
+          url: https://cryptoslate.com/
+          linkSelector: .small-post a
+          timeInterval: 1000
+    ethereumworldnews:
+          title: Ethereumworldnews
+          url: https://ethereumworldnews.com
+          linkSelector: .item-inner a
+          timeInterval: 1000
+    ethnews:
+          title: Ethnews
+          url: https://ethnews.com/
+          linkSelector: .article-thumbnail__info__title a
+          timeInterval: 1000
+    hackernoon:
+          title: Hackernoon
+          url: https://hackernoon.com/tagged/cryptocurrency
+          linkSelector: .postArticle a
+          timeInterval: 1000
+    insidebitcoins:
+          title: Insidebitcoins
+          url: https://insidebitcoins.com/
+          linkSelector: .et_pb_post a
+          timeInterval: 1000
+    investinblockchain:
+          title: Investinblockchain
+          url: https://investinblockchain.com/
+          linkSelector: .post_body a
+          timeInterval: 1000
+    mediumbitcoin:
+          title: MediumBitcoin
+          url: https://medium.com/tag/bitcoin
+          linkSelector: .postArticle a
+          timeInterval: 1000
+    newsbitcoin:
+          title: NewsBitcoin
+          url: https://news.bitcoin.com/
+          linkSelector: .td_block_wrap a
+          timeInterval: 1000
+    newsycombinator:
+          title: NewsYcombinator
+          url: https://news.ycombinator.com
+          linkSelector: .athing a
+          timeInterval: 1000
+    newsbtc:
+          title: Newsbtc
+          url: https://newsbtc.com/
+          linkSelector: article a
+          timeInterval: 1000
+    sludgefeed:
+          title: Sludgefeed
+          url: https://sludgefeed.com/
+          linkSelector: .item-details a
+          timeInterval: 1000
+    steemit:
+          title: Steemit
+          url: https://steemit.com/trending/altcoin
+          linkSelector: .class="articles__content-block a
+          timeInterval: 1000
+    nulltx:
+          title: Nulltx
+          url: https://nulltx.com/
+          linkSelector: .td_module_wrap a
+          timeInterval: 1000
+    tradingview:
+          title: Tradingview
+          url: https://tradingview.com/
+          linkSelector: .tv-site-widget__body a
+          timeInterval: 1000
+    visualcapitalist:
+          title: Visualcapitalist
+          url: https://visualcapitalist.com/
+          linkSelector: article a
+          timeInterval: 1000
+    visualcapitalist:
+          title: Visualcapitalist
+          url: https://visualcapitalist.com/
+          linkSelector: article a
+          timeInterval: 1000
+    hacked:
+          title: Hacked
+          url: https://hacked.com
+          linkSelector: .mvp-flex-story-wrap a
+          timeInterval: 1000
+    coinidol:
+          title: Coinidol
+          url: https://coinidol.com/
+          linkSelector: .last-news__left a
+          timeInterval: 1000
+    cryptoninjas:
+          title: Cryptoninjas
+          url: https://www.cryptoninjas.net/
+          linkSelector: .news-post-block a
+          timeInterval: 1000
+    bitcoinchaser:
+          title: Bitcoinchaser
+          url: https://bitcoinchaser.com/
+          linkSelector: .post a
+          timeInterval: 1000
+    storeofvalueblog:
+          title: Storeofvalueblog
+          url: http://storeofvalueblog.com/
+          linkSelector: .post-list a
+          timeInterval: 1000
+          td-read-more
+    thebitcoinnews:
+          title: Thebitcoinnews
+          url: https://thebitcoinnews.com/
+          linkSelector: .td-read-more a
+          timeInterval: 1000
+    coindoo:
+          title: Coindoo
+          url: https://coindoo.com/
+          linkSelector: .poster-content a
+          timeInterval: 1000
+    coingeek:
+          title: Coingeek
+          url: https://coingeek.com/
+          linkSelector: .post-block a
+          timeInterval: 1000
+    coinpedia:
+          title: Coinpedia
+          url: https://coinpedia.org/
+          linkSelector: .post-content a
+          timeInterval: 1000
+    ukbitcoinblog:
+          title: Ukbitcoinblog
+          url: https://ukbitcoinblog.com/
+          linkSelector: .post a
+          timeInterval: 1000
+    coinspeaker:
+          title: Coinspeaker
+          url: https://www.coinspeaker.com
+          linkSelector: .newsTitle a
+          timeInterval: 1000
