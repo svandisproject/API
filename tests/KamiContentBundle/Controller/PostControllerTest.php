@@ -134,14 +134,14 @@ class PostControllerTest extends ApiTestCase
     {
         $response = $this->requestByWorker('POST', '/api/post', [
             'post' => [
-                'title' => 'test',
+                'title' => 'Updated title',
                 'url' => 'http://test.com',
                 'content' => 'test',
                 'source' => 'test',
                 'published_at' => '01-01-2000 00:00:00'
             ]
         ]);
-        $this->assertJsonResponse($response, 400);
+        $this->assertJsonResponse($response, 200);
     }
 
     public function testEditPostLoggedInAsAnonymous()

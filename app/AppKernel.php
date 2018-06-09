@@ -29,6 +29,7 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Kami\IcoBenchBundle\KamiIcoBenchBundle(),
             new Kami\ApiCoreBundle\KamiApiCoreBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
 
             new Kami\UserBundle\KamiUserBundle(),
             new Kami\ContentBundle\KamiContentBundle(),

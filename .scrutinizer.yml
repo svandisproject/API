@@ -147,8 +147,9 @@ build:
                     file: 'coverage'
                     format: 'clover'
     environment:
-            variables:
-                SYMFONY_ENV: 'test'
+        redis: true
+        variables:
+            SYMFONY_ENV: 'test'
 
 build_failure_conditions:
     - 'issues.severity(= CRITICAL).exists'
