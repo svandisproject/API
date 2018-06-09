@@ -11,6 +11,12 @@ doctrine:
         driver: pdo_pgsql
         url: "%env(DATABASE_URL)%"
 
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: "%env(REDIS_URL)%"
 monolog:
     handlers:
         main:
