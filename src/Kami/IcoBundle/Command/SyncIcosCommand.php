@@ -6,7 +6,7 @@ namespace Kami\IcoBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Kami\IcoBench\Client;
-use Kami\IcoBundle\Entity\IcoOld;
+use Kami\IcoBundle\Entity\Ico;
 use Kami\IcoBundle\Normalizer\IcoBench\IcoBenchNormalizer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;

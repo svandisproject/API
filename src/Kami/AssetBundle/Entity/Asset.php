@@ -43,7 +43,7 @@ class Asset
     private $ticker;
 
     /**
-     * @ORM\Column(name="ticker", type="integer")
+     * @ORM\Column(name="price", type="integer")
      */
     private $price;
 
@@ -58,4 +58,153 @@ class Asset
      */
     private $posts;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title.
+     *
+     * @param string $title
+     *
+     * @return Asset
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Set ticker.
+     *
+     * @param string $ticker
+     *
+     * @return Asset
+     */
+    public function setTicker($ticker)
+    {
+        $this->ticker = $ticker;
+
+        return $this;
+    }
+
+    /**
+     * Get ticker.
+     *
+     * @return string
+     */
+    public function getTicker()
+    {
+        return $this->ticker;
+    }
+
+    /**
+     * Set price.
+     *
+     * @param int $price
+     *
+     * @return Asset
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
+
+        return $this;
+    }
+
+    /**
+     * Get price.
+     *
+     * @return int
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * Set tokenType.
+     *
+     * @param \Kami\AssetBundle\Entity\TokenType|null $tokenType
+     *
+     * @return Asset
+     */
+    public function setTokenType(\Kami\AssetBundle\Entity\TokenType $tokenType = null)
+    {
+        $this->tokenType = $tokenType;
+
+        return $this;
+    }
+
+    /**
+     * Get tokenType.
+     *
+     * @return \Kami\AssetBundle\Entity\TokenType|null
+     */
+    public function getTokenType()
+    {
+        return $this->tokenType;
+    }
+
+    /**
+     * Add post.
+     *
+     * @param \Kami\ContentBundle\Entity\Post $post
+     *
+     * @return Asset
+     */
+    public function addPost(\Kami\ContentBundle\Entity\Post $post)
+    {
+        $this->posts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post.
+     *
+     * @param \Kami\ContentBundle\Entity\Post $post
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePost(\Kami\ContentBundle\Entity\Post $post)
+    {
+        return $this->posts->removeElement($post);
+    }
+
+    /**
+     * Get posts.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
 }

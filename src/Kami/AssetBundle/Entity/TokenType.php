@@ -33,4 +33,81 @@ class TokenType
      */
     private $assets;
 
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->assets = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set title.
+     *
+     * @param string $title
+     *
+     * @return TokenType
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
+     * Get title.
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Add asset.
+     *
+     * @param \Kami\AssetBundle\Entity\Asset $asset
+     *
+     * @return TokenType
+     */
+    public function addAsset(\Kami\AssetBundle\Entity\Asset $asset)
+    {
+        $this->assets[] = $asset;
+
+        return $this;
+    }
+
+    /**
+     * Remove asset.
+     *
+     * @param \Kami\AssetBundle\Entity\Asset $asset
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAsset(\Kami\AssetBundle\Entity\Asset $asset)
+    {
+        return $this->assets->removeElement($asset);
+    }
+
+    /**
+     * Get assets.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAssets()
+    {
+        return $this->assets;
+    }
 }
