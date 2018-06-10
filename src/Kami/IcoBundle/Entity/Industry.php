@@ -32,7 +32,7 @@ class Industry
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="industries")
+     * @ORM\ManyToMany(targetEntity="IcoOld.php", mappedBy="industries")
      */
     private $icos;
 
@@ -77,10 +77,10 @@ class Industry
 
     /**
      * Add ico
-     * @param Ico $ico
+     * @param IcoOld $ico
      * @return Industry
      */
-    public function addIco(Ico $ico){
+    public function addIco(IcoOld $ico){
 
         $this->icos[] = $ico;
         return $this;
@@ -88,7 +88,7 @@ class Industry
 
     /**
      * Remove ico
-     * @param Ico $ico
+     * @param IcoOld $ico
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */

@@ -6,7 +6,7 @@ namespace Kami\IcoBundle\Command;
 
 use Doctrine\ORM\EntityManager;
 use Kami\IcoBench\Client;
-use Kami\IcoBundle\Entity\Ico;
+use Kami\IcoBundle\Entity\IcoOld;
 use Kami\IcoBundle\Normalizer\IcoBench\IcoBenchNormalizer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Command\Command;
@@ -86,17 +86,17 @@ class SyncIcosCommand extends Command
 
     /**
      * @param int $id
-     * @return Ico
+     * @return IcoOld
      *
      * @throws \Doctrine\ORM\ORMException
      */
-    protected function findOrCreateIco(int $id) : Ico
+    protected function findOrCreateIco(int $id) : IcoOld
     {
-        $ico = $this->manager->getRepository('KamiIcoBundle:Ico')
+        $ico = $this->manager->getRepository('IcoOld.php')
             ->findOneByRemoteId($id);
 
         if(!$ico) {
-            return new Ico();
+            return new IcoOld();
         }
 
         return $ico;
