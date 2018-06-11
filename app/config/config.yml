@@ -149,3 +149,13 @@ snc_redis:
             alias: cache
             dsn: redis://localhost
             logging: false
+
+# M6Web Cassandra Configuration
+m6web_cassandra:
+    clients:
+        default:
+            contact_endpoints:
+                - 127.0.0.1
+        credentials:
+            username: ""
+            password: ""

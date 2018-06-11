@@ -8,7 +8,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Kami\IcoBundle\Entity\Ico;
 
- //todo: This should be refactored to use PropertyNormalizers
 abstract class AbstractIcoNormalizer implements IcoNormalizerInterface
 {
      /**
@@ -28,18 +27,10 @@ abstract class AbstractIcoNormalizer implements IcoNormalizerInterface
 
      public function normalize(Ico $ico, $remoteData) : Ico
      {
-         foreach ($this->getPropertyMap() as $property => $path) {
-
-             if (is_array($path)) {
-                 $normalizer = $this->getNormalizer($path['normalizer']);
-                 $normalizer->fromRemote($ico, $this->getValueByPath($remoteData, $path['property']));
-             } else {
-                 $value = $this->getValueByPath($remoteData, $path);
-                 $method = 'set'.ucfirst($property);
-                 $ico->$method($value);
-             }
+         foreach ($this->getNormalizingMap() as $config) {
+            $this->getNormalizer($config['normalizer'])->normalize();
          }
-        return $ico;
+         return $ico;
      }
 
      private function getValueByPath(array $remoteData, string $path)

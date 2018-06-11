@@ -16,5 +16,5 @@ interface IcoNormalizerInterface
     /**
      * @return array
      */
-    public function getPropertyMap() : array;
+    public function getNormalizingMap() : array;
 }

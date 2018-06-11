@@ -5,5 +5,5 @@ namespace Kami\IcoBundle\Normalizer;
 
 interface PropertyNormalizerInterface
 {
-    public function normailize($value);
+    public function normailize($remoteData);
 }

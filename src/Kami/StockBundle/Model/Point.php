@@ -6,7 +6,7 @@ namespace Kami\StockBundle\Model;
 
 use Kami\AssetBundle\Entity\Asset;
 
-class Point
+class Point implements StorableInterface
 {
     /**
      * @var \DateTime
@@ -54,4 +54,12 @@ class Point
         return $this->price;
     }
 
+    public function toDatabaseValues(): array
+    {
+        return [
+            'time'  => $this->time->format(\DateTime::W3C),
+            'asset' => $this->asset->getTicker(),
+            'price' => $this->price
+        ];
+    }
 }

@@ -26,50 +26,22 @@ class IcoBenchNormalizer extends AbstractIcoNormalizer
     public function getPropertyMap() : array
     {
         return [
-            'rating' => 'rating',
-            'icoToken' => 'finance.token',
-            'ratingTeam' => 'ratingTeam',
-            'ratingProfile' => 'ratingProfile',
-            'ratingVision' => 'ratingVision',
-            'ratingProduct' => 'ratingProduct',
-            'remoteId' => 'id',
-            'country' => 'country',
-            'icoUrl' => 'url',
-            'icoTagline' => 'tagline',
-            'icoIntro' => 'intro',
-            'icoAbout' => 'about',
-            'platform' => 'finance.platform',
-            'icoTokenPrice' => 'finance.price',
-            'hardCap' => 'finance.hardcap',
-            'minCap' => 'finance.softcap',
-            'raised' => 'finance.raised',
-            'bonus' => 'finance.bonus',
-            'openPresale' => 'dates.preIcoStart',
-
-            'teamMember' => [
-                'property' => 'team',
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\TeamMembersNormalizer'
-            ],
-
-            'tokenType' => [
-                'property' => 'finance.tokentype',
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\TokenTypeNormalizer'
-            ],
-
-            'kyc' => [
-                'property' => 'kyc',
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\KycNormalizer',
-                'method' => 'addKyc'
-            ],
-            'industries' => [
-                'property'=>'categories',
-                'normalizer'=>'Kami\IcoBundle\Normalizer\IcoBench\IndustryNormalizer',
-                'method' => 'addIndustry'
-            ],
-            'restrictedCountries' => [
-                'property'=>'restrictions',
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\RestrictedCountriesNormalizer'
-            ]
+            'title' => '',
+            'asset' => '',
+            'country' => '',
+            'restrictedCountries' => '',
+            'openPresale' => '',
+            'kyc' => '',
+            'hardCap' => '',
+            'totalCap' => '',
+            'raised' => '',
+            'tokenPrice' => '',
+            'forSale' => '',
+            'tokenSaleDate' => '',
+            'team' => '',
+            'advisors' => '',
+            'partners' => '',
+            'competitors' => '',
         ];
     }
 }
