@@ -13,5 +13,8 @@ class SyncAssetsCommand extends Command
 
     private $doctrine;
 
-
+    public function configure()
+    {
+        $this->setName('svandis:assets:sync');
+    }
 }

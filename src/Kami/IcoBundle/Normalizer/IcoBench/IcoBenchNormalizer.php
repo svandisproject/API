@@ -23,7 +23,7 @@ class IcoBenchNormalizer extends AbstractIcoNormalizer
         parent::__construct($manager);
     }
 
-    public function getPropertyMap() : array
+    public function getNormalizingMap() : array
     {
         return [
             'title' => '',

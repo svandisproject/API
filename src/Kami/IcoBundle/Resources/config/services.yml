@@ -23,29 +23,10 @@ services:
         class: Kami\IcoBundle\Normalizer\IcoBench\IcoBenchNormalizer
         arguments:
             - "@doctrine.orm.entity_manager"
-            - ["@kami.ico_normalizer.icobench.industry", "@kami.ico_normalizer.icobench.kyc", "@kami.ico_normalizer.icobench.team_members", "@kami.ico_normalizer.icobench.token_type", "@kami.ico_normalizer.icobench.restricted_countries"]
+            - []
 #                - "@kami.ico_normalizer.icobench.kyc"
 #                -
 #                - "@kami.ico_normalizer.icobench.team_members"
 #                -
 
 
-    kami.ico_normalizer.icobench.industry:
-        class: Kami\IcoBundle\Normalizer\IcoBench\IndustryNormalizer
-        parent: "kami.ico_normalizer.abstract"
-
-    kami.ico_normalizer.icobench.kyc:
-        class: Kami\IcoBundle\Normalizer\IcoBench\KycNormalizer
-        parent: "kami.ico_normalizer.abstract"
-
-    kami.ico_normalizer.icobench.restricted_countries:
-        class: Kami\IcoBundle\Normalizer\IcoBench\RestrictedCountriesNormalizer
-        parent: "kami.ico_normalizer.abstract"
-
-    kami.ico_normalizer.icobench.team_members:
-        class: Kami\IcoBundle\Normalizer\IcoBench\TeamMembersNormalizer
-        parent: "kami.ico_normalizer.abstract"
-
-    kami.ico_normalizer.icobench.token_type:
-         class: Kami\IcoBundle\Normalizer\IcoBench\TokenTypeNormalizer
-         parent: "kami.ico_normalizer.abstract"

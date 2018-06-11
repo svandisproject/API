@@ -48,7 +48,7 @@ class Asset
     private $price;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\AssetBundle\Entity\TokenType")
+     * @ORM\ManyToOne(targetEntity="Kami\AssetBundle\Entity\TokenType", inversedBy="assets")
      */
     private $tokenType;
 

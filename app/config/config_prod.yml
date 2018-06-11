@@ -44,3 +44,11 @@ monolog:
         console:
             type: console
             process_psr_3_messages: false
+
+m6web_cassandra:
+    clients:
+        default:
+            contact_endpoints: "%env(IC_CONTACT_POINTS)%"
+            credentials:
+                username: "%env(IC_USER)%"
+                password: "%env(IC_PASSWORD)%"

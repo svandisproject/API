@@ -91,29 +91,39 @@ class Ico
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="token_sale_date", type="datetime", nullable=true)
+     * @ORM\Column(name="token_sale_date", type="date", nullable=true)
      */
     private $tokenSaleDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
+     * @ORM\JoinTable(name="ico_team")
      */
     private $team;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
+     * @ORM\JoinTable(name="ico_advisors")
      */
     private $advisors;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico")
+     * @ORM\JoinTable(name="ico_partners")
      */
     private $partners;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico")
+     * @ORM\JoinTable(name="ico_competitors")
      */
     private $competitors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="icos")
+     */
+    private $industries;
+
     /**
      * Constructor
      */
@@ -123,6 +133,7 @@ class Ico
         $this->advisors = new \Doctrine\Common\Collections\ArrayCollection();
         $this->partners = new \Doctrine\Common\Collections\ArrayCollection();
         $this->competitors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->industries = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -565,5 +576,41 @@ class Ico
     public function getCompetitors()
     {
         return $this->competitors;
+    }
+
+    /**
+     * Add industry.
+     *
+     * @param \Kami\IcoBundle\Entity\Industry $industry
+     *
+     * @return Ico
+     */
+    public function addIndustry(\Kami\IcoBundle\Entity\Industry $industry)
+    {
+        $this->industries[] = $industry;
+
+        return $this;
+    }
+
+    /**
+     * Remove industry.
+     *
+     * @param \Kami\IcoBundle\Entity\Industry $industry
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeIndustry(\Kami\IcoBundle\Entity\Industry $industry)
+    {
+        return $this->industries->removeElement($industry);
+    }
+
+    /**
+     * Get industries.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIndustries()
+    {
+        return $this->industries;
     }
 }
