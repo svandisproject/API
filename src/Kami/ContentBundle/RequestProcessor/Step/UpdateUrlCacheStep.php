@@ -4,34 +4,42 @@
 namespace Kami\ContentBundle\RequestProcessor\Step;
 
 
+use Cassandra\Uuid;
 use Kami\Component\RequestProcessor\Artifact;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
 use Kami\ContentBundle\Entity\Post;
-use Predis\Client;
-use Symfony\Component\HttpFoundation\Request;
+use M6Web\Bundle\CassandraBundle\Cassandra\Client
+    ;use Symfony\Component\HttpFoundation\Request;
 
 class UpdateUrlCacheStep extends AbstractStep
 {
     /**
      * @var Client
      */
-    private $urlCache;
+    private $cassandra;
 
     /**
      * UpdateUrlCacheStep constructor.
-     * @param Client $urlCache
+     * @param Client $cassandra
      */
-    public function __construct(Client $urlCache)
+    public function __construct(Client $cassandra)
     {
-        $this->urlCache = $urlCache;
+        $this->cassandra = $cassandra;
     }
 
     public function execute(Request $request): ArtifactCollection
     {
         /** @var Post $post */
         $post = $this->getArtifact('entity');
-        $this->urlCache->set($post->getUrl(), $post->getValidatedBy()->count());
+        $statement = $this->cassandra->prepare(
+            'INSERT INTO svandis_url_cache.crawled_urls (id, url, confirmations) VALUES (?, ?, ?)'
+        );
+        $this->cassandra->execute(
+            $statement,
+            ['arguments' => [new Uuid(), $post->getUrl(), $post->getValidatedBy()->count()]]
+        );
+
         return new ArtifactCollection([
             new Artifact('cached', true)
         ]);

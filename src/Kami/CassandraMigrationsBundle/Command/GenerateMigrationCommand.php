@@ -22,9 +22,14 @@ use M6Web\Bundle\CassandraBundle\Cassandra\Client;
 
 class CassandraMigration%s extends AbstractMigration
 {
-    public function migrate(Client $client)    
+    public function migrate(Client $client) : void    
     {
         // Define your migrations here
+    }
+    
+    public function getVersion() : string
+    {
+        return '%s';
     }
 }
 
@@ -56,7 +61,7 @@ EOD;
 
         $currentTime = (new \DateTime())->getTimestamp();
         $filename = sprintf('%s/CassandraMigration%s.php', $this->migrationsDir, $currentTime);
-        $fs->dumpFile($filename, sprintf(self::TEMPLATE, $currentTime));
+        $fs->dumpFile($filename, sprintf(self::TEMPLATE, $currentTime, $currentTime));
 
         $output->writeln(sprintf('Successfully generated new migration: %s', $filename));
     }
