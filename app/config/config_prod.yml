@@ -6,8 +6,6 @@ doctrine:
         metadata_cache_driver: predis
         result_cache_driver: predis
         query_cache_driver: predis
-
-doctrine:
     dbal:
         driver: pdo_pgsql
         url: "%env(DATABASE_URL)%"
