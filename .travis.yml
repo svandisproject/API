@@ -22,7 +22,6 @@ env:
 
 # Update composer
 before-install:
-  - composer self-update
   - sudo apt-add-repository ppa:linuxjedi/ppa -y
   - sudo apt-get update
   - sudo apt-get install -y libssl-dev
@@ -30,6 +29,7 @@ before-install:
   - cd /tmp && git clone https://github.com/datastax/php-driver.git && cd php-driver && git checkout master && git submodule update --init
   - cd ext && ./install.sh && cd "$TRAVIS_BUILD_DIR"
   - echo "extension=cassandra.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+  - composer self-update
 
 
 services:
