@@ -5,16 +5,16 @@ doctrine:
     dbal:
         driver: pdo_pgsql
         url: "%env(DATABASE_URL)%"
-    orm:
-        metadata_cache_driver:
-            type: predis
-            id: snc.redis.client.cache
-        result_cache_driver:
-            type: predis
-            id: snc.redis.client.cache
-        query_cache_driver:
-            type: predis
-            id: snc.redis.client.cache
+#    orm:
+#        metadata_cache_driver:
+#            type: predis
+#            id: snc.redis.client.cache
+#        result_cache_driver:
+#            type: predis
+#            id: snc.redis.client.cache
+#        query_cache_driver:
+#            type: predis
+#            id: snc.redis.client.cache
 
 
 snc_redis:
@@ -58,4 +58,4 @@ kami_ico_bench:
     private_key: "%ico_bench_private_key%"
     public_key: "%ico_bench_public_key%"
     guzzle_options:
-        proxy: http://vw520rzfhacf1p:5eQVQyie4_ILLX_YOtlsvDqmCw@eu-west-static-01.quotaguard.com:9293
+        proxy: "%env(QUOTAGUARDSTATIC_URL)%"
