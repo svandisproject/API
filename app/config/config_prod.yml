@@ -5,6 +5,16 @@ doctrine:
     dbal:
         driver: pdo_pgsql
         url: "%env(DATABASE_URL)%"
+    orm:
+        metadata_cache_driver:
+            type: predis
+            client: snc.redis.client.cache
+        result_cache_driver:
+            type: predis
+            client: snc.redis.client.cache
+        query_cache_driver:
+            type: predis
+            client: snc.redis.client.cache
 
 snc_redis:
     clients:
