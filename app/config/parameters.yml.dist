@@ -38,3 +38,5 @@ parameters:
     pusher_secret: 4eb1eacb7beb23571c99
     ico_bench_private_key: ~
     ico_bench_public_key: ~
+
+    redis_url: "%env(REDIS_URL)%"
