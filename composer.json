@@ -4,7 +4,8 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Kami\\": "src/Kami"
+            "Kami\\": "src/Kami",
+            "CassandraMigrations\\": "app/CassandraMigrations"
         },
         "classmap": [
             "app/AppKernel.php",

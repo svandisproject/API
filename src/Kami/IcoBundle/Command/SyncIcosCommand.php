@@ -66,6 +66,8 @@ class SyncIcosCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        var_dump($this->icoBenchClient->getIcos());
+        exit;
         $totalPages =  $this->icoBenchClient->getIcos()['pages'];
 
         for($i = 0; $i < $totalPages; $i++){

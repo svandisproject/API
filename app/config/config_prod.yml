@@ -52,3 +52,10 @@ m6web_cassandra:
             credentials:
                 username: "%env(IC_USER)%"
                 password: "%env(IC_PASSWORD)%"
+
+# Kami IcoBench Configuration
+kami_ico_bench:
+    private_key: "%ico_bench_private_key%"
+    public_key: "%ico_bench_public_key%"
+    guzzle_options:
+        proxy: http://vw520rzfhacf1p:5eQVQyie4_ILLX_YOtlsvDqmCw@eu-west-static-01.quotaguard.com:9293

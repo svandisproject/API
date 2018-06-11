@@ -136,6 +136,7 @@ kami_ico_bench:
     public_key: "%ico_bench_public_key%"
     guzzle_options: ~
 
+
 # Snc Redis Configuration
 snc_redis:
     clients:

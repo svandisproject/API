@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8f329e2da261655484271858f3712ca8",
+    "content-hash": "4f4b5734ccb298b8fbabdb312c4768f7",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2035,12 +2035,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/icobench-bundle.git",
-                "reference": "c41c64b42749ccb5d0863ce4a95054fb5dba09e3"
+                "reference": "3d05084947134b0e64bae32d67ae03745d86935c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/icobench-bundle/zipball/c41c64b42749ccb5d0863ce4a95054fb5dba09e3",
-                "reference": "c41c64b42749ccb5d0863ce4a95054fb5dba09e3",
+                "url": "https://api.github.com/repos/kamilabs/icobench-bundle/zipball/3d05084947134b0e64bae32d67ae03745d86935c",
+                "reference": "3d05084947134b0e64bae32d67ae03745d86935c",
                 "shasum": ""
             },
             "require": {
@@ -2067,7 +2067,7 @@
                 }
             ],
             "description": "IcoBench API Client Bundle",
-            "time": "2018-06-02T15:10:27+00:00"
+            "time": "2018-06-11T12:53:34+00:00"
         },
         {
             "name": "kami/icobench-client",
@@ -5705,7 +5705,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "7.1.*"
+        "php": "7.1.*",
+        "ext-cassandra": "*"
     },
     "platform-dev": []
 }
