@@ -138,7 +138,8 @@ kami_ico_bench:
 # Snc Redis Configuration
 snc_redis:
     clients:
-        default:
+        cache:
             type: predis
-            alias: default
+            alias: cache
             dsn: redis://localhost
+            logging: false
