@@ -15,6 +15,9 @@ doctrine:
         query_cache_driver:
             type: predis
             id: snc.redis.client.cache
+
+
+snc_redis:
     doctrine:
         metadata_cache:
             client: cache
