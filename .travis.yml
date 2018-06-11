@@ -26,6 +26,7 @@ before-install:
 
 services:
   - redis-server
+  - cassandra
 
 # Install composer dependencies,
 # Create database, schema and fixtures
