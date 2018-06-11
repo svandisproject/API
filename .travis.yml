@@ -2,7 +2,7 @@
 language: php
 
 # Allows use container-based infrastructure
-sudo: false
+sudo: true
 
 # Cache composer packages so "composer install" is faster
 cache:
