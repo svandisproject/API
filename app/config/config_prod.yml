@@ -15,19 +15,6 @@ doctrine:
         query_cache_driver:
             type: predis
             id: snc.redis.client.cache
-
-snc_redis:
-    clients:
-        default:
-            type: predis
-            alias: default
-            dsn: "%env(REDIS_URL)%"
-            logging: false
-        cache:
-            type: predis
-            alias: cache
-            dsn: "%env(REDIS_URL)%"
-            logging: false
     doctrine:
         metadata_cache:
             client: cache

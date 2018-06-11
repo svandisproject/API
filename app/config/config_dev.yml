@@ -43,3 +43,16 @@ kami_ico_bench:
     private_key: "%ico_bench_private_key%"
     public_key: "%ico_bench_public_key%"
     guzzle_options: ~
+
+snc_redis:
+    clients:
+        default:
+            type: predis
+            alias: default
+            dsn: redis://localhost
+            logging: false
+        cache:
+            type: predis
+            alias: cache
+            dsn: redis://localhost
+            logging: false

@@ -143,12 +143,12 @@ snc_redis:
         default:
             type: predis
             alias: default
-            dsn: redis://localhost
+            dsn: "%env(REDIS_URL)%"
             logging: false
         cache:
             type: predis
             alias: cache
-            dsn: redis://localhost
+            dsn: "%env(REDIS_URL)%"
             logging: false
 
 # M6Web Cassandra Configuration
