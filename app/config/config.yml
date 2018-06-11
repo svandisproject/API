@@ -156,6 +156,3 @@ m6web_cassandra:
         default:
             contact_endpoints:
                 - 127.0.0.1
-        credentials:
-            username: ""
-            password: ""

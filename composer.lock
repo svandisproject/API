@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f08bfd92e1d07b993cca310367ec91e2",
+    "content-hash": "5d51badafbdb0cfabbe9e505c4ea78fb",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -2109,52 +2109,6 @@
             "time": "2018-06-02T15:02:29+00:00"
         },
         {
-            "name": "kami/request-processor",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kamilabs/request-processor.git",
-                "reference": "16d1c6672e22b92d882c274c2ed87cc72b8cd141"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/request-processor/zipball/16d1c6672e22b92d882c274c2ed87cc72b8cd141",
-                "reference": "16d1c6672e22b92d882c274c2ed87cc72b8cd141",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/common": "^2.8",
-                "php": "^7.1",
-                "symfony/http-foundation": "^3.4 || ^4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Kami\\Component\\RequestProcessor\\": "./src/Kami/Component/RequestProcessor"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Iakov Mishchenko",
-                    "email": "iakov@kamilabs.com"
-                }
-            ],
-            "description": "Request processor component",
-            "time": "2018-06-01T10:38:23+00:00"
-        },
-        {
             "name": "khepin/yaml-fixtures-bundle",
             "version": "1.0.2",
             "target-dir": "Khepin/YamlFixturesBundle",
@@ -2506,6 +2460,58 @@
                 "symfony"
             ],
             "time": "2018-03-06T12:23:17+00:00"
+        },
+        {
+            "name": "m6web/cassandra-bundle",
+            "version": "v2.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/M6Web/CassandraBundle.git",
+                "reference": "0be35814abfdb570716d5f3273ab9cb0f4bac019"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/M6Web/CassandraBundle/zipball/0be35814abfdb570716d5f3273ab9cb0f4bac019",
+                "reference": "0be35814abfdb570716d5f3273ab9cb0f4bac019",
+                "shasum": ""
+            },
+            "require": {
+                "ext-cassandra": "^1.3.0",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "atoum/atoum": "^2.8||^3.0",
+                "datastax/php-driver": "dev-master",
+                "m6web/coke": "~1.2",
+                "m6web/symfony2-coding-standard": "~2.0",
+                "symfony/config": "~2.3",
+                "symfony/dependency-injection": "~2.3",
+                "symfony/event-dispatcher": "~2.3",
+                "symfony/yaml": "~2.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "M6Web\\Bundle\\CassandraBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "M6Web",
+                    "email": "opensource@m6web.fr",
+                    "homepage": "http://tech.m6web.fr/"
+                }
+            ],
+            "description": "Symfony2 bundle on top of datastax/php-driver",
+            "keywords": [
+                "bundle",
+                "cassandra"
+            ],
+            "time": "2018-05-31T13:09:09+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5327,16 +5333,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v2.12.0",
+            "version": "v2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "a53f39a72cf0baa03909fae779a4de6d3772c74f"
+                "reference": "beef6cbe6dec7205edcd143842a49f9a691859a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/a53f39a72cf0baa03909fae779a4de6d3772c74f",
-                "reference": "a53f39a72cf0baa03909fae779a4de6d3772c74f",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/beef6cbe6dec7205edcd143842a49f9a691859a6",
+                "reference": "beef6cbe6dec7205edcd143842a49f9a691859a6",
                 "shasum": ""
             },
             "require": {
@@ -5367,10 +5373,10 @@
                 "mikey179/vfsstream": "^1.6",
                 "php-coveralls/php-coveralls": "^2.1",
                 "php-cs-fixer/accessible-object": "^1.0",
-                "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.0",
-                "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.0",
+                "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.0.1",
+                "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.0.1",
                 "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1",
-                "phpunitgoodpractices/traits": "^1.4",
+                "phpunitgoodpractices/traits": "^1.5",
                 "symfony/phpunit-bridge": "^4.0"
             },
             "suggest": {
@@ -5383,11 +5389,6 @@
                 "php-cs-fixer"
             ],
             "type": "application",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.12-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "PhpCsFixer\\": "src/"
@@ -5419,7 +5420,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-06-02T17:33:35+00:00"
+            "time": "2018-06-10T08:26:56+00:00"
         },
         {
             "name": "php-cs-fixer/diff",
