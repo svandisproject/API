@@ -8,6 +8,11 @@ doctrine:
 
 snc_redis:
     clients:
+        default:
+            type: predis
+            alias: default
+            dsn: "%env(REDIS_URL)%"
+            logging: false
         cache:
             type: predis
             alias: cache
@@ -16,13 +21,13 @@ snc_redis:
     doctrine:
         metadata_cache:
             client: cache
-            entity_manager: default
+            entity_manager: default_entity_manager
         result_cache:
             client: cache
-            entity_manager: default
+            entity_manager: default_entity_manager
         query_cache:
             client: cache
-            entity_manager: default
+            entity_manager: default_entity_manager
         second_level_cache:
             client: default
             entity_manager: default
