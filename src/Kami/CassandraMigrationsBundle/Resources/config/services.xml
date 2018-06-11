@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="kami.cassandra_migrations.generate_command" class="Kami\CassandraMigrationsBundle\Command\GenerateMigrationCommand">
+            <argument>%kernel.root_dir%/CassandraMigrations</argument>
+            <tag name="console.command"/>
+        </service>
+        <service id="kami.cassandra_migrations.migration_helper" class="Kami\CassandraMigrationsBundle\MigrationHelper\MigrationHelper">
+            <argument type="service" id="m6web_cassandra.client.default" />
+        </service>
+        <service id="kami.cassandra_migrations.migrate_command" class="Kami\CassandraMigrationsBundle\Command\MigrateCommand">
+            <argument type="service" id="kami.cassandra_migrations.migration_helper"/>
+            <tag name="console.command"/>
+        </service>
+    </services>
+</container>
