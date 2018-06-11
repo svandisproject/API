@@ -8,13 +8,13 @@ doctrine:
     orm:
         metadata_cache_driver:
             type: predis
-            client: snc.redis.client.cache
+            id: snc.redis.client.cache
         result_cache_driver:
             type: predis
-            client: snc.redis.client.cache
+            id: snc.redis.client.cache
         query_cache_driver:
             type: predis
-            client: snc.redis.client.cache
+            id: snc.redis.client.cache
 
 snc_redis:
     clients:
