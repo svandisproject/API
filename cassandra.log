@@ -1,2 +1,0 @@
-11-06-2018 15:43:25 EEST [ERROR] Unable to establish a control connection to host 127.0.0.1 because of the following error: Connect error 'connection refused' (src/control_connection.cpp:263)
-11-06-2018 16:19:57 EEST [ERROR] Unable to establish a control connection to host 127.0.0.1 because of the following error: Connect error 'connection refused' (src/control_connection.cpp:263)
