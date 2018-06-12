@@ -13,8 +13,19 @@ class SyncAssetsCommand extends Command
 
     private $doctrine;
 
+    private $pusher;
+
+    private $emergency = false;
+
     public function configure()
     {
         $this->setName('svandis:assets:sync');
+    }
+
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        while (!$this->emergency) {
+
+        }
     }
 }

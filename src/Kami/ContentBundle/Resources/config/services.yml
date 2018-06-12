@@ -23,6 +23,6 @@ services:
     kami.request_processor.update_url_cache.step:
         class: Kami\ContentBundle\RequestProcessor\Step\UpdateUrlCacheStep
         arguments:
-            - "@snc_redis.default"
+            - "@m6web_cassandra.client.default"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "update_url_cache" }
