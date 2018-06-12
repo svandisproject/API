@@ -37,7 +37,14 @@ class UpdateUrlCacheStep extends AbstractStep
         );
         $this->cassandra->execute(
             $statement,
-            ['arguments' => [md5($post->getUrl()), $post->getUrl(), $post->getValidatedBy()->count()]]
+            [
+                'arguments'=> [
+                    'hash' => md5($post->getUrl()),
+                    'url' => $post->getUrl(),
+                    'confirmations' => new \Cassandra\Tinyint($post->getValidatedBy()->count())
+                ]
+            ]
+
         );
 
         return new ArtifactCollection([
