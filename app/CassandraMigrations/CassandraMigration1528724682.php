@@ -15,6 +15,7 @@ class CassandraMigration1528724682 extends AbstractMigration
              (id UUID PRIMARY KEY, url text, confirmations tinyint);'
         );
 
+
         $client->execute($statement);
     }
     
