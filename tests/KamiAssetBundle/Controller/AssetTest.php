@@ -120,7 +120,7 @@ class AssetTest extends ApiTestCase
                 'last_updated' => 1525137271
             ]
         ]);
-        $this->assertJsonResponse($response, 200);
+        $this->assertJsonResponse($response, 403);
     }
 
     public function testFilterLoggedInAsAdmin()
