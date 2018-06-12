@@ -40,7 +40,7 @@ class Industry
      */
     public function __construct()
     {
-        $this->icos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->icos = new ArrayCollection();
     }
 
     /**

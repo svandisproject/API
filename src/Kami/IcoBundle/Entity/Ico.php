@@ -2,13 +2,21 @@
 
 namespace Kami\IcoBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use function in_array;
+use Kami\AssetBundle\Entity\Asset;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * Ico
  *
  * @ORM\Table(name="ico")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IcoRepository")
+ * @UniqueEntity({"remoteId"})
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\AnonymousAccess()
  */
 class Ico
 {
@@ -18,45 +26,70 @@ class Ico
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $id;
+
+    /**
+     * @ORM\Column(name="remote_id", type="integer", unique=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     *
+     */
+    private $remoteId;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $title;
 
     /**
      * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Asset")
+     * @ORM\Column(name="asset", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $asset;
 
     /**
-     * @ORM\Column(name="country", type="string", length=2, nullable=true)
+     * @ORM\Column(name="country", type="string", length=50, nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $country;
 
     /**
      * @ORM\Column(name="restricted_countries", type="array", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
-    private $restrictedCountries;
+    private $restrictedCountries = [];
 
     /**
-     * @ORM\Column(name="open_presale", type="boolean", nullable=true)
+     * @ORM\Column(name="open_presale", type="datetime", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $openPresale;
 
     /**
      * @ORM\Column(name="kyc", type="boolean", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $kyc;
 
     /**
-     * @var int|null
+     * @var string|null
      *
-     * @ORM\Column(name="hard_cap", type="integer", nullable=true)
+     * @ORM\Column(name="hard_cap", type="string", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $hardCap;
 
@@ -64,6 +97,8 @@ class Ico
      * @var int|null
      *
      * @ORM\Column(name="total_cap", type="integer", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $totalCap;
 
@@ -71,56 +106,74 @@ class Ico
      * @var int|null
      *
      * @ORM\Column(name="raised", type="integer", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $raised;
 
     /**
-     * @var int|null
+     * @var string|null
      *
-     * @ORM\Column(name="tokenPrice", type="integer", nullable=true)
+     * @ORM\Column(name="token_price", type="string", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $tokenPrice;
 
     /**
      * @var int|null
      *
-     * @ORM\Column(name="forSale", type="smallint", nullable=true)
+     * @ORM\Column(name="for_sale", type="smallint", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $forSale;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      *
-     * @ORM\Column(name="token_sale_date", type="date", nullable=true)
+     * @ORM\Column(name="token_sale_date", type="datetime", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $tokenSaleDate;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person", cascade={"persist"})
      * @ORM\JoinTable(name="ico_team")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $team;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person", cascade={"persist"})
      * @ORM\JoinTable(name="ico_advisors")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $advisors;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico")
      * @ORM\JoinTable(name="ico_partners")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $partners;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico")
      * @ORM\JoinTable(name="ico_competitors")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $competitors;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="icos")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      */
     private $industries;
 
@@ -195,15 +248,18 @@ class Ico
     }
 
     /**
-     * Set restrictedCountries.
+     * Add restrictedCountry.
      *
-     * @param array|null $restrictedCountries
+     * @param array|null $restrictedCountry
      *
      * @return Ico
      */
-    public function setRestrictedCountries($restrictedCountries = null)
+    public function addRestrictedCountry($restrictedCountry = null)
     {
-        $this->restrictedCountries = $restrictedCountries;
+        if (in_array($restrictedCountry, $this->restrictedCountries)) {
+            return;
+        }
+        $this->restrictedCountries[] = $restrictedCountry;
 
         return $this;
     }
@@ -221,12 +277,19 @@ class Ico
     /**
      * Set openPresale.
      *
-     * @param bool|null $openPresale
+     * @param string $openPresale
      *
      * @return Ico
      */
-    public function setOpenPresale($openPresale = null)
+    public function setOpenPresale($openPresale)
     {
+
+        if (!$openPresale instanceof DateTime) {
+            $this->openPresale = ($openPresale !== '0000-00-00 00:00:00') ?
+                DateTime::createFromFormat('Y-m-d H:i:s', $openPresale) :
+                null;
+            return $this;
+        }
         $this->openPresale = $openPresale;
 
         return $this;
@@ -269,7 +332,7 @@ class Ico
     /**
      * Set hardCap.
      *
-     * @param int|null $hardCap
+     * @param string|null $hardCap
      *
      * @return Ico
      */
@@ -283,7 +346,7 @@ class Ico
     /**
      * Get hardCap.
      *
-     * @return int|null
+     * @return string|null
      */
     public function getHardCap()
     {
@@ -341,7 +404,7 @@ class Ico
     /**
      * Set tokenPrice.
      *
-     * @param int|null $tokenPrice
+     * @param string|null $tokenPrice
      *
      * @return Ico
      */
@@ -355,7 +418,7 @@ class Ico
     /**
      * Get tokenPrice.
      *
-     * @return int|null
+     * @return string|null
      */
     public function getTokenPrice()
     {
@@ -389,21 +452,26 @@ class Ico
     /**
      * Set tokenSaleDate.
      *
-     * @param \DateTime|null $tokenSaleDate
+     * @param DateTime|null $tokenSaleDate
      *
      * @return Ico
      */
     public function setTokenSaleDate($tokenSaleDate = null)
     {
+        if (!$tokenSaleDate instanceof DateTime) {
+            $this->tokenSaleDate = ($tokenSaleDate != '0000-00-00 00:00:00') ?
+                DateTime::createFromFormat('Y-m-d H:i:s', $tokenSaleDate) :
+                null;
+            return $this;
+        }
         $this->tokenSaleDate = $tokenSaleDate;
-
         return $this;
     }
 
     /**
      * Get tokenSaleDate.
      *
-     * @return \DateTime|null
+     * @return DateTime|null
      */
     public function getTokenSaleDate()
     {
@@ -413,11 +481,11 @@ class Ico
     /**
      * Set asset.
      *
-     * @param \Kami\AssetBundle\Entity\Asset|null $asset
+     * @param Asset|null $asset
      *
      * @return Ico
      */
-    public function setAsset(\Kami\AssetBundle\Entity\Asset $asset = null)
+    public function setAsset(Asset $asset = null)
     {
         $this->asset = $asset;
 
@@ -443,6 +511,9 @@ class Ico
      */
     public function addTeam(\Kami\IcoBundle\Entity\Person $team)
     {
+        if ($this->team->contains($team)) {
+            return;
+        }
         $this->team[] = $team;
 
         return $this;
@@ -451,11 +522,11 @@ class Ico
     /**
      * Remove team.
      *
-     * @param \Kami\IcoBundle\Entity\Person $team
+     * @param Person $team
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeTeam(\Kami\IcoBundle\Entity\Person $team)
+    public function removeTeam(Person $team)
     {
         return $this->team->removeElement($team);
     }
@@ -479,6 +550,10 @@ class Ico
      */
     public function addAdvisor(\Kami\IcoBundle\Entity\Person $advisor)
     {
+
+        if ($this->advisors->contains($advisor)) {
+            return;
+        }
         $this->advisors[] = $advisor;
 
         return $this;
@@ -587,6 +662,9 @@ class Ico
      */
     public function addIndustry(\Kami\IcoBundle\Entity\Industry $industry)
     {
+        if ($this->industries->contains($industry)) {
+            return;
+        }
         $this->industries[] = $industry;
 
         return $this;
@@ -612,5 +690,25 @@ class Ico
     public function getIndustries()
     {
         return $this->industries;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getRemoteId()
+    {
+        return $this->remoteId;
+    }
+
+    /**
+     * @param integer $remoteId
+     *
+     * @return Ico
+     */
+    public function setRemoteId($remoteId)
+    {
+        $this->remoteId = $remoteId;
+
+        return $this;
     }
 }

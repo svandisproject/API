@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
     "content-hash": "74c3709eec1e84161f43e73105693641",
@@ -2080,7 +2080,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-            "time": "2018-05-31T23:17:13+00:00"
+            "time": "2018-05-31 23:17:13"
         },
         {
             "name": "kami/icobench-bundle",
@@ -2120,7 +2120,7 @@
                 }
             ],
             "description": "IcoBench API Client Bundle",
-            "time": "2018-06-11T12:53:34+00:00"
+            "time": "2018-06-11 12:53:34"
         },
         {
             "name": "kami/icobench-client",
@@ -2159,7 +2159,7 @@
                 }
             ],
             "description": "ICOBench API Client",
-            "time": "2018-06-02T15:02:29+00:00"
+            "time": "2018-06-02 15:02:29"
         },
         {
             "name": "kami/request-processor",
@@ -2205,7 +2205,7 @@
                 }
             ],
             "description": "Request processor component",
-            "time": "2018-06-01T10:38:23+00:00"
+            "time": "2018-06-01 10:38:23"
         },
         {
             "name": "khepin/yaml-fixtures-bundle",
@@ -4151,7 +4151,7 @@
                 "redis",
                 "symfony"
             ],
-            "time": "2018-05-09T08:25:09+00:00"
+            "time": "2018-05-09 08:25:09"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
