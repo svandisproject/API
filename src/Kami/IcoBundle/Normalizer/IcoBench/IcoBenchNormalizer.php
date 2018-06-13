@@ -39,7 +39,7 @@ class IcoBenchNormalizer extends AbstractIcoNormalizer
                  'property' => 'finance.token'
             ],
             'country' => [
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\IcoCountryNormalizer',
                 'property' => 'country'
             ],
             'restrictedCountries' => [

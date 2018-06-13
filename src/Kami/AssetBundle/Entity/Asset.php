@@ -14,6 +14,11 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Entity(repositoryClass="Kami\AssetBundle\Repository\AssetRepository")
  * @ORM\Table(name="asset")
+ * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+ *
  */
 class Asset
 {
@@ -31,6 +36,11 @@ class Asset
      *
      * @ORM\Column(name="title", type="string", length=255)
      * @Assert\NotBlank()
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     *
      */
     private $title;
 
@@ -39,11 +49,21 @@ class Asset
      *
      * @ORM\Column(name="ticker", type="string", length=10)
      * @Assert\NotBlank()
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     *
      */
     private $ticker;
 
     /**
      * @ORM\Column(name="price", type="integer")
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     *
      */
     private $price;
 

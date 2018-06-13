@@ -3,8 +3,8 @@
 namespace Kami\IcoBundle\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use function in_array;
 use Kami\AssetBundle\Entity\Asset;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
@@ -19,7 +19,6 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\AnonymousAccess()
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
- * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class Ico
 {
@@ -38,8 +37,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     *
      */
     private $remoteId;
 
@@ -51,7 +48,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $title;
 
@@ -62,29 +58,19 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $asset;
 
     /**
-     * @ORM\Column(name="country", type="string", length=50, nullable=true)
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="icos")
+     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
-    private $country;
-
-    /**
-     * @ORM\Column(name="restricted_countries", type="array", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $restrictedCountries;
+    private $countryId;
 
     /**
      * @ORM\Column(name="open_presale", type="datetime", nullable=true)
@@ -92,7 +78,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $openPresale;
 
@@ -102,7 +87,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $kyc;
 
@@ -114,7 +98,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $hardCap;
 
@@ -126,7 +109,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $totalCap;
 
@@ -138,7 +120,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $raised;
 
@@ -150,7 +131,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $tokenPrice;
 
@@ -162,7 +142,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $forSale;
 
@@ -174,7 +153,6 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $tokenSaleDate;
 
@@ -184,8 +162,7 @@ class Ico
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $team;
 
@@ -196,7 +173,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $advisors;
 
@@ -207,7 +184,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $partners;
 
@@ -218,7 +195,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $competitors;
 
@@ -228,20 +205,33 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $industries;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="restrictedIcos")
+     * @ORM\JoinTable(name="icos_restrictions")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $restricted;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->team = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->advisors = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->partners = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->competitors = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->industries = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->team = new ArrayCollection();
+        $this->advisors = new ArrayCollection();
+        $this->partners = new ArrayCollection();
+        $this->competitors = new ArrayCollection();
+        $this->industries = new ArrayCollection();
+        $this->restricted = new ArrayCollection();
     }
 
     /**
@@ -279,15 +269,15 @@ class Ico
     }
 
     /**
-     * Set country.
+     * Set countryId.
      *
-     * @param string|null $country
+     * @param Country $countryId
      *
      * @return Ico
      */
-    public function setCountry($country = null)
+    public function setCountryId($countryId)
     {
-        $this->country = $country;
+        $this->countryId = $countryId;
 
         return $this;
     }
@@ -297,25 +287,24 @@ class Ico
      *
      * @return string|null
      */
-    public function getCountry()
+    public function getCountryId()
     {
-        return $this->country;
+        return $this->countryId;
     }
 
     /**
      * Add restrictedCountry.
      *
-     * @param array|null $restrictedCountry
+     * @param Country $restrictedCountry
      *
-     * @return Ico
+     * @return Ico|null
      */
-    public function addRestrictedCountry($restrictedCountry)
+    public function addRestricted($restrictedCountry)
     {
-        $this->restrictedCountries = [];
-        if (in_array($restrictedCountry, $this->restrictedCountries)) {
+        if ($this->restricted->contains($restrictedCountry)) {
             return;
         }
-        $this->restrictedCountries[] = $restrictedCountry;
+        $this->restricted[] = $restrictedCountry;
 
         return $this;
     }
@@ -323,11 +312,23 @@ class Ico
     /**
      * Get restrictedCountries.
      *
-     * @return array|null
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function getRestrictedCountries()
+    public function getRestricted()
     {
-        return $this->restrictedCountries;
+        return $this->restricted;
+    }
+
+    /**
+     * Remove restrictedCountry.
+     *
+     * @param Country $country
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeRestricted($country)
+    {
+        return $this->restricted->removeElement($country);
     }
 
     /**

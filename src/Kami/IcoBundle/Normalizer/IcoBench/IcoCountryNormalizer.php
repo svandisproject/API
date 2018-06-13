@@ -1,14 +1,14 @@
 <?php
 
+
 namespace Kami\IcoBundle\Normalizer\IcoBench;
 
 use Kami\IcoBundle\Entity\Country;
 use Kami\IcoBundle\Entity\Ico;
 use Kami\IcoBundle\Normalizer\AbstractIcoNormalizer;
 
-class RestrictedCountriesNormalizer extends AbstractIcoNormalizer
+class IcoCountryNormalizer extends AbstractIcoNormalizer
 {
-
     /**
      * @param Ico $ico
      * @param $remoteData
@@ -16,13 +16,8 @@ class RestrictedCountriesNormalizer extends AbstractIcoNormalizer
      */
     public function normalize(Ico $ico, $remoteData): Ico
     {
-       if (!empty($remoteData)) {
-           foreach ($remoteData as $item) {
-               $ico->addRestricted($this->findOrCreateCountry($item['country']));
-//               $ico->addRestrictedCountry($item['country']);
-           }
-       }
-       return $ico;
+        $ico->setCountryId($this->findOrCreateCountry($remoteData));
+        return $ico;
     }
 
     /**
@@ -45,5 +40,6 @@ class RestrictedCountriesNormalizer extends AbstractIcoNormalizer
     public function getNormalizingMap(): array
     {
         return [];
+
     }
 }
