@@ -33,11 +33,18 @@ class UpdateUrlCacheStep extends AbstractStep
         /** @var Post $post */
         $post = $this->getArtifact('entity');
         $statement = $this->cassandra->prepare(
-            'INSERT INTO svandis_url_cache.crawled_urls (id, url, confirmations) VALUES (?, ?, ?)'
+            'INSERT INTO svandis_url_cache.crawled_urls (hash, url, confirmations) VALUES (?, ?, ?)'
         );
         $this->cassandra->execute(
             $statement,
-            ['arguments' => [new Uuid(), $post->getUrl(), $post->getValidatedBy()->count()]]
+            [
+                'arguments'=> [
+                    'hash' => md5($post->getUrl()),
+                    'url' => $post->getUrl(),
+                    'confirmations' => new \Cassandra\Tinyint($post->getValidatedBy()->count())
+                ]
+            ]
+
         );
 
         return new ArtifactCollection([

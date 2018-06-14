@@ -34,8 +34,8 @@ parameters:
     pusher_timeout: 30
     pusher_debug: "%kernel.debug%"
     pusher_app_id: 513696
-    pusher_key: 139ee335d6ffa4609ca9
-    pusher_secret: 4eb1eacb7beb23571c99
+    pusher_key: c30bba9bc2130476c75d
+    pusher_secret: 806971350eba631200b7
     ico_bench_private_key: ~
     ico_bench_public_key: ~
 

@@ -13,6 +13,8 @@ class SyncAssetsCommand extends Command
 
     private $doctrine;
 
+    private $stockWatcher;
+
     private $pusher;
 
     private $emergency = false;
@@ -26,6 +28,8 @@ class SyncAssetsCommand extends Command
     {
         while (!$this->emergency) {
 
+
+            sleep(1);
         }
     }
 }
