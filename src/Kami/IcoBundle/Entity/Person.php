@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="person")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\PersonRepository")
- * @UniqueEntity({"link"})
+ * @UniqueEntity({"url"})
  */
 class Person
 {
@@ -31,9 +31,14 @@ class Person
     private $name;
 
     /**
-     * @ORM\Column(name="links", type="array", nullable=true)
+     * @ORM\Column(name="links", type="string", nullable=true)
      */
     private $links;
+
+    /**
+     * @ORM\Column(name="url", type="string", unique=true)
+     */
+    private $url;
 
     /**
      * Get id.
@@ -43,6 +48,22 @@ class Person
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param mixed $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
     /**
@@ -72,7 +93,7 @@ class Person
     /**
      * Set links.
      *
-     * @param array|null $links
+     * @param string|null $links
      *
      * @return Person
      */

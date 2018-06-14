@@ -30,7 +30,7 @@ class AssetTest extends ApiTestCase
 
     public function testFilterLoggedInAsAnonymous()
     {
-        $filter = json_encode(base64_encode('[{"type": "eq", "property": "name", "value": "test"}]'));
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
         $response = $this->request('GET', '/api/asset/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 403);
     }
@@ -39,18 +39,9 @@ class AssetTest extends ApiTestCase
     {
         $response = $this->request('POST', '/api/asset', [
             'asset' => [
-                'name' => 'test',
-                'symbol' => 'test',
-                'rank' => 1,
-                'volume_usd_day' => 1.0,
-                'market_cap_usd' => 1.0,
-                'circulating_supply' => 1.0,
-                'total_supply' => 1.0,
-                'max_supply' => 1.0,
-                'percent_change_hour_usd' => 1.0,
-                'percent_change_day_usd' => 1.0,
-                'percent_change_week_usd' => 1.0,
-                'last_updated' => 1525137271
+                'title' => 'test',
+                'price' => '1',
+                'ticker' => 'test',
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -61,18 +52,9 @@ class AssetTest extends ApiTestCase
         $this->logInAsUser();
         $response = $this->request('POST', '/api/asset', [
             'asset' => [
-                'name' => 'test',
-                'symbol' => 'test',
-                'rank' => 1,
-                'volume_usd_day' => 1.0,
-                'market_cap_usd' => 1.0,
-                'circulating_supply' => 1.0,
-                'total_supply' => 1.0,
-                'max_supply' => 1.0,
-                'percent_change_hour_usd' => 1.0,
-                'percent_change_day_usd' => 1.0,
-                'percent_change_week_usd' => 1.0,
-                'last_updated' => 1525137271
+                'title' => 'test',
+                'price' => '1',
+                'ticker' => 'test',
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -83,22 +65,13 @@ class AssetTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('POST', '/api/asset', [
             'asset' => [
-                'name' => 'test',
-                'symbol' => 'test',
-                'rank' => 1,
-                'volume_usd_day' => 1.0,
-                'market_cap_usd' => 1.0,
-                'circulating_supply' => 1.0,
-                'total_supply' => 1.0,
-                'max_supply' => 1.0,
-                'percent_change_hour_usd' => 1.0,
-                'percent_change_day_usd' => 1.0,
-                'percent_change_week_usd' => 1.0,
-                'last_updated' => 1525137271
+                'title' => 'test',
+                'price' => '1',
+                'ticker' => 'test',
             ]
         ]);
         $this->assertJsonResponse($response, 200);
-        $this->assertEquals('test', $this->getResponseData($response)['name']);
+        $this->assertEquals('test', $this->getResponseData($response)['title']);
         $this->assertContainsKeys($response);
     }
 
@@ -106,18 +79,9 @@ class AssetTest extends ApiTestCase
     {
         $response = $this->requestByWorker('POST', '/api/asset', [
             'asset' => [
-                'name' => 'test_worker',
-                'symbol' => 'test_worker',
-                'rank' => 1,
-                'volume_usd_day' => 1.0,
-                'market_cap_usd' => 1.0,
-                'circulating_supply' => 1.0,
-                'total_supply' => 1.0,
-                'max_supply' => 1.0,
-                'percent_change_hour_usd' => 1.0,
-                'percent_change_day_usd' => 1.0,
-                'percent_change_week_usd' => 1.0,
-                'last_updated' => 1525137271
+                'title' => 'test',
+                'price' => 1,
+                'ticker' => 'test',
             ]
         ]);
         $this->assertJsonResponse($response, 200);
@@ -126,18 +90,18 @@ class AssetTest extends ApiTestCase
     public function testFilterLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $filter = json_encode(base64_encode('[{"type": "eq", "property": "name", "value": "test"}]'));
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
         $response = $this->request('GET', '/api/asset/filter?filter=' . $filter);
-        $this->assertEquals('test', $this->getResponseData($response)['content'][0]['name']);
+        $this->assertEquals('test', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
     }
 
     public function testFilterLoggedInAsUser()
     {
         $this->logInAsUser();
-        $filter = json_encode(base64_encode('[{"type": "eq", "property": "name", "value": "test"}]'));
+        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
         $response = $this->request('GET', '/api/asset/filter?filter=' . $filter);
-        $this->assertEquals('test', $this->getResponseData($response)['content'][0]['name']);
+        $this->assertEquals('test', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
     }
 
@@ -145,18 +109,9 @@ class AssetTest extends ApiTestCase
     {
         $response = $this->request('PUT', '/api/asset/1', [
             'asset' => [
-                'name' => 'edit',
-                'symbol' => 'edit',
-                'rank' => 1,
-                'volume_usd_day' => 1.0,
-                'market_cap_usd' => 1.0,
-                'circulating_supply' => 1.0,
-                'total_supply' => 1.0,
-                'max_supply' => 1.0,
-                'percent_change_hour_usd' => 1.0,
-                'percent_change_day_usd' => 1.0,
-                'percent_change_week_usd' => 1.0,
-                'last_updated' => 1525137271
+                'title' => 'test',
+                'price' => '1',
+                'ticker' => 'test',
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -167,18 +122,9 @@ class AssetTest extends ApiTestCase
         $this->logInAsUser();
         $response = $this->request('PUT', '/api/asset/1', [
             'asset' => [
-                'name' => 'edit',
-                'symbol' => 'edit',
-                'rank' => 1,
-                'volume_usd_day' => 1.0,
-                'market_cap_usd' => 1.0,
-                'circulating_supply' => 1.0,
-                'total_supply' => 1.0,
-                'max_supply' => 1.0,
-                'percent_change_hour_usd' => 1.0,
-                'percent_change_day_usd' => 1.0,
-                'percent_change_week_usd' => 1.0,
-                'last_updated' => 1525137271
+                'title' => 'test',
+                'price' => '1',
+                'ticker' => 'test',
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -189,23 +135,14 @@ class AssetTest extends ApiTestCase
         $this->logInAsAdmin();
         $response = $this->request('PUT', '/api/asset/1', [
             'asset' => [
-                'name' => 'edit',
-                'symbol' => 'edit',
-                'rank' => 1,
-                'volume_usd_day' => 1.0,
-                'market_cap_usd' => 1.0,
-                'circulating_supply' => 1.0,
-                'total_supply' => 1.0,
-                'max_supply' => 1.0,
-                'percent_change_hour_usd' => 1.0,
-                'percent_change_day_usd' => 1.0,
-                'percent_change_week_usd' => 1.0,
-                'last_updated' => 1525137271
+                'title' => 'edit',
+                'price' => '1',
+                'ticker' => 'test',
             ]
         ]);
         $this->assertJsonResponse($response, 200);
         $this->assertContainsKeys($response);
-        $this->assertEquals('edit', $this->getResponseData($response)['name']);
+        $this->assertEquals('edit', $this->getResponseData($response)['title']);
     }
 
     public function testUpdateNotExistedFieldLoggedInAsAdmin()
@@ -237,8 +174,6 @@ class AssetTest extends ApiTestCase
 
     public function getModelKeys()
     {
-        return ['name', 'symbol', 'rank', 'volume_usd_day', 'market_cap_usd',
-            'circulating_supply', 'total_supply', 'max_supply', 'percent_change_hour_usd', 'percent_change_day_usd',
-            'percent_change_week_usd', 'last_updated'];
+        return ['title', 'price', 'ticker'];
     }
 }

@@ -23,10 +23,42 @@ services:
         class: Kami\IcoBundle\Normalizer\IcoBench\IcoBenchNormalizer
         arguments:
             - "@doctrine.orm.entity_manager"
-            - []
+            - ["@kami.ico_normalizer.icobench.scalar", "@kami.ico_normalizer.icobench.team", "@kami.ico_normalizer.icobench.restrictions",
+              "@kami.ico_normalizer.icobench.kyc", "@kami.ico_normalizer.icobench.advisors", "@kami.ico_normalizer.icobench.industries",
+                "@kami.ico_normalizer.icobench.asset", "@kami.ico_normalizer.icobench.country"]
 #                - "@kami.ico_normalizer.icobench.kyc"
 #                -
 #                - "@kami.ico_normalizer.icobench.team_members"
 #                -
+    kami.ico_normalizer.icobench.scalar:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer
+
+    kami.ico_normalizer.icobench.asset:
+        class: Kami\IcoBundle\Normalizer\IcoBench\AssetNormalizer
+        parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.team:
+        class: Kami\IcoBundle\Normalizer\IcoBench\TeamNormalizer
+        parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.restrictions:
+            class: Kami\IcoBundle\Normalizer\IcoBench\RestrictedCountriesNormalizer
+            parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.kyc:
+                class: Kami\IcoBundle\Normalizer\IcoBench\KycNormalizer
+                parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.advisors:
+                    class: Kami\IcoBundle\Normalizer\IcoBench\AdvisorsNormalizer
+                    parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.industries:
+                        class: Kami\IcoBundle\Normalizer\IcoBench\IndustryNormalizer
+                        parent: "kami.ico_normalizer.abstract"
+
+    kami.ico_normalizer.icobench.country:
+                            class: Kami\IcoBundle\Normalizer\IcoBench\IcoCountryNormalizer
+                            parent: "kami.ico_normalizer.abstract"
 
 
