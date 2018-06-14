@@ -26,6 +26,7 @@ class IcoCountryNormalizer extends AbstractIcoNormalizer
      */
     protected function findOrCreateCountry($title)
     {
+
         $country = $this->entityManager->getRepository(Country::class)->findOneBy(['title' => $title]);
 
         if (!$country) {

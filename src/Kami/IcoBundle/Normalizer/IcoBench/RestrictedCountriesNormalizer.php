@@ -5,6 +5,8 @@ namespace Kami\IcoBundle\Normalizer\IcoBench;
 use Kami\IcoBundle\Entity\Country;
 use Kami\IcoBundle\Entity\Ico;
 use Kami\IcoBundle\Normalizer\AbstractIcoNormalizer;
+use function mb_strimwidth;
+use function strlen;
 
 class RestrictedCountriesNormalizer extends AbstractIcoNormalizer
 {
@@ -31,6 +33,10 @@ class RestrictedCountriesNormalizer extends AbstractIcoNormalizer
      */
     protected function findOrCreateCountry($title)
     {
+        if (strlen($title) >= 100) {
+            $title = mb_strimwidth($title, 0, 99);
+        }
+
         $country = $this->entityManager->getRepository(Country::class)->findOneBy(['title' => $title]);
 
         if (!$country) {

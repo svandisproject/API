@@ -2,6 +2,7 @@
 
 
 namespace Kami\IcoBundle\Normalizer\IcoBench;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Kami\IcoBundle\Normalizer\AbstractIcoNormalizer;

@@ -43,7 +43,7 @@ class Ico
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255, unique=true)
+     * @ORM\Column(name="title", type="string", length=255)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -115,7 +115,7 @@ class Ico
     /**
      * @var int|null
      *
-     * @ORM\Column(name="raised", type="integer", nullable=true)
+     * @ORM\Column(name="raised", type="decimal", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -437,7 +437,7 @@ class Ico
     /**
      * Set raised.
      *
-     * @param int|null $raised
+     * @param float|null $raised
      *
      * @return Ico
      */
@@ -451,7 +451,7 @@ class Ico
     /**
      * Get raised.
      *
-     * @return int|null
+     * @return float|null
      */
     public function getRaised()
     {

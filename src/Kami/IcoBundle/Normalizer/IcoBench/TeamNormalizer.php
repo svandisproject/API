@@ -8,6 +8,7 @@ use function in_array;
 use Kami\IcoBundle\Entity\Ico;
 use Kami\IcoBundle\Entity\Person;
 use Kami\IcoBundle\Normalizer\AbstractIcoNormalizer;
+use function strlen;
 
 class TeamNormalizer extends AbstractIcoNormalizer
 {
@@ -37,7 +38,7 @@ class TeamNormalizer extends AbstractIcoNormalizer
         if (!$teamMember) {
             $teamMember = new Person();
             $teamMember->setName($person['name']);
-            if ($person['links']) {
+            if ($person['links'] && strlen($person['links']) <= 255) {
                 $teamMember->setLinks($person['links']);
             }
             $teamMember->setUrl($person['url']);
