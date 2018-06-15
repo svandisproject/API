@@ -51,7 +51,7 @@ class PostCreationListener
                     'tags' => $entity->getTags()
                 ]
             ]);
-            var_dump($result);
+            $this->logger->info($result);
         } catch (PusherException $exception) {
             $this->logger->error(
                 sprintf('Failed to send pusher notifications with exception: "%s"', $exception->getMessage())
