@@ -83,6 +83,7 @@ class ValidatePostStep extends ValidateFormStep
             }
             return $this->updateStalePost($originalPost, $receivedPost);
         }
+        throw new BadRequestHttpException('Post is not valid');
     }
 
     private function updateStalePost(Post $originalPost, Form $receivedPost)
