@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ce2f291b9050a884c198c08de523d4ba",
+    "content-hash": "3ae65bbe5f8980f5231f89fc48932a01",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -49,6 +49,128 @@
                 "transliterator"
             ],
             "time": "2017-04-04T11:38:05+00:00"
+        },
+        {
+            "name": "brightnucleus/config",
+            "version": "v0.4.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brightnucleus/config.git",
+                "reference": "ff50a5eaa0bb2865b84d347e230520e49af68ea1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brightnucleus/config/zipball/ff50a5eaa0bb2865b84d347e230520e49af68ea1",
+                "reference": "ff50a5eaa0bb2865b84d347e230520e49af68ea1",
+                "shasum": ""
+            },
+            "require": {
+                "brightnucleus/exceptions": ">=0.2",
+                "symfony/options-resolver": ">=2.8"
+            },
+            "require-dev": {
+                "malukenho/docheader": "^0.1.5",
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^4.0|^5.0",
+                "squizlabs/php_codesniffer": "^2.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BrightNucleus\\Config\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alain Schlesser",
+                    "email": "alain.schlesser@gmail.com"
+                }
+            ],
+            "description": "Minimal, reusable Config component.",
+            "time": "2017-02-16T00:44:34+00:00"
+        },
+        {
+            "name": "brightnucleus/country-codes",
+            "version": "v0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brightnucleus/country-codes.git",
+                "reference": "022850891c7fe082d33b0b637e9250f6e1258e72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brightnucleus/country-codes/zipball/022850891c7fe082d33b0b637e9250f6e1258e72",
+                "reference": "022850891c7fe082d33b0b637e9250f6e1258e72",
+                "shasum": ""
+            },
+            "require": {
+                "brightnucleus/config": ">=0.2",
+                "brightnucleus/exceptions": ">=0.3.0",
+                "composer-plugin-api": "^1",
+                "php": ">=5.4"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "BrightNucleus\\CountryCodes\\CountryPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "BrightNucleus\\CountryCodes\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alain Schlesser",
+                    "email": "alain.schlesser@gmail.com"
+                }
+            ],
+            "description": "Automatically updated country data containing ISO codes and English country names, powered by free MaxMind data.",
+            "time": "2018-02-02T13:26:37+00:00"
+        },
+        {
+            "name": "brightnucleus/exceptions",
+            "version": "v0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brightnucleus/exceptions.git",
+                "reference": "7eb528cd2cb71b045ced235c7b1b933d8cfe36a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brightnucleus/exceptions/zipball/7eb528cd2cb71b045ced235c7b1b933d8cfe36a8",
+                "reference": "7eb528cd2cb71b045ced235c7b1b933d8cfe36a8",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4",
+                "squizlabs/php_codesniffer": "~2.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BrightNucleus\\Exception\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alain Schlesser",
+                    "email": "alain.schlesser@gmail.com"
+                }
+            ],
+            "description": "Exceptions shared across Bright Nucleus components.",
+            "time": "2017-04-11T06:19:00+00:00"
         },
         {
             "name": "composer/ca-bundle",

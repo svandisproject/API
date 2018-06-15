@@ -62,15 +62,13 @@ class Ico
     private $asset;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="icos")
-     * @ORM\JoinColumn(name="country_id", referencedColumnName="id")
+     * @ORM\Column(name="country", type="string", length=3, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\Relation()
      */
-    private $countryId;
+    private $country;
 
     /**
      * @ORM\Column(name="open_presale", type="datetime", nullable=true)
@@ -211,27 +209,23 @@ class Ico
 
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Country", inversedBy="restrictedIcos")
-     * @ORM\JoinTable(name="icos_restrictions")
+     * @ORM\Column(type="array", name="restricted_countries")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\Relation()
      */
-    private $restricted;
-
+    private $restrictedCountries;
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->team = new ArrayCollection();
-        $this->advisors = new ArrayCollection();
-        $this->partners = new ArrayCollection();
-        $this->competitors = new ArrayCollection();
-        $this->industries = new ArrayCollection();
-        $this->restricted = new ArrayCollection();
+        $this->team = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->advisors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->partners = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->competitors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->industries = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -242,6 +236,30 @@ class Ico
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set remoteId.
+     *
+     * @param int $remoteId
+     *
+     * @return Ico
+     */
+    public function setRemoteId($remoteId)
+    {
+        $this->remoteId = $remoteId;
+
+        return $this;
+    }
+
+    /**
+     * Get remoteId.
+     *
+     * @return int
+     */
+    public function getRemoteId()
+    {
+        return $this->remoteId;
     }
 
     /**
@@ -269,15 +287,39 @@ class Ico
     }
 
     /**
-     * Set countryId.
+     * Set asset.
      *
-     * @param Country $countryId
+     * @param string|null $asset
      *
      * @return Ico
      */
-    public function setCountryId($countryId)
+    public function setAsset($asset = null)
     {
-        $this->countryId = $countryId;
+        $this->asset = $asset;
+
+        return $this;
+    }
+
+    /**
+     * Get asset.
+     *
+     * @return string|null
+     */
+    public function getAsset()
+    {
+        return $this->asset;
+    }
+
+    /**
+     * Set country.
+     *
+     * @param string $country
+     *
+     * @return Ico
+     */
+    public function setCountry($country)
+    {
+        $this->country = $country;
 
         return $this;
     }
@@ -285,68 +327,22 @@ class Ico
     /**
      * Get country.
      *
-     * @return string|null
+     * @return string
      */
-    public function getCountryId()
+    public function getCountry()
     {
-        return $this->countryId;
-    }
-
-    /**
-     * Add restrictedCountry.
-     *
-     * @param Country $restrictedCountry
-     *
-     * @return Ico|null
-     */
-    public function addRestricted($restrictedCountry)
-    {
-        if ($this->restricted->contains($restrictedCountry)) {
-            return;
-        }
-        $this->restricted[] = $restrictedCountry;
-
-        return $this;
-    }
-
-    /**
-     * Get restrictedCountries.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getRestricted()
-    {
-        return $this->restricted;
-    }
-
-    /**
-     * Remove restrictedCountry.
-     *
-     * @param Country $country
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeRestricted($country)
-    {
-        return $this->restricted->removeElement($country);
+        return $this->country;
     }
 
     /**
      * Set openPresale.
      *
-     * @param string $openPresale
+     * @param \DateTime|null $openPresale
      *
      * @return Ico
      */
-    public function setOpenPresale($openPresale)
+    public function setOpenPresale($openPresale = null)
     {
-
-        if (!$openPresale instanceof DateTime) {
-            $this->openPresale = ($openPresale !== '0000-00-00 00:00:00') ?
-                DateTime::createFromFormat('Y-m-d H:i:s', $openPresale) :
-                null;
-            return $this;
-        }
         $this->openPresale = $openPresale;
 
         return $this;
@@ -355,7 +351,7 @@ class Ico
     /**
      * Get openPresale.
      *
-     * @return bool|null
+     * @return \DateTime|null
      */
     public function getOpenPresale()
     {
@@ -437,7 +433,7 @@ class Ico
     /**
      * Set raised.
      *
-     * @param float|null $raised
+     * @param string|null $raised
      *
      * @return Ico
      */
@@ -451,7 +447,7 @@ class Ico
     /**
      * Get raised.
      *
-     * @return float|null
+     * @return string|null
      */
     public function getRaised()
     {
@@ -509,26 +505,21 @@ class Ico
     /**
      * Set tokenSaleDate.
      *
-     * @param DateTime|null $tokenSaleDate
+     * @param \DateTime|null $tokenSaleDate
      *
      * @return Ico
      */
     public function setTokenSaleDate($tokenSaleDate = null)
     {
-        if (!$tokenSaleDate instanceof DateTime) {
-            $this->tokenSaleDate = ($tokenSaleDate != '0000-00-00 00:00:00') ?
-                DateTime::createFromFormat('Y-m-d H:i:s', $tokenSaleDate) :
-                null;
-            return $this;
-        }
         $this->tokenSaleDate = $tokenSaleDate;
+
         return $this;
     }
 
     /**
      * Get tokenSaleDate.
      *
-     * @return DateTime|null
+     * @return \DateTime|null
      */
     public function getTokenSaleDate()
     {
@@ -536,27 +527,27 @@ class Ico
     }
 
     /**
-     * Set asset.
+     * Set restrictedCountries.
      *
-     * @param Asset|null $asset
+     * @param array $restrictedCountries
      *
      * @return Ico
      */
-    public function setAsset(Asset $asset = null)
+    public function setRestrictedCountries($restrictedCountries)
     {
-        $this->asset = $asset;
+        $this->restrictedCountries = $restrictedCountries;
 
         return $this;
     }
 
     /**
-     * Get asset.
+     * Get restrictedCountries.
      *
-     * @return \Kami\AssetBundle\Entity\Asset|null
+     * @return array
      */
-    public function getAsset()
+    public function getRestrictedCountries()
     {
-        return $this->asset;
+        return $this->restrictedCountries;
     }
 
     /**
@@ -568,9 +559,6 @@ class Ico
      */
     public function addTeam(\Kami\IcoBundle\Entity\Person $team)
     {
-        if ($this->team->contains($team)) {
-            return;
-        }
         $this->team[] = $team;
 
         return $this;
@@ -579,11 +567,11 @@ class Ico
     /**
      * Remove team.
      *
-     * @param Person $team
+     * @param \Kami\IcoBundle\Entity\Person $team
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeTeam(Person $team)
+    public function removeTeam(\Kami\IcoBundle\Entity\Person $team)
     {
         return $this->team->removeElement($team);
     }
@@ -607,10 +595,6 @@ class Ico
      */
     public function addAdvisor(\Kami\IcoBundle\Entity\Person $advisor)
     {
-
-        if ($this->advisors->contains($advisor)) {
-            return;
-        }
         $this->advisors[] = $advisor;
 
         return $this;
@@ -719,9 +703,6 @@ class Ico
      */
     public function addIndustry(\Kami\IcoBundle\Entity\Industry $industry)
     {
-        if ($this->industries->contains($industry)) {
-            return;
-        }
         $this->industries[] = $industry;
 
         return $this;
@@ -750,22 +731,53 @@ class Ico
     }
 
     /**
-     * @return integer
+     * @param mixed $team
+     * @return Ico
      */
-    public function getRemoteId()
+    public function setTeam($team)
     {
-        return $this->remoteId;
+        $this->team = $team;
+        return $this;
     }
 
     /**
-     * @param integer $remoteId
-     *
+     * @param mixed $advisors
      * @return Ico
      */
-    public function setRemoteId($remoteId)
+    public function setAdvisors($advisors)
     {
-        $this->remoteId = $remoteId;
-
+        $this->advisors = $advisors;
         return $this;
     }
+
+    /**
+     * @param mixed $partners
+     * @return Ico
+     */
+    public function setPartners($partners)
+    {
+        $this->partners = $partners;
+        return $this;
+    }
+
+    /**
+     * @param mixed $competitors
+     * @return Ico
+     */
+    public function setCompetitors($competitors)
+    {
+        $this->competitors = $competitors;
+        return $this;
+    }
+
+    /**
+     * @param mixed $industries
+     * @return Ico
+     */
+    public function setIndustries($industries)
+    {
+        $this->industries = $industries;
+        return $this;
+    }
+
 }

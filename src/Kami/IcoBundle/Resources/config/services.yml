@@ -19,49 +19,59 @@ services:
         arguments:
             - "@doctrine.orm.entity_manager"
 
+    kami.ico_property_normalizer.abstract:
+          class: "%kami.ico_normalizer.abstract.class%"
+          abstract: true
+          arguments:
+              - "@doctrine.orm.entity_manager"
+
     kami.ico_normalizer.icobench:
         class: Kami\IcoBundle\Normalizer\IcoBench\IcoBenchNormalizer
         arguments:
             - "@doctrine.orm.entity_manager"
             -
-              - "@kami.ico_normalizer.icobench.scalar"
-              - "@kami.ico_normalizer.icobench.team"
-              - "@kami.ico_normalizer.icobench.restrictions"
-              - "@kami.ico_normalizer.icobench.kyc"
-              - "@kami.ico_normalizer.icobench.advisors"
-              - "@kami.ico_normalizer.icobench.industries"
-              - "@kami.ico_normalizer.icobench.asset"
-              - "@kami.ico_normalizer.icobench.country"
+              - "@kami.ico_property_normalizer.icobench.scalar"
+              - "@kami.ico_property_normalizer.icobench.team"
+              - "@kami.ico_property_normalizer.icobench.restrictions"
+              - "@kami.ico_property_normalizer.icobench.kyc"
+              - "@kami.ico_property_normalizer.icobench.advisors"
+              - "@kami.ico_property_normalizer.icobench.industries"
+              - "@kami.ico_property_normalizer.icobench.asset"
+              - "@kami.ico_property_normalizer.icobench.country"
+              - "@kami.ico_property_normalizer.icobench.datetime"
 
-    kami.ico_normalizer.icobench.scalar:
+    kami.ico_property_normalizer.icobench.scalar:
         class: Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer
 
-    kami.ico_normalizer.icobench.asset:
-        class: Kami\IcoBundle\Normalizer\IcoBench\AssetNormalizer
-        parent: "kami.ico_normalizer.abstract"
+    kami.ico_property_normalizer.icobench.asset:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\AssetNormalizer
+        parent: "kami.ico_property_normalizer.abstract"
 
-    kami.ico_normalizer.icobench.team:
-        class: Kami\IcoBundle\Normalizer\IcoBench\TeamNormalizer
-        parent: "kami.ico_normalizer.abstract"
+    kami.ico_property_normalizer.icobench.team:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\TeamNormalizer
+        parent: "kami.ico_property_normalizer.abstract"
 
-    kami.ico_normalizer.icobench.restrictions:
-        class: Kami\IcoBundle\Normalizer\IcoBench\RestrictedCountriesNormalizer
-        parent: "kami.ico_normalizer.abstract"
+    kami.ico_property_normalizer.icobench.restrictions:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\RestrictedCountriesNormalizer
+        parent: "kami.ico_property_normalizer.abstract"
 
-    kami.ico_normalizer.icobench.kyc:
-        class: Kami\IcoBundle\Normalizer\IcoBench\KycNormalizer
-        parent: "kami.ico_normalizer.abstract"
+    kami.ico_property_normalizer.icobench.kyc:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\KycNormalizer
+        parent: "kami.ico_property_normalizer.abstract"
 
-    kami.ico_normalizer.icobench.advisors:
-        class: Kami\IcoBundle\Normalizer\IcoBench\AdvisorsNormalizer
-        parent: "kami.ico_normalizer.abstract"
+    kami.ico_property_normalizer.icobench.advisors:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\AdvisorsNormalizer
+        parent: "kami.ico_property_normalizer.abstract"
 
-    kami.ico_normalizer.icobench.industries:
-        class: Kami\IcoBundle\Normalizer\IcoBench\IndustryNormalizer
-        parent: "kami.ico_normalizer.abstract"
+    kami.ico_property_normalizer.icobench.industries:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\IndustryNormalizer
+        parent: "kami.ico_property_normalizer.abstract"
 
-    kami.ico_normalizer.icobench.country:
-        class: Kami\IcoBundle\Normalizer\IcoBench\IcoCountryNormalizer
-        parent: "kami.ico_normalizer.abstract"
+    kami.ico_property_normalizer.icobench.country:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\CountryNormalizer
+        parent: "kami.ico_property_normalizer.abstract"
+    kami.ico_property_normalizer.icobench.datetime:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\DateTimeNormalizer
+        parent: "kami.ico_property_normalizer.abstract"
 
 

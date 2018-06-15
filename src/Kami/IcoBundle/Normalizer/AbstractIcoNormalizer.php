@@ -30,16 +30,11 @@ abstract class AbstractIcoNormalizer implements IcoNormalizerInterface
      public function normalize(Ico $ico, $remoteData) : Ico
      {
          foreach ($this->getNormalizingMap() as $property => $config) {
-
              $normalizer = $this->getNormalizer($config['normalizer']);
-
-             if ($normalizer instanceof ScalarNormalizer) {
-                 $method = 'set'.ucfirst($property);
-                 $ico->$method($normalizer->normalize($this->getValueByPath($remoteData, $config['property'])));
-             } else {
-                 $normalizer->normalize($ico, $this->getValueByPath($remoteData, $config['property']));
-             }
+             $method = 'set'.ucfirst($property);
+             $ico->$method($normalizer->normalize($this->getValueByPath($remoteData, $config['property'])));
          }
+
          return $ico;
      }
 

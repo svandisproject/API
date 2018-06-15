@@ -1,24 +1,24 @@
 <?php
 
 
-namespace Kami\IcoBundle\Normalizer\IcoBench;
+namespace Kami\IcoBundle\Normalizer\IcoBench\Property;
 
-use Kami\IcoBundle\Entity\Ico;
 use Kami\IcoBundle\Entity\Person;
-use Kami\IcoBundle\Normalizer\AbstractIcoNormalizer;
+use Kami\IcoBundle\Normalizer\AbstractPropertyNormalizer;
 
-class AdvisorsNormalizer extends AbstractIcoNormalizer
+class AdvisorsNormalizer extends AbstractPropertyNormalizer
 {
 
-    public function normalize(Ico $ico, $remoteData): Ico
+    public function normalize($remoteData): array
     {
         foreach ($remoteData as $person) {
+            $advisors = [];
             if ($person['name'] !== "Benchy") {
-                $advisor = $this->findOrCreatePerson($person);
-                $ico->addAdvisor($advisor);
+                $advisors[] = $this->findOrCreatePerson($person);
+
             }
         }
-        return $ico;
+        return $advisors;
     }
 
     /**
@@ -36,11 +36,6 @@ class AdvisorsNormalizer extends AbstractIcoNormalizer
                 $advisor->setUrl($person['url']);
             }
             return $advisor;
-    }
-
-    public function getNormalizingMap(): array
-    {
-        return [];
     }
 
 }

@@ -1,21 +1,22 @@
 <?php
 
 
-namespace Kami\IcoBundle\Normalizer\IcoBench;
+namespace Kami\IcoBundle\Normalizer\IcoBench\Property;
 
 
 use Kami\IcoBundle\Entity\Industry;
-use Kami\IcoBundle\Normalizer\AbstractIcoNormalizer;
-use Kami\IcoBundle\Entity\Ico;
+use Kami\IcoBundle\Normalizer\AbstractPropertyNormalizer;
 
-class IndustryNormalizer extends AbstractIcoNormalizer
+class IndustryNormalizer extends AbstractPropertyNormalizer
 {
-    public function normalize(Ico $ico, $remoteData): Ico
+    public function normalize($remoteData): array
     {
+        $industries = [];
         foreach ($remoteData as $industry) {
-            $ico->addIndustry($this->findOrCreateIndustry($industry));
+           $industries[] = $this->findOrCreateIndustry($industry);
         }
-        return $ico;
+
+        return $industries;
     }
 
     /**

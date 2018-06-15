@@ -70,15 +70,17 @@ class SyncIcosCommand extends Command
         $totalPages =  $this->icoBenchClient->getIcos()['pages'];
 
         for($i = 0; $i < $totalPages; $i++) {
+            $output->writeln('Processing Page: '.$i.' from '.$totalPages);
 
             $response = $this->icoBenchClient->getIcos('all', ['page'=> $i]);
             foreach ($response['results'] as $result) {
                 $remoteData = $this->icoBenchClient->getIco($result['id']);
-
                 $ico = $this->findOrCreateIco($result['id']);
                 $ico = $this->icoBenchNormalizer->normalize($ico, $remoteData);
+
                 $this->manager->persist($ico);
                 $this->manager->flush();
+                $output->writeln('Successfully updated ICO '.$ico->getTitle());
             }
         }
 

@@ -1,29 +1,25 @@
 <?php
 
 
-namespace Kami\IcoBundle\Normalizer\IcoBench;
+namespace Kami\IcoBundle\Normalizer\IcoBench\Property;
 
-use function array_push;
-use function in_array;
-use Kami\IcoBundle\Entity\Ico;
 use Kami\IcoBundle\Entity\Person;
-use Kami\IcoBundle\Normalizer\AbstractIcoNormalizer;
-use function strlen;
+use Kami\IcoBundle\Normalizer\AbstractPropertyNormalizer;
 
-class TeamNormalizer extends AbstractIcoNormalizer
+class TeamNormalizer extends AbstractPropertyNormalizer
 {
 
-    public function normalize(Ico $ico, $remoteData): Ico
+    public function normalize($remoteData): array
     {
-        $uniq = [];
+        $unique = [];
+        $team = [];
         foreach ($remoteData as $person) {
-            if(!in_array($person['url'], $uniq)) {
-                $teamMember = $this->findOrCreatePerson($person);
-                $ico->addTeam($teamMember);
+            if(!in_array($person['url'], $unique)) {
+                $team[] = $this->findOrCreatePerson($person);
             }
-            array_push($uniq, $person['url']);
+            array_push($unique, $person['url']);
         }
-        return $ico;
+        return $team;
     }
 
     /**
@@ -45,11 +41,6 @@ class TeamNormalizer extends AbstractIcoNormalizer
             $this->entityManager->persist($teamMember);
         }
         return $teamMember;
-    }
-
-    public function getNormalizingMap(): array
-    {
-        return [];
     }
 
 }
