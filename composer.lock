@@ -2162,6 +2162,52 @@
             "time": "2018-06-02T15:02:29+00:00"
         },
         {
+            "name": "kami/request-processor",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kamilabs/request-processor.git",
+                "reference": "16d1c6672e22b92d882c274c2ed87cc72b8cd141"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kamilabs/request-processor/zipball/16d1c6672e22b92d882c274c2ed87cc72b8cd141",
+                "reference": "16d1c6672e22b92d882c274c2ed87cc72b8cd141",
+                "shasum": ""
+            },
+            "require": {
+                "doctrine/common": "^2.8",
+                "php": "^7.1",
+                "symfony/http-foundation": "^3.4 || ^4.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^7.1"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Kami\\Component\\RequestProcessor\\": "./src/Kami/Component/RequestProcessor"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Iakov Mishchenko",
+                    "email": "iakov@kamilabs.com"
+                }
+            ],
+            "description": "Request processor component",
+            "time": "2018-06-01T10:38:23+00:00"
+        },
+        {
             "name": "khepin/yaml-fixtures-bundle",
             "version": "1.0.2",
             "target-dir": "Khepin/YamlFixturesBundle",
