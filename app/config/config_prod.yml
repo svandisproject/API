@@ -52,7 +52,7 @@ m6web_cassandra:
 
 # Kami IcoBench Configuration
 kami_ico_bench:
-    private_key: "%ico_bench_private_key%"
-    public_key: "%ico_bench_public_key%"
+    private_key: "%env(ICOBENCH_PRIVATE_KEY)%"
+    public_key: "%env(ICOBENCH_PUBLIC_KEY)%"
     guzzle_options:
         proxy: "%env(QUOTAGUARDSTATIC_URL)%"
