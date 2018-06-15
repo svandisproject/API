@@ -11,6 +11,7 @@ use Kami\Component\RequestProcessor\Step\AbstractStep;
 use Pusher\Pusher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class PersistPostStep extends AbstractStep
@@ -52,7 +53,7 @@ class PersistPostStep extends AbstractStep
             throw new BadRequestHttpException('Your request can not be stored', $exception);
         }
 
-        $this->pusher->trigger('news-feed', 'new-post', [
+        $result = $this->pusher->trigger('news-feed', 'new-post', [
             'message' => [
                 'title' => $entity->getTitle(),
                 'content' => $entity->getContent(),
@@ -61,6 +62,10 @@ class PersistPostStep extends AbstractStep
                 'tags' => $entity->getTags()
             ]
         ]);
+
+        if(!$result) {
+            throw new NotFoundHttpException(131);
+        }
 
         return new ArtifactCollection([
             new Artifact('response_data', $entity),
