@@ -40,22 +40,5 @@ class PostCreationListener
         if (!$entity instanceof Post) {
            return;
         }
-
-        try {
-            $result =$this->pusher->trigger('news-feed', 'new-post', [
-                'message' => [
-                    'title' => $entity->getTitle(),
-                    'content' => $entity->getContent(),
-                    'source' => $entity->getSource(),
-                    'publishedAt' => $entity->getPublishedAt()->getTimestamp(),
-                    'tags' => $entity->getTags()
-                ]
-            ]);
-            $this->logger->info($result);
-        } catch (PusherException $exception) {
-            $this->logger->error(
-                sprintf('Failed to send pusher notifications with exception: "%s"', $exception->getMessage())
-            );
-        }
     }
 }

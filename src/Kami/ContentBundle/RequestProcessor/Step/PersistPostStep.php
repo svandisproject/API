@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Kami\Component\RequestProcessor\Artifact;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
+use Pusher\Pusher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -24,10 +25,13 @@ class PersistPostStep extends AbstractStep
      */
     private $tokenStorage;
 
-    public function __construct(Registry $doctrine, TokenStorageInterface $tokenStorage)
+    private $pusher;
+
+    public function __construct(Registry $doctrine, TokenStorageInterface $tokenStorage, Pusher $pusher)
     {
         $this->doctrine = $doctrine;
         $this->tokenStorage = $tokenStorage;
+        $this->pusher = $pusher;
     }
 
     public function execute(Request $request) : ArtifactCollection
@@ -47,6 +51,16 @@ class PersistPostStep extends AbstractStep
         } catch (\Exception $exception) {
             throw new BadRequestHttpException('Your request can not be stored', $exception);
         }
+
+        $this->pusher->trigger('news-feed', 'new-post', [
+            'message' => [
+                'title' => $entity->getTitle(),
+                'content' => $entity->getContent(),
+                'source' => $entity->getSource(),
+                'publishedAt' => $entity->getPublishedAt()->getTimestamp(),
+                'tags' => $entity->getTags()
+            ]
+        ]);
 
         return new ArtifactCollection([
             new Artifact('response_data', $entity),
