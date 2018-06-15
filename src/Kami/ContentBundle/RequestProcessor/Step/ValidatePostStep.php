@@ -12,6 +12,7 @@ use Kami\ContentBundle\Entity\Post;
 use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints\Url;
@@ -63,8 +64,12 @@ class ValidatePostStep extends ValidateFormStep
 
     private function validatePost(Post $originalPost, Form $receivedPost)
     {
+        if ($originalPost->getCreatedBy() === $this->tokenStorage->getToken()->getUser()) {
+            throw new BadRequestHttpException('Post can\'t be validated by same user');
+        }
         if ($receivedPost->get('title')->isValid() &&
             $receivedPost->get('content')->isValid() &&
+            $receivedPost->get('source')->isValid() &&
             $receivedPost->get('published_at')->isValid()) {
 
             $titleMatch = $originalPost->getTitle() === $receivedPost->get('title')->getData();
@@ -76,7 +81,6 @@ class ValidatePostStep extends ValidateFormStep
 
                 return $originalPost;
             }
-
             return $this->updateStalePost($originalPost, $receivedPost);
         }
     }

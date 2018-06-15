@@ -6,7 +6,7 @@ parameters:
         - build_create_form
         - handle_request
         - validate_post
-        - persist
+        - persist_post
         - update_url_cache
         - build_serializer
         - serialize
@@ -19,6 +19,13 @@ services:
             - "@security.token_storage"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "validate_post" }
+    kami.request_processor.persist_post.step:
+        class: Kami\ContentBundle\RequestProcessor\Step\PersistPostStep
+        arguments:
+            - "@doctrine"
+            - "@security.token_storage"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "persist_post" }
 
     kami.request_processor.update_url_cache.step:
         class: Kami\ContentBundle\RequestProcessor\Step\UpdateUrlCacheStep
