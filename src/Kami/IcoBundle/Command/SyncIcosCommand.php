@@ -69,10 +69,10 @@ class SyncIcosCommand extends Command
 
         $totalPages =  $this->icoBenchClient->getIcos()['pages'];
 
-        for($i = 0; $i < $totalPages; $i++){
+        for($i = 0; $i < $totalPages; $i++) {
 
             $response = $this->icoBenchClient->getIcos('all', ['page'=> $i]);
-            foreach ($response['results'] as $result){
+            foreach ($response['results'] as $result) {
                 $remoteData = $this->icoBenchClient->getIco($result['id']);
 
                 $ico = $this->findOrCreateIco($result['id']);

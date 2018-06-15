@@ -2088,12 +2088,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/icobench-bundle.git",
-                "reference": "3d05084947134b0e64bae32d67ae03745d86935c"
+                "reference": "db3558edb357dd549eb0d95bb7b47f8f7806f809"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/icobench-bundle/zipball/3d05084947134b0e64bae32d67ae03745d86935c",
-                "reference": "3d05084947134b0e64bae32d67ae03745d86935c",
+                "url": "https://api.github.com/repos/kamilabs/icobench-bundle/zipball/db3558edb357dd549eb0d95bb7b47f8f7806f809",
+                "reference": "db3558edb357dd549eb0d95bb7b47f8f7806f809",
                 "shasum": ""
             },
             "require": {
@@ -2120,7 +2120,7 @@
                 }
             ],
             "description": "IcoBench API Client Bundle",
-            "time": "2018-06-11T12:53:34+00:00"
+            "time": "2018-06-15T09:31:19+00:00"
         },
         {
             "name": "kami/icobench-client",
@@ -2160,52 +2160,6 @@
             ],
             "description": "ICOBench API Client",
             "time": "2018-06-02T15:02:29+00:00"
-        },
-        {
-            "name": "kami/request-processor",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kamilabs/request-processor.git",
-                "reference": "16d1c6672e22b92d882c274c2ed87cc72b8cd141"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/request-processor/zipball/16d1c6672e22b92d882c274c2ed87cc72b8cd141",
-                "reference": "16d1c6672e22b92d882c274c2ed87cc72b8cd141",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/common": "^2.8",
-                "php": "^7.1",
-                "symfony/http-foundation": "^3.4 || ^4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Kami\\Component\\RequestProcessor\\": "./src/Kami/Component/RequestProcessor"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Iakov Mishchenko",
-                    "email": "iakov@kamilabs.com"
-                }
-            ],
-            "description": "Request processor component",
-            "time": "2018-06-01T10:38:23+00:00"
         },
         {
             "name": "khepin/yaml-fixtures-bundle",
