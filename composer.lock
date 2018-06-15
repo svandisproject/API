@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "74c3709eec1e84161f43e73105693641",
@@ -2080,7 +2080,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-            "time": "2018-05-31 23:17:13"
+            "time": "2018-05-31T23:17:13+00:00"
         },
         {
             "name": "kami/icobench-bundle",
@@ -2120,7 +2120,7 @@
                 }
             ],
             "description": "IcoBench API Client Bundle",
-            "time": "2018-06-11 12:53:34"
+            "time": "2018-06-11T12:53:34+00:00"
         },
         {
             "name": "kami/icobench-client",
@@ -2159,53 +2159,7 @@
                 }
             ],
             "description": "ICOBench API Client",
-            "time": "2018-06-02 15:02:29"
-        },
-        {
-            "name": "kami/request-processor",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/kamilabs/request-processor.git",
-                "reference": "16d1c6672e22b92d882c274c2ed87cc72b8cd141"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/request-processor/zipball/16d1c6672e22b92d882c274c2ed87cc72b8cd141",
-                "reference": "16d1c6672e22b92d882c274c2ed87cc72b8cd141",
-                "shasum": ""
-            },
-            "require": {
-                "doctrine/common": "^2.8",
-                "php": "^7.1",
-                "symfony/http-foundation": "^3.4 || ^4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^7.1"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Kami\\Component\\RequestProcessor\\": "./src/Kami/Component/RequestProcessor"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Iakov Mishchenko",
-                    "email": "iakov@kamilabs.com"
-                }
-            ],
-            "description": "Request processor component",
-            "time": "2018-06-01 10:38:23"
+            "time": "2018-06-02T15:02:29+00:00"
         },
         {
             "name": "khepin/yaml-fixtures-bundle",
@@ -4151,7 +4105,7 @@
                 "redis",
                 "symfony"
             ],
-            "time": "2018-05-09 08:25:09"
+            "time": "2018-05-09T08:25:09+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
