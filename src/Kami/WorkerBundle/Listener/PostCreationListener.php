@@ -42,7 +42,7 @@ class PostCreationListener
         }
 
         try {
-            $this->pusher->trigger('news-feed', 'new-post', [
+            $result =$this->pusher->trigger('news-feed', 'new-post', [
                 'message' => [
                     'title' => $entity->getTitle(),
                     'content' => $entity->getContent(),
@@ -51,6 +51,7 @@ class PostCreationListener
                     'tags' => $entity->getTags()
                 ]
             ]);
+            var_dump($result);
         } catch (PusherException $exception) {
             $this->logger->error(
                 sprintf('Failed to send pusher notifications with exception: "%s"', $exception->getMessage())
