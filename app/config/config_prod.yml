@@ -56,3 +56,14 @@ kami_ico_bench:
     public_key: "%env(ICOBENCH_PUBLIC_KEY)%"
     guzzle_options:
         proxy: "%env(QUOTAGUARDSTATIC_URL)%"
+
+lopi_pusher:
+    scheme: https
+    host: api-eu.pusher.com
+    port: 443
+    cluster: eu
+    timeout: 30
+    debug: true
+    app_id: 513696
+    key: 139ee335d6ffa4609ca9
+    secret: 4eb1eacb7beb23571c99
