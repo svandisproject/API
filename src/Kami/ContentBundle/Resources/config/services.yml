@@ -25,6 +25,7 @@ services:
             - "@doctrine"
             - "@security.token_storage"
             - "@lopi_pusher.pusher"
+            - "@logger"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "persist_post" }
 
