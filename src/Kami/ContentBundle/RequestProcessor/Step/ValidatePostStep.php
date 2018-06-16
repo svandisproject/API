@@ -12,6 +12,7 @@ use Kami\ContentBundle\Entity\Post;
 use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Constraints\Url;
@@ -37,7 +38,7 @@ class ValidatePostStep extends ValidateFormStep
     public function execute(Request $request): ArtifactCollection
     {
         if (!$this->tokenStorage->getToken()->getUser() instanceof Worker) {
-           return parent::execute($request);
+            return parent::execute($request);
         }
         /** @var Form $form */
         $form = $this->getArtifact('form');
@@ -47,7 +48,7 @@ class ValidatePostStep extends ValidateFormStep
             $originalPost = $this->doctrine->getRepository(Post::class)
                 ->findOneBy(['url' => $url]);
             if (!$originalPost) {
-               return parent::execute($request);
+                return parent::execute($request);
             }
 
 
@@ -63,22 +64,20 @@ class ValidatePostStep extends ValidateFormStep
 
     private function validatePost(Post $originalPost, Form $receivedPost)
     {
-        if ($receivedPost->get('title')->isValid() &&
-            $receivedPost->get('content')->isValid() &&
-            $receivedPost->get('published_at')->isValid()) {
+        if ($originalPost->getCreatedBy() === $this->tokenStorage->getToken()->getUser()
+            || $originalPost->getValidatedBy()->contains($this->tokenStorage->getToken()->getUser())) {
+            throw new BadRequestHttpException('Post can\'t be validated by same user');
+        }
 
-            $titleMatch = $originalPost->getTitle() === $receivedPost->get('title')->getData();
-            $contentMatch = $originalPost->getContent() === $receivedPost->get('content')->getData();
-            $publishedAtMatch = $originalPost->getPublishedAt() === $receivedPost->get('published_at')->getData();
-
-            if ($titleMatch && $contentMatch && $publishedAtMatch) {
+        if ($this->postFieldsAreValid($receivedPost)) {
+            if ($this->postAreEqual($originalPost, $receivedPost)) {
                 $originalPost->addValidatedBy($this->tokenStorage->getToken()->getUser());
-
                 return $originalPost;
             }
-
             return $this->updateStalePost($originalPost, $receivedPost);
         }
+
+        throw new BadRequestHttpException('Post is not valid');
     }
 
     private function updateStalePost(Post $originalPost, Form $receivedPost)
@@ -90,5 +89,22 @@ class ValidatePostStep extends ValidateFormStep
         $originalPost->setValidatedBy([]);
 
         return $originalPost;
+    }
+
+    private function postFieldsAreValid(Form $receivedPost) : bool
+    {
+        return $receivedPost->get('title')->isValid() &&
+            $receivedPost->get('content')->isValid() &&
+            $receivedPost->get('source')->isValid() &&
+            $receivedPost->get('published_at')->isValid();
+    }
+
+    private function postAreEqual(Post $originalPost, Form $receivedPost)
+    {
+        $titleMatch = $originalPost->getTitle() === $receivedPost->get('title')->getData();
+        $contentMatch = $originalPost->getContent() === $receivedPost->get('content')->getData();
+        $publishedAtMatch = $originalPost->getPublishedAt() === $receivedPost->get('published_at')->getData();
+
+        return $titleMatch && $contentMatch && $publishedAtMatch;
     }
 }

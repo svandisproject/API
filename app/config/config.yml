@@ -6,6 +6,7 @@ imports:
     - { resource: "@KamiContentBundle/Resources/config/services.yml" }
     - { resource: "@KamiWorkerBundle/Resources/config/services.yml" }
     - { resource: "@KamiIcoBundle/Resources/config/services.yml" }
+    - { resource: "@KamiStockBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -135,10 +136,24 @@ kami_ico_bench:
     public_key: "%ico_bench_public_key%"
     guzzle_options: ~
 
+
 # Snc Redis Configuration
 snc_redis:
     clients:
         default:
             type: predis
             alias: default
-            dsn: redis://localhost
+            dsn: "%redis_url%"
+            logging: false
+        cache:
+            type: predis
+            alias: cache
+            dsn: "%redis_url%"
+            logging: false
+
+# M6Web Cassandra Configuration
+m6web_cassandra:
+    clients:
+        default:
+            contact_endpoints:
+                - 127.0.0.1

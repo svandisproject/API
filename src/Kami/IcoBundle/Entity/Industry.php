@@ -35,10 +35,12 @@ class Industry
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="industries")
      */
     private $icos;
-
+    /**
+     * Constructor
+     */
     public function __construct()
     {
-        $this->icos= new ArrayCollection();
+        $this->icos = new ArrayCollection();
     }
 
     /**
@@ -60,7 +62,7 @@ class Industry
      */
     public function setTitle($title)
     {
-        $this->title= $title;
+        $this->title = $title;
 
         return $this;
     }
@@ -76,25 +78,38 @@ class Industry
     }
 
     /**
-     * Add ico
-     * @param Ico $ico
+     * Add ico.
+     *
+     * @param \Kami\IcoBundle\Entity\Ico $ico
+     *
      * @return Industry
      */
-    public function addIco(Ico $ico){
-
+    public function addIco(\Kami\IcoBundle\Entity\Ico $ico)
+    {
         $this->icos[] = $ico;
+
         return $this;
     }
 
     /**
-     * Remove ico
-     * @param Ico $ico
+     * Remove ico.
+     *
+     * @param \Kami\IcoBundle\Entity\Ico $ico
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeIco($ico)
+    public function removeIco(\Kami\IcoBundle\Entity\Ico $ico)
     {
         return $this->icos->removeElement($ico);
+    }
 
+    /**
+     * Get icos.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIcos()
+    {
+        return $this->icos;
     }
 }
