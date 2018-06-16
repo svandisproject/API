@@ -7,7 +7,7 @@ dependencies:
       - sudo apt-get update && sudo apt-get install -y cassandra
       - cd /tmp && git clone https://github.com/datastax/cpp-driver.git && cd cpp-driver && git checkout 76656844bd13be1dbccbdb69dad93c2e9514e21f `#Version 2.6.0` && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make && sudo make install
 
-  override:
+    override:
       - yes | pecl install cassandra
       - cd /home/scrutinizer/build/ && composer install --no-interaction
 filter:
