@@ -3,8 +3,6 @@
 
 namespace Kami\CassandraMigrationsBundle\Command;
 
-
-use CassandraMigrations\CassandraMigration1528718485;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
