@@ -2,6 +2,7 @@
 
 namespace Kami\IcoBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\AssetBundle\Entity\Asset;
@@ -9,593 +10,232 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
- * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IcoRepository")
+ * Ico
+ *
  * @ORM\Table(name="ico")
+ * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IcoRepository")
  * @UniqueEntity({"remoteId"})
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\AnonymousAccess()
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  */
 class Ico
 {
     /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
      * @ORM\Id
-     * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
      */
     private $id;
 
     /**
-     * @ORM\Column(name="rating", type="decimal")
+     * @ORM\Column(name="remote_id", type="integer", unique=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
-     */
-    private $rating;
-
-    /**
-     * @ORM\Column(name="rating_team", type="decimal", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     */
-    private $ratingTeam;
-
-    /**
-     * @ORM\Column(name="rating_profile", type="decimal", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     */
-    private $ratingProfile;
-    /**
-     * @ORM\Column(name="rating_vision", type="decimal", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     */
-    private $ratingVision;
-
-    /**
-     * @ORM\Column(name="rating_product", type="decimal", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     */
-    private $ratingProduct;
-
-    /**
-     * @ORM\Column(type="integer", unique=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $remoteId;
 
     /**
-     * @ORM\Column(name="ico_url", type="string", length=255, nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     */
-    private $icoUrl;
-
-    /**
-     * @ORM\Column(name="ico_tagline", type="string", length=255, nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     */
-    private $icoTagline;
-
-    /**
-     * @ORM\Column(name="ico_intro", type="text", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     */
-    private $icoIntro;
-
-    /**
-     * @ORM\Column(name="ico_about", type="text", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     */
-    private $icoAbout;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\TokenType", inversedBy="icos")
-     * @ORM\JoinColumn(name="token_type_id", referencedColumnName="id")
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     */
-    private $tokenType;
-
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     */
-    private $restrictedCountries;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Asset")
-     * @ORM\JoinTable(name="ico_asset",
-     *     joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="asset_id", referencedColumnName="id")})
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\Relation
-     */
-    private $acceptingAssets;
-
-    /**
+     * @var string
      *
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
-     * @ORM\JoinTable(name="ico_blockchain_advisors",
-     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
-     *      )
+     * @ORM\Column(name="title", type="string", length=255)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\Relation
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $blockchainAdvisors;
+    private $title;
 
     /**
-     *@ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
-     *@ORM\JoinTable(name="ico_industry_advisors",
-     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
-     *      )
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Asset")
+     * @ORM\Column(name="asset", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\Relation
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $industryAdvisors;
+    private $asset;
 
     /**
-     *@ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
-     *@ORM\JoinTable(name="ico_legal_partners",
-     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="person_id", referencedColumnName="id")}
-     *      )
+     * @ORM\Column(name="country", type="string", length=3, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\Relation
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $legalPartners;
+    private $country;
 
     /**
-     * @ORM\Column(name="ico_token", type="string", length=100)
+     * @ORM\Column(name="open_presale", type="datetime", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\Relation
-     */
-    private $icoToken;
-
-    /**
-     * @ORM\Column(name="ico_platform", type="string", length=100)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     */
-    private $platform;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="icos")
-     * @ORM\JoinTable(name="icos_industies")
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\Relation
-     */
-    private $industries;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="competitorsIcos")
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\Relation
-     */
-    private $competitorForIcos;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="competitorForIcos")
-     * @ORM\JoinTable(name="competitors",
-     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="competitor_ico_id", referencedColumnName="id")}
-     *      )
-     */
-    private $competitorsIcos;
-
-    /**
-     * @ORM\Column(type="string", name="ico_token_price", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     */
-    protected $icoTokenPrice;
-
-    /**
-     * @ORM\Column(type="string", name="hard_cap", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     */
-    private $hardCap;
-
-    /**
-     * @ORM\Column(type="string", name="min_cap", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     */
-    private $minCap;
-
-    /**
-     * @ORM\Column(type="string", name="raised")
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     */
-    private $raised;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Kyc")
-     * @ORM\JoinTable(name="kyc_icos",
-     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="kyc_id", referencedColumnName="id")}
-     *      )
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\Relation
-     */
-    private $kyc;
-
-    /**
-     * @ORM\Column(type="boolean", name="bonus", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     */
-    private $bonus;
-
-    /**
-     * @ORM\Column(type="datetime", name="open_presale", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $openPresale;
 
     /**
-     * @ORM\Column(type="integer", name="team_tokens", nullable=true)
+     * @ORM\Column(name="kyc", type="boolean", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $teamTokens;
+    private $kyc;
 
     /**
-     * @ORM\Column(type="boolean", name="smart_contract_audit", nullable=true)
+     * @var string|null
+     *
+     * @ORM\Column(name="hard_cap", type="string", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $smartContractAudit;
+    private $hardCap;
 
     /**
-     *@ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person")
-     *@ORM\JoinTable(name="ico_member",
-     *      joinColumns={@ORM\JoinColumn(name="ico_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="member_id", referencedColumnName="id")}
-     *      )
+     * @var int|null
+     *
+     * @ORM\Column(name="total_cap", type="integer", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\Relation
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $teamMembers;
+    private $totalCap;
 
     /**
-     * @ORM\Column(type="string")
+     * @var int|null
+     *
+     * @ORM\Column(name="raised", type="decimal", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $country;
+    private $raised;
 
-    public function __construct() {
-        $this->acceptingAssets = new ArrayCollection();
-        $this->blockchainAdvisors = new ArrayCollection();
-        $this->industryAdvisors = new ArrayCollection();
-        $this->legalPartners = new ArrayCollection();
-        $this->competitorForIcos = new ArrayCollection();
-        $this->competitorsIcos = new ArrayCollection();
-        $this->industries = new ArrayCollection();
-        $this->teamMembers = new ArrayCollection();
-        $this->kyc = new ArrayCollection();
+    /**
+     * @var string|null
+     *
+     * @ORM\Column(name="token_price", type="string", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $tokenPrice;
+
+    /**
+     * @var int|null
+     *
+     * @ORM\Column(name="for_sale", type="smallint", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $forSale;
+
+    /**
+     * @var DateTime|null
+     *
+     * @ORM\Column(name="token_sale_date", type="datetime", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $tokenSaleDate;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person", cascade={"persist"})
+     * @ORM\JoinTable(name="ico_team")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $team;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person", cascade={"persist"})
+     * @ORM\JoinTable(name="ico_advisors")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $advisors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico")
+     * @ORM\JoinTable(name="ico_partners")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $partners;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico")
+     * @ORM\JoinTable(name="ico_competitors")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $competitors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Industry", inversedBy="icos")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $industries;
+
+
+    /**
+     * @ORM\Column(type="array", name="restricted_countries")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $restrictedCountries;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->team = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->advisors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->partners = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->competitors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->industries = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
-     * Add blockchainAdvisor.
-     * @param Person $blockchainAdvisor
+     * Get id.
      *
-     * @return Ico
+     * @return int
      */
-    public function addBlockhainAdvisor(Person $blockchainAdvisor)
+    public function getId()
     {
-        $this->blockchainAdvisors[] = $blockchainAdvisor;
-        return $this;
-    }
-
-    /**
-     * Remove blockchainAdvisor
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeBlockchainAdvisor(Person $blockchainAdvisor)
-    {
-       return $this->blockchainAdvisors->removeElement($blockchainAdvisor);
-    }
-
-    /**
-     *
-     *  @return \Doctrine\Common\Collections\Collection
-     */
-    public function getBlockchainAdvisors()
-    {
-        return $this->blockchainAdvisors;
-    }
-
-    /**
-     * Add industryAdvisor.
-     * @param Person $industryAdvisor
-     *
-     * @return Ico
-     */
-    public function addIndustryAdvisor(Person $industryAdvisor)
-    {
-        $this->industryAdvisors[] = $industryAdvisor;
-        return $this;
-    }
-
-    /**
-     * Remove industryAdvisor
-     *
-     * @param Person $industryAdvisor
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeIndustryAdvisor(Person $industryAdvisor)
-    {
-        return $this->industryAdvisors->removeElement($industryAdvisor);
-    }
-
-    /**
-     *
-     *  @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIndustryAdvisor()
-    {
-        return $this->industryAdvisors;
-    }
-
-    /**
-     * Add legalPartner.
-     * @param Person $legalPartner
-     *
-     * @return Ico
-     */
-    public function addLegalPartner(Person $legalPartner)
-    {
-        $this->legalPartners[] = $legalPartner;
-        return $this;
-    }
-
-    /**
-     * Remove legalPartner
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeLegalPartner(Person $legalPartner)
-    {
-        return $this->legalPartners->removeElement($legalPartner);
-    }
-
-    /**
-     * Get legalPartners
-     *
-     *  @return \Doctrine\Common\Collections\Collection
-     */
-    public function getLegalPartners()
-    {
-        return $this->legalPartners;
-    }
-
-    /**
-     * Add teamMember.
-     * @param Person $teamMember
-     *
-     * @return Ico
-     */
-    public function addTeamMember(Person $teamMember)
-    {
-        if($this->teamMembers->contains($teamMember)){
-                return;
-        }
-        $this->teamMembers[] = $teamMember;
-        return $this;
-    }
-
-    /**
-     * Remove teamMember
-     *
-     * @param Person $teamMember
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeTeamMember(Person $teamMember)
-    {
-        return $this->teamMembers->removeElement($teamMember);
-    }
-
-    /**
-     * Add kyc.
-     * @param Kyc $kyc
-     *
-     * @return Ico
-     */
-    public function addKyc(Kyc $kyc)
-    {
-        if($this->kyc->contains($kyc)){
-            return;
-        }
-        $this->kyc[] = $kyc;
-        return $this;
-    }
-
-    /**
-     * Remove kyc
-     *
-     * @param Kyc $kyc
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeKyc(Kyc $kyc)
-    {
-        return $this->kyc->removeElement($kyc);
-    }
-
-    /**
-     * Get kyc
-     *
-     *  @return \Doctrine\Common\Collections\Collection
-     */
-    public function getKyc()
-    {
-        return $this->kyc;
-    }
-
-    /**
-     * Add acceptingAsset.
-     *
-     * @param Asset $asset
-     *
-     * @return Ico
-     */
-    public function addAcceptingAsset(Asset $asset)
-    {
-        $asset->addIco($this);
-        $this->acceptingAssets[] = $asset;
-        return $this;
-    }
-
-    /**
-     * Remove acceptingAsset.
-     *
-     * @param Asset $asset
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeAsset(Asset $asset)
-    {
-        return $this->acceptingAssets->removeElement($asset);
-    }
-
-    /**
-     * Get acceptingAssets.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAcceptingAssets()
-    {
-        return $this->acceptingAssets;
-    }
-
-    /**
-     * Set icoToken.
-     *
-     * @param string $token
-     *
-     * @return Ico
-     */
-    public function setIcoToken($token)
-    {
-        $this->icoToken = $token;
-
-        return $this;
-    }
-
-    /**
-     * Get icoToken.
-     *
-     * @return string
-     */
-    public function getIcoToken()
-    {
-        return $this->icoToken;
-    }
-
-    /**
-     * @param string $icoAbout
-     *
-     * @return Ico
-     */
-    public function setIcoAbout($icoAbout)
-    {
-        $this->icoAbout = $icoAbout;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIcoAbout()
-    {
-        return $this->icoAbout;
-    }
-
-    /**
-     * @param string $icoIntro
-     *
-     * @return Ico
-     */
-    public function setIcoIntro($icoIntro)
-    {
-        $this->icoIntro = $icoIntro;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIcoIntro()
-    {
-        return $this->icoIntro;
-    }
-
-    /**
-     * @param string $icoTagline
-     *
-     * @return Ico
-     */
-    public function setIcoTagline($icoTagline)
-    {
-        $this->icoTagline = $icoTagline;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIcoTagline()
-    {
-        return $this->icoTagline;
-    }
-
-    /**
-     * @param string $icoUrl
-     *
-     * @return Ico
-     */
-    public function setIcoUrl($icoUrl)
-    {
-        $this->icoUrl = $icoUrl;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getIcoUrl()
-    {
-        return $this->icoUrl;
-    }
-
-    /**
-     * Set platform.
-     *
-     * @param string $platform
-     *
-     * @return Ico
-     */
-    public function setPlatform($platform)
-    {
-        $this->platform = $platform;
-
-        return $this;
-    }
-
-    /**
-     * Get platform.
-     *
-     * @return string
-     */
-    public function getPlatform()
-    {
-        return $this->platform;
+        return $this->id;
     }
 
     /**
@@ -623,51 +263,59 @@ class Ico
     }
 
     /**
-     * Add industries.
+     * Set title.
      *
-     * @param Industry $industry
+     * @param string $title
      *
      * @return Ico
      */
-    public function addIndustry(Industry $industry)
+    public function setTitle($title)
     {
-        if($this->industries->contains($industry)){
-            return;
-        }
-        $this->industries[] = $industry;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get industries.
+     * Get title.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return string
      */
-    public function getIndustry()
+    public function getTitle()
     {
-        return $this->industries;
+        return $this->title;
     }
 
     /**
-     * Remove industry
+     * Set asset.
      *
-     * @param Industry $industry
+     * @param string|null $asset
      *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @return Ico
      */
-    public function removeIco($industry)
+    public function setAsset($asset = null)
     {
-        $industry->removeIco($this);
-        return $this->industries->removeElement($industry);
+        $this->asset = $asset;
 
+        return $this;
     }
 
-     /**
+    /**
+     * Get asset.
+     *
+     * @return string|null
+     */
+    public function getAsset()
+    {
+        return $this->asset;
+    }
+
+    /**
      * Set country.
+     *
      * @param string $country
+     *
      * @return Ico
-      *
      */
     public function setCountry($country)
     {
@@ -687,87 +335,15 @@ class Ico
     }
 
     /**
-     * Add restrictedCountry.
-     *
-     * @param string $restrictedCountry
-     */
-    public function addRestrictedCountry($restrictedCountry)
-    {
-        $this->restrictedCountries[] = $restrictedCountry;
-    }
-
-    /**
-     * Get restrictedCountries.
-     *
-     * @return array
-     */
-    public function getRestrictedCountry()
-    {
-        return $this->restrictedCountries;
-    }
-
-    /**
-     * Set smartContractAudit.
-     *
-     * @param $smartContractAudit
-     *
-     * @return Ico
-     */
-    public function setSmartContractAudit($smartContractAudit)
-    {
-        $this->smartContractAudit = $smartContractAudit;
-
-        return $this;
-    }
-
-    /**
-     * Get smartContractAudit.
-     *
-     * @return boolean
-     */
-    public function getSmartContractAudit()
-    {
-        return $this->smartContractAudit;
-    }
-
-    /**
-     * Set teamTokens.
-     *
-     * @param $teamTokens
-     *
-     * @return Ico
-     */
-    public function setTeamTokens($teamTokens)
-    {
-        $this->teamTokens = $teamTokens;
-
-        return $this;
-    }
-
-    /**
-     * Get teamTokens.
-     */
-    public function getTeamTokens()
-    {
-        return $this->teamTokens;
-    }
-
-    /**
      * Set openPresale.
      *
-     * @param $openPresale
+     * @param \DateTime|null $openPresale
      *
      * @return Ico
      */
-    public function setOpenPresale($openPresale)
+    public function setOpenPresale($openPresale = null)
     {
-        if (!$openPresale instanceof \DateTime) {
-            $this->$openPresale = ($openPresale != '0000-00-00 00:00:00') ?
-                \DateTime::createFromFormat('Y-m-d H:i:s', $openPresale) :
-                null;
-            return $this;
-        }
-        $this->$openPresale = $openPresale;
+        $this->openPresale = $openPresale;
 
         return $this;
     }
@@ -775,112 +351,45 @@ class Ico
     /**
      * Get openPresale.
      *
-     * @return boolean
+     * @return \DateTime|null
      */
     public function getOpenPresale()
     {
         return $this->openPresale;
     }
 
-
     /**
-     * Set bonus.
+     * Set kyc.
      *
-     * @param $bonus
+     * @param bool|null $kyc
      *
      * @return Ico
      */
-    public function setBonus($bonus)
+    public function setKyc($kyc = null)
     {
-        $this->bonus = $bonus;
-
-        return $this;
-    }
-
-    /*
-     * Get bonus.
-     */
-    public function getBonus()
-    {
-        return $this->bonus;
-    }
-
-
-    /**
-     * Set raised.
-     *
-     * @param $raised
-     *
-     * @return Ico
-     */
-    public function setRaised($raised)
-    {
-        $this->raised = $raised;
+        $this->kyc = $kyc;
 
         return $this;
     }
 
     /**
-     * Get raised.
-     */
-    public function getRaised()
-    {
-        return $this->raised;
-    }
-
-    /**
-     * Set minCap.
+     * Get kyc.
      *
-     * @param $minCap
-     *
-     * @return Ico
+     * @return bool|null
      */
-    public function setMinCap($minCap)
+    public function getKyc()
     {
-        $this->minCap = $minCap;
-
-        return $this;
-    }
-
-    /**
-     * Get minCap.
-     */
-    public function getMinCap()
-    {
-        return $this->minCap;
-    }
-
-    /**
-     * Set tokenType.
-     *
-     * @param TokenType $tokenType
-     *
-     * @return Ico
-     */
-    public function setTokenType(TokenType $tokenType)
-    {
-        $tokenType->addIco($this);
-        $this->tokenType = $tokenType;
-
-        return $this;
-    }
-
-    /**
-     * Get tokenType.
-     */
-    public function getTokenType()
-    {
-        return $this->tokenType;
+        return $this->kyc;
     }
 
     /**
      * Set hardCap.
      *
-     * @param $hardCap
+     * @param string|null $hardCap
      *
      * @return Ico
      */
-    public function setHardCap($hardCap)
+    public function setHardCap($hardCap = null)
     {
         $this->hardCap = $hardCap;
 
@@ -889,6 +398,8 @@ class Ico
 
     /**
      * Get hardCap.
+     *
+     * @return string|null
      */
     public function getHardCap()
     {
@@ -896,136 +407,377 @@ class Ico
     }
 
     /**
-     * Set icoTokenPrice.
+     * Set totalCap.
      *
-     * @param $icoTokenPrice
+     * @param int|null $totalCap
      *
      * @return Ico
      */
-    public function setIcoTokenPrice($icoTokenPrice)
+    public function setTotalCap($totalCap = null)
     {
-        $this->icoTokenPrice = $icoTokenPrice;
+        $this->totalCap = $totalCap;
 
         return $this;
     }
 
     /**
-     * Get icoTokenPrice.
+     * Get totalCap.
+     *
+     * @return int|null
      */
-    public function getIcoTokenPrice()
+    public function getTotalCap()
     {
-        return $this->icoTokenPrice;
+        return $this->totalCap;
     }
 
     /**
-     * Get id.
+     * Set raised.
      *
-     * @return int
+     * @param string|null $raised
+     *
+     * @return Ico
      */
-    public function getId()
+    public function setRaised($raised = null)
     {
-        return $this->id;
+        $this->raised = $raised;
+
+        return $this;
     }
 
     /**
-     * Get rating
+     * Get raised.
      *
-     * @return integer
+     * @return string|null
      */
-    public function getRating()
+    public function getRaised()
     {
-        return $this->rating;
+        return $this->raised;
     }
 
     /**
-     * Set rating
+     * Set tokenPrice.
      *
-     * @param integer $rating
+     * @param string|null $tokenPrice
+     *
+     * @return Ico
      */
-    public function setRating($rating)
+    public function setTokenPrice($tokenPrice = null)
     {
-        $this->rating = $rating;
+        $this->tokenPrice = $tokenPrice;
+
+        return $this;
     }
 
     /**
-     * Get ratingProduct
+     * Get tokenPrice.
      *
-     * @return integer
+     * @return string|null
      */
-    public function getRatingProduct()
+    public function getTokenPrice()
     {
-        return $this->ratingProduct;
+        return $this->tokenPrice;
     }
 
     /**
-     * Set ratingProduct
+     * Set forSale.
      *
-     * @param integer $ratingProduct
+     * @param int|null $forSale
+     *
+     * @return Ico
      */
-    public function setRatingProduct($ratingProduct)
+    public function setForSale($forSale = null)
     {
-        $this->ratingProduct = $ratingProduct;
+        $this->forSale = $forSale;
+
+        return $this;
     }
 
     /**
-     * Get ratingProfile
+     * Get forSale.
      *
-     * @return integer $ratingProfile
+     * @return int|null
      */
-    public function getRatingProfile()
+    public function getForSale()
     {
-        return $this->ratingProfile;
+        return $this->forSale;
     }
 
     /**
-     * Set ratingProfile
+     * Set tokenSaleDate.
      *
-     * @param integer $ratingProfile
+     * @param \DateTime|null $tokenSaleDate
+     *
+     * @return Ico
      */
-    public function setRatingProfile($ratingProfile)
+    public function setTokenSaleDate($tokenSaleDate = null)
     {
-        $this->ratingProfile = $ratingProfile;
+        $this->tokenSaleDate = $tokenSaleDate;
+
+        return $this;
     }
 
     /**
-     * Get ratingTeam
+     * Get tokenSaleDate.
      *
-     * @return integer $ratingTeam
+     * @return \DateTime|null
      */
-    public function getRatingTeam()
+    public function getTokenSaleDate()
     {
-        return $this->ratingTeam;
+        return $this->tokenSaleDate;
     }
 
     /**
-     * Set ratingTeam
+     * Set restrictedCountries.
      *
-     * @param integer $ratingTeam
+     * @param array $restrictedCountries
+     *
+     * @return Ico
      */
-    public function setRatingTeam($ratingTeam)
+    public function setRestrictedCountries($restrictedCountries)
     {
-        $this->ratingTeam = $ratingTeam;
+        $this->restrictedCountries = $restrictedCountries;
+
+        return $this;
     }
 
     /**
-     * Get ratingVision
+     * Get restrictedCountries.
      *
-     * @return integer $ratingVision
+     * @return array
      */
-    public function getRatingVision()
+    public function getRestrictedCountries()
     {
-        return $this->ratingVision;
+        return $this->restrictedCountries;
     }
 
     /**
-     * Set ratingVision
+     * Add team.
      *
-     * @param integer $ratingVision
+     * @param \Kami\IcoBundle\Entity\Person $team
+     *
+     * @return Ico
      */
-    public function setRatingVision($ratingVision)
+    public function addTeam(\Kami\IcoBundle\Entity\Person $team)
     {
-        $this->ratingVision = $ratingVision;
+        $this->team[] = $team;
+
+        return $this;
     }
 
+    /**
+     * Remove team.
+     *
+     * @param \Kami\IcoBundle\Entity\Person $team
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeTeam(\Kami\IcoBundle\Entity\Person $team)
+    {
+        return $this->team->removeElement($team);
+    }
+
+    /**
+     * Get team.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    /**
+     * Add advisor.
+     *
+     * @param \Kami\IcoBundle\Entity\Person $advisor
+     *
+     * @return Ico
+     */
+    public function addAdvisor(\Kami\IcoBundle\Entity\Person $advisor)
+    {
+        $this->advisors[] = $advisor;
+
+        return $this;
+    }
+
+    /**
+     * Remove advisor.
+     *
+     * @param \Kami\IcoBundle\Entity\Person $advisor
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeAdvisor(\Kami\IcoBundle\Entity\Person $advisor)
+    {
+        return $this->advisors->removeElement($advisor);
+    }
+
+    /**
+     * Get advisors.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdvisors()
+    {
+        return $this->advisors;
+    }
+
+    /**
+     * Add partner.
+     *
+     * @param \Kami\IcoBundle\Entity\Ico $partner
+     *
+     * @return Ico
+     */
+    public function addPartner(\Kami\IcoBundle\Entity\Ico $partner)
+    {
+        $this->partners[] = $partner;
+
+        return $this;
+    }
+
+    /**
+     * Remove partner.
+     *
+     * @param \Kami\IcoBundle\Entity\Ico $partner
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removePartner(\Kami\IcoBundle\Entity\Ico $partner)
+    {
+        return $this->partners->removeElement($partner);
+    }
+
+    /**
+     * Get partners.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPartners()
+    {
+        return $this->partners;
+    }
+
+    /**
+     * Add competitor.
+     *
+     * @param \Kami\IcoBundle\Entity\Ico $competitor
+     *
+     * @return Ico
+     */
+    public function addCompetitor(\Kami\IcoBundle\Entity\Ico $competitor)
+    {
+        $this->competitors[] = $competitor;
+
+        return $this;
+    }
+
+    /**
+     * Remove competitor.
+     *
+     * @param \Kami\IcoBundle\Entity\Ico $competitor
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeCompetitor(\Kami\IcoBundle\Entity\Ico $competitor)
+    {
+        return $this->competitors->removeElement($competitor);
+    }
+
+    /**
+     * Get competitors.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompetitors()
+    {
+        return $this->competitors;
+    }
+
+    /**
+     * Add industry.
+     *
+     * @param \Kami\IcoBundle\Entity\Industry $industry
+     *
+     * @return Ico
+     */
+    public function addIndustry(\Kami\IcoBundle\Entity\Industry $industry)
+    {
+        $this->industries[] = $industry;
+
+        return $this;
+    }
+
+    /**
+     * Remove industry.
+     *
+     * @param \Kami\IcoBundle\Entity\Industry $industry
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeIndustry(\Kami\IcoBundle\Entity\Industry $industry)
+    {
+        return $this->industries->removeElement($industry);
+    }
+
+    /**
+     * Get industries.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getIndustries()
+    {
+        return $this->industries;
+    }
+
+    /**
+     * @param mixed $team
+     * @return Ico
+     */
+    public function setTeam($team)
+    {
+        $this->team = $team;
+        return $this;
+    }
+
+    /**
+     * @param mixed $advisors
+     * @return Ico
+     */
+    public function setAdvisors($advisors)
+    {
+        $this->advisors = $advisors;
+        return $this;
+    }
+
+    /**
+     * @param mixed $partners
+     * @return Ico
+     */
+    public function setPartners($partners)
+    {
+        $this->partners = $partners;
+        return $this;
+    }
+
+    /**
+     * @param mixed $competitors
+     * @return Ico
+     */
+    public function setCompetitors($competitors)
+    {
+        $this->competitors = $competitors;
+        return $this;
+    }
+
+    /**
+     * @param mixed $industries
+     * @return Ico
+     */
+    public function setIndustries($industries)
+    {
+        $this->industries = $industries;
+        return $this;
+    }
 
 }

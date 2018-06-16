@@ -48,7 +48,7 @@ class PostControllerTest extends ApiTestCase
     public function testFilterLoggedInAsUser()
     {
         $this->logInAsUser();
-        $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]'));
+        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]');
         $response = $this->request('GET', '/api/post/filter?filter=' . $filter);
         $this->assertEquals('Test post 1', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
@@ -130,7 +130,7 @@ class PostControllerTest extends ApiTestCase
         $this->assertEquals('http://test.com', $this->getResponseData($response)['url']);
     }
 
-    public function testCreatePostByWorkerWithNotUniqueUrl()
+    public function testCreatePostByWorkerWithNotUniqueUrlBySameWorker()
     {
         $response = $this->requestByWorker('POST', '/api/post', [
             'post' => [
@@ -141,7 +141,45 @@ class PostControllerTest extends ApiTestCase
                 'published_at' => '01-01-2000 00:00:00'
             ]
         ]);
+        $this->assertJsonResponse($response, 400);
+    }
+
+    public function testCreatePostByWorkerWithNotUniqueUrlByAnotherWorker()
+    {
+        $response = $this->requestByWorker('POST', '/api/post', [
+            'post' => [
+                'title' => 'Updated title',
+                'url' => 'http://test.com',
+                'content' => 'test',
+                'source' => 'test',
+                'published_at' => '01-01-2000 00:00:00'
+            ]
+        ], [], [], null, true, true);
         $this->assertJsonResponse($response, 200);
+    }
+
+    public function testCreatePostByWorkerWithNotUniqueUrlByAnotherWorkerTwice()
+    {
+        $response = $this->requestByWorker('POST', '/api/post', [
+            'post' => [
+                'title' => 'Updated title',
+                'url' => 'http://test.com/1',
+                'content' => 'test',
+                'source' => 'test',
+                'published_at' => '01-01-2000 00:00:00'
+            ]
+        ], [], [], null, true, true);
+
+        $response = $this->requestByWorker('POST', '/api/post', [
+            'post' => [
+                'title' => 'Updated title',
+                'url' => 'http://test.com/1',
+                'content' => 'test',
+                'source' => 'test',
+                'published_at' => '01-01-2000 00:00:00'
+            ]
+        ], [], [], null, true, true);
+        $this->assertJsonResponse($response, 400);
     }
 
     public function testEditPostLoggedInAsAnonymous()

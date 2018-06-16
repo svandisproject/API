@@ -3,4 +3,5 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 php $DIR/console doctrine:migrations:migrate -n
+php $DIR/console kami:cassandra-migrations:migrate -n
 php $DIR/console cache:clear --env=prod

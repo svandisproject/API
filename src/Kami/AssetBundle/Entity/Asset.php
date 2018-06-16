@@ -12,10 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Asset
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Kami\AssetBundle\Repository\AssetRepository")
  * @ORM\Table(name="asset")
- * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
- * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+ * @UniqueEntity({"ticker"})
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
@@ -27,200 +28,64 @@ class Asset
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     *
      */
-    private $name;
+    private $title;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="symbol", type="string", length=255)
+     * @ORM\Column(name="ticker", type="string", length=10)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $symbol;
+    private $ticker;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="rank", type="integer", nullable=true)
-     * @Assert\NotBlank()
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @ORM\Column(name="price", type="integer")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $rank;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="circulating_supply", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $circulatingSupply;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="total_supply", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $totalSupply;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="max_supply", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $maxSupply;
-
-    /**
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Price", mappedBy="asset", cascade={"persist"})
-     * @ORM\JoinColumn(name="price_id", referencedColumnName="id")
      */
     private $price;
 
     /**
-     * @var float
-     *
-     * @ORM\Column(name="volume_usd_day", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+     * @ORM\ManyToOne(targetEntity="Kami\AssetBundle\Entity\TokenType", inversedBy="assets")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $volumeUsdDay;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="market_cap_usd", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $marketCapUsd;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="percent_change_hour_usd", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $percentChangeHourUsd;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="percent_change_day_usd", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $percentChangeDayUsd;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="percent_change_week_usd", type="float", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $percentChangeWeekUsd;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="last_updated", type="datetime")
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $lastUpdated;
-
-
+    private $tokenType;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="assets")
-     * @ORM\JoinTable(name="assets_posts")
+     * @ORM\JoinTable(name="asset_posts")
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $posts;
 
-    public function __construct() {
-        $this->posts = new ArrayCollection();
-    }
-
     /**
-     * Add post.
-     *
-     * @param Post $post
-     *
-     * @return Asset
+     * Constructor
      */
-    public function addPost(Post $post)
+    public function __construct()
     {
-        $this->posts[] = $post;
-
-        return $this;
-    }
-
-    /**
-     * Remove post.
-     *
-     * @param Post $post
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removePost(Post $post)
-    {
-        return $this->posts->removeElement($post);
-    }
-
-    /**
-     * Get posts.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPosts()
-    {
-        return $this->posts;
+        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -234,79 +99,57 @@ class Asset
     }
 
     /**
-     * Set name.
+     * Set title.
      *
-     * @param string $name
-     *
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Set symbol.
-     *
-     * @param string $symbol
+     * @param string $title
      *
      * @return Asset
      */
-    public function setSymbol($symbol)
+    public function setTitle($title)
     {
-        $this->symbol = $symbol;
+        $this->title = $title;
 
         return $this;
     }
 
     /**
-     * Get symbol.
+     * Get title.
      *
      * @return string
      */
-    public function getSymbol()
+    public function getTitle()
     {
-        return $this->symbol;
+        return $this->title;
     }
 
     /**
-     * Set rank.
+     * Set ticker.
      *
-     * @param integer $rank
+     * @param string $ticker
      *
      * @return Asset
      */
-    public function setRank($rank)
+    public function setTicker($ticker)
     {
-        $this->rank = $rank;
+        $this->ticker = $ticker;
 
         return $this;
     }
 
     /**
-     * Get rank.
+     * Get ticker.
      *
-     * @return integer
+     * @return string
      */
-    public function getRank()
+    public function getTicker()
     {
-        return $this->rank;
+        return $this->ticker;
     }
 
     /**
-     * set price.
+     * Set price.
      *
-     * @param $price
+     * @param int $price
      *
      * @return Asset
      */
@@ -320,7 +163,7 @@ class Asset
     /**
      * Get price.
      *
-     * @return Price
+     * @return int
      */
     public function getPrice()
     {
@@ -328,217 +171,62 @@ class Asset
     }
 
     /**
-     * Set volumeUsdDay.
+     * Set tokenType.
      *
-     * @param float $volumeUsdDay
+     * @param \Kami\AssetBundle\Entity\TokenType|null $tokenType
      *
      * @return Asset
      */
-    public function setVolumeUsdDay($volumeUsdDay)
+    public function setTokenType(\Kami\AssetBundle\Entity\TokenType $tokenType = null)
     {
-        $this->volumeUsdDay = $volumeUsdDay;
+        $this->tokenType = $tokenType;
 
         return $this;
     }
 
     /**
-     * Get volumeUsdDay.
+     * Get tokenType.
      *
-     * @return float
+     * @return \Kami\AssetBundle\Entity\TokenType|null
      */
-    public function getVolumeUsdDay()
+    public function getTokenType()
     {
-        return $this->volumeUsdDay;
+        return $this->tokenType;
     }
 
     /**
-     * Set marketCapUsd.
+     * Add post.
      *
-     * @param float $marketCapUsd
+     * @param \Kami\ContentBundle\Entity\Post $post
      *
      * @return Asset
      */
-    public function setMarketCapUsd($marketCapUsd)
+    public function addPost(\Kami\ContentBundle\Entity\Post $post)
     {
-        $this->marketCapUsd = $marketCapUsd;
+        $this->posts[] = $post;
 
         return $this;
     }
 
     /**
-     * Get marketCapUsd.
+     * Remove post.
      *
-     * @return float
+     * @param \Kami\ContentBundle\Entity\Post $post
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function getMarketCapUsd()
+    public function removePost(\Kami\ContentBundle\Entity\Post $post)
     {
-        return $this->marketCapUsd;
+        return $this->posts->removeElement($post);
     }
 
     /**
-     * Set circulatingSupply.
+     * Get posts.
      *
-     * @param float $circulatingSupply
-     *
-     * @return Asset
+     * @return \Doctrine\Common\Collections\Collection
      */
-    public function setCirculatingSupply($circulatingSupply)
+    public function getPosts()
     {
-        $this->circulatingSupply = $circulatingSupply;
-
-        return $this;
-    }
-
-    /**
-     * Get circulatingSupply.
-     *
-     * @return float
-     */
-    public function getCirculatingSupply()
-    {
-        return $this->circulatingSupply;
-    }
-
-    /**
-     * Set totalSupply.
-     *
-     * @param float $totalSupply
-     *
-     * @return Asset
-     */
-    public function setTotalSupply($totalSupply)
-    {
-        $this->totalSupply = $totalSupply;
-
-        return $this;
-    }
-
-    /**
-     * Get totalSupply.
-     *
-     * @return float
-     */
-    public function getTotalSupply()
-    {
-        return $this->totalSupply;
-    }
-
-    /**
-     * Set maxSupply.
-     *
-     * @param float $maxSupply
-     *
-     * @return Asset
-     */
-    public function setMaxSupply($maxSupply)
-    {
-        $this->maxSupply = $maxSupply;
-
-        return $this;
-    }
-
-    /**
-     * Get maxSupply.
-     *
-     * @return float
-     */
-    public function getMaxSupply()
-    {
-        return $this->maxSupply;
-    }
-
-    /**
-     * Set percentChangeHourUsd.
-     *
-     * @param float $percentChangeHourUsd
-     *
-     * @return Asset
-     */
-    public function setPercentChangeHourUsd($percentChangeHourUsd)
-    {
-        $this->percentChangeHourUsd = $percentChangeHourUsd;
-
-        return $this;
-    }
-
-    /**
-     * Get percentChangeHourUsd.
-     *
-     * @return float
-     */
-    public function getPercentChangeHourUsd()
-    {
-        return $this->percentChangeHourUsd;
-    }
-
-    /**
-     * Set percentChangeDayUsd.
-     *
-     * @param float $percentChangeDayUsd
-     *
-     * @return Asset
-     */
-    public function setPercentChangeDayUsd($percentChangeDayUsd)
-    {
-        $this->percentChangeDayUsd = $percentChangeDayUsd;
-
-        return $this;
-    }
-
-    /**
-     * Get percentChangeDayUsd.
-     *
-     * @return float
-     */
-    public function getPercentChangeDayUsd()
-    {
-        return $this->percentChangeDayUsd;
-    }
-
-    /**
-     * Set percentChangeWeekUsd.
-     *
-     * @param float $percentChangeWeekUsd
-     *
-     * @return Asset
-     */
-    public function setPercentChangeWeekUsd($percentChangeWeekUsd)
-    {
-        $this->percentChangeWeekUsd = $percentChangeWeekUsd;
-
-        return $this;
-    }
-
-    /**
-     * Get percentChangeWeekUsd.
-     *
-     * @return float
-     */
-    public function getPercentChangeWeekUsd()
-    {
-        return $this->percentChangeWeekUsd;
-    }
-
-    /**
-     * Set lastUpdated.
-     *
-     * @param int $lastUpdated
-     *
-     * @return Asset
-     */
-    public function setLastUpdated($lastUpdated)
-    {
-        $this->lastUpdated = (new \DateTime())->setTimestamp($lastUpdated);
-        return $this;
-    }
-
-    /**
-     * Get lastUpdated.
-     *
-     * @return \DateTime
-     */
-    public function getLastUpdated()
-    {
-        return $this->lastUpdated;
+        return $this->posts;
     }
 }

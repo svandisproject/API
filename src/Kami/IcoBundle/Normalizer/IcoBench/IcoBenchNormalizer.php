@@ -2,6 +2,7 @@
 
 
 namespace Kami\IcoBundle\Normalizer\IcoBench;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Kami\IcoBundle\Normalizer\AbstractIcoNormalizer;
@@ -23,52 +24,64 @@ class IcoBenchNormalizer extends AbstractIcoNormalizer
         parent::__construct($manager);
     }
 
-    public function getPropertyMap() : array
+    public function getNormalizingMap() : array
     {
         return [
-            'rating' => 'rating',
-            'icoToken' => 'finance.token',
-            'ratingTeam' => 'ratingTeam',
-            'ratingProfile' => 'ratingProfile',
-            'ratingVision' => 'ratingVision',
-            'ratingProduct' => 'ratingProduct',
-            'remoteId' => 'id',
-            'country' => 'country',
-            'icoUrl' => 'url',
-            'icoTagline' => 'tagline',
-            'icoIntro' => 'intro',
-            'icoAbout' => 'about',
-            'platform' => 'finance.platform',
-            'icoTokenPrice' => 'finance.price',
-            'hardCap' => 'finance.hardcap',
-            'minCap' => 'finance.softcap',
-            'raised' => 'finance.raised',
-            'bonus' => 'finance.bonus',
-            'openPresale' => 'dates.preIcoStart',
-
-            'teamMember' => [
-                'property' => 'team',
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\TeamMembersNormalizer'
+            'remoteId' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
+                'property' => 'id'
             ],
-
-            'tokenType' => [
-                'property' => 'finance.tokentype',
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\TokenTypeNormalizer'
+            'title' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
+                'property' => 'name'
             ],
-
-            'kyc' => [
-                'property' => 'kyc',
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\KycNormalizer',
-                'method' => 'addKyc'
+            'asset' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\AssetNormalizer',
+                 'property' => 'finance.token'
             ],
-            'industries' => [
-                'property'=>'categories',
-                'normalizer'=>'Kami\IcoBundle\Normalizer\IcoBench\IndustryNormalizer',
-                'method' => 'addIndustry'
+            'country' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\CountryNormalizer',
+                'property' => 'country'
             ],
             'restrictedCountries' => [
-                'property'=>'restrictions',
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\RestrictedCountriesNormalizer'
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\RestrictedCountriesNormalizer',
+                'property' => 'restrictions'
+            ],
+            'openPresale' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\DateTimeNormalizer',
+                'property' => 'dates.preIcoStart'
+            ],
+            'kyc' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\KycNormalizer',
+                'property' => 'kyc'
+            ],
+            'hardCap' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
+                'property' => 'finance.hardcap'
+            ],
+            'raised' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
+                'property' => 'finance.raised'
+            ],
+            'tokenPrice' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
+                'property' => 'finance.price'
+            ],
+            'tokenSaleDate' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\DateTimeNormalizer',
+                'property' => 'dates.icoStart'
+            ],
+            'team' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\TeamNormalizer',
+                'property' => 'team'
+            ],
+            'advisors' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\AdvisorsNormalizer',
+                'property' => 'ratings'
+            ],
+            'industries' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\IndustryNormalizer',
+                'property' => 'categories'
             ]
         ];
     }

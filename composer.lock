@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f08bfd92e1d07b993cca310367ec91e2",
+    "content-hash": "3ae65bbe5f8980f5231f89fc48932a01",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -49,6 +49,128 @@
                 "transliterator"
             ],
             "time": "2017-04-04T11:38:05+00:00"
+        },
+        {
+            "name": "brightnucleus/config",
+            "version": "v0.4.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brightnucleus/config.git",
+                "reference": "ff50a5eaa0bb2865b84d347e230520e49af68ea1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brightnucleus/config/zipball/ff50a5eaa0bb2865b84d347e230520e49af68ea1",
+                "reference": "ff50a5eaa0bb2865b84d347e230520e49af68ea1",
+                "shasum": ""
+            },
+            "require": {
+                "brightnucleus/exceptions": ">=0.2",
+                "symfony/options-resolver": ">=2.8"
+            },
+            "require-dev": {
+                "malukenho/docheader": "^0.1.5",
+                "mikey179/vfsstream": "^1.6",
+                "phpunit/phpunit": "^4.0|^5.0",
+                "squizlabs/php_codesniffer": "^2.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BrightNucleus\\Config\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alain Schlesser",
+                    "email": "alain.schlesser@gmail.com"
+                }
+            ],
+            "description": "Minimal, reusable Config component.",
+            "time": "2017-02-16T00:44:34+00:00"
+        },
+        {
+            "name": "brightnucleus/country-codes",
+            "version": "v0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brightnucleus/country-codes.git",
+                "reference": "022850891c7fe082d33b0b637e9250f6e1258e72"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brightnucleus/country-codes/zipball/022850891c7fe082d33b0b637e9250f6e1258e72",
+                "reference": "022850891c7fe082d33b0b637e9250f6e1258e72",
+                "shasum": ""
+            },
+            "require": {
+                "brightnucleus/config": ">=0.2",
+                "brightnucleus/exceptions": ">=0.3.0",
+                "composer-plugin-api": "^1",
+                "php": ">=5.4"
+            },
+            "type": "composer-plugin",
+            "extra": {
+                "class": "BrightNucleus\\CountryCodes\\CountryPlugin"
+            },
+            "autoload": {
+                "psr-4": {
+                    "BrightNucleus\\CountryCodes\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alain Schlesser",
+                    "email": "alain.schlesser@gmail.com"
+                }
+            ],
+            "description": "Automatically updated country data containing ISO codes and English country names, powered by free MaxMind data.",
+            "time": "2018-02-02T13:26:37+00:00"
+        },
+        {
+            "name": "brightnucleus/exceptions",
+            "version": "v0.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/brightnucleus/exceptions.git",
+                "reference": "7eb528cd2cb71b045ced235c7b1b933d8cfe36a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/brightnucleus/exceptions/zipball/7eb528cd2cb71b045ced235c7b1b933d8cfe36a8",
+                "reference": "7eb528cd2cb71b045ced235c7b1b933d8cfe36a8",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4",
+                "squizlabs/php_codesniffer": "~2.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BrightNucleus\\Exception\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alain Schlesser",
+                    "email": "alain.schlesser@gmail.com"
+                }
+            ],
+            "description": "Exceptions shared across Bright Nucleus components.",
+            "time": "2017-04-11T06:19:00+00:00"
         },
         {
             "name": "composer/ca-bundle",
@@ -105,6 +227,59 @@
                 "tls"
             ],
             "time": "2018-03-29T19:57:20+00:00"
+        },
+        {
+            "name": "datastax/php-driver",
+            "version": "v1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/datastax/php-driver.git",
+                "reference": "1333d835130e07f0b517fc431d4b1aa45eed27a5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/datastax/php-driver/zipball/1333d835130e07f0b517fc431d4b1aa45eed27a5",
+                "reference": "1333d835130e07f0b517fc431d4b1aa45eed27a5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-cassandra": "^1.0.0",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "behat/behat": "~3.0.6",
+                "phpunit/php-code-coverage": "~2.0",
+                "phpunit/php-token-stream": "~1.3",
+                "phpunit/phpunit": "~4.8",
+                "symfony/process": "~2.1"
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Bulat Shakirzyanov",
+                    "email": "bulat.shakirzyanov@datastax.com",
+                    "homepage": "http://avalanche123.com"
+                },
+                {
+                    "name": "Michael Penick",
+                    "email": "michael.penick@datastax.com",
+                    "homepage": "https://github.com/mpenick"
+                }
+            ],
+            "description": "DataStax PHP Driver for Apache Cassandra",
+            "homepage": "http://datastax.github.io/php-driver/",
+            "keywords": [
+                "cassandra",
+                "database",
+                "datastax",
+                "driver",
+                "nosql"
+            ],
+            "time": "2017-08-11T19:29:38+00:00"
         },
         {
             "name": "doctrine/annotations",
@@ -1969,16 +2144,16 @@
         },
         {
             "name": "kami/api-core-bundle",
-            "version": "dev-external-request-processor",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/api-core-bundle.git",
-                "reference": "831ce53bb39728a8704990ddeed6773a1420db06"
+                "reference": "f0f25e203ac0a89cf114c436ccd8eb3447329130"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/831ce53bb39728a8704990ddeed6773a1420db06",
-                "reference": "831ce53bb39728a8704990ddeed6773a1420db06",
+                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/f0f25e203ac0a89cf114c436ccd8eb3447329130",
+                "reference": "f0f25e203ac0a89cf114c436ccd8eb3447329130",
                 "shasum": ""
             },
             "require": {
@@ -2027,7 +2202,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-            "time": "2018-05-31T23:17:13+00:00"
+            "time": "2018-06-15T10:07:42+00:00"
         },
         {
             "name": "kami/icobench-bundle",
@@ -2035,12 +2210,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/icobench-bundle.git",
-                "reference": "c41c64b42749ccb5d0863ce4a95054fb5dba09e3"
+                "reference": "db3558edb357dd549eb0d95bb7b47f8f7806f809"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/icobench-bundle/zipball/c41c64b42749ccb5d0863ce4a95054fb5dba09e3",
-                "reference": "c41c64b42749ccb5d0863ce4a95054fb5dba09e3",
+                "url": "https://api.github.com/repos/kamilabs/icobench-bundle/zipball/db3558edb357dd549eb0d95bb7b47f8f7806f809",
+                "reference": "db3558edb357dd549eb0d95bb7b47f8f7806f809",
                 "shasum": ""
             },
             "require": {
@@ -2067,7 +2242,7 @@
                 }
             ],
             "description": "IcoBench API Client Bundle",
-            "time": "2018-06-02T15:10:27+00:00"
+            "time": "2018-06-15T09:31:19+00:00"
         },
         {
             "name": "kami/icobench-client",
@@ -2506,6 +2681,58 @@
                 "symfony"
             ],
             "time": "2018-03-06T12:23:17+00:00"
+        },
+        {
+            "name": "m6web/cassandra-bundle",
+            "version": "v2.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/M6Web/CassandraBundle.git",
+                "reference": "0be35814abfdb570716d5f3273ab9cb0f4bac019"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/M6Web/CassandraBundle/zipball/0be35814abfdb570716d5f3273ab9cb0f4bac019",
+                "reference": "0be35814abfdb570716d5f3273ab9cb0f4bac019",
+                "shasum": ""
+            },
+            "require": {
+                "ext-cassandra": "^1.3.0",
+                "php": ">=5.6"
+            },
+            "require-dev": {
+                "atoum/atoum": "^2.8||^3.0",
+                "datastax/php-driver": "dev-master",
+                "m6web/coke": "~1.2",
+                "m6web/symfony2-coding-standard": "~2.0",
+                "symfony/config": "~2.3",
+                "symfony/dependency-injection": "~2.3",
+                "symfony/event-dispatcher": "~2.3",
+                "symfony/yaml": "~2.3"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "M6Web\\Bundle\\CassandraBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "M6Web",
+                    "email": "opensource@m6web.fr",
+                    "homepage": "http://tech.m6web.fr/"
+                }
+            ],
+            "description": "Symfony2 bundle on top of datastax/php-driver",
+            "keywords": [
+                "bundle",
+                "cassandra"
+            ],
+            "time": "2018-05-31T13:09:09+00:00"
         },
         {
             "name": "monolog/monolog",
@@ -5327,16 +5554,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v2.12.0",
+            "version": "v2.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/FriendsOfPHP/PHP-CS-Fixer.git",
-                "reference": "a53f39a72cf0baa03909fae779a4de6d3772c74f"
+                "reference": "beef6cbe6dec7205edcd143842a49f9a691859a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/a53f39a72cf0baa03909fae779a4de6d3772c74f",
-                "reference": "a53f39a72cf0baa03909fae779a4de6d3772c74f",
+                "url": "https://api.github.com/repos/FriendsOfPHP/PHP-CS-Fixer/zipball/beef6cbe6dec7205edcd143842a49f9a691859a6",
+                "reference": "beef6cbe6dec7205edcd143842a49f9a691859a6",
                 "shasum": ""
             },
             "require": {
@@ -5367,10 +5594,10 @@
                 "mikey179/vfsstream": "^1.6",
                 "php-coveralls/php-coveralls": "^2.1",
                 "php-cs-fixer/accessible-object": "^1.0",
-                "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.0",
-                "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.0",
+                "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.0.1",
+                "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.0.1",
                 "phpunit/phpunit": "^5.7.27 || ^6.5.8 || ^7.1",
-                "phpunitgoodpractices/traits": "^1.4",
+                "phpunitgoodpractices/traits": "^1.5",
                 "symfony/phpunit-bridge": "^4.0"
             },
             "suggest": {
@@ -5383,11 +5610,6 @@
                 "php-cs-fixer"
             ],
             "type": "application",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.12-dev"
-                }
-            },
             "autoload": {
                 "psr-4": {
                     "PhpCsFixer\\": "src/"
@@ -5419,7 +5641,7 @@
                 }
             ],
             "description": "A tool to automatically fix PHP code style",
-            "time": "2018-06-02T17:33:35+00:00"
+            "time": "2018-06-10T08:26:56+00:00"
         },
         {
             "name": "php-cs-fixer/diff",
@@ -5658,7 +5880,8 @@
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": "~7.1"
+        "php": "7.1.*",
+        "ext-cassandra": "*"
     },
     "platform-dev": []
 }

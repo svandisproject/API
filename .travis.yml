@@ -1,35 +1,32 @@
 # Project language
 language: php
-
-# Allows use container-based infrastructure
-sudo: false
-
-# Cache composer packages so "composer install" is faster
-cache:
-  directories:
-    - $HOME/.composer/cache/files
-
-# Matrix to test in every php version
-matrix:
-  # Fast finish allows to set the build as "finished" even if the "allow_failures" matrix elements are not finished yet.
-  fast_finish: true
-  include:
-    - php: 7.1
+php:
+  - 7.1
 
 # Define an environment variable
 env:
-  - SYMFONY_VERSION="3.4.*" SYMFONY_ENV=test
+  - SYMFONY_ENV=test
 
 # Update composer
 before-install:
   - composer self-update
 
+
 services:
   - redis-server
+  - cassandra
 
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
+  - sudo apt-get install -y g++ make cmake libuv-dev libssl-dev libgmp-dev openssl libpcre3-dev python-setuptools python-dev build-essential
+  - echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+  - curl https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+  - sudo apt-get update
+  - sudo apt-get install -y cassandra
+  - cd /tmp && git clone https://github.com/datastax/cpp-driver.git && cd cpp-driver && git checkout 3fe834b8829734d3949527078b07bc4a0f1245cb && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make && sudo make install
+  - yes | pecl install cassandra
+  - cd "$TRAVIS_BUILD_DIR"
   - composer install
   - mkdir var/jwt
   - bin/generate-token

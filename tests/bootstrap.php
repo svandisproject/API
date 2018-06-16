@@ -29,6 +29,12 @@ if (isset($_ENV['BOOTSTRAP_REFRESH_DATABASE_ENV'])) {
     ));
 
     echo "Database refreshed\n\n";
+
+    exec(sprintf(
+        'php "%s/../bin/console" kami:cassandra-migrations:migrate --env=%s',
+        __DIR__,
+        $_ENV['BOOTSTRAP_REFRESH_DATABASE_ENV']
+    ));
 }
 
 
