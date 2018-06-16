@@ -12,7 +12,7 @@ final class Version20180616092943 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
-        $this->addSql('TRUNCATE TABLE `post`');
+        $this->addSql('TRUNCATE TABLE post CASCADE');
     }
 
     public function down(Schema $schema) : void
