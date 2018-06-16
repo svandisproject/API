@@ -69,8 +69,8 @@ class PersistPostStep extends AbstractStep
                     'title' => $entity->getTitle(),
                     'content' => $entity->getContent(),
                     'source' => $entity->getSource(),
-                    'publishedAt' => $entity->getPublishedAt()->getTimestamp(),
-                    'tags' => $entity->getTags()
+                    'published_at' => $entity->getPublishedAt()->getTimestamp(),
+                    'tags' => $entity->getTags()->toArray()
                 ]
             ]);
         } catch (PusherException $exception) {
