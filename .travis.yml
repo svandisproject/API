@@ -19,13 +19,13 @@ services:
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
-  - sudo apt-add-repository ppa:linuxjedi/ppa -y
+  - sudo apt-get install -y g++ make cmake libuv-dev libssl-dev libgmp-dev openssl libpcre3-dev python-setuptools python-dev build-essential
+  - echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+  - curl https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
   - sudo apt-get update
-  - sudo apt-get install -y libssl-dev
-  - cd /tmp && wget https://github.com/libuv/libuv/archive/v1.11.0.tar.gz && tar -xvzf v1.11.0.tar.gz && cd libuv-1.11.0 && sh autogen.sh && ./configure && sudo make && sudo make install && sudo ldconfig
-  - cd /tmp && git clone https://github.com/datastax/php-driver.git && cd php-driver && git checkout master && git submodule update --init
-  - cd ext && ./install.sh && cd "$TRAVIS_BUILD_DIR"
-  - echo "extension=cassandra.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
+  - sudo apt-get install -y cassandra
+  - cd /tmp && git clone https://github.com/datastax/cpp-driver.git && cd cpp-driver && git checkout 3fe834b8829734d3949527078b07bc4a0f1245cb && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make && sudo make install
+  - yes | pecl install cassandra
   - composer install
   - mkdir var/jwt
   - bin/generate-token

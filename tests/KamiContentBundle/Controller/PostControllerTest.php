@@ -163,7 +163,17 @@ class PostControllerTest extends ApiTestCase
         $response = $this->requestByWorker('POST', '/api/post', [
             'post' => [
                 'title' => 'Updated title',
-                'url' => 'http://test.com',
+                'url' => 'http://test.com/1',
+                'content' => 'test',
+                'source' => 'test',
+                'published_at' => '01-01-2000 00:00:00'
+            ]
+        ], [], [], null, true, true);
+
+        $response = $this->requestByWorker('POST', '/api/post', [
+            'post' => [
+                'title' => 'Updated title',
+                'url' => 'http://test.com/1',
                 'content' => 'test',
                 'source' => 'test',
                 'published_at' => '01-01-2000 00:00:00'
