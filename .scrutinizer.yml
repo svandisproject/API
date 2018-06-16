@@ -158,7 +158,7 @@ build:
           - curl https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
           - sudo apt-get update
           - sudo apt-get install -y cassandra
-          - cd /tmp && git clone https://github.com/datastax/cpp-driver.git && cd cpp-driver && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make && sudo make install
+#          - cd /tmp && git clone https://github.com/datastax/cpp-driver.git && cd cpp-driver && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make && sudo make install
 
 
         override:
