@@ -32,5 +32,6 @@ class MigrateCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $this->migrationHelper->migrate();
+        $output->writeln('Cassandra successfully migrated');
     }
 }

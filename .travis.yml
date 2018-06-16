@@ -9,13 +9,6 @@ env:
 
 # Update composer
 before-install:
-  - sudo apt-add-repository ppa:linuxjedi/ppa -y
-  - sudo apt-get update
-  - sudo apt-get install -y libssl-dev
-  - cd /tmp && wget https://github.com/libuv/libuv/archive/v1.11.0.tar.gz && tar -xvzf v1.11.0.tar.gz && cd libuv-1.11.0 && sh autogen.sh && ./configure && sudo make && sudo make install && sudo ldconfig
-  - cd /tmp && git clone https://github.com/datastax/php-driver.git && cd php-driver && git checkout master && git submodule update --init
-  - cd ext && ./install.sh && cd "$TRAVIS_BUILD_DIR"
-  - echo "extension=cassandra.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - composer self-update
 
 
@@ -26,6 +19,13 @@ services:
 # Install composer dependencies,
 # Create database, schema and fixtures
 install:
+  - sudo apt-add-repository ppa:linuxjedi/ppa -y
+  - sudo apt-get update
+  - sudo apt-get install -y libssl-dev
+  - cd /tmp && wget https://github.com/libuv/libuv/archive/v1.11.0.tar.gz && tar -xvzf v1.11.0.tar.gz && cd libuv-1.11.0 && sh autogen.sh && ./configure && sudo make && sudo make install && sudo ldconfig
+  - cd /tmp && git clone https://github.com/datastax/php-driver.git && cd php-driver && git checkout master && git submodule update --init
+  - cd ext && ./install.sh && cd "$TRAVIS_BUILD_DIR"
+  - echo "extension=cassandra.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
   - composer install
   - mkdir var/jwt
   - bin/generate-token

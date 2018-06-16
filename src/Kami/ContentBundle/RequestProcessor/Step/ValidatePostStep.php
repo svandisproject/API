@@ -64,7 +64,8 @@ class ValidatePostStep extends ValidateFormStep
 
     private function validatePost(Post $originalPost, Form $receivedPost)
     {
-        if ($originalPost->getCreatedBy() === $this->tokenStorage->getToken()->getUser()) {
+        if ($originalPost->getCreatedBy() === $this->tokenStorage->getToken()->getUser()
+            && !$originalPost->getValidatedBy()->contains($this->tokenStorage->getToken()->getUser())) {
             throw new BadRequestHttpException('Post can\'t be validated by same user');
         }
         if ($receivedPost->get('title')->isValid() &&

@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Kami\Component\RequestProcessor\Artifact;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
+use Kami\WorkerBundle\Entity\Worker;
 use Psr\Log\LoggerInterface;
 use Pusher\Pusher;
 use Pusher\PusherException;
@@ -54,7 +55,7 @@ class PersistPostStep extends AbstractStep
         }
 
         try {
-            if (null === $entity->getId()) {
+            if (null === $entity->getId() && $this->tokenStorage->getToken()->getUser() instanceof Worker) {
                $entity->setCreatedBy($this->tokenStorage->getToken()->getUser());
             }
             $this->doctrine->getManager()->persist($entity);

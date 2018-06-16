@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
- *
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class Asset
 {
@@ -29,8 +29,6 @@ class Asset
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $id;
 
@@ -42,7 +40,6 @@ class Asset
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      *
      */
     private $title;
@@ -55,7 +52,6 @@ class Asset
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $ticker;
 
