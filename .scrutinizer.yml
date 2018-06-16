@@ -154,9 +154,6 @@ build:
     dependencies:
         before:
           - sudo apt-get install -y g++ make cmake libuv-dev libssl-dev libgmp-dev openssl libpcre3-dev python-setuptools python-dev build-essential
-          - sudo add-apt-repository ppa:webupd8team/java
-          - sudo apt-get update
-          - sudo apt-get install oracle-java8-set-default
           - echo "deb http://www.apache.org/dist/cassandra/debian 22x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
           - echo "deb-src http://www.apache.org/dist/cassandra/debian 22x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
           - gpg --keyserver pgp.mit.edu --recv-keys F758CE318D77295D
