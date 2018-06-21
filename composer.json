@@ -31,6 +31,7 @@
         "doctrine/orm": "^2.5",
         "friendsofsymfony/user-bundle": "^2.0",
         "incenteev/composer-parameter-handler": "^2.0",
+        "jaggedsoft/php-binance-api": "@dev",
         "jms/serializer-bundle": "^2.3",
         "kami/api-core-bundle": "dev-master",
         "kami/icobench-bundle": "dev-master",
