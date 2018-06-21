@@ -32,6 +32,7 @@
         "friendsofsymfony/user-bundle": "^2.0",
         "gesdinet/jwt-refresh-token-bundle": "^0.4.0",
         "incenteev/composer-parameter-handler": "^2.0",
+        "jaggedsoft/php-binance-api": "@dev",
         "jms/serializer-bundle": "^2.3",
         "kami/api-core-bundle": "dev-master",
         "kami/icobench-bundle": "dev-master",
