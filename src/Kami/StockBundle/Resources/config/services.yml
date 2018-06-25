@@ -1,7 +1,4 @@
 services:
-    kami_stock.binance:
-        class: Kami\StockBundle\Binance\BinanceSync
-        arguments:
-            - "@doctrine.orm.entity_manager"
-            - "@m6web_cassandra.client.default"
-        public: true
+    kami_stock.watcher:
+            class: Kami\StockBundle\Watcher\Watcher
+            public: true
