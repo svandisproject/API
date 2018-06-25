@@ -8,7 +8,7 @@ use Cassandra\BatchStatement;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client;
-use Symfony\Component\Validator\Constraints\Uuid;
+use Cassandra\Uuid;
 
 class BinanceSync
 {
@@ -37,29 +37,27 @@ class BinanceSync
     {
         $api = new API();
         $ticker = $api->prices();
-
+        $points = [];
         foreach ($ticker as $pair => $price) {
             $points[] = $this->getUsdPrice($ticker, $pair, $price);
         }
 
         $cassandra = $this->client;
-        $prepared = $cassandra->prepare("INSERT INTO svandis_asset_prices.asset_price(id, update_time, ticker, price) VALUES(?, ?, ?, ?)");
+        $prepared = $cassandra->prepare(
+            'INSERT INTO svandis_asset_prices.asset_price (id, ticker, price, time) 
+              VALUES (?, ?, ?, toTimeStamp(toDate(now())));'
+        );
         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
         foreach ($points as $point){
             $this->findOrCreateAsset($point);
             $batch->add($prepared, [
-                'id' => new Uuid(),
-                'updated_time' => new \DateTime(),
-                'asset' => $point['asset'],
-                'price' => $point['price']
+                'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
+                'ticker' => $point['asset'],
+                'price' =>  new \Cassandra\Float($point['price'])
             ]);
         }
 
         $cassandra->execute($batch);
-
-
-
-        dump($cassandra);die;
     }
 
     private function getUsdPrice($ticker, $pair, $price)
@@ -70,16 +68,16 @@ class BinanceSync
             if (strpos($pair, $currency) >= 1) {
                 $asset = strstr ($pair, $currency, true);
                 if ($currency == 'USDT') {
-                    $cource = $price;
+                    $rate = $price;
                 } else {
-                    $cource = $ticker[$currency . 'USDT'] * $price;
+                    $rate = $ticker[$currency . 'USDT'] * $price;
                 }
             }
         }
 
         return [
             'asset' => $asset,
-            'price' => $cource
+            'price' => $rate
         ];
     }
 
