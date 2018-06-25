@@ -89,6 +89,7 @@ class BinanceSync
             $asset->setPrice($point['price']);
             $asset->setTicker($point['asset']);
             $this->entityManager->persist($asset);
+            $this->entityManager->flush();
         }
         return $asset;
     }
