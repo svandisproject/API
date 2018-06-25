@@ -35,8 +35,7 @@ class Asset
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -56,7 +55,7 @@ class Asset
     private $ticker;
 
     /**
-     * @ORM\Column(name="price", type="integer")
+     * @ORM\Column(name="price", type="decimal", precision=25, scale=15)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
