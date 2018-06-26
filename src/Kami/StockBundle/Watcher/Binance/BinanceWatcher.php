@@ -5,13 +5,15 @@ namespace Kami\StockBundle\Watcher\Binance;
 
 use Binance\API;
 use Cassandra\BatchStatement;
+use DateTime;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
-use Kami\StockBundle\Watcher\StockWatcherInterface;
+use Kami\StockBundle\Model\Point;
+use Kami\StockBundle\Watcher\ExchangeWatcherInterface;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client;
 use Cassandra\Uuid;
 
-class BinanceWatcher implements StockWatcherInterface
+class BinanceWatcher implements ExchangeWatcherInterface
 {
     /**
      * @var EntityManager
@@ -37,12 +39,19 @@ class BinanceWatcher implements StockWatcherInterface
     /**
      * @return void
      */
-    public function getAssetPrices()
+    public function updateAssetPrices()
     {
         $api = new API();
+
         $ticker = $api->prices();
-        $points = $this->getUsdPrices($ticker);
-        $this->storeCassandra($points);
+
+        $tickersArray = $this->getUsdPrices($ticker);
+        foreach ($tickersArray as $tickerData) {
+            $point = $this->createNewPoint($tickerData);
+
+            $this->persistPoint($point);
+        }
+
     }
 
     private function getUsdPrices($ticker)
@@ -69,7 +78,7 @@ class BinanceWatcher implements StockWatcherInterface
         return $points;
     }
 
-    private function storeCassandra($points)
+    private function persistPoint(Point $point)
     {
         $cassandra = $this->client;
         $prepared = $cassandra->prepare(
@@ -77,34 +86,45 @@ class BinanceWatcher implements StockWatcherInterface
               VALUES (?, ?, ?, toTimeStamp(toDate(now())));'
         );
         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
-        foreach ($points as $point){
-            $this->findOrCreateAsset($point);
-            $batch->add($prepared, [
-                'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
-                'ticker' => $point['asset'],
-                'price' =>  new \Cassandra\Float($point['price'])
-            ]);
-        }
+        $pointDbValues = $point->toDatabaseValues();
+
+        $batch->add($prepared, [
+            'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
+            'ticker' => $pointDbValues['asset'],
+            'price' =>  new \Cassandra\Float($pointDbValues['price'])
+        ]);
 
         $cassandra->execute($batch);
     }
 
-    public function findOrCreateAsset($point)
+    /**
+     * @param array $tickerData
+     * @return Asset|null|object
+     */
+    public function findOrCreateAsset($tickerData)
     {
-        if (!$asset = $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $point['asset']])) {
+        if (!$asset = $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $tickerData['asset']])) {
             $asset = new Asset();
         }
-        $asset->setPrice($point['price']);
-        $asset->setTicker($point['asset']);
+        $asset->setPrice($tickerData['price']);
+        $asset->setTicker($tickerData['asset']);
         $this->entityManager->persist($asset);
         $this->entityManager->flush();
 
         return $asset;
     }
 
-
-    public function tick(): array
+    /**
+     * @param array
+     *
+     * @return Point
+     */
+    public function createNewPoint($tickerData) :Point
     {
-        // TODO: Implement tick() method.
+        $asset = $this->findOrCreateAsset($tickerData);
+        $point = new Point($asset, new DateTime(), $tickerData['price']);
+
+        return $point;
     }
+
 }
