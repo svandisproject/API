@@ -19,6 +19,11 @@ class SyncAssetsCommand extends Command
 
     private $emergency = false;
 
+    public function __construct(){
+
+        parent::__construct();
+    }
+
     public function configure()
     {
         $this->setName('svandis:assets:sync');
@@ -27,7 +32,7 @@ class SyncAssetsCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         while (!$this->emergency) {
-
+            $this->getApplication()->getKernel()->getContainer()->get('kami_stock.binance')->execute();
 
             sleep(1);
         }

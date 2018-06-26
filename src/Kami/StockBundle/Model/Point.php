@@ -11,7 +11,7 @@ class Point implements StorableInterface
     /**
      * @var \DateTime
      */
-    private $time;
+    private $updateTime;
 
     /**
      * @var Asset
@@ -23,9 +23,9 @@ class Point implements StorableInterface
      */
     private $price;
 
-    public function __construct(Asset $asset, \DateTime $time, $price)
+    public function __construct(Asset $asset, \DateTime $updateTime, $price)
     {
-        $this->time = $time;
+        $this->updateTime = $updateTime;
         $this->asset = $asset;
         $this->price = $price;
     }
@@ -33,9 +33,9 @@ class Point implements StorableInterface
     /**
      * @return \DateTime
      */
-    public function getTime(): \DateTime
+    public function getUpdateTime(): \DateTime
     {
-        return $this->time;
+        return $this->updateTime;
     }
 
     /**
