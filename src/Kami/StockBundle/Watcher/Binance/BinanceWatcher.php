@@ -7,11 +7,13 @@ use Binance\API;
 use Cassandra\BatchStatement;
 use DateTime;
 use Doctrine\ORM\EntityManager;
+use function in_array;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\Model\Point;
 use Kami\StockBundle\Watcher\ExchangeWatcherInterface;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client;
 use Cassandra\Uuid;
+use const true;
 
 class BinanceWatcher implements ExchangeWatcherInterface
 {
@@ -25,6 +27,10 @@ class BinanceWatcher implements ExchangeWatcherInterface
      */
     protected $client;
 
+    /**
+     * @var array
+     */
+    private $convertableTickers = ['USDT', 'BTC', 'ETH', 'BNB'];
     /**
      *
      * @param Client $client
@@ -60,9 +66,7 @@ class BinanceWatcher implements ExchangeWatcherInterface
 
         foreach ($ticker as $pair => $price) {
 
-            $tickerPair = ['USDT', 'BTC', 'ETH', 'BNB'];
-
-            foreach ($tickerPair as $currency) {
+            foreach ($this->convertableTickers as $currency) {
                 if (strpos($pair, $currency) >= 1) {
                     $asset = strstr($pair, $currency, true);
 
@@ -106,6 +110,7 @@ class BinanceWatcher implements ExchangeWatcherInterface
         if (!$asset = $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $tickerData['asset']])) {
             $asset = new Asset();
         }
+        if(in_array($tickerData['asset'], $this->convertableTickers)) $asset->setConvertable(true);
         $asset->setPrice($tickerData['price']);
         $asset->setTicker($tickerData['asset']);
         $this->entityManager->persist($asset);
