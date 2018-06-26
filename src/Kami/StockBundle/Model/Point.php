@@ -33,7 +33,7 @@ class Point implements StorableInterface
     /**
      * @return \DateTime
      */
-    public function getUpdateTime(): \DateTime
+    public function getTime(): \DateTime
     {
         return $this->time;
     }
