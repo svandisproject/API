@@ -80,6 +80,14 @@ class Asset
     private $posts;
 
     /**
+     * @ORM\Column(name="convertable", type="boolean")
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $convertable = false;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -227,5 +235,21 @@ class Asset
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getConvertable()
+    {
+        return $this->convertable;
+    }
+
+    /**
+     * @param boolean $convertable
+     */
+    public function setConvertable($convertable)
+    {
+        $this->convertable = $convertable;
     }
 }

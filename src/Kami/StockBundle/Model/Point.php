@@ -33,7 +33,7 @@ class Point implements StorableInterface
     /**
      * @return \DateTime
      */
-    public function getTime(): \DateTime
+    public function getUpdateTime(): \DateTime
     {
         return $this->time;
     }
@@ -57,7 +57,7 @@ class Point implements StorableInterface
     public function toDatabaseValues(): array
     {
         return [
-            'time'  => $this->updateTime->format(\DateTime::W3C),
+            'time'  => $this->time->format(\DateTime::W3C),
             'asset' => $this->asset->getTicker(),
             'price' => $this->price
         ];
