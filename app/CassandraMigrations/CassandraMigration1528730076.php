@@ -11,7 +11,7 @@ class CassandraMigration1528730076 extends AbstractMigration
     {
         $statement = $client->prepare(
             'CREATE TABLE IF NOT EXISTS svandis_asset_prices.asset_price 
-                 (id UUID PRIMARY KEY, update_time timestamp, ticker varchar, price int)'
+                 (id UUID PRIMARY KEY, time timestamp, ticker varchar, price int)'
         );
         $client->execute($statement);
     }
