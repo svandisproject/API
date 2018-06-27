@@ -4,6 +4,9 @@ namespace Kami\WorkerBundle\Controller;
 
 use Kami\Util\TokenGenerator;
 use Kami\WorkerBundle\Entity\Worker;
+use Longman\TelegramBot\Exception\TelegramException;
+use Longman\TelegramBot\Telegram;
+use Monolog\Logger;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -13,6 +16,44 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 class WorkerController extends Controller
 {
+    /**
+     * @Route("/t/get", methods={"GET"})
+     */
+    public function tAction()
+    {
+        $logger = $this->get('logger');
+        $logger->info('I just got the logger');die;
+        $bot_api_key  = '420303509:AAGlpRSe_K_DslbJrKs4whV9r3uOM8d11eU';
+        $bot_username = 'TestRomanBot';
+        $hook_url = 'https://e3048a33.ngrok.io/t/hook';
+
+        try {
+            $telegram = new Telegram($bot_api_key, $bot_username);
+            $result = $telegram->setWebhook($hook_url, ['certificate' => $this->container->getParameter('kernel.root_dir')]);
+        } catch (TelegramException $e) {
+             $e->getMessage();
+        }
+
+        return new JsonResponse([
+            'result' => $result->getDescription()
+        ]);
+    }
+
+    /**
+     * @Route("/t/hook", methods={"GET"})
+     */
+    public function hookAction(Request $request)
+    {
+        $bot_api_key  = '420303509:AAGlpRSe_K_DslbJrKs4whV9r3uOM8d11eU';
+        $bot_username = 'TestRomanBot';
+        try {
+            $telegram = new Telegram($bot_api_key, $bot_username);
+            $telegram->handle();
+        } catch (TelegramException $e) {
+            // echo $e->getMessage();
+        }
+    }
+
     /**
      * @Route("/worker/register", methods={"POST"}, name="worker.register")
      */
