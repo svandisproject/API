@@ -3,29 +3,41 @@
 
 namespace Kami\StockBundle\Watcher;
 
-use Doctrine\ORM\EntityManager;
 use Kami\StockBundle\Watcher\Binance\BinanceWatcher;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexWatcher;
-use M6Web\Bundle\CassandraBundle\Cassandra\Client;
 
 class Watcher implements StockWatcherInterface
 {
-    public function execute(Client $client, EntityManager $entityManager)
-    {
-        $binanceWatcher = new BinanceWatcher($client, $entityManager);
-        $binanceWatcher->updateAssetPrices();
+    /**
+     * @var BinanceWatcher
+     */
+    public $binanceWatcher;
 
-        $bitfinexWatcher = new BitfinexWatcher($client, $entityManager);
-        $bitfinexWatcher->updateAssetPrices();
+    /**
+     * @var BitfinexWatcher
+     */
+    public $bitfinexWatcher;
+
+    /**
+     * Watcher constructor.
+     * @param BinanceWatcher $binanceWatcher
+     * @param BitfinexWatcher $bitfinexWatcher
+     */
+    public function __construct(BinanceWatcher $binanceWatcher, BitfinexWatcher $bitfinexWatcher)
+    {
+        $this->binanceWatcher = $binanceWatcher;
+        $this->bitfinexWatcher = $bitfinexWatcher;
     }
 
     /**
      * Returns graph points to store
-     *
-     * @return array<Point>
+     * @throws \Exception
+     * @throws \Cassandra\Exception
      */
-    public function tick() : array
+    public function tick()
     {
+        $this->binanceWatcher->updateAssetPrices();
 
+        $this->bitfinexWatcher->updateAssetPrices();
     }
 }

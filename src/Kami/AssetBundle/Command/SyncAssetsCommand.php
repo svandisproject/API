@@ -37,10 +37,8 @@ class SyncAssetsCommand extends Command
      */
     private $emergency = false;
 
-    public function __construct(Client $client, EntityManager $entityManager, Watcher $watcher){
+    public function __construct(Watcher $watcher){
 
-        $this->cassandra = $client;
-        $this->doctrine = $entityManager;
         $this->stockWatcher = $watcher;
 
         parent::__construct();
@@ -61,7 +59,7 @@ class SyncAssetsCommand extends Command
     {
         while (!$this->emergency) {
 
-            $this->stockWatcher->execute($this->cassandra, $this->doctrine);
+            $this->stockWatcher->tick();
 
             sleep(1);
         }

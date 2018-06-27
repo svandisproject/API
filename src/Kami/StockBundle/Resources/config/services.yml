@@ -1,4 +1,18 @@
 services:
     kami_stock.watcher:
             class: Kami\StockBundle\Watcher\Watcher
+            arguments:
+              - '@kami_stock.binance.watcher'
+              - '@kami_stock.bitfinex.watcher'
             public: true
+
+    kami_stock.binance.watcher:
+            class: Kami\StockBundle\Watcher\Binance\BinanceWatcher
+            arguments:
+              - '@m6web_cassandra.client.default'
+              - '@doctrine.orm.entity_manager'
+    kami_stock.bitfinex.watcher:
+            class: Kami\StockBundle\Watcher\Bitfinex\BitfinexWatcher
+            arguments:
+              - '@m6web_cassandra.client.default'
+              - '@doctrine.orm.entity_manager'
