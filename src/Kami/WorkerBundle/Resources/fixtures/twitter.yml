@@ -1,0 +1,302 @@
+model: Kami\WorkerBundle\Entity\WebFeed
+fixtures:
+    aantonop:
+        title: aantonop
+        url: https://twitter.com/aantonop
+        linkSelector: .time a
+        timeInterval: 60000
+    DerinCag:
+        title: DerinCag
+        url: https://twitter.com/DerinCag
+        linkSelector: .time a
+        timeInterval: 60000
+    brockpierce:
+        title: brockpierce
+        url: https://twitter.com/brockpierce
+        linkSelector: .time a
+        timeInterval: 60000
+    niccary:
+        title: niccary
+        url: https://twitter.com/niccary
+        linkSelector: .time a
+        timeInterval: 60000
+    SusanneChishti:
+        title: SusanneChishti
+        url: https://twitter.com/SusanneChishti
+        linkSelector: .time a
+        timeInterval: 60000
+    TimDraper:
+        title: TimDraper
+        url: https://twitter.com/TimDraper
+        linkSelector: .time a
+        timeInterval: 60000
+    rogerkver:
+        title: rogerkver
+        url: https://twitter.com/rogerkver
+        linkSelector: .time a
+        timeInterval: 60000
+    josephzhou:
+        title: josephzhou
+        url: https://twitter.com/josephzhou
+        linkSelector: .time a
+        timeInterval: 60000
+    VitalikButerin:
+        title: VitalikButerin
+        url: https://twitter.com/VitalikButerin
+        linkSelector: .time a
+        timeInterval: 60000
+    ethereumjoseph:
+        title: ethereumjoseph
+        url: https://twitter.com/ethereumjoseph
+        linkSelector: .time a
+        timeInterval: 60000
+    nickszabo4:
+        title: nickszabo4
+        url: https://twitter.com/nickszabo4
+        linkSelector: .time a
+        timeInterval: 60000
+    NeerajKA:
+        title: NeerajKA
+        url: https://twitter.com/NeerajKA
+        linkSelector: .time a
+        timeInterval: 60000
+    NickSzabo4:
+        title: NickSzabo4
+        url: https://twitter.com/NickSzabo4
+        linkSelector: .time a
+        timeInterval: 60000
+    gavinandresen:
+        title: gavinandresen
+        url: https://twitter.com/gavinandresen
+        linkSelector: .time a
+        timeInterval: 60000
+    IOHK_Charles:
+        title: IOHK_Charles
+        url: https://twitter.com/IOHK_Charles
+        linkSelector: .time a
+        timeInterval: 60000
+    brian_armstrong:
+        title: brian_armstrong
+        url: https://twitter.com/brian_armstrong
+        linkSelector: .time a
+        timeInterval: 60000
+    SatoshiLite:
+        title: SatoshiLite
+        url: https://twitter.com/SatoshiLite
+        linkSelector: .time a
+        timeInterval: 60000
+    TuurDemeester:
+        title: TuurDemeester
+        url: https://twitter.com/TuurDemeester
+        linkSelector: .time a
+        timeInterval: 60000
+    jgarzik:
+        title: jgarzik
+        url: https://twitter.com/jgarzik
+        linkSelector: .time a
+        timeInterval: 60000
+    erikvoorhees:
+        title: erikvoorhees
+        url: https://twitter.com/erikvoorhees
+        linkSelector: .time a
+        timeInterval: 60000
+    barrysilbert:
+        title: barrysilbert
+        url: https://twitter.com/barrysilbert
+        linkSelector: .time a
+        timeInterval: 60000
+    JihanWu:
+        title: JihanWu
+        url: https://twitter.com/JihanWu
+        linkSelector: .time a
+        timeInterval: 60000
+    VinnyLingham:
+        title: VinnyLingham
+        url: https://twitter.com/VinnyLingham
+        linkSelector: .time a
+        timeInterval: 60000
+    el33th4xor:
+        title: el33th4xor
+        url: https://twitter.com/el33th4xor
+        linkSelector: .time a
+        timeInterval: 60000
+    avsa:
+        title: avsa
+        url: https://twitter.com/avsa
+        linkSelector: .time a
+        timeInterval: 60000
+    jonmatonis:
+        title: jonmatonis
+        url: https://twitter.com/jonmatonis
+        linkSelector: .time a
+        timeInterval: 60000
+    petertoddbtc:
+        title: petertoddbtc
+        url: https://twitter.com/petertoddbtc
+        linkSelector: .time a
+        timeInterval: 60000
+    adam3us:
+        title: adam3us
+        url: https://twitter.com/adam3us
+        linkSelector: .time a
+        timeInterval: 60000
+    balajis:
+        title: balajis
+        url: https://twitter.com/balajis
+        linkSelector: .time a
+        timeInterval: 60000
+    charlieshrem:
+        title: charlieshrem
+        url: https://twitter.com/charlieshrem
+        linkSelector: .time a
+        timeInterval: 60000
+    naval:
+        title: naval
+        url: https://twitter.com/naval
+        linkSelector: .time a
+        timeInterval: 60000
+    stephantual:
+        title: stephantual
+        url: https://twitter.com/stephantual
+        linkSelector: .time a
+        timeInterval: 60000
+    RandyHilarski:
+        title: RandyHilarski
+        url: https://twitter.com/RandyHilarski
+        linkSelector: .time a
+        timeInterval: 60000
+    f2pool_wangchun:
+        title: f2pool_wangchun
+        url: https://twitter.com/f2pool_wangchun
+        linkSelector: .time a
+        timeInterval: 60000
+    laurashin:
+        title: laurashin
+        url: https://twitter.com/laurashin
+        linkSelector: .time a
+        timeInterval: 60000
+    cryptospacesuit:
+        title: cryptospacesuit
+        url: https://twitter.com/cryptospacesuit
+        linkSelector: .time a
+        timeInterval: 60000
+    whalepanda:
+        title: whalepanda
+        url: https://twitter.com/whalepanda
+        linkSelector: .time a
+        timeInterval: 60000
+    CoinDesk:
+        title: CoinDesk
+        url: https://twitter.com/CoinDesk
+        linkSelector: .time a
+        timeInterval: 60000
+    bitcoinmagazine:
+        title: bitcoinmagazine
+        url: https://twitter.com/bitcoinmagazine
+        linkSelector: .time a
+        timeInterval: 60000
+    breaking_crypto:
+        title: breaking_crypto
+        url: https://twitter.com/breaking_crypto
+        linkSelector: .time a
+        timeInterval: 60000
+    starkness:
+        title: starkness
+        url: https://twitter.com/starkness
+        linkSelector: .time a
+        timeInterval: 60000
+    twobitidiot:
+        title: twobitidiot
+        url: https://twitter.com/twobitidiot
+        linkSelector: .time a
+        timeInterval: 60000
+    AmberBaldet:
+        title: AmberBaldet
+        url: https://twitter.com/AmberBaldet
+        linkSelector: .time a
+        timeInterval: 60000
+    lopp:
+        title: lopp
+        url: https://twitter.com/lopp
+        linkSelector: .time a
+        timeInterval: 60000
+    Excellion:
+        title: Excellion
+        url: https://twitter.com/Excellion
+        linkSelector: .time a
+        timeInterval: 60000
+    prestonjbyrne:
+        title: prestonjbyrne
+        url: https://twitter.com/prestonjbyrne
+        linkSelector: .time a
+        timeInterval: 60000
+    Melt_Dem:
+        title: Melt_Dem
+        url: https://twitter.com/Melt_Dem
+        linkSelector: .time a
+        timeInterval: 60000
+    richiela:
+        title: richiela
+        url: https://twitter.com/richiela
+        linkSelector: .time a
+        timeInterval: 60000
+    bitfinex:
+        title: bitfinex
+        url: https://twitter.com/bitfinex
+        linkSelector: .time a
+        timeInterval: 60000
+    BittrexExchange:
+        title: BittrexExchange
+        url: https://twitter.com/BittrexExchange
+        linkSelector: .time a
+        timeInterval: 60000
+    binance:
+        title: binance
+        url: https://twitter.com/binance
+        linkSelector: .time a
+        timeInterval: 60000
+    cz_binance:
+        title: cz_binance
+        url: https://twitter.com/cz_binance
+        linkSelector: .time a
+        timeInterval: 60000
+    BaldingsWorld:
+        title: BaldingsWorld
+        url: https://twitter.com/BaldingsWorld
+        linkSelector: .time a
+        timeInterval: 60000
+    prchovanec:
+        title: prchovanec
+        url: https://twitter.com/prchovanec
+        linkSelector: .time a
+        timeInterval: 60000
+    Sunchartist:
+        title: Sunchartist
+        url: https://twitter.com/Sunchartist
+        linkSelector: .time a
+        timeInterval: 60000
+    RadioFreeTom:
+        title: RadioFreeTom
+        url: https://twitter.com/RadioFreeTom
+        linkSelector: .time a
+        timeInterval: 60000
+    Bamabroker:
+        title: Bamabroker
+        url: https://twitter.com/Bamabroker
+        linkSelector: .time a
+        timeInterval: 60000
+    GerberKawasaki:
+        title: GerberKawasaki
+        url: https://twitter.com/GerberKawasaki
+        linkSelector: .time a
+        timeInterval: 60000
+    valuewalk:
+        title: valuewalk
+        url: https://twitter.com/valuewalk
+        linkSelector: .time a
+        timeInterval: 60000
+    WizJourn:
+        title: WizJourn
+        url: https://twitter.com/WizJourn
+        linkSelector: .time a
+        timeInterval: 60000
