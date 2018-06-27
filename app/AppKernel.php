@@ -37,6 +37,7 @@ class AppKernel extends Kernel
             new Kami\ContentBundle\KamiContentBundle(),
             new Kami\WorkerBundle\KamiWorkerBundle(),
             new Kami\AssetBundle\KamiAssetBundle(),
+            new Kami\FilterBundle\KamiFilterBundle(),
             new Kami\IcoBundle\KamiIcoBundle(),
             new Kami\StockBundle\KamiStockBundle(),
         ];
