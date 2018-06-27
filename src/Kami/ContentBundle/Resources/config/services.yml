@@ -1,4 +1,37 @@
+parameters:
+    kami.post_creation_strategy:
+        - get_reflection_from_request
+        - validate_resource_access
+        - get_entity_from_reflection
+        - build_create_form
+        - handle_request
+        - validate_post
+        - persist_post
+        - update_url_cache
+        - build_serializer
+        - serialize
+
 services:
-#    kami_content.example:
-#        class: Kami\ContentBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    kami.request_processor.validate_post.step:
+        class: Kami\ContentBundle\RequestProcessor\Step\ValidatePostStep
+        arguments:
+            - "@doctrine"
+            - "@security.token_storage"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "validate_post" }
+    kami.request_processor.persist_post.step:
+        class: Kami\ContentBundle\RequestProcessor\Step\PersistPostStep
+        arguments:
+            - "@doctrine"
+            - "@security.token_storage"
+            - "@lopi_pusher.pusher"
+            - "@logger"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "persist_post" }
+
+    kami.request_processor.update_url_cache.step:
+        class: Kami\ContentBundle\RequestProcessor\Step\UpdateUrlCacheStep
+        arguments:
+            - "@m6web_cassandra.client.default"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "update_url_cache" }

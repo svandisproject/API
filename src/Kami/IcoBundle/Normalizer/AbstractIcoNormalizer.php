@@ -4,12 +4,13 @@
 namespace Kami\IcoBundle\Normalizer;
 
 
- use Doctrine\Common\Collections\ArrayCollection;
- use Doctrine\ORM\EntityManager;
- use Kami\IcoBundle\Entity\Ico;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityManager;
+use Kami\IcoBundle\Entity\Ico;
+use Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer;
+use function ucfirst;
 
- //todo: This should be refactored to use PropertyNormalizers
- abstract class AbstractIcoNormalizer implements IcoNormalizerInterface
+abstract class AbstractIcoNormalizer implements IcoNormalizerInterface
 {
      /**
       * @var EntityManager
@@ -26,20 +27,15 @@ namespace Kami\IcoBundle\Normalizer;
         $this->entityManager = $manager;
     }
 
-     public function fromRemote(Ico $ico, $remoteData)
+     public function normalize(Ico $ico, $remoteData) : Ico
      {
-         foreach ($this->getPropertyMap() as $property => $path) {
-
-             if (is_array($path)) {
-                 $normalizer = $this->getNormalizer($path['normalizer']);
-                 $normalizer->fromRemote($ico, $this->getValueByPath($remoteData, $path['property']));
-             } else {
-                 $value = $this->getValueByPath($remoteData, $path);
-                 $method = 'set'.ucfirst($property);
-                 $ico->$method($value);
-             }
+         foreach ($this->getNormalizingMap() as $property => $config) {
+             $normalizer = $this->getNormalizer($config['normalizer']);
+             $method = 'set'.ucfirst($property);
+             $ico->$method($normalizer->normalize($this->getValueByPath($remoteData, $config['property'])));
          }
-        return $ico;
+
+         return $ico;
      }
 
      private function getValueByPath(array $remoteData, string $path)
@@ -56,9 +52,9 @@ namespace Kami\IcoBundle\Normalizer;
 
      /**
       * @param $name
-      * @return AbstractIcoNormalizer
+      * @return mixed
       */
-     protected function getNormalizer($name) : AbstractIcoNormalizer
+     protected function getNormalizer($name)
      {
          $normalizer = $this->normalizers->get($name);
          if(!$normalizer) {

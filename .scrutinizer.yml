@@ -147,8 +147,23 @@ build:
                     file: 'coverage'
                     format: 'clover'
     environment:
-            variables:
-                SYMFONY_ENV: 'test'
+        redis: true
+        variables:
+            SYMFONY_ENV: 'test'
+
+    dependencies:
+        before:
+          - sudo apt-get install -y g++ make cmake libuv-dev libssl-dev libgmp-dev openssl libpcre3-dev python-setuptools python-dev build-essential
+          - echo "deb http://www.apache.org/dist/cassandra/debian 311x main" | sudo tee -a /etc/apt/sources.list.d/cassandra.sources.list
+          - curl https://www.apache.org/dist/cassandra/KEYS | sudo apt-key add -
+          - sudo apt-get update
+          - sudo apt-get install -y cassandra
+          - cd /tmp && git clone https://github.com/datastax/cpp-driver.git && cd cpp-driver && git checkout 3fe834b8829734d3949527078b07bc4a0f1245cb && mkdir build && cd build && cmake -DCMAKE_INSTALL_PREFIX=/usr .. && make && sudo make install
+
+
+        override:
+          - yes | pecl install cassandra
+          - cd /home/scrutinizer/build/ && composer install --no-interaction
 
 build_failure_conditions:
     - 'issues.severity(= CRITICAL).exists'

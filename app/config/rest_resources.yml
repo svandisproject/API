@@ -1,7 +1,11 @@
 kami_api_core:
   locales: ['en', 'ru']
   resources:
-    - { name: post, entity: Kami\ContentBundle\Entity\Post }
+    - name: post
+      entity: Kami\ContentBundle\Entity\Post
+      strategies:
+          create: "kami.post_creation_strategy"
+
     - { name: tag, entity: Kami\ContentBundle\Entity\Tag }
     - { name: worker, entity: Kami\WorkerBundle\Entity\Worker }
     - { name: web-feed, entity: Kami\WorkerBundle\Entity\WebFeed }

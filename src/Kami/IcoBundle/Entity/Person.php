@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="person")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\PersonRepository")
- * @UniqueEntity({"link"})
+ * @UniqueEntity({"url"})
  */
 class Person
 {
@@ -26,30 +26,19 @@ class Person
     /**
      * @var string
      *
-     * @ORM\Column(name="name", type="string", length=100)
+     * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="title", type="string", nullable=true)
+     * @ORM\Column(name="links", type="string", nullable=true)
      */
-    private $title;
+    private $links;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="subdivision", type="string", nullable=true)
+     * @ORM\Column(name="url", type="string", unique=true)
      */
-    private $subdivision;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="link", type="string", length=255)
-     */
-    private $link;
+    private $url;
 
     /**
      * Get id.
@@ -59,6 +48,22 @@ class Person
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUrl()
+    {
+        return $this->url;
+    }
+
+    /**
+     * @param mixed $url
+     */
+    public function setUrl($url)
+    {
+        $this->url = $url;
     }
 
     /**
@@ -86,58 +91,26 @@ class Person
     }
 
     /**
-     * @param mixed $title
-     */
-    public function setTitle($title)
-    {
-        $this->title = $title;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTitle()
-    {
-        return $this->title;
-    }
-
-    /**
-     * @param mixed $subdivision
-     */
-    public function setSubdivision($subdivision)
-    {
-        $this->subdivision = $subdivision;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSubdivision()
-    {
-        return $this->subdivision;
-    }
-
-    /**
-     * Set link.
+     * Set links.
      *
-     * @param string $link
+     * @param string|null $links
      *
      * @return Person
      */
-    public function setLink($link)
+    public function setLinks($links = null)
     {
-        $this->link = $link;
+        $this->links = $links;
 
         return $this;
     }
 
     /**
-     * Get link.
+     * Get links.
      *
-     * @return string
+     * @return array|null
      */
-    public function getLink()
+    public function getLinks()
     {
-        return $this->link;
+        return $this->links;
     }
 }

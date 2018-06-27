@@ -21,6 +21,11 @@ abstract class ApiTestCase extends WebTestCase
     protected $workerToken = 111;
 
     /**
+     * @var int
+     */
+    protected $secondWorkerToken = 222;
+
+    /**
      * @var string
      */
     protected $workerCode;
@@ -94,14 +99,21 @@ abstract class ApiTestCase extends WebTestCase
      *
      * @return Response
      */
-    protected function requestByWorker($method, $uri, array $parameters = [], array $files = [], array $server = [], $content = null, $changeHistory = true)
+    protected function requestByWorker($method,
+                                       $uri,
+                                       array $parameters = [],
+                                       array $files = [],
+                                       array $server = [],
+                                       $content = null,
+                                       $changeHistory = true,
+                                       $second = false)
     {
         $client = static::createClient();
         $client->followRedirects();
         $client->insulate(false);
         if($this->workerToken) {
             $server = array_merge($server, [
-                'HTTP_X-WORKER-TOKEN' => $this->workerToken,
+                'HTTP_X-WORKER-TOKEN' => $second ? $this->secondWorkerToken : $this->workerToken,
             ]);
         }
         $client->request($method, $uri, $parameters, $files, $server, $content, $changeHistory);

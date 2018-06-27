@@ -66,18 +66,21 @@ class SyncIcosCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+
         $totalPages =  $this->icoBenchClient->getIcos()['pages'];
 
-        for($i = 0; $i < $totalPages; $i++){
+        for($i = 0; $i < $totalPages; $i++) {
+            $output->writeln('Processing Page: '.$i.' from '.$totalPages);
 
             $response = $this->icoBenchClient->getIcos('all', ['page'=> $i]);
-            foreach ($response['results'] as $result){
+            foreach ($response['results'] as $result) {
                 $remoteData = $this->icoBenchClient->getIco($result['id']);
-
                 $ico = $this->findOrCreateIco($result['id']);
-                $ico = $this->icoBenchNormalizer->fromRemote($ico, $remoteData);
+                $ico = $this->icoBenchNormalizer->normalize($ico, $remoteData);
+
                 $this->manager->persist($ico);
                 $this->manager->flush();
+                $output->writeln('Successfully updated ICO '.$ico->getTitle());
             }
         }
 
@@ -85,15 +88,16 @@ class SyncIcosCommand extends Command
     }
 
     /**
-     * @param int $id
+     * @param int $remoteId
+     *
      * @return Ico
      *
      * @throws \Doctrine\ORM\ORMException
      */
-    protected function findOrCreateIco(int $id) : Ico
+    protected function findOrCreateIco(int $remoteId) : Ico
     {
         $ico = $this->manager->getRepository('KamiIcoBundle:Ico')
-            ->findOneByRemoteId($id);
+            ->findOneBy(['remoteId' => $remoteId]);
 
         if(!$ico) {
             return new Ico();

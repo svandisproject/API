@@ -29,6 +29,9 @@ class AppKernel extends Kernel
             new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new Kami\IcoBenchBundle\KamiIcoBenchBundle(),
             new Kami\ApiCoreBundle\KamiApiCoreBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
+            new M6Web\Bundle\CassandraBundle\M6WebCassandraBundle,
+            new Kami\CassandraMigrationsBundle\KamiCassandraMigrationsBundle(),
 
             new Kami\UserBundle\KamiUserBundle(),
             new Kami\ContentBundle\KamiContentBundle(),
@@ -36,6 +39,7 @@ class AppKernel extends Kernel
             new Kami\AssetBundle\KamiAssetBundle(),
             new Kami\FilterBundle\KamiFilterBundle(),
             new Kami\IcoBundle\KamiIcoBundle(),
+            new Kami\StockBundle\KamiStockBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
