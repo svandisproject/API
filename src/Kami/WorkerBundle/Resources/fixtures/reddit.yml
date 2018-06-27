@@ -1,0 +1,87 @@
+model: Kami\WorkerBundle\Entity\WebFeed
+fixtures:
+    Bancor:
+        title: Bancor
+        url: https://www.reddit.com/r/Bancor
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    Best_of_Crypto:
+        title: Best_of_Crypto
+        url: https://www.reddit.com/r/Best_of_Crypto
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    BlockChain:
+        title: BlockChain
+        url: https://www.reddit.com/r/BlockChain
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    CryptoCurrency:
+        title: CryptoCurrency
+        url: https://www.reddit.com/r/CryptoCurrency
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    CryptoICO:
+        title: CryptoICO
+        url: https://www.reddit.com/r/CryptoICO
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    decentralization:
+        title: decentralization
+        url: https://www.reddit.com/r/decentralization
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    ethtrader:
+        title: ethtrader
+        url: https://www.reddit.com/r/ethtrader
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    ICOAnalysis:
+        title: ICOAnalysis
+        url: https://www.reddit.com/r/ICOAnalysis
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    icocrypto:
+        title: icocrypto
+        url: https://www.reddit.com/r/icocrypto
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    InitialCoinOfferings:
+        title: InitialCoinOfferings
+        url: https://www.reddit.com/r/InitialCoinOfferings
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    Bitcoin:
+        title: Bitcoin
+        url: https://www.reddit.com/r/Bitcoin
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    Ethereum:
+        title: Ethereum
+        url: https://www.reddit.com/r/Ethereum
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    btc:
+        title: btc
+        url: https://www.reddit.com/r/btc
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    litecoin:
+        title: litecoin
+        url: https://www.reddit.com/r/litecoin
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    BitcoinMarkets:
+        title: BitcoinMarkets
+        url: https://www.reddit.com/r/BitcoinMarkets
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    Ripple:
+        title: Ripple
+        url: https://www.reddit.com/r/Ripple
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
+    Reddcoin:
+        title: Reddcoin
+        url: https://www.reddit.com/r/Reddcoin
+        linkSelector: wx076j-0 a
+        timeInterval: 60000
