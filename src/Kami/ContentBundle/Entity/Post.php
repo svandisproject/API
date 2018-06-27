@@ -375,7 +375,7 @@ class Post
     }
 
     /**
-     * Set createdBy.
+     * Set createdBy
      *
      * @param \Kami\WorkerBundle\Entity\Worker|null $createdBy
      *
