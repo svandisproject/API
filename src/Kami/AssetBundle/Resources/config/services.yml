@@ -2,8 +2,6 @@ services:
     kami.sync_assets.command:
         class: Kami\AssetBundle\Command\SyncAssetsCommand
         arguments:
-            - "@m6web_cassandra.client.default"
-            - "@doctrine.orm.entity_manager"
             - "@kami_stock.watcher"
         tags:
             - { name: 'console.command' }
