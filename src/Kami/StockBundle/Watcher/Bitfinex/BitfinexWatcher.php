@@ -6,40 +6,28 @@ namespace Kami\StockBundle\Watcher\Bitfinex;
 
 use Cassandra\BatchStatement;
 use Cassandra\Uuid;
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\Model\Point;
-use Kami\StockBundle\Watcher\ExchangeWatcherInterface;
-use M6Web\Bundle\CassandraBundle\Cassandra\Client;
+use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
 
-class BitfinexWatcher implements ExchangeWatcherInterface
+class BitfinexWatcher extends AbstractExchangeWatcher
 {
+    /**
+     * @var array
+     */
     private $presentedCurrencies = [];
+
+    /**
+     * @var array
+     */
     private $tickersArray = [];
 
-
     /**
-     * @var EntityManager
-     */
-    protected $entityManager;
-
-    /**
-     * @var Client
-     */
-    protected $client;
-
-    /**
-     *
-     * @param Client $client
-     * @param EntityManager $manager
-     */
-    public function __construct(Client $client, EntityManager $manager)
-    {
-        $this->entityManager = $manager;
-        $this->client = $client;
-    }
-
-    /**
+     * @throws ORMInvalidArgumentException
+     * @throws ORMException
+     * @throws \Cassandra\Exception
      * @return void
      */
     public function updateAssetPrices()
@@ -56,7 +44,11 @@ class BitfinexWatcher implements ExchangeWatcherInterface
         }
     }
 
-    private function getUsdPrices($data)
+    /**
+     * @param array $data
+     * @return void
+     */
+    public function getUsdPrices(array $data)
     {
         foreach ($this->presentedCurrencies as $presentedCurrency){
             $price = null;
@@ -69,27 +61,12 @@ class BitfinexWatcher implements ExchangeWatcherInterface
         }
     }
 
-    private function setUniquePresentedCurrencies(array $data){
-        foreach ($data as $datum){
-            //$datum = 'tBTCUSD'
-            if($datum[0][0] == 't'){
-                $ticker = trim($datum[0], 't');//'BTCUSD'
-                $presentedCurrency = substr($ticker, 0, -3);//'BTC'
-                if(!in_array($presentedCurrency, $this->presentedCurrencies)){
-                    array_push($this->presentedCurrencies, $presentedCurrency);
-                }
-            }
-        }
-    }
-
-    private function createNewPoint($tickerData){
-        $asset = $this->findOrCreateAsset($tickerData);
-        $point = new Point($asset, new \DateTime(), $tickerData['price']);
-
-        return $point;
-    }
-
-    private function persistPoint(Point $point)
+    /**
+     * @param Point $point
+     * @throws \Cassandra\Exception
+     * @return void
+     */
+    public function persistPoint(Point $point)
     {
         $cassandra = $this->client;
         $prepared = $cassandra->prepare(
@@ -110,9 +87,11 @@ class BitfinexWatcher implements ExchangeWatcherInterface
 
     /**
      * @param array $tickerData
-     * @return Asset|null|object
+     * @throws ORMInvalidArgumentException
+     * @throws ORMException
+     * @return Asset
      */
-    public function findOrCreateAsset($tickerData)
+    public function findOrCreateAsset(array $tickerData) :Asset
     {
         if (!$asset = $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $tickerData['asset']])) {
             $asset = new Asset();
@@ -123,6 +102,38 @@ class BitfinexWatcher implements ExchangeWatcherInterface
         $this->entityManager->flush();
 
         return $asset;
+    }
+
+    /**
+     * @param array $tickerData
+     * @throws ORMInvalidArgumentException
+     * @throws ORMException
+     * @return Point
+     */
+    public function createNewPoint(array $tickerData) :Point
+    {
+        $asset = $this->findOrCreateAsset($tickerData);
+        $point = new Point($asset, new \DateTime(), $tickerData['price']);
+
+        return $point;
+    }
+
+    /**
+     * @param array $data
+     * @return void
+     */
+    private function setUniquePresentedCurrencies(array $data)
+    {
+        foreach ($data as $datum){
+            //$datum = 'tBTCUSD'
+            if($datum[0][0] == 't'){
+                $ticker = trim($datum[0], 't');//'BTCUSD'
+                $presentedCurrency = substr($ticker, 0, -3);//'BTC'
+                if(!in_array($presentedCurrency, $this->presentedCurrencies)){
+                    array_push($this->presentedCurrencies, $presentedCurrency);
+                }
+            }
+        }
     }
 
 }
