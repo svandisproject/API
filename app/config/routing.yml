@@ -3,6 +3,11 @@ kami_worker:
     type:     annotation
     prefix:   /
 
+kami_content:
+    resource: "@KamiContentBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 api_login_check:
     path: /api/login_check
 
