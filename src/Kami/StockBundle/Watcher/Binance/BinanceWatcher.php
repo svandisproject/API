@@ -6,43 +6,23 @@ namespace Kami\StockBundle\Watcher\Binance;
 use Binance\API;
 use Cassandra\BatchStatement;
 use DateTime;
-use Doctrine\ORM\EntityManager;
-use function in_array;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\Model\Point;
-use Kami\StockBundle\Watcher\ExchangeWatcherInterface;
-use M6Web\Bundle\CassandraBundle\Cassandra\Client;
+use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
 use Cassandra\Uuid;
-use const true;
 
-class BinanceWatcher implements ExchangeWatcherInterface
+class BinanceWatcher extends AbstractExchangeWatcher
 {
-    /**
-     * @var EntityManager
-     */
-    protected $entityManager;
-
-    /**
-     * @var Client
-     */
-    protected $client;
-
     /**
      * @var array
      */
     private $convertableTickers = ['USDT', 'BTC', 'ETH', 'BNB'];
-    /**
-     *
-     * @param Client $client
-     * @param EntityManager $manager
-     */
-    public function __construct(Client $client, EntityManager $manager)
-    {
-        $this->entityManager = $manager;
-        $this->client = $client;
-    }
 
     /**
+     * @throws \Exception
+     * @throws \Cassandra\Exception
      * @return void
      */
     public function updateAssetPrices()
@@ -60,11 +40,15 @@ class BinanceWatcher implements ExchangeWatcherInterface
 
     }
 
-    private function getUsdPrices($ticker)
+    /**
+     * @param array $data
+     * @return array
+     */
+    public function getUsdPrices(array $data) :array
     {
         $points = [];
 
-        foreach ($ticker as $pair => $price) {
+        foreach ($data as $pair => $price) {
 
             foreach ($this->convertableTickers as $currency) {
                 if (strpos($pair, $currency) >= 1) {
@@ -73,7 +57,7 @@ class BinanceWatcher implements ExchangeWatcherInterface
                     if ($currency == 'USDT') {
                         $rate = $price;
                     } else {
-                        $rate = $ticker[$currency.'USDT'] * $price;
+                        $rate = $data[$currency.'USDT'] * $price;
                     }
                     array_push($points, ['asset' => $asset, 'price' => floatval($rate)]);
                 }
@@ -82,7 +66,12 @@ class BinanceWatcher implements ExchangeWatcherInterface
         return $points;
     }
 
-    private function persistPoint(Point $point)
+    /**
+     * @param Point $point
+     * @throws \Cassandra\Exception
+     * @return void
+     */
+    public function persistPoint(Point $point)
     {
         $cassandra = $this->client;
         $prepared = $cassandra->prepare(
@@ -103,9 +92,11 @@ class BinanceWatcher implements ExchangeWatcherInterface
 
     /**
      * @param array $tickerData
-     * @return Asset|null|object
+     * @throws ORMInvalidArgumentException
+     * @throws ORMException
+     * @return Asset
      */
-    public function findOrCreateAsset($tickerData)
+    public function findOrCreateAsset(array $tickerData) :Asset
     {
         if (!$asset = $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $tickerData['asset']])) {
             $asset = new Asset();
@@ -121,10 +112,11 @@ class BinanceWatcher implements ExchangeWatcherInterface
 
     /**
      * @param array
-     *
+     * @throws ORMInvalidArgumentException
+     * @throws ORMException
      * @return Point
      */
-    public function createNewPoint($tickerData) :Point
+    public function createNewPoint(array $tickerData) :Point
     {
         $asset = $this->findOrCreateAsset($tickerData);
         $point = new Point($asset, new DateTime(), $tickerData['price']);
