@@ -23,7 +23,6 @@ class BinanceWatcher extends AbstractExchangeWatcher
         $api = new API();
 
         $ticker = $api->prices();
-
         $tickersArray = $this->getUsdPrices($ticker);
         foreach ($tickersArray as $tickerData) {
             $point = $this->createNewPoint($tickerData);
@@ -55,7 +54,36 @@ class BinanceWatcher extends AbstractExchangeWatcher
                 }
             }
         }
+
+        $points = $this->usdPriceNormalize($points);
         return $points;
     }
+
+    /**
+    * Get average arithmetic of asset price in USD
+    *
+    * @param array
+    *
+    * @return array
+    */
+    private function usdPriceNormalize($tickersArray) :array
+    {
+        $normalizeArray = [];
+        $resultArray = [];
+        foreach ($tickersArray as $tickers) {
+            if (!key_exists($tickers['asset'], $normalizeArray)) {
+                $normalizeArray[$tickers['asset']] = $tickers['price'];
+            } else {
+                $normalizeArray[$tickers['asset']] = ($normalizeArray[$tickers['asset']] + $tickers['price']) / 2;
+            }
+        }
+        foreach ($normalizeArray as $asset => $price) {
+            array_push($resultArray, ['asset' => $asset, 'price' => $price]);
+        }
+
+        return $resultArray;
+    }
+
+
 
 }
