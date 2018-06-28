@@ -5,6 +5,7 @@ services:
               - '@kami_stock.binance.watcher'
               - '@kami_stock.bitfinex.watcher'
               - '@kami_stock.bittrex.watcher'
+              - '@kami_stock.poloniex.watcher'
             public: true
 
     kami_stock.binance.watcher:
@@ -22,3 +23,8 @@ services:
             arguments:
               - '@m6web_cassandra.client.default'
               - '@doctrine.orm.entity_manager'
+    kami_stock.poloniex.watcher:
+                class: Kami\StockBundle\Watcher\Poloniex\PoloniexWatcher
+                arguments:
+                  - '@m6web_cassandra.client.default'
+                  - '@doctrine.orm.entity_manager'
