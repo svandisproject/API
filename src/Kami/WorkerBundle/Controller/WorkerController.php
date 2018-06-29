@@ -62,7 +62,7 @@ class WorkerController extends Controller
     public function getWorkerSecretAction()
     {
         if(!$this->getUser()){
-            throw new AccessDeniedHttpException('Authorize with your worker code');
+            throw new AccessDeniedHttpException();
         }
         return new JsonResponse(['secret' => $this->getUser()->getWorkerToken()]);
     }
