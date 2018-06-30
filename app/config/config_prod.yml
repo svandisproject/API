@@ -1,5 +1,7 @@
 imports:
     - { resource: config.yml }
+parameters:
+    proxy_url: "%env(QUOTAGUARDSTATIC_URL)%"
 
 doctrine:
     dbal:

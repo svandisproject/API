@@ -10,7 +10,7 @@ class BittrexClient implements ClientInterface
 
     private function query($options)
     {
-
+        //Stack overflow driven development
         $ch = curl_init(self::API_URL.$options);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
