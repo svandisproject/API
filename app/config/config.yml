@@ -157,3 +157,7 @@ m6web_cassandra:
         default:
             contact_endpoints:
                 - 127.0.0.1
+
+# Gesdinet Refresh Token Configuration
+gesdinet_jwt_refresh_token:
+    user_identity_field: email

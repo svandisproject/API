@@ -32,6 +32,7 @@ class AppKernel extends Kernel
             new Snc\RedisBundle\SncRedisBundle(),
             new M6Web\Bundle\CassandraBundle\M6WebCassandraBundle,
             new Kami\CassandraMigrationsBundle\KamiCassandraMigrationsBundle(),
+            new Gesdinet\JWTRefreshTokenBundle\GesdinetJWTRefreshTokenBundle(),
 
             new Kami\UserBundle\KamiUserBundle(),
             new Kami\ContentBundle\KamiContentBundle(),
