@@ -1,8 +1,15 @@
+parameters:
+    kami.token_screener.index_strategy:
+        - ""
+    kami.token_screener.filter_strategy:
+        - ""
+
 services:
     kami.sync_assets.command:
         class: Kami\AssetBundle\Command\SyncAssetsCommand
         arguments:
             - "@kami_stock.watcher"
+            - "@lopi_pusher.pusher"
         tags:
             - { name: 'console.command' }
 

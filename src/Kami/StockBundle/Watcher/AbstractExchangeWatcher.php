@@ -10,7 +10,9 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\Model\Point;
-use M6Web\Bundle\CassandraBundle\Cassandra\Client;
+use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
+use Psr\Log\LoggerInterface;
+use GuzzleHttp\Client as HttpClient;
 
 abstract class AbstractExchangeWatcher
 {
@@ -20,19 +22,41 @@ abstract class AbstractExchangeWatcher
     protected $entityManager;
 
     /**
-     * @var Client
+     * @var CassandraClient
      */
     protected $client;
 
     /**
-     *
-     * @param Client $client
-     * @param EntityManager $manager
+     * @var LoggerInterface
      */
-    public function __construct(Client $client, EntityManager $manager)
+    protected $logger;
+
+    /**
+     * @var HttpClient
+     */
+    protected $httpClient;
+
+    /**
+     * @var bool
+     */
+    protected $useProxy = false;
+
+    /**
+     * AbstractExchangeWatcher constructor.
+     * @param CassandraClient $client
+     * @param EntityManager $manager
+     * @param LoggerInterface $logger
+     * @param string $proxy
+     */
+    public function __construct(CassandraClient $client, EntityManager $manager, LoggerInterface $logger, $proxy)
     {
         $this->entityManager = $manager;
         $this->client = $client;
+        $this->logger = $logger;
+
+        if ($this->useProxy) {
+            $this->httpClient = new HttpClient(['proxy'=>$proxy]);
+        }
     }
 
     abstract public function updateAssetPrices();

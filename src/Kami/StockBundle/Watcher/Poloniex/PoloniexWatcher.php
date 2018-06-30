@@ -3,10 +3,13 @@
 
 namespace Kami\StockBundle\Watcher\Poloniex;
 
+use GuzzleHttp\Client;
 use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
 
 class PoloniexWatcher extends AbstractExchangeWatcher
 {
+
+    protected $useProxy = true;
 
     /**
      * @throws \Exception
@@ -15,14 +18,19 @@ class PoloniexWatcher extends AbstractExchangeWatcher
      */
     public function updateAssetPrices()
     {
-        $body = file_get_contents('https://poloniex.com/public?command=returnTicker');
-        $data = (array) json_decode($body);
-        $tickersArray = $this->getUsdPrices($data);
-        foreach ($tickersArray as $tickerData) {
-            $point = $this->createNewPoint($tickerData);
+        try {
+            $body = $this->httpClient->get('https://poloniex.com/public?command=returnTicker')->getBody();
+            $data = (array) json_decode($body);
+            $tickersArray = $this->getUsdPrices($data);
+            foreach ($tickersArray as $tickerData) {
+                $point = $this->createNewPoint($tickerData);
 
-            $this->persistPoint($point);
+                $this->persistPoint($point);
+            }
+        } catch (\Exception $exception) {
+            $this->logger->error('Could\'t update poloniex prices');
         }
+
     }
 
     /**
