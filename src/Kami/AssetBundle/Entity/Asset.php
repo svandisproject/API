@@ -88,11 +88,17 @@ class Asset
     private $convertable = false;
 
     /**
+     * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Volume", mappedBy="asset")
+     */
+    private $volumes;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->volumes = new ArrayCollection();
     }
 
     /**
@@ -251,5 +257,41 @@ class Asset
     public function setConvertable($convertable)
     {
         $this->convertable = $convertable;
+    }
+
+    /**
+     * Add volume.
+     *
+     * @param \Kami\AssetBundle\Entity\Volume $volume
+     *
+     * @return Asset
+     */
+    public function addVolume(\Kami\AssetBundle\Entity\Volume $volume)
+    {
+        $this->volumes[] = $volume;
+
+        return $this;
+    }
+
+    /**
+     * Remove volume.
+     *
+     * @param \Kami\AssetBundle\Entity\Volume $volume
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeVolume(\Kami\AssetBundle\Entity\Volume $volume)
+    {
+        return $this->volumes->removeElement($volume);
+    }
+
+    /**
+     * Get volumes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVolumes()
+    {
+        return $this->volumes;
     }
 }

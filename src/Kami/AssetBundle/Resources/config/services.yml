@@ -13,4 +13,11 @@ services:
         tags:
             - { name: 'console.command' }
 
+    kami.sync_assets.volumes.command:
+            class: Kami\AssetBundle\Command\SyncAssetsVolumesCommand
+            arguments:
+                - "@kami_stock.volumes.watcher"
+            tags:
+                - { name: 'console.command' }
+
 

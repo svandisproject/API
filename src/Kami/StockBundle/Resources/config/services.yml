@@ -8,6 +8,12 @@ services:
           - '@kami_stock.poloniex.watcher'
         public: true
 
+    kami_stock.volumes.watcher:
+            class: Kami\StockBundle\Watcher\VolumesWatcher
+            arguments:
+              - '@kami_stock.bittrex.volume.watcher'
+            public: true
+
     kami_stock.abstract.watcher:
         abstract: true
         arguments:
@@ -15,6 +21,14 @@ services:
             - '@doctrine.orm.entity_manager'
             - '@logger'
             - '%proxy_url%'
+
+    kami_stock.abstract.volumes.watcher:
+            abstract: true
+            arguments:
+                - '@doctrine.orm.entity_manager'
+                - '@logger'
+                - '@kami_stock.bittrex.client'
+                - '%proxy_url%'
 
     kami_stock.binance.watcher:
         class: Kami\StockBundle\Watcher\Binance\BinanceWatcher
@@ -31,3 +45,10 @@ services:
     kami_stock.poloniex.watcher:
          class: Kami\StockBundle\Watcher\Poloniex\PoloniexWatcher
          parent: kami_stock.abstract.watcher
+
+    kami_stock.bittrex.volume.watcher:
+            class: Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher
+            parent: kami_stock.abstract.volumes.watcher
+
+    kami_stock.bittrex.client:
+            class: Kami\StockBundle\Watcher\Bittrex\Utils\BittrexClient
