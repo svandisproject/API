@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Kami\ContentBundle\Tests\Controller;
+namespace Kami\AssetBundle\Tests\Controller;
 
 use Kami\Util\TestCase\ApiTestCase;
 

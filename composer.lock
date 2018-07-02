@@ -2200,12 +2200,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/api-core-bundle.git",
-                "reference": "50b0047131f98a4b9c3657f390aa1e4d6a8ecb54"
+                "reference": "2668e07b02f8fb5bb9a9a1a8159892b690b89de4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/50b0047131f98a4b9c3657f390aa1e4d6a8ecb54",
-                "reference": "50b0047131f98a4b9c3657f390aa1e4d6a8ecb54",
+                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/2668e07b02f8fb5bb9a9a1a8159892b690b89de4",
+                "reference": "2668e07b02f8fb5bb9a9a1a8159892b690b89de4",
                 "shasum": ""
             },
             "require": {
@@ -2254,7 +2254,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-            "time": "2018-07-02T15:19:00+00:00"
+            "time": "2018-07-02T16:03:23+00:00"
         },
         {
             "name": "kami/icobench-bundle",

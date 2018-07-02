@@ -5,7 +5,7 @@ namespace Kami\WorkerBundle\Controller;
 use Kami\Util\TokenGenerator;
 use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
