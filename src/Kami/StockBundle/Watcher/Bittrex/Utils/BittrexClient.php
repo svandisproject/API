@@ -3,6 +3,7 @@
 
 namespace Kami\StockBundle\Watcher\Bittrex\Utils;
 
+use GuzzleHttp\Client;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class BittrexClient implements ClientInterface
@@ -10,21 +11,16 @@ class BittrexClient implements ClientInterface
 
     private function query($options)
     {
-        //Stack overflow driven development
-        $ch = curl_init(self::API_URL.$options);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $guzzle = new Client();
+        try {
+            $body = $guzzle->get(self::API_URL . $options)->getBody();
+            $data = json_decode($body);
+            return $data;
 
-        // run the query
-        $res = curl_exec($ch);
-
-        if ($res === false) throw new Exception('Curl error: '.curl_error($ch));
-
-        $dec = json_decode($res, true);
-        if (!$dec){
-            throw new Exception('Invalid data: '.$res);
-        }else{
-            return $dec;
+        } catch (\Exception $exception) {
+            throw new Exception('Couldn\'t get data from Bittrex API.');
         }
+
     }
 
     /**
@@ -40,11 +36,23 @@ class BittrexClient implements ClientInterface
         $marketsArray = $this->getMarkets();
 
         foreach ($marketsArray as $market) {
-            $data = $this->query('getticker?market=' . $market);
-            array_push($tickersArray, [$market => $data['result']['Last']]);
+
+            $data = $this->getTicker($market);
+            array_push($tickersArray, [$market => $data->result->Last]);
         }
 
        return $tickersArray;
+    }
+
+    /**
+     * Get one ticker data
+     * @param string $market
+     *
+     * @return array
+     */
+    public function getTicker($market)
+    {
+        return $this->query('getticker?market=' . $market);
     }
 
     /*
@@ -55,11 +63,27 @@ class BittrexClient implements ClientInterface
     {
         $marketsArray = [];
         $dataArray = $this->query('getmarkets');
-        foreach ($dataArray['result'] as $market) {
-            array_push($marketsArray, $market['MarketName']);
+        foreach ($dataArray->result as $market) {
+            array_push($marketsArray, $market->MarketName);
         }
 
         return $marketsArray;
+    }
+
+    public function getMarketsSummaries()
+    {
+        $marketsSummariesArray = [];
+        $dataArray = $this->query('getmarketsummaries');
+        foreach ($dataArray->result as $market) {
+            array_push($marketsSummariesArray, [
+                $market->MarketName => [
+                    'Volume' => $market->Volume,
+                    'BaseVolume' => $market->BaseVolume,
+                    'TimeStamp' => $market->TimeStamp
+                ]
+            ]);
+        }
+        return $marketsSummariesArray;
     }
 
 }
