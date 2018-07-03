@@ -33,6 +33,7 @@ class BittrexWatcher extends AbstractExchangeWatcher
                 $currenciesArr = explode('-', $pair);
                 if($currenciesArr[0] == "USD"){
                     $usdPrices[$pair] = $price;
+                    array_push($points, ['asset' => $currenciesArr[1], 'price' => $price]);
                 }
             }
         }
@@ -51,7 +52,6 @@ class BittrexWatcher extends AbstractExchangeWatcher
             }
 
           $pointsArray = $this->usdPriceNormalize($points);
-
         return $pointsArray;
     }
 

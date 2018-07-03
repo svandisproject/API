@@ -42,25 +42,18 @@ class BittrexVolumeWatcher extends AbstractVolumesWatcher
                         if (!key_exists($assetsArr[1], $valuesArray)) {
                             $valuesArray[$assetsArr[1]]['volumeUSD'] = $data['BaseVolume'] * $usdValue;
                             $valuesArray[$assetsArr[1]]['time'] = $data['TimeStamp'];
-                            echo "First time - " . $assetsArr[1] . " with usdValue " . $data['BaseVolume'] * $usdValue . "\n";
                         } else {
                             $valuesArray[$assetsArr[1]]['volumeUSD'] += $data['BaseVolume'] * $usdValue;
-                            echo "Second time - " . $assetsArr[1] . " with usdValue " . $data['BaseVolume'] * $usdValue ."\n";
                         }
                     } else {
                         if (!key_exists($assetsArr[1], $valuesArray)) {
-
-                            echo "Updated " . $assetsArr[1] . "\n";
 
                             $valuesArray[$assetsArr[1]]['volumeUSD'] = $data['BaseVolume'];
                             $valuesArray[$assetsArr[1]]['time'] = $data['TimeStamp'];
 
                         } else {
-
-                            echo "Second time updated " . $assetsArr[1] . "\n";
                             $valuesArray[$assetsArr[1]]['volumeUSD'] += $data['BaseVolume'];
                         }
-
                     }
             }
 
