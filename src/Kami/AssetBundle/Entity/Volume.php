@@ -3,6 +3,7 @@
 
 namespace Kami\AssetBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
 
@@ -57,6 +58,14 @@ class Volume
      */
     private $addedTime;
 
+    /**
+     * @ORM\Column(name="exchange", type="string", length=255)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $exchange;
+
 
     /**
      * @return int
@@ -67,9 +76,29 @@ class Volume
     }
 
     /**
+     * @return string
+     */
+    public function getExchange()
+    {
+        return $this->exchange;
+    }
+
+    /**
+     * @param string $exchange
+     *
+     * @return self
+     */
+    public function setExchange($exchange): self
+    {
+        $this->exchange = $exchange;
+
+        return $this;
+    }
+
+    /**
      * @return Asset
      */
-    public function getAsset() :Asset
+    public function getAsset(): Asset
     {
         return $this->asset;
     }
@@ -79,7 +108,7 @@ class Volume
      *
      * @return Volume
      */
-    public function setAsset(Asset $asset) :Volume
+    public function setAsset(Asset $asset): Volume
     {
         $this->asset = $asset;
 
@@ -114,13 +143,14 @@ class Volume
     }
 
     /**
-     * @param \DateTime $addedTime
+     * @param  $addedTime
      *
      * @return Volume
      */
-    public function setAddedTime(\DateTime $addedTime)
+    public function setAddedTime( $addedTime)
     {
-        $this->addedTime = $addedTime;
+        $this->addedTime = (new DateTime)->setTimestamp($addedTime);
+
         return $this;
     }
 

@@ -4,7 +4,6 @@
 namespace Kami\StockBundle\Watcher\Bittrex;
 
 
-use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\Watcher\AbstractVolumesWatcher;
 
 class BittrexVolumeWatcher extends AbstractVolumesWatcher
@@ -13,58 +12,36 @@ class BittrexVolumeWatcher extends AbstractVolumesWatcher
     public function updateVolumes()
     {
         $markets = $this->bittrexClient->getMarketsSummaries();
-
         $assetsValues = $this->getUsdValues($markets);
 
-        foreach ($assetsValues as $assetKey => $values) {
-
+        foreach ($assetsValues as $assetKey => $usdVolume) {
             $asset = $this->findAsset($assetKey);
-
-            $this->persistVolumes($asset, $values);
+            $this->persistVolumes($asset, $usdVolume, 'Bittrex');
         }
-
     }
 
     private function getUsdValues($markets)
     {
         $valuesArray = [];
+        $BTC = ($this->bittrexClient->getTicker("USD-BTC"))->result->Last;
+        $ETH = ($this->bittrexClient->getTicker("USD-ETH"))->result->Last;
+        $USDT = ($this->bittrexClient->getTicker("USD-USDT"))->result->Last;
+        $USD = ($this->bittrexClient->getTicker("USD-TUSD"))->result->Last;
 
         foreach ($markets as $market) {
-
             foreach ($market as $pair => $data ) {
-
                 $assetsArr = explode('-', $pair);
-
-                    if ($assetsArr[0] !== "USD") {
-
-                        $usdValue =  ($this->bittrexClient->getTicker("USD-" . $assetsArr[0]))->result->Last;
-
-                        if (!key_exists($assetsArr[1], $valuesArray)) {
-                            $valuesArray[$assetsArr[1]]['volumeUSD'] = $data['BaseVolume'] * $usdValue;
-                            $valuesArray[$assetsArr[1]]['time'] = $data['TimeStamp'];
-                        } else {
-                            $valuesArray[$assetsArr[1]]['volumeUSD'] += $data['BaseVolume'] * $usdValue;
-                        }
-                    } else {
-                        if (!key_exists($assetsArr[1], $valuesArray)) {
-
-                            $valuesArray[$assetsArr[1]]['volumeUSD'] = $data['BaseVolume'];
-                            $valuesArray[$assetsArr[1]]['time'] = $data['TimeStamp'];
-
-                        } else {
-                            $valuesArray[$assetsArr[1]]['volumeUSD'] += $data['BaseVolume'];
-                        }
-                    }
+                $currency = $assetsArr[0];
+                $asset = $assetsArr[1];
+                if (!key_exists($assetsArr[1], $valuesArray)) {
+                    $valuesArray[$asset] = ($currency == "USD") ? $data['BaseVolume'] : ($data['BaseVolume'] * $$currency);
+                } else {
+                    $valuesArray[$asset] += ($currency == "USD") ? $data['BaseVolume'] : ($data['BaseVolume'] * $$currency);
+                }
             }
-
         }
         return $valuesArray;
-
     }
 
-    private function findAsset($ticker)
-    {
-        return $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $ticker]);
-    }
 
 }

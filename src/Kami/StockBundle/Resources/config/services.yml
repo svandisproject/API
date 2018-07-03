@@ -12,6 +12,7 @@ services:
             class: Kami\StockBundle\Watcher\VolumesWatcher
             arguments:
               - '@kami_stock.bittrex.volume.watcher'
+              - '@kami_stock.binance.volume.watcher'
             public: true
 
     kami_stock.abstract.watcher:
@@ -33,6 +34,10 @@ services:
     kami_stock.binance.watcher:
         class: Kami\StockBundle\Watcher\Binance\BinanceWatcher
         parent: kami_stock.abstract.watcher
+
+    kami_stock.binance.volume.watcher:
+                class: Kami\StockBundle\Watcher\Binance\BinanceVolumeWatcher
+                parent: kami_stock.abstract.volumes.watcher
 
     kami_stock.bitfinex.watcher:
         class: Kami\StockBundle\Watcher\Bitfinex\BitfinexWatcher

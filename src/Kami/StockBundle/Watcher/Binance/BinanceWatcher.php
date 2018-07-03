@@ -22,8 +22,8 @@ class BinanceWatcher extends AbstractExchangeWatcher
     {
         $api = new API();
 
-        $ticker = $api->prices();
-        $tickersArray = $this->getUsdPrices($ticker);
+        $tickers = $api->prices();
+        $tickersArray = $this->getUsdPrices($tickers);
         foreach ($tickersArray as $tickerData) {
             $point = $this->createNewPoint($tickerData);
 
@@ -35,7 +35,7 @@ class BinanceWatcher extends AbstractExchangeWatcher
      * @param array $data
      * @return array
      */
-    public function getUsdPrices(array $data) :array
+    public function getUsdPrices(array $data): array
     {
         $points = [];
 
@@ -66,7 +66,7 @@ class BinanceWatcher extends AbstractExchangeWatcher
     *
     * @return array
     */
-    private function usdPriceNormalize($tickersArray) :array
+    private function usdPriceNormalize($tickersArray): array
     {
         $normalizeArray = [];
         $resultArray = [];

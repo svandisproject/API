@@ -58,17 +58,29 @@ abstract class AbstractVolumesWatcher
 
     /**
      * @param Asset $asset
-     * @param array $volumeData
+     * @param float $usdVolume
+     * @param string $exchange
      */
-    protected function persistVolumes(Asset $asset, $volumeData)
+    protected function persistVolumes(Asset $asset, $usdVolume, $exchange)
     {
         $volume = new Volume();
         $volume->setAsset($asset);
 
-        $volume->setVolumeUsd($volumeData['volumeUSD']);
-        $volume->setAddedTime(\DateTime::createFromFormat('Y-m-d?G:i:s.u', $volumeData['time']));
+        $volume->setVolumeUsd($usdVolume);
+        $volume->setAddedTime(time());
+        $volume->setExchange($exchange);
 
         $this->entityManager->persist($volume);
         $this->entityManager->flush();
+    }
+
+    /**
+     * @param string $ticker
+     *
+     * @return Asset
+     */
+    protected function findAsset($ticker): Asset
+    {
+        return $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $ticker]);
     }
 }
