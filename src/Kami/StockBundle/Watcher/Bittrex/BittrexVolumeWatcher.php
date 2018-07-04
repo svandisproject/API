@@ -33,11 +33,8 @@ class BittrexVolumeWatcher extends AbstractVolumesWatcher
                 $assetsArr = explode('-', $pair);
                 $currency = $assetsArr[0];
                 $asset = $assetsArr[1];
-                if (!key_exists($assetsArr[1], $valuesArray)) {
-                    $valuesArray[$asset] = ($currency == "USD") ? $data['BaseVolume'] : ($data['BaseVolume'] * $$currency);
-                } else {
-                    $valuesArray[$asset] += ($currency == "USD") ? $data['BaseVolume'] : ($data['BaseVolume'] * $$currency);
-                }
+                $valuesArray[$asset] = isset($valuesArray[$asset]) ? $valuesArray[$asset] : 0;
+                $valuesArray[$asset] += ($currency == "USD") ? $data['BaseVolume'] : ($data['BaseVolume'] * $$currency);
             }
         }
         return $valuesArray;

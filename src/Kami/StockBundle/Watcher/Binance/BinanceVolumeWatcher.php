@@ -37,11 +37,8 @@ class BinanceVolumeWatcher extends AbstractVolumesWatcher
             foreach ($this->convertableTickersVolume as $currency) {
                 if (strpos($data['symbol'], $currency) >= 1) {
                     $asset = strstr($data['symbol'], $currency, true);
-                    if(!array_key_exists($asset, $points)){
-                        $points[$asset] = ($currency == 'USDT') ? $data['quoteVolume'] : ($data['quoteVolume'] * $ticker[$currency.'USDT']);
-                    } else {
-                        $points[$asset] += ($currency == 'USDT') ? $data['quoteVolume'] : ($data['quoteVolume'] * $ticker[$currency.'USDT']);
-                    }
+                    $points[$asset] = isset($points[$asset]) ? $points[$asset] : 0;
+                    $points[$asset] += ($currency == 'USDT') ? $data['quoteVolume'] : ($data['quoteVolume'] * $ticker[$currency.'USDT']);
                 }
             }
         }
