@@ -43,7 +43,8 @@ abstract class AbstractVolumesWatcher
         EntityManager $manager,
         LoggerInterface $logger,
         BittrexClient $bittrexClient,
-        $proxy)
+        $proxy
+    )
     {
         $this->entityManager = $manager;
         $this->logger = $logger;

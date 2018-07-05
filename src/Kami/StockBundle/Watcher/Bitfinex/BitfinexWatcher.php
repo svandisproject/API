@@ -70,10 +70,9 @@ class BitfinexWatcher extends AbstractExchangeWatcher
     private function setUniquePresentedCurrencies(array $data)
     {
         foreach ($data as $datum){
-            //$datum = 'tBTCUSD'
             if($datum[0][0] == 't'){
-                $ticker = trim($datum[0], 't');//'BTCUSD'
-                $presentedCurrency = substr($ticker, 0, -3);//'BTC'
+                $ticker = trim($datum[0], 't');
+                $presentedCurrency = substr($ticker, 0, -3);
                 if(!in_array($presentedCurrency, $this->presentedCurrencies)){
                     array_push($this->presentedCurrencies, $presentedCurrency);
                 }
