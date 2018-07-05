@@ -4,6 +4,8 @@
 namespace Kami\StockBundle\Watcher;
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\ORMInvalidArgumentException;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\AssetBundle\Entity\Volume;
 use Kami\StockBundle\Watcher\Bittrex\Utils\BittrexClient;
@@ -61,6 +63,9 @@ abstract class AbstractVolumesWatcher
      * @param Asset $asset
      * @param float $usdVolume
      * @param string $exchange
+     *
+     * @throws ORMInvalidArgumentException
+     * @throws ORMException
      */
     protected function persistVolumes(Asset $asset, $usdVolume, $exchange)
     {

@@ -14,6 +14,7 @@ services:
               - '@kami_stock.bittrex.volume.watcher'
               - '@kami_stock.binance.volume.watcher'
               - '@kami_stock.bitfinex.volume.watcher'
+              - '@kami_stock.poloniex.volume.watcher'
             public: true
 
     kami_stock.abstract.watcher:
@@ -55,6 +56,10 @@ services:
     kami_stock.poloniex.watcher:
          class: Kami\StockBundle\Watcher\Poloniex\PoloniexWatcher
          parent: kami_stock.abstract.watcher
+
+    kami_stock.poloniex.volume.watcher:
+          class: Kami\StockBundle\Watcher\Poloniex\PoloniexVolumeWatcher
+          parent: kami_stock.abstract.volumes.watcher
 
     kami_stock.bittrex.volume.watcher:
             class: Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher
