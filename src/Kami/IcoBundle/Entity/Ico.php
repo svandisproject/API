@@ -52,8 +52,7 @@ class Ico
     private $title;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Asset")
-     * @ORM\Column(name="asset", nullable=true)
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="ico")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})

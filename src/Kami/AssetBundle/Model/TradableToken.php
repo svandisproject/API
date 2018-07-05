@@ -3,7 +3,6 @@
 
 namespace Kami\AssetBundle\Model;
 
-
 use Kami\IcoBundle\Entity\Industry;
 
 class TradableToken
@@ -49,7 +48,7 @@ class TradableToken
     private $yearToDayChange;
 
     /**
-     * @var integer
+     * @var float
      */
     private $volume;
 

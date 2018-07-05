@@ -20,4 +20,11 @@ services:
             tags:
                 - { name: 'console.command' }
 
+    kami.sync.market_cap.command:
+                class: Kami\AssetBundle\Command\SyncMarketCapCommand
+                arguments:
+                    - "@kami_stock.coin_market.watcher"
+                tags:
+                    - { name: 'console.command' }
+
 
