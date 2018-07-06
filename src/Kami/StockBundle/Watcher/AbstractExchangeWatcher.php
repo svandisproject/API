@@ -73,7 +73,7 @@ abstract class AbstractExchangeWatcher
         $cassandra = $this->client;
         $prepared = $cassandra->prepare(
             'INSERT INTO svandis_asset_prices.asset_price (id, ticker, price, time) 
-              VALUES (?, ?, ?, toTimeStamp(toDate(now())));'
+              VALUES (?, ?, ?, toUnixTimestamp(now()));'
         );
         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
         $pointDbValues = $point->toDatabaseValues();
