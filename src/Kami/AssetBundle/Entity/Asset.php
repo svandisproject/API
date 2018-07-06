@@ -5,6 +5,7 @@ namespace Kami\AssetBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ContentBundle\Entity\Post;
+use Kami\IcoBundle\Entity\Ico;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -91,6 +92,18 @@ class Asset
      * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Volume", mappedBy="asset")
      */
     private $volumes;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="asset")
+     * @ORM\JoinColumn(name="ico_id", referencedColumnName="id")
+     */
+    private $ico;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\CoinMarketCap", inversedBy="asset")
+     * @ORM\JoinColumn(name="market_cap_id", referencedColumnName="id")
+     */
+    private $marketCap;
 
     /**
      * Constructor
@@ -294,4 +307,45 @@ class Asset
     {
         return $this->volumes;
     }
+
+    /**
+     * @param Ico $ico
+     *
+     * @return self
+     */
+    public function setIco($ico): self
+    {
+        $this->ico = $ico;
+
+        return $this;
+    }
+
+    /**
+     * @return Ico
+     */
+    public function getIco()
+    {
+        return $this->ico;
+    }
+
+    /**
+     * @param CoinMarketCap $marketCap
+     *
+     * @return self
+     */
+    public function setMarketCap($marketCap)
+    {
+        $this->marketCap = $marketCap;
+
+        return $this;
+    }
+
+    /**
+     * @return CoinMarketCap
+     */
+    public function getMarketCap()
+    {
+        return $this->marketCap;
+    }
+
 }

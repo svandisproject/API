@@ -5,6 +5,7 @@ namespace Kami\IcoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * Industry
@@ -12,6 +13,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="industry")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IndustryRepository")
  * @UniqueEntity({"title"})
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  */
 class Industry
 {
@@ -28,6 +30,7 @@ class Industry
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=100)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $title;
 

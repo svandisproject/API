@@ -3,53 +3,77 @@
 
 namespace Kami\AssetBundle\Model;
 
-
 use Kami\IcoBundle\Entity\Industry;
+use Kami\ApiCoreBundle\Annotation as Api;
 
+/**
+ * Class TradableToken
+ * @package Kami\AssetBundle\Model
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ */
 class TradableToken
 {
     /**
      * @var string
+     *
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $ticker;
 
     /**
      * @var string
+     *
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $title;
 
     /**
      * @var Industry
+     *
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $industry;
 
     /**
      * @var integer
+     *
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $marketCap;
 
+
     /**
      * @var float
+     *
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $price;
 
     /**
      * @var float
+     *
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $change;
 
     /**
      * @var float
+     *
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $weeklyChange;
 
     /**
      * @var float
+     *
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $yearToDayChange;
 
     /**
-     * @var integer
+     * @var float
+     *
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $volume;
 

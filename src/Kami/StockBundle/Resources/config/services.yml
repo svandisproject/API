@@ -38,32 +38,37 @@ services:
         parent: kami_stock.abstract.watcher
 
     kami_stock.binance.volume.watcher:
-                class: Kami\StockBundle\Watcher\Binance\BinanceVolumeWatcher
-                parent: kami_stock.abstract.volumes.watcher
+        class: Kami\StockBundle\Watcher\Binance\BinanceVolumeWatcher
+        parent: kami_stock.abstract.volumes.watcher
 
     kami_stock.bitfinex.watcher:
         class: Kami\StockBundle\Watcher\Bitfinex\BitfinexWatcher
         parent: kami_stock.abstract.watcher
 
     kami_stock.bitfinex.volume.watcher:
-                    class: Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher
-                    parent: kami_stock.abstract.volumes.watcher
+        class: Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher
+        parent: kami_stock.abstract.volumes.watcher
 
     kami_stock.bittrex.watcher:
         class: Kami\StockBundle\Watcher\Bittrex\BittrexWatcher
         parent: kami_stock.abstract.watcher
 
     kami_stock.poloniex.watcher:
-         class: Kami\StockBundle\Watcher\Poloniex\PoloniexWatcher
-         parent: kami_stock.abstract.watcher
+        class: Kami\StockBundle\Watcher\Poloniex\PoloniexWatcher
+        parent: kami_stock.abstract.watcher
 
     kami_stock.poloniex.volume.watcher:
-          class: Kami\StockBundle\Watcher\Poloniex\PoloniexVolumeWatcher
-          parent: kami_stock.abstract.volumes.watcher
+        class: Kami\StockBundle\Watcher\Poloniex\PoloniexVolumeWatcher
+        parent: kami_stock.abstract.volumes.watcher
 
     kami_stock.bittrex.volume.watcher:
-            class: Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher
-            parent: kami_stock.abstract.volumes.watcher
+        class: Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher
+        parent: kami_stock.abstract.volumes.watcher
 
     kami_stock.bittrex.client:
-            class: Kami\StockBundle\Watcher\Bittrex\Utils\BittrexClient
+        class: Kami\StockBundle\Watcher\Bittrex\Utils\BittrexClient
+
+    kami_stock.coin_market.watcher:
+        class: Kami\StockBundle\Watcher\CoinMarketCap\CoinMarketCapWatcher
+        arguments:
+            - '@doctrine.orm.entity_manager'
