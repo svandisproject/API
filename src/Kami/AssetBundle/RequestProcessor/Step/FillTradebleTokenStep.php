@@ -40,10 +40,8 @@ class FillTradebleTokenStep extends AbstractStep
                     foreach ($industries as $industry){
                         $token->setIndustry($industry);
                     }
-                }else{
-                    $token->setIndustry((new Industry())->setTitle('Blockchain'));
                 }
-            }else{
+            }elseif(!$ico || !$ico->getIndustries()){
                 $token->setIndustry((new Industry())->setTitle('Blockchain'));
             }
 
