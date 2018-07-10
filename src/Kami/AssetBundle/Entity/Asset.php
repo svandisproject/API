@@ -75,8 +75,10 @@ class Asset
     /**
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="assets")
      * @ORM\JoinTable(name="asset_posts")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $posts;
 
@@ -96,12 +98,20 @@ class Asset
     /**
      * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="asset")
      * @ORM\JoinColumn(name="ico_id", referencedColumnName="id")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $ico;
 
     /**
      * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\CoinMarketCap", inversedBy="asset")
      * @ORM\JoinColumn(name="market_cap_id", referencedColumnName="id")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $marketCap;
 
