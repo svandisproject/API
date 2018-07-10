@@ -18,6 +18,7 @@ parameters:
         - filter_token_step
         - sort
         - paginate
+        - fill_tradeble_token_step
         - build_serializer
         - serialize
 
