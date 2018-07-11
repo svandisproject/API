@@ -25,7 +25,7 @@ class PoloniexWatcher extends AbstractExchangeWatcher
             foreach ($tickersArray as $tickerData) {
                 $point = $this->createNewPoint($tickerData);
 
-                $this->persistPoint($point);
+                $this->persistPoint($point, 'Poloniex');
             }
         } catch (\Exception $exception) {
             $this->logger->error('Could\'t update poloniex prices');

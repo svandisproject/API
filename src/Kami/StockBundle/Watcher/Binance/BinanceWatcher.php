@@ -27,7 +27,7 @@ class BinanceWatcher extends AbstractExchangeWatcher
         foreach ($tickersArray as $tickerData) {
             $point = $this->createNewPoint($tickerData);
 
-            $this->persistPoint($point);
+            $this->persistPoint($point, 'Binance');
         }
     }
 

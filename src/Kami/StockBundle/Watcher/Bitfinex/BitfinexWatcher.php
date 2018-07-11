@@ -22,7 +22,6 @@ class BitfinexWatcher extends AbstractExchangeWatcher
 
     /**
      * @throws ORMInvalidArgumentException
-     * @throws ORMException
      * @throws \Cassandra\Exception
      * @return void
      */
@@ -38,7 +37,7 @@ class BitfinexWatcher extends AbstractExchangeWatcher
             foreach ($this->tickersArray as $tickerData){
                 $point = $this->createNewPoint($tickerData);
 
-                $this->persistPoint($point);
+                $this->persistPoint($point, 'Bitfiniex');
             }
         } catch (\Exception $exception) {
             $this->logger->error('Couldn\'t update Bitfiniex prices');

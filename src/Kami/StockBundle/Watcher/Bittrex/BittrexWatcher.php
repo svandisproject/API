@@ -9,6 +9,10 @@ use Kami\StockBundle\Watcher\Bittrex\Utils\BittrexClient;
 class BittrexWatcher extends AbstractExchangeWatcher
 {
 
+    /**
+     * @throws \Cassandra\Exception
+     * @throws \Doctrine\ORM\ORMException
+     */
     public function updateAssetPrices()
     {
         $client = new BittrexClient();
@@ -19,7 +23,7 @@ class BittrexWatcher extends AbstractExchangeWatcher
         foreach ($tickersArray as $tickerData) {
             $point = $this->createNewPoint($tickerData);
 
-            $this->persistPoint($point);
+            $this->persistPoint($point, 'Bittrex');
         }
     }
 

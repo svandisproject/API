@@ -68,12 +68,12 @@ abstract class AbstractExchangeWatcher
      * @throws \Cassandra\Exception
      * @return void
      */
-    protected function persistPoint(Point $point)
+    protected function persistPoint(Point $point, $exchange)
     {
         $cassandra = $this->client;
         $prepared = $cassandra->prepare(
-            'INSERT INTO svandis_asset_prices.asset_price (id, ticker, price, time) 
-              VALUES (?, ?, ?, toUnixTimestamp(now()));'
+            'INSERT INTO svandis_asset_prices.asset_price (id, ticker, price, exchange, time) 
+              VALUES (?, ?, ?, ?, toUnixTimestamp(now()));'
         );
         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
         $pointDbValues = $point->toDatabaseValues();
@@ -81,7 +81,8 @@ abstract class AbstractExchangeWatcher
         $batch->add($prepared, [
             'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
             'ticker' => $pointDbValues['asset'],
-            'price' =>  new \Cassandra\Float($pointDbValues['price'])
+            'price' =>  new \Cassandra\Float($pointDbValues['price']),
+            'exchange' =>  $exchange,
         ]);
 
         $cassandra->execute($batch);
