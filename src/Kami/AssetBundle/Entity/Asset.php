@@ -5,6 +5,7 @@ namespace Kami\AssetBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ContentBundle\Entity\Post;
+use Kami\IcoBundle\Entity\Ico;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -35,8 +36,7 @@ class Asset
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
-     * @Assert\NotBlank()
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -56,7 +56,7 @@ class Asset
     private $ticker;
 
     /**
-     * @ORM\Column(name="price", type="integer")
+     * @ORM\Column(name="price", type="decimal", precision=25, scale=15)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -75,10 +75,45 @@ class Asset
     /**
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="assets")
      * @ORM\JoinTable(name="asset_posts")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $posts;
+
+    /**
+     * @ORM\Column(name="convertable", type="boolean")
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $convertable = false;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Volume", mappedBy="asset")
+     */
+    private $volumes;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="asset")
+     * @ORM\JoinColumn(name="ico_id", referencedColumnName="id")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $ico;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\CoinMarketCap", inversedBy="asset")
+     * @ORM\JoinColumn(name="market_cap_id", referencedColumnName="id")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $marketCap;
 
     /**
      * Constructor
@@ -86,6 +121,7 @@ class Asset
     public function __construct()
     {
         $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->volumes = new ArrayCollection();
     }
 
     /**
@@ -229,4 +265,97 @@ class Asset
     {
         return $this->posts;
     }
+
+    /**
+     * @return boolean
+     */
+    public function getConvertable()
+    {
+        return $this->convertable;
+    }
+
+    /**
+     * @param boolean $convertable
+     */
+    public function setConvertable($convertable)
+    {
+        $this->convertable = $convertable;
+    }
+
+    /**
+     * Add volume.
+     *
+     * @param \Kami\AssetBundle\Entity\Volume $volume
+     *
+     * @return Asset
+     */
+    public function addVolume(\Kami\AssetBundle\Entity\Volume $volume)
+    {
+        $this->volumes[] = $volume;
+
+        return $this;
+    }
+
+    /**
+     * Remove volume.
+     *
+     * @param \Kami\AssetBundle\Entity\Volume $volume
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeVolume(\Kami\AssetBundle\Entity\Volume $volume)
+    {
+        return $this->volumes->removeElement($volume);
+    }
+
+    /**
+     * Get volumes.
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVolumes()
+    {
+        return $this->volumes;
+    }
+
+    /**
+     * @param Ico $ico
+     *
+     * @return self
+     */
+    public function setIco($ico): self
+    {
+        $this->ico = $ico;
+
+        return $this;
+    }
+
+    /**
+     * @return Ico
+     */
+    public function getIco()
+    {
+        return $this->ico;
+    }
+
+    /**
+     * @param CoinMarketCap $marketCap
+     *
+     * @return self
+     */
+    public function setMarketCap($marketCap)
+    {
+        $this->marketCap = $marketCap;
+
+        return $this;
+    }
+
+    /**
+     * @return CoinMarketCap
+     */
+    public function getMarketCap()
+    {
+        return $this->marketCap;
+    }
+
 }

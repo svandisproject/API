@@ -1,6 +1,9 @@
 imports:
     - { resource: config.yml }
 
+parameters:
+    proxy_url: http://vw520rzfhacf1p:5eQVQyie4_ILLX_YOtlsvDqmCw@eu-west-static-01.quotaguard.com:9293
+
 framework:
     router:
         resource: '%kernel.project_dir%/app/config/routing_dev.yml'
