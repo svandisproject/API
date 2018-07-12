@@ -49,6 +49,8 @@ class CoinMarketCapWatcher
      * @param string $ticker
      * @param array $value
      *
+     * @throws \Exception
+     *
      * @return Asset
      */
     private function findOrCreateAsset($ticker, $value): Asset
@@ -67,6 +69,7 @@ class CoinMarketCapWatcher
     /**
      * @param Asset $asset
      * @param array $value
+     * @throws \Exception
      */
     private function persistCoinMarketCap($asset, $value)
     {

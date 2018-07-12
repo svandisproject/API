@@ -65,6 +65,7 @@ abstract class AbstractExchangeWatcher
 
     /**
      * @param Point $point
+     * @param string $exchange
      * @throws \Cassandra\Exception
      * @return void
      */
