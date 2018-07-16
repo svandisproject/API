@@ -56,11 +56,8 @@ class Watcher implements StockWatcherInterface
     public function tick()
     {
         $this->poloniexWatcher->updateAssetPrices();
-
         $this->binanceWatcher->updateAssetPrices();
-
         $this->bitfinexWatcher->updateAssetPrices();
-
         $this->bittrexWatcher->updateAssetPrices();
     }
 }

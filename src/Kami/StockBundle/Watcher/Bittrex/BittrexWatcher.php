@@ -32,31 +32,25 @@ class BittrexWatcher extends AbstractExchangeWatcher
         $points = [];
         $usdPrices = [];
 
-        foreach ($tickers as $ticker) {
-            foreach ($ticker as $pair => $price) {
-                $currenciesArr = explode('-', $pair);
-                if($currenciesArr[0] == "USD"){
-                    $usdPrices[$pair] = $price;
-                    array_push($points, ['asset' => $currenciesArr[1], 'price' => $price]);
-                }
+        foreach ($tickers as $pair => $price) {
+            $currenciesArr = explode('-', $pair);
+            if($currenciesArr[0] == "USD"){
+                $usdPrices[$pair] = $price;
+                array_push($points, ['asset' => $currenciesArr[1], 'price' => $price]);
             }
         }
-        foreach ($tickers as $ticker) {
-            foreach ($ticker as $pair => $price) {
+        foreach ($tickers as $pair => $price) {
+                $coinsArray = explode('-', $pair);
+                $currency = $coinsArray[0];
+                $asset = $coinsArray[1];
 
-                    $coinsArray = explode('-', $pair);
-                    $currency = $coinsArray[0];
-                    $asset = $coinsArray[1];
-
-                    if ($currency !== "USD") {
-                        $rate = $usdPrices['USD-' . $currency] * $price;
-                        array_push($points, ['asset' => $asset, 'price' => $rate]);
-                    }
+                if ($currency !== "USD") {
+                    $rate = $usdPrices['USD-' . $currency] * $price;
+                    array_push($points, ['asset' => $asset, 'price' => $rate]);
                 }
             }
 
-          $pointsArray = $this->usdPriceNormalize($points);
-        return $pointsArray;
+        return $this->usdPriceNormalize($points);
     }
 
     /**

@@ -4,22 +4,28 @@
 namespace Kami\StockBundle\Watcher\Bittrex\Utils;
 
 use GuzzleHttp\Client;
-use Symfony\Component\Config\Definition\Exception\Exception;
+use GuzzleHttp\Promise;
+use GuzzleHttp\Exception\RequestException;
 
 class BittrexClient implements ClientInterface
 {
 
+
+    private $tickersArray = [];
+
+    private $guzzle;
+
+    public function __construct()
+    {
+        $this->guzzle = new Client();
+    }
+
     private function query($options)
     {
-        $guzzle = new Client();
-        try {
-            $body = $guzzle->get(self::API_URL . $options)->getBody();
-            $data = json_decode($body);
-            return $data;
 
-        } catch (\Exception $exception) {
-            throw new Exception('Couldn\'t get data from Bittrex API.');
-        }
+        $response = $this->guzzle->get(self::API_URL . $options);
+
+        return json_decode($response->getBody());
 
     }
 
@@ -30,29 +36,26 @@ class BittrexClient implements ClientInterface
      */
     public function getTickers() :array
     {
-
-        $tickersArray = [];
+        $linksArray = [];
 
         $marketsArray = $this->getMarkets();
 
         foreach ($marketsArray as $market) {
-
-            $data = $this->getTicker($market);
-            array_push($tickersArray, [$market => $data->result->Last]);
+            $linksArray[$market] = $this->guzzle->getAsync(self::API_URL . 'getticker?market=' . $market);
         }
+         Promise\all($linksArray)->then(
+            function ( $responses) {
+                foreach ($responses as $pair => $response) {
 
-       return $tickersArray;
-    }
+                    $this->tickersArray[$pair]  =  json_decode($response->getBody(), true)['result']['Last'];
+                }
+            },
+            function (RequestException $e) {
+                echo $e->getMessage() . "\n";
+            }
+        )->wait();
 
-    /**
-     * Get one ticker data
-     * @param string $market
-     *
-     * @return array
-     */
-    public function getTicker($market)
-    {
-        return $this->query('getticker?market=' . $market);
+       return $this->tickersArray;
     }
 
     /*
@@ -62,11 +65,10 @@ class BittrexClient implements ClientInterface
     public function getMarkets() :array
     {
         $marketsArray = [];
-        $dataArray = $this->query('getmarkets');
+       $dataArray  = $this->query('getmarkets');
         foreach ($dataArray->result as $market) {
             array_push($marketsArray, $market->MarketName);
         }
-
         return $marketsArray;
     }
 
