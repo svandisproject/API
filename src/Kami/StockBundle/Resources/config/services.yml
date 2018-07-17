@@ -6,6 +6,7 @@ services:
           - '@kami_stock.bitfinex.watcher'
           - '@kami_stock.bittrex.watcher'
           - '@kami_stock.poloniex.watcher'
+          - '@kami_stock.coin_market.watcher'
         public: true
 
     kami_stock.volumes.watcher:
@@ -15,6 +16,9 @@ services:
               - '@kami_stock.binance.volume.watcher'
               - '@kami_stock.bitfinex.volume.watcher'
               - '@kami_stock.poloniex.volume.watcher'
+              - '@doctrine.orm.entity_manager'
+              - '@snc_redis.default'
+              - '@m6web_cassandra.client.default'
             public: true
 
     kami_stock.abstract.watcher:
@@ -31,6 +35,7 @@ services:
                 - '@doctrine.orm.entity_manager'
                 - '@logger'
                 - '@kami_stock.bittrex.client'
+                - '@snc_redis.default'
                 - '%proxy_url%'
 
     kami_stock.binance.watcher:

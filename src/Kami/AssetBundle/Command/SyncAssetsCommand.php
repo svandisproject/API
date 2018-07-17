@@ -3,9 +3,7 @@
 
 namespace Kami\AssetBundle\Command;
 
-use Doctrine\ORM\EntityManager;
 use Kami\StockBundle\Watcher\Watcher;
-use M6Web\Bundle\CassandraBundle\Cassandra\Client;
 use Pusher\Pusher;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -13,16 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class SyncAssetsCommand extends Command
 {
-    /**
-     * @var Client
-     */
-    private $cassandra;
-
-    /**
-     * @var EntityManager
-     */
-    private $doctrine;
-
     /**
      * @var Watcher
      */
@@ -56,6 +44,7 @@ class SyncAssetsCommand extends Command
      * @param OutputInterface $output
      * @return int|null|void
      * @throws \Cassandra\Exception
+     * @throws \Exception
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {

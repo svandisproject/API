@@ -9,6 +9,7 @@ use Doctrine\ORM\ORMInvalidArgumentException;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\AssetBundle\Entity\Volume;
 use Kami\StockBundle\Watcher\Bittrex\Utils\BittrexClient;
+use Predis\Client;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Client as HttpClient;
 
@@ -35,22 +36,30 @@ abstract class AbstractVolumesWatcher
     protected $bittrexClient;
 
     /**
+     * @var Client
+     */
+    protected $redis;
+
+    /**
      * AbstractVolumeWatcher constructor.
      * @param EntityManager $manager
      * @param LoggerInterface $logger
      * @param BittrexClient $bittrexClient
+     * @param Client $redis
      * @param string $proxy
      */
     public function __construct(
         EntityManager $manager,
         LoggerInterface $logger,
         BittrexClient $bittrexClient,
+        Client $redis,
         $proxy
     )
     {
         $this->entityManager = $manager;
         $this->logger = $logger;
         $this->bittrexClient = $bittrexClient;
+        $this->redis = $redis;
 
         if ($this->useProxy) {
             $this->httpClient = new HttpClient(['proxy'=>$proxy]);
@@ -69,9 +78,15 @@ abstract class AbstractVolumesWatcher
      */
     protected function persistVolumes(Asset $asset, $usdVolume, $exchange)
     {
+        if($data = $this->redis->get($asset->getTicker())){
+            $newData = json_decode($data);
+            $newData->$exchange = $usdVolume;
+            $this->redis->set($asset->getTicker(), json_encode($newData));
+        } else{
+            $this->redis->set($asset->getTicker(), json_encode([$exchange => $usdVolume]));
+        }
         $volume = new Volume();
         $volume->setAsset($asset);
-
         $volume->setVolumeUsd($usdVolume);
         $volume->setAddedTime(time());
         $volume->setExchange($exchange);

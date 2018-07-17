@@ -19,23 +19,26 @@ class CoinMarketCapWatcher
         $this->em = $entityManager;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function sync()
     {
         $client = new Client();
 
-        $global = json_decode($client->get('https://api.coinmarketcap.com/v2/global/')->getBody()->getContents())->data->active_cryptocurrencies;
+        $global = json_decode($client->get('https://api.coinmarketcap.com/v2/global/')->getBody()->getContents())
+            ->data->active_cryptocurrencies;
         $start = 0;
         do{
-            $response = json_decode($client->get("https://api.coinmarketcap.com/v2/ticker?structure=array&start=$start")->getBody()->getContents())->data;
+            $response = json_decode($client->get("https://api.coinmarketcap.com/v2/ticker?structure=array&start=$start")
+                ->getBody()->getContents())->data;
             foreach ($response as $data){
                 if ((($volume = $data->quotes->USD->volume_24h) >= 1000) &&
-                    $circulatingSupply = $data->circulating_supply &&
-                    $price = $data->quotes->USD->price) {
+                    $circulatingSupply = $data->circulating_supply) {
                     $value = [
                         'title' => $data->name,
                         'circulating_supply' => $circulatingSupply,
-                        'volume' => $volume,
-                        'price' => $price,
+                        'volume' => $volume
                     ];
                     $asset = $this->findOrCreateAsset($data->symbol, $value);
                     $this->persistCoinMarketCap($asset, $value);
@@ -59,7 +62,6 @@ class CoinMarketCapWatcher
             $asset = new Asset();
             $asset->setTitle($value['title']);
             $asset->setTicker($ticker);
-            $asset->setPrice($value['price']);
             $this->em->persist($asset);
             $this->em->flush();
         }

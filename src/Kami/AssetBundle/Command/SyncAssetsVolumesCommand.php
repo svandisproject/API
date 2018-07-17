@@ -16,6 +16,11 @@ class SyncAssetsVolumesCommand extends Command
      */
     private $volumeWatcher;
 
+    /**
+     * @var bool
+     */
+    private $emergency = false;
+
     public function __construct(VolumesWatcher $watcher){
 
         $this->volumeWatcher = $watcher;
@@ -31,12 +36,18 @@ class SyncAssetsVolumesCommand extends Command
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     * @throws \Cassandra\Exception
+     * @throws \Doctrine\ORM\ORMException
+     * @throws \Doctrine\ORM\OptimisticLockException
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output):void
     {
+        while (!$this->emergency) {
 
             $this->volumeWatcher->getVolumes();
+
+            sleep(1);
+        }
     }
 
 }

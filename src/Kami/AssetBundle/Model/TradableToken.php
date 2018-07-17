@@ -50,21 +50,21 @@ class TradableToken
     private $price;
 
     /**
-     * @var float
+     * @var string|null
      *
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $change;
 
     /**
-     * @var float
+     * @var string|null
      *
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $weeklyChange;
 
     /**
-     * @var float
+     * @var string|null
      *
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
@@ -173,18 +173,18 @@ class TradableToken
     }
 
     /**
-     * @return float
+     * @return string|null
      */
-    public function getChange(): float
+    public function getChange()
     {
         return $this->change;
     }
 
     /**
-     * @param float $change
+     * @param string|null $change
      * @return TradableToken
      */
-    public function setChange(float $change): TradableToken
+    public function setChange($change): TradableToken
     {
         $this->change = $change;
 
@@ -192,18 +192,18 @@ class TradableToken
     }
 
     /**
-     * @return float
+     * @return string|null
      */
-    public function getWeeklyChange(): float
+    public function getWeeklyChange()
     {
         return $this->weeklyChange;
     }
 
     /**
-     * @param float $weeklyChange
+     * @param string|null $weeklyChange
      * @return TradableToken
      */
-    public function setWeeklyChange(float $weeklyChange): TradableToken
+    public function setWeeklyChange($weeklyChange): TradableToken
     {
         $this->weeklyChange = $weeklyChange;
 
@@ -211,18 +211,18 @@ class TradableToken
     }
 
     /**
-     * @return float
+     * @return string|null
      */
-    public function getYearToDayChange(): float
+    public function getYearToDayChange()
     {
         return $this->yearToDayChange;
     }
 
     /**
-     * @param float $yearToDayChange
+     * @param string|null $yearToDayChange
      * @return TradableToken
      */
-    public function setYearToDayChange(float $yearToDayChange): TradableToken
+    public function setYearToDayChange($yearToDayChange): TradableToken
     {
         $this->yearToDayChange = $yearToDayChange;
 
