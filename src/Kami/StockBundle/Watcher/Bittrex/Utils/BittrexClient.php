@@ -3,10 +3,7 @@
 
 namespace Kami\StockBundle\Watcher\Bittrex\Utils;
 
-use function dump;
 use GuzzleHttp\Client;
-use GuzzleHttp\Promise;
-use GuzzleHttp\Exception\RequestException;
 
 class BittrexClient implements ClientInterface
 {
@@ -38,20 +35,6 @@ class BittrexClient implements ClientInterface
         }
 
        return $tickersArray;
-    }
-
-    /*
-     * Get markets list from Bittrex API
-     *
-     */
-    public function getMarkets() :array
-    {
-        $marketsArray = [];
-       $dataArray  = $this->query('getmarkets');
-        foreach ($dataArray->result as $market) {
-            $marketsArray[] = $market->MarketName;
-        }
-        return $marketsArray;
     }
 
     public function getMarketsSummaries()

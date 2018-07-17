@@ -49,7 +49,6 @@ class BittrexWatcher extends AbstractExchangeWatcher
                     array_push($points, ['asset' => $asset, 'price' => $rate]);
                 }
             }
-
         return $this->usdPriceNormalize($points);
     }
 
