@@ -115,9 +115,9 @@ class FillTradebleTokenStep extends AbstractStep
     private function getChange($price, $lastPrice)
     {
         if($price > $lastPrice){
-            $result = '+' . ((($price * 100) / $lastPrice) - 100) . '% ' . ($price - $lastPrice);
+            $result = ((($price * 100) / $lastPrice) - 100);
         } else {
-            $result = - ((($lastPrice * 100) / $price) - 100) . '% ' . abs($price - $lastPrice);
+            $result = - ((($lastPrice * 100) / $price) - 100);
         }
 
         return $result;

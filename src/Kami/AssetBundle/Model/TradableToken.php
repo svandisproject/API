@@ -50,21 +50,21 @@ class TradableToken
     private $price;
 
     /**
-     * @var string|null
+     * @var float
      *
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $change;
 
     /**
-     * @var string|null
+     * @var float
      *
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $weeklyChange;
 
     /**
-     * @var string|null
+     * @var float
      *
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      */
@@ -173,15 +173,15 @@ class TradableToken
     }
 
     /**
-     * @return string|null
+     * @return float
      */
-    public function getChange()
+    public function getChange():float
     {
         return $this->change;
     }
 
     /**
-     * @param string|null $change
+     * @param float $change
      * @return TradableToken
      */
     public function setChange($change): TradableToken
@@ -192,15 +192,15 @@ class TradableToken
     }
 
     /**
-     * @return string|null
+     * @return float
      */
-    public function getWeeklyChange()
+    public function getWeeklyChange():float
     {
         return $this->weeklyChange;
     }
 
     /**
-     * @param string|null $weeklyChange
+     * @param float $weeklyChange
      * @return TradableToken
      */
     public function setWeeklyChange($weeklyChange): TradableToken
@@ -211,15 +211,15 @@ class TradableToken
     }
 
     /**
-     * @return string|null
+     * @return float
      */
-    public function getYearToDayChange()
+    public function getYearToDayChange():float
     {
         return $this->yearToDayChange;
     }
 
     /**
-     * @param string|null $yearToDayChange
+     * @param float $yearToDayChange
      * @return TradableToken
      */
     public function setYearToDayChange($yearToDayChange): TradableToken
