@@ -28,14 +28,12 @@ class BittrexVolumeWatcher extends AbstractVolumesWatcher
         $USDT = ($this->bittrexClient->getTicker("USD-USDT"))->result->Last;
         $USD = ($this->bittrexClient->getTicker("USD-TUSD"))->result->Last;
 
-        foreach ($markets as $market) {
-            foreach ($market as $pair => $data ) {
-                $assetsArr = explode('-', $pair);
-                $currency = $assetsArr[0];
-                $asset = $assetsArr[1];
-                $valuesArray[$asset] = isset($valuesArray[$asset]) ? $valuesArray[$asset] : 0;
-                $valuesArray[$asset] += ($currency == "USD") ? $data['BaseVolume'] : ($data['BaseVolume'] * $$currency);
-            }
+        foreach ($markets as $pair => $data) {
+            $assetsArr = explode('-', $pair);
+            $currency = $assetsArr[0];
+            $asset = $assetsArr[1];
+            $valuesArray[$asset] = isset($valuesArray[$asset]) ? $valuesArray[$asset] : 0;
+            $valuesArray[$asset] += ($currency == "USD") ? $data['BaseVolume'] : ($data['BaseVolume'] * $$currency);
         }
         return $valuesArray;
     }

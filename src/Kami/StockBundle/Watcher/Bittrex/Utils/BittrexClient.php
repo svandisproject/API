@@ -3,15 +3,13 @@
 
 namespace Kami\StockBundle\Watcher\Bittrex\Utils;
 
+use function dump;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use GuzzleHttp\Exception\RequestException;
 
 class BittrexClient implements ClientInterface
 {
-
-
-    private $tickersArray = [];
 
     private $guzzle;
 
@@ -22,11 +20,8 @@ class BittrexClient implements ClientInterface
 
     private function query($options)
     {
-
-        $response = $this->guzzle->get(self::API_URL . $options);
-
-        return json_decode($response->getBody());
-
+        $promise = $this->guzzle->getAsync(self::API_URL . $options);
+        return json_decode($promise->wait()->getBody());
     }
 
     /**
@@ -36,26 +31,13 @@ class BittrexClient implements ClientInterface
      */
     public function getTickers() :array
     {
-        $linksArray = [];
+        $tickersArray = [];
 
-        $marketsArray = $this->getMarkets();
-
-        foreach ($marketsArray as $market) {
-            $linksArray[$market] = $this->guzzle->getAsync(self::API_URL . 'getticker?market=' . $market);
+        foreach ($this->getMarketsSummaries() as $pair => $value) {
+            $tickersArray[$pair] = $value['Last'];
         }
-         Promise\all($linksArray)->then(
-            function ( $responses) {
-                foreach ($responses as $pair => $response) {
 
-                    $this->tickersArray[$pair]  =  json_decode($response->getBody(), true)['result']['Last'];
-                }
-            },
-            function (RequestException $e) {
-                echo $e->getMessage() . "\n";
-            }
-        )->wait();
-
-       return $this->tickersArray;
+       return $tickersArray;
     }
 
     /*
@@ -67,7 +49,7 @@ class BittrexClient implements ClientInterface
         $marketsArray = [];
        $dataArray  = $this->query('getmarkets');
         foreach ($dataArray->result as $market) {
-            array_push($marketsArray, $market->MarketName);
+            $marketsArray[] = $market->MarketName;
         }
         return $marketsArray;
     }
@@ -77,13 +59,13 @@ class BittrexClient implements ClientInterface
         $marketsSummariesArray = [];
         $dataArray = $this->query('getmarketsummaries');
         foreach ($dataArray->result as $market) {
-            array_push($marketsSummariesArray, [
-                $market->MarketName => [
+            $marketsSummariesArray[$market->MarketName] =
+                [
+                    'Last' => $market->Last,
                     'Volume' => $market->Volume,
                     'BaseVolume' => $market->BaseVolume,
                     'TimeStamp' => $market->TimeStamp
-                ]
-            ]);
+                ];
         }
         return $marketsSummariesArray;
     }
