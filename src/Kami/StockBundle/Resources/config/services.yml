@@ -8,15 +8,6 @@ services:
           - '@kami_stock.poloniex.watcher'
         public: true
 
-    kami_stock.volumes.watcher:
-            class: Kami\StockBundle\Watcher\VolumesWatcher
-            arguments:
-              - '@kami_stock.bittrex.volume.watcher'
-              - '@kami_stock.binance.volume.watcher'
-              - '@kami_stock.bitfinex.volume.watcher'
-              - '@kami_stock.poloniex.volume.watcher'
-            public: true
-
     kami_stock.abstract.watcher:
         abstract: true
         arguments:

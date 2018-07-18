@@ -22,20 +22,15 @@ class BittrexVolumeWatcher extends AbstractVolumesWatcher
     private function getUsdValues($markets)
     {
         $valuesArray = [];
-        $BTC = $this->bittrexClient->getMarketsSummaries()["USD-BTC"]["Last"];
-        $ETH  = $this->bittrexClient->getMarketsSummaries()["USD-ETH"]["Last"];
-        $USDT = $this->bittrexClient->getMarketsSummaries()["USD-USDT"]["Last"];
-        $USD = $this->bittrexClient->getMarketsSummaries()["USD-TUSD"]["Last"];
 
         foreach ($markets as $pair => $data) {
             $assetsArr = explode('-', $pair);
             $currency = $assetsArr[0];
             $asset = $assetsArr[1];
             $valuesArray[$asset] = isset($valuesArray[$asset]) ? $valuesArray[$asset] : 0;
-            $valuesArray[$asset] += ($currency == "USD") ? $data['BaseVolume'] : ($data['BaseVolume'] * $$currency);
+            $valuesArray[$asset] += ($currency == 'USD') ? $data['BaseVolume'] : ($data['BaseVolume'] * $markets['USD-' . $currency]['Last']);
         }
         return $valuesArray;
     }
-
 
 }

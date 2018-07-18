@@ -48,18 +48,39 @@ services:
         tags:
             - { name: 'console.command' }
 
-    kami.sync_assets.volumes.command:
-            class: Kami\AssetBundle\Command\SyncAssetsVolumesCommand
-            arguments:
-                - "@kami_stock.volumes.watcher"
-            tags:
-                - { name: 'console.command' }
+    kami.sync_assets.binance.volumes.command:
+        class: Kami\AssetBundle\Command\SyncBinanceVolumesCommand
+        arguments:
+            - '@kami_stock.binance.volume.watcher'
+        tags:
+            - { name: 'console.command' }
+
+    kami.sync_assets.bittrex.volumes.command:
+        class: Kami\AssetBundle\Command\SyncBittrexVolumesCommand
+        arguments:
+            - '@kami_stock.bittrex.volume.watcher'
+        tags:
+            - { name: 'console.command' }
+
+    kami.sync_assets.poloniex.volumes.command:
+        class: Kami\AssetBundle\Command\SyncPoloniexVolumesCommand
+        arguments:
+            - '@kami_stock.poloniex.volume.watcher'
+        tags:
+            - { name: 'console.command' }
+
+    kami.sync_assets.bitfinex.volumes.command:
+        class: Kami\AssetBundle\Command\SyncBitfinexVolumesCommand
+        arguments:
+            - '@kami_stock.bitfinex.volume.watcher'
+        tags:
+            - { name: 'console.command' }
 
     kami.sync.market_cap.command:
-                class: Kami\AssetBundle\Command\SyncMarketCapCommand
-                arguments:
-                    - "@kami_stock.coin_market.watcher"
-                tags:
-                    - { name: 'console.command' }
+        class: Kami\AssetBundle\Command\SyncMarketCapCommand
+        arguments:
+            - "@kami_stock.coin_market.watcher"
+        tags:
+            - { name: 'console.command' }
 
 
