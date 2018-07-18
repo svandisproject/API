@@ -99,11 +99,10 @@ abstract class AbstractExchangeWatcher
     {
         if (!$asset = $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $tickerData['asset']])) {
             $asset = new Asset();
+            $asset->setTicker($tickerData['asset']);
+            $this->entityManager->persist($asset);
+            $this->entityManager->flush();
         }
-        $asset->setPrice($tickerData['price']);
-        $asset->setTicker($tickerData['asset']);
-        $this->entityManager->persist($asset);
-        $this->entityManager->flush();
 
         return $asset;
     }
