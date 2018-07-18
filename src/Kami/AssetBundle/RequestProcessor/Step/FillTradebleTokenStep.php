@@ -32,17 +32,24 @@ class FillTradebleTokenStep extends AbstractStep
     {
         $this->client = $client;
 
-        $this->endOfLastYear = date('Y') - 1 . '-12-31 23:55';
-        $this->startOfCurrentYear = date('Y') . '-01-01 00:00';
-        $this->endOfLastWeek = date("Y-m-d",strtotime("last sunday")) . ' 23:55';
-        $this->startOfCurrentWeek = date("Y-m-d",strtotime("last Monday", strtotime('tomorrow'))) . ' 00:00';
-        $this->yesterday = date("Y-m-d", time() - 60 * 60 * 24) . ' 23:55';
-        $this->today = date("Y-m-d", time()) . ' 00:00';
+        $this->endOfLastYear = (new \DateTime('@'.strtotime(date('Y') - 1 . '-12-31 23:55')))
+            ->format('Y-m-d H-i');
+        $this->startOfCurrentYear = (new \DateTime('@'.strtotime(date('Y') . '-01-01 00:00')))
+            ->format('Y-m-d H-i');
+        $this->endOfLastWeek = (new \DateTime('@'.strtotime(date("Y-m-d",strtotime("last sunday")) . ' 23:55')))
+            ->format('Y-m-d H-i');
+        $this->startOfCurrentWeek = (new \DateTime('@'.strtotime(date("Y-m-d",strtotime("last Monday", strtotime('tomorrow'))) . ' 00:00')))
+            ->format('Y-m-d H-i');
+        $this->yesterday = (new \DateTime('@'.strtotime(date("Y-m-d", time() - 60 * 60 * 24) . ' 23:55')))
+            ->format('Y-m-d H-i');
+        $this->today = (new \DateTime('@'.strtotime(date("Y-m-d", time()) . ' 00:00')))
+            ->format('Y-m-d H-i');
     }
 
     /**
      * @param Request $request
      * @return ArtifactCollection
+     * @throws \Cassandra\Exception
      * @throws \Kami\Component\RequestProcessor\ProcessingException
      */
     public function execute(Request $request) : ArtifactCollection

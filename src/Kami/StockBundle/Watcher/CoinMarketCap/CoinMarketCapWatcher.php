@@ -26,26 +26,36 @@ class CoinMarketCapWatcher
     {
         $client = new Client();
 
-        $global = json_decode($client->get('https://api.coinmarketcap.com/v2/global/')->getBody()->getContents())
-            ->data->active_cryptocurrencies;
-        $start = 0;
-        do{
-            $response = json_decode($client->get("https://api.coinmarketcap.com/v2/ticker?structure=array&start=$start")
-                ->getBody()->getContents())->data;
-            foreach ($response as $data){
-                if ((($volume = $data->quotes->USD->volume_24h) >= 1000) &&
-                    $circulatingSupply = $data->circulating_supply) {
-                    $value = [
-                        'title' => $data->name,
-                        'circulating_supply' => $circulatingSupply,
-                        'volume' => $volume
-                    ];
-                    $asset = $this->findOrCreateAsset($data->symbol, $value);
-                    $this->persistCoinMarketCap($asset, $value);
+        try{
+            $globalData = $client->get('https://api.coinmarketcap.com/v2/global/');
+            $activeCryptocurrencies = json_decode($globalData->getBody()->getContents())->data->active_cryptocurrencies;
+
+            $start = 0;
+            do{
+                try{
+                    $response = $client->get("https://api.coinmarketcap.com/v2/ticker?structure=array&start=$start");
+                    $responseData = json_decode($response->getBody()->getContents())->data;
+                    foreach ($responseData as $data){
+                        if ((($volume = $data->quotes->USD->volume_24h) >= 1000) &&
+                            $circulatingSupply = $data->circulating_supply) {
+                            $value = [
+                                'title' => $data->name,
+                                'circulating_supply' => $circulatingSupply,
+                                'volume' => $volume
+                            ];
+                            $asset = $this->findOrCreateAsset($data->symbol, $value);
+                            $this->persistCoinMarketCap($asset, $value);
+                        }
+                    }
+                    $start += 100;
+                } catch (\Exception $e){
+                    echo $e->getMessage();
                 }
-            }
-            $start += 100;
-        } while($start < $global);
+            } while($start < $activeCryptocurrencies);
+        } catch (\Exception $e){
+            echo $e->getMessage();
+        }
+
     }
 
     /**
