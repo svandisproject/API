@@ -36,6 +36,11 @@ abstract class AbstractVolumesWatcher
     protected $bittrexClient;
 
     /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * @var Client
      */
     protected $redis;

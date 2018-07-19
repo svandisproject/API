@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityManager;
 use GuzzleHttp\Client;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\AssetBundle\Entity\CoinMarketCap;
+use Psr\Log\LoggerInterface;
 
 class CoinMarketCapWatcher
 {
@@ -14,9 +15,19 @@ class CoinMarketCapWatcher
      */
     private $em;
 
-    function __construct(EntityManager $entityManager)
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
+     * CoinMarketCapWatcher constructor.
+     * @param EntityManager $entityManager
+     */
+    function __construct(EntityManager $entityManager, LoggerInterface $logger)
     {
         $this->em = $entityManager;
+        $this->logger = $logger;
     }
 
     /**
@@ -30,7 +41,7 @@ class CoinMarketCapWatcher
             $globalData = $client->get('https://api.coinmarketcap.com/v2/global/');
             $activeCryptocurrencies = json_decode($globalData->getBody()->getContents())->data->active_cryptocurrencies;
             $start = 0;
-            do{
+            while ($start <= $activeCryptocurrencies) {
                 try{
                     $response = $client->get("https://api.coinmarketcap.com/v2/ticker?structure=array&start=$start");
                     $responseData = json_decode($response->getBody()->getContents())->data;
@@ -46,13 +57,12 @@ class CoinMarketCapWatcher
                             $this->persistCoinMarketCap($asset, $value);
                         }
                     }
-                    $start += 100;
                 } catch (\Exception $e){
-                    echo $e->getMessage();
+                    $this->logger->error('Could\'t update data from CoinMarketCap starting from ' . $start . " page.");
                 }
-            } while($start < $activeCryptocurrencies);
+            }
         } catch (\Exception $e){
-            echo $e->getMessage();
+            $this->logger->error('Could\'t update data from CoinMarketCap');
         }
 
     }
