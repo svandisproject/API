@@ -58,8 +58,9 @@ class CoinMarketCapWatcher
                         }
                     }
                 } catch (\Exception $e){
-                    $this->logger->error('Could\'t update data from CoinMarketCap starting from ' . $start . " page.");
+                    $this->logger->error('Could\'t update data from CoinMarketCap starting from ' . $start . ' page.');
                 }
+                $start += 100;
             }
         } catch (\Exception $e){
             $this->logger->error('Could\'t update data from CoinMarketCap');
