@@ -9,6 +9,7 @@ use Kami\AssetBundle\Entity\Asset;
 use Kami\AssetBundle\Repository\AssetRepository;
 use Kami\StockBundle\Watcher\CoinMarketCap\CoinMarketCapWatcher;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
+use Psr\Log\LoggerInterface;
 
 class CoinMarketCapWatcherTest extends WebTestCase
 {
@@ -20,8 +21,9 @@ class CoinMarketCapWatcherTest extends WebTestCase
         $assetRepoMock = $this->createMock(AssetRepository::class);
         $assetRepoMock->expects($this->any())->method('findOneBy')->willReturn($asset);
         $em = $this->createMock(EntityManager::class);
+        $logger = $this->createMock(LoggerInterface::class);
         $em->expects($this->any())->method('getRepository')->willReturn($assetRepoMock);
-        $watcher = new CoinMarketCapWatcher($em);
+        $watcher = new CoinMarketCapWatcher($em, $logger);
         $this->assertNull($watcher->sync());
     }
 }
