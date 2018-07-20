@@ -5,6 +5,7 @@ namespace Kami\StockBundle\Watcher\Bitfinex;
 
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
+use GuzzleHttp\Client;
 use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
 
 class BitfinexWatcher extends AbstractExchangeWatcher
@@ -19,8 +20,6 @@ class BitfinexWatcher extends AbstractExchangeWatcher
      */
     private $tickersArray = [];
 
-    protected $useProxy = true;
-
     /**
      * @throws ORMInvalidArgumentException
      * @throws \Cassandra\Exception
@@ -28,8 +27,9 @@ class BitfinexWatcher extends AbstractExchangeWatcher
      */
     public function updateAssetPrices()
     {
+        $guzzle = new Client();
         try {
-            $body = $this->httpClient->get('https://api.bitfinex.com/v2/tickers?symbols=ALL')->getBody();
+            $body = $guzzle->get('https://api.bitfinex.com/v2/tickers?symbols=ALL')->getBody();
             $data = json_decode($body);
             $this->setUniquePresentedCurrencies($data);
             $this->getUsdPrices($data);
@@ -37,10 +37,10 @@ class BitfinexWatcher extends AbstractExchangeWatcher
             foreach ($this->tickersArray as $tickerData){
                 $point = $this->createNewPoint($tickerData);
 
-                $this->persistPoint($point, 'Bitfinex');
+                $this->persistPoint($point, 'Bitfiniex');
             }
         } catch (\Exception $exception) {
-            $this->logger->error('Couldn\'t update Bitfinex prices');
+            $this->logger->error('Couldn\'t update Bitfiniex prices');
         }
 
     }

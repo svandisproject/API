@@ -21,10 +21,12 @@ class BinanceWatcher extends AbstractExchangeWatcher
     public function updateAssetPrices()
     {
         $api = new API();
+
         $tickers = $api->prices();
         $tickersArray = $this->getUsdPrices($tickers);
         foreach ($tickersArray as $tickerData) {
             $point = $this->createNewPoint($tickerData);
+
             $this->persistPoint($point, 'Binance');
         }
     }
@@ -81,6 +83,7 @@ class BinanceWatcher extends AbstractExchangeWatcher
 
         return $resultArray;
     }
+
 
 
 }

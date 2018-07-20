@@ -3,40 +3,38 @@
 
 namespace Kami\AssetBundle\Command;
 
+use Kami\StockBundle\Watcher\CoinMarketCap\CoinMarketCapWatcher;
 use Symfony\Component\Console\Command\Command;
-use Kami\StockBundle\Watcher\VolumesWatcher;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SyncAssetsVolumesCommand extends Command
+class SyncMarketCapCommand extends Command
 {
 
     /**
-     * @var VolumesWatcher $watcher
+     * @var CoinMarketCapWatcher
      */
-    private $volumeWatcher;
+    private $coinMarketWatcher;
 
-    public function __construct(VolumesWatcher $watcher){
-
-        $this->volumeWatcher = $watcher;
-
+    public function __construct(CoinMarketCapWatcher $coinMarketCapWatcher){
+        $this->coinMarketWatcher = $coinMarketCapWatcher;
         parent::__construct();
     }
 
     public function configure()
     {
-        $this->setName('svandis:volumes:sync');
+        $this->setName('svandis:coin-market:sync');
     }
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
+     * @return void
+     * @throws \Cassandra\Exception
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-
-            $this->volumeWatcher->getVolumes();
+        $this->coinMarketWatcher->sync();
+        sleep(1);
     }
-
 }

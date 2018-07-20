@@ -175,7 +175,7 @@ class TradableToken
     /**
      * @return float
      */
-    public function getChange():float
+    public function getChange(): float
     {
         return $this->change;
     }
@@ -184,7 +184,7 @@ class TradableToken
      * @param float $change
      * @return TradableToken
      */
-    public function setChange($change): TradableToken
+    public function setChange(float $change): TradableToken
     {
         $this->change = $change;
 
@@ -194,7 +194,7 @@ class TradableToken
     /**
      * @return float
      */
-    public function getWeeklyChange():float
+    public function getWeeklyChange(): float
     {
         return $this->weeklyChange;
     }
@@ -203,7 +203,7 @@ class TradableToken
      * @param float $weeklyChange
      * @return TradableToken
      */
-    public function setWeeklyChange($weeklyChange): TradableToken
+    public function setWeeklyChange(float $weeklyChange): TradableToken
     {
         $this->weeklyChange = $weeklyChange;
 
@@ -213,7 +213,7 @@ class TradableToken
     /**
      * @return float
      */
-    public function getYearToDayChange():float
+    public function getYearToDayChange(): float
     {
         return $this->yearToDayChange;
     }
@@ -222,7 +222,7 @@ class TradableToken
      * @param float $yearToDayChange
      * @return TradableToken
      */
-    public function setYearToDayChange($yearToDayChange): TradableToken
+    public function setYearToDayChange(float $yearToDayChange): TradableToken
     {
         $this->yearToDayChange = $yearToDayChange;
 

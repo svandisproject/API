@@ -15,7 +15,7 @@ interface ClientInterface
      *
      * @return array
      */
-    public function getMarketsSummaries();
+    public function getMarkets();
 
     /**
      * Get ticker
