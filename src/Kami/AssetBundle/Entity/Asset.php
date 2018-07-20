@@ -56,7 +56,7 @@ class Asset
     private $ticker;
 
     /**
-     * @ORM\Column(name="price", type="decimal", precision=25, scale=15, nullable=true)
+     * @ORM\Column(name="price", type="decimal", precision=25, scale=15)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
