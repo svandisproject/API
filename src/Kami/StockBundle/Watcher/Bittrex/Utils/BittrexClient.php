@@ -4,23 +4,21 @@
 namespace Kami\StockBundle\Watcher\Bittrex\Utils;
 
 use GuzzleHttp\Client;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 class BittrexClient implements ClientInterface
 {
 
+    private $guzzle;
+
+    public function __construct()
+    {
+        $this->guzzle = new Client();
+    }
+
     private function query($options)
     {
-        $guzzle = new Client();
-        try {
-            $body = $guzzle->get(self::API_URL . $options)->getBody();
-            $data = json_decode($body);
-            return $data;
-
-        } catch (\Exception $exception) {
-            throw new Exception('Couldn\'t get data from Bittrex API.');
-        }
-
+        $promise = $this->guzzle->getAsync(self::API_URL . $options);
+        return json_decode($promise->wait()->getBody());
     }
 
     /**
@@ -30,44 +28,13 @@ class BittrexClient implements ClientInterface
      */
     public function getTickers() :array
     {
-
         $tickersArray = [];
 
-        $marketsArray = $this->getMarkets();
-
-        foreach ($marketsArray as $market) {
-
-            $data = $this->getTicker($market);
-            array_push($tickersArray, [$market => $data->result->Last]);
+        foreach ($this->getMarketsSummaries() as $pair => $value) {
+            $tickersArray[$pair] = $value['Last'];
         }
 
        return $tickersArray;
-    }
-
-    /**
-     * Get one ticker data
-     * @param string $market
-     *
-     * @return array
-     */
-    public function getTicker($market)
-    {
-        return $this->query('getticker?market=' . $market);
-    }
-
-    /*
-     * Get markets list from Bittrex API
-     *
-     */
-    public function getMarkets() :array
-    {
-        $marketsArray = [];
-        $dataArray = $this->query('getmarkets');
-        foreach ($dataArray->result as $market) {
-            array_push($marketsArray, $market->MarketName);
-        }
-
-        return $marketsArray;
     }
 
     public function getMarketsSummaries()
@@ -75,13 +42,13 @@ class BittrexClient implements ClientInterface
         $marketsSummariesArray = [];
         $dataArray = $this->query('getmarketsummaries');
         foreach ($dataArray->result as $market) {
-            array_push($marketsSummariesArray, [
-                $market->MarketName => [
+            $marketsSummariesArray[$market->MarketName] =
+                [
+                    'Last' => $market->Last,
                     'Volume' => $market->Volume,
                     'BaseVolume' => $market->BaseVolume,
                     'TimeStamp' => $market->TimeStamp
-                ]
-            ]);
+                ];
         }
         return $marketsSummariesArray;
     }

@@ -6,32 +6,33 @@ services:
           - '@kami_stock.bitfinex.watcher'
           - '@kami_stock.bittrex.watcher'
           - '@kami_stock.poloniex.watcher'
+          - '@kami_stock.coin_market.watcher'
         public: true
 
     kami_stock.volumes.watcher:
-            class: Kami\StockBundle\Watcher\VolumesWatcher
-            arguments:
-              - '@kami_stock.bittrex.volume.watcher'
-              - '@kami_stock.binance.volume.watcher'
-              - '@kami_stock.bitfinex.volume.watcher'
-              - '@kami_stock.poloniex.volume.watcher'
-            public: true
+        class: Kami\StockBundle\Watcher\VolumesWatcher
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@snc_redis.default'
+          - '@m6web_cassandra.client.default'
+        public: true
 
     kami_stock.abstract.watcher:
         abstract: true
         arguments:
-            - '@m6web_cassandra.client.default'
-            - '@doctrine.orm.entity_manager'
-            - '@logger'
-            - '%proxy_url%'
+          - '@m6web_cassandra.client.default'
+          - '@doctrine.orm.entity_manager'
+          - '@logger'
+          - '%proxy_url%'
 
     kami_stock.abstract.volumes.watcher:
-            abstract: true
-            arguments:
-                - '@doctrine.orm.entity_manager'
-                - '@logger'
-                - '@kami_stock.bittrex.client'
-                - '%proxy_url%'
+        abstract: true
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@logger'
+          - '@kami_stock.bittrex.client'
+          - '@snc_redis.default'
+          - '%proxy_url%'
 
     kami_stock.binance.watcher:
         class: Kami\StockBundle\Watcher\Binance\BinanceWatcher
@@ -72,3 +73,4 @@ services:
         class: Kami\StockBundle\Watcher\CoinMarketCap\CoinMarketCapWatcher
         arguments:
             - '@doctrine.orm.entity_manager'
+            - '@logger'

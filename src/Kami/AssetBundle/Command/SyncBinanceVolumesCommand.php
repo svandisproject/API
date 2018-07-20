@@ -3,56 +3,46 @@
 
 namespace Kami\AssetBundle\Command;
 
-use Kami\StockBundle\Watcher\Watcher;
-use Pusher\Pusher;
 use Symfony\Component\Console\Command\Command;
+use Kami\StockBundle\Watcher\Binance\BinanceVolumeWatcher;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class SyncAssetsCommand extends Command
+class SyncBinanceVolumesCommand extends Command
 {
-
-    /**
-     * @var Watcher
-     */
-    private $stockWatcher;
-
-    /**
-     * @var Pusher
-     */
-    private $pusher;
 
     /**
      * @var bool
      */
     private $emergency = false;
 
-    public function __construct(Watcher $watcher, Pusher $pusher){
+    /**
+     * @var BinanceVolumeWatcher $volumeWatcher
+     */
+    private $binanceVolumeWatcher;
 
-        $this->stockWatcher = $watcher;
-        $this->pusher = $pusher;
+    public function __construct(BinanceVolumeWatcher $volumeWatcher){
+
+        $this->binanceVolumeWatcher = $volumeWatcher;
 
         parent::__construct();
     }
 
     public function configure()
     {
-        $this->setName('svandis:assets:sync');
+        $this->setName('svandis:binance.volumes:sync');
     }
 
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
      * @return int|null|void
-     * @throws \Exception
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
         while (!$this->emergency) {
-
-            $this->stockWatcher->tick();
-
-            sleep(1);
+            $this->binanceVolumeWatcher->updateVolumes();
         }
     }
+
 }
