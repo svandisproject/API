@@ -3,7 +3,6 @@
 
 namespace Kami\StockBundle\Watcher\Bitfinex;
 
-use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use GuzzleHttp\Client;
 use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
@@ -37,10 +36,10 @@ class BitfinexWatcher extends AbstractExchangeWatcher
             foreach ($this->tickersArray as $tickerData){
                 $point = $this->createNewPoint($tickerData);
 
-                $this->persistPoint($point, 'Bitfiniex');
+                $this->persistPoint($point, 'Bitfinex');
             }
         } catch (\Exception $exception) {
-            $this->logger->error('Couldn\'t update Bitfiniex prices');
+            $this->logger->error('Couldn\'t update Bitfinex prices');
         }
 
     }

@@ -8,6 +8,7 @@ use Kami\AssetBundle\Entity\Asset;
 use Kami\AssetBundle\Repository\AssetRepository;
 use Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher;
 use Kami\StockBundle\Watcher\Bittrex\Utils\BittrexClient;
+use Predis\Client;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
 
@@ -39,7 +40,8 @@ class BinanceVolumeWatcherTest extends WebTestCase
         $client = $this->createMock(BittrexClient::class);
         $client->expects($this->any())->method('getTicker')->willReturn($ticker);
         $client->expects($this->any())->method('getMarketsSummaries')->willReturn($markets);
-        $watcher = new BittrexVolumeWatcher($em, $logger, $client, false);
+        $redis = $this->createMock(Client::class);
+        $watcher = new BittrexVolumeWatcher($em, $logger, $client, $redis, false);
         $this->assertNull($watcher->updateVolumes());
     }
 }
