@@ -33,17 +33,17 @@ class FillTradebleTokenStep extends AbstractStep
         $this->client = $client;
 
         $this->endOfLastYear = (new \DateTime('@'.strtotime(date('Y') - 1 . '-12-31 23:55')))
-            ->format('Y-m-d H-i');
+            ->format('Y-m-d H:i:s');
         $this->startOfCurrentYear = (new \DateTime('@'.strtotime(date('Y') . '-01-01 00:00')))
-            ->format('Y-m-d H-i');
+            ->format('Y-m-d H:i:s');
         $this->endOfLastWeek = (new \DateTime('@'.strtotime(date("Y-m-d",strtotime("last sunday")) . ' 23:55')))
-            ->format('Y-m-d H-i');
+            ->format('Y-m-d H:i:s');
         $this->startOfCurrentWeek = (new \DateTime('@'.strtotime(date("Y-m-d",strtotime("last Monday", strtotime('tomorrow'))) . ' 00:00')))
-            ->format('Y-m-d H-i');
+            ->format('Y-m-d H:i:s');
         $this->yesterday = (new \DateTime('@'.strtotime(date("Y-m-d", time() - 60 * 60 * 24) . ' 23:55')))
-            ->format('Y-m-d H-i');
+            ->format('Y-m-d H:i:s');
         $this->today = (new \DateTime('@'.strtotime(date("Y-m-d", time()) . ' 00:00')))
-            ->format('Y-m-d H-i');
+            ->format('Y-m-d H:i:s');
     }
 
     /**
