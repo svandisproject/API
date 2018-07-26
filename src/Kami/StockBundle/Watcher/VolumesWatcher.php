@@ -7,6 +7,7 @@ namespace Kami\StockBundle\Watcher;
 use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
 use Doctrine\ORM\EntityManager;
+use function dump;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
 use Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher;
@@ -123,7 +124,7 @@ class VolumesWatcher
                     $soldAsset += $volume / $result[0]['price']->value();
                 }
 
-                $avgPrice = array_sum($data) / $soldAsset;
+                $avgPrice = ($soldAsset != 0) ? (array_sum($data) / $soldAsset) : 0;
                 $asset->setPrice($avgPrice);
                 $this->em->persist($asset);
                 $this->em->flush();
