@@ -7,14 +7,17 @@ namespace Kami\StockBundle\Watcher;
 use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
 use Doctrine\ORM\EntityManager;
-use function dump;
 use Kami\AssetBundle\Entity\Asset;
+use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
 use Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher;
 use Kami\StockBundle\Watcher\Binance\BinanceVolumeWatcher;
 use Kami\StockBundle\Watcher\Poloniex\PoloniexVolumeWatcher;
 use Predis\Client;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
+use Psr\Log\LoggerInterface;
+use Pusher\Pusher;
+use Pusher\PusherException;
 
 class VolumesWatcher
 {
@@ -54,6 +57,21 @@ class VolumesWatcher
     protected $cassandra;
 
     /**
+     * @var ChangesHelper
+     */
+    protected $changesHelper;
+
+    /**
+     * @var Pusher
+     */
+    protected $pusher;
+
+    /**
+     * @var LoggerInterface
+     */
+    protected $logger;
+
+    /**
      * VolumesWatcher constructor.
      * @param BittrexVolumeWatcher $bittrexVolumeWatcher
      * @param BinanceVolumeWatcher $binanceVolumeWatcher
@@ -62,6 +80,9 @@ class VolumesWatcher
      * @param EntityManager $em
      * @param Client $redis
      * @param CassandraClient $cassandra
+     * @param ChangesHelper $changesHelper
+     * @param Pusher $pusher
+     * @param LoggerInterface $logger
      */
     function __construct(
         BittrexVolumeWatcher $bittrexVolumeWatcher,
@@ -70,7 +91,10 @@ class VolumesWatcher
         PoloniexVolumeWatcher $poloniexVolumeWatcher,
         EntityManager $em,
         Client $redis,
-        CassandraClient $cassandra
+        CassandraClient $cassandra,
+        ChangesHelper $changesHelper,
+        Pusher $pusher,
+        LoggerInterface $logger
     )
     {
         $this->bittrexVolumeWatcher = $bittrexVolumeWatcher;
@@ -80,6 +104,9 @@ class VolumesWatcher
         $this->em = $em;
         $this->redis = $redis;
         $this->cassandra = $cassandra;
+        $this->changesHelper = $changesHelper;
+        $this->pusher = $pusher;
+        $this->logger = $logger;
     }
 
     /**
@@ -131,6 +158,7 @@ class VolumesWatcher
                 $this->em->persist($asset);
                 $this->em->flush();
 
+                $this->push($asset, $avgPrice, array_sum($data));
                 $this->storeAvgPrice($ticker, $avgPrice, array_sum($data));
             }
         }
@@ -158,5 +186,29 @@ class VolumesWatcher
         ]);
 
         $this->cassandra->execute($batch);
+    }
+
+
+    /**
+     * @param Asset $asset
+     * @param float $avgPrice
+     * @param float $volume
+     * @throws \Cassandra\Exception
+     */
+    private function push(Asset $asset, $avgPrice, $volume){
+        try {
+            $this->pusher->trigger('token', 'token', [
+                'message' => [
+                    'ticker' => $asset->getTicker(),
+                    'price' => $avgPrice,
+                    'volume' => $volume,
+                    'change' => $this->changesHelper->setChanges($asset, 'day'),
+                    'weeklyChange' => $this->changesHelper->setChanges($asset, 'week'),
+                    'yearToDayChange' => $this->changesHelper->setChanges($asset, 'year'),
+                ]
+            ]);
+        } catch (PusherException $exception) {
+            $this->logger->error('Failed to send a pusher message');
+        }
     }
 }
