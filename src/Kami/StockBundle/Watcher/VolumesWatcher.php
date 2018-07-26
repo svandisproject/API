@@ -121,7 +121,9 @@ class VolumesWatcher
 
                     $statement = new SimpleStatement($query);
                     $result = $this->cassandra->execute($statement);
-                    $soldAsset += $volume / $result[0]['price']->value();
+                    if ($result[0]['price'] != null) {
+                        $soldAsset += $volume / $result[0]['price']->value();
+                    }
                 }
 
                 $avgPrice = ($soldAsset != 0) ? (array_sum($data) / $soldAsset) : 0;
