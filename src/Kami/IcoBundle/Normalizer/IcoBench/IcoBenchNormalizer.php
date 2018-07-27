@@ -64,8 +64,8 @@ class IcoBenchNormalizer extends AbstractIcoNormalizer
                 'property' => 'finance.raised'
             ],
             'tokenPrice' => [
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
-                'property' => 'finance.price'
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\UsdPriceNormalizer',
+                'property' => 'finance'
             ],
             'tokenSaleDate' => [
                 'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\DateTimeNormalizer',

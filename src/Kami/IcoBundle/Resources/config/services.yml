@@ -31,6 +31,7 @@ services:
             - "@doctrine.orm.entity_manager"
             -
               - "@kami.ico_property_normalizer.icobench.scalar"
+              - "@kami.ico_property_normalizer.icobench.price"
               - "@kami.ico_property_normalizer.icobench.team"
               - "@kami.ico_property_normalizer.icobench.restrictions"
               - "@kami.ico_property_normalizer.icobench.kyc"
@@ -42,6 +43,11 @@ services:
 
     kami.ico_property_normalizer.icobench.scalar:
         class: Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer
+
+    kami.ico_property_normalizer.icobench.price:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\UsdPriceNormalizer
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
     kami.ico_property_normalizer.icobench.asset:
         class: Kami\IcoBundle\Normalizer\IcoBench\Property\AssetNormalizer
