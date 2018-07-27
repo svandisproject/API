@@ -19,6 +19,9 @@ services:
               - '@doctrine.orm.entity_manager'
               - '@snc_redis.default'
               - '@m6web_cassandra.client.default'
+              - '@kami_stock.changes_helper'
+              - '@lopi_pusher.pusher'
+              - '@logger'
             public: true
 
     kami_stock.abstract.watcher:
@@ -77,3 +80,8 @@ services:
         class: Kami\StockBundle\Watcher\CoinMarketCap\CoinMarketCapWatcher
         arguments:
             - '@doctrine.orm.entity_manager'
+
+    kami_stock.changes_helper:
+        class: Kami\StockBundle\ChangesHelper\ChangesHelper
+        arguments:
+            - '@m6web_cassandra.client.default'
