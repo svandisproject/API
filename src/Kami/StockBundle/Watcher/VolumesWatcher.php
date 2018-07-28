@@ -7,7 +7,6 @@ namespace Kami\StockBundle\Watcher;
 use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
 use Doctrine\ORM\EntityManager;
-use function dump;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
