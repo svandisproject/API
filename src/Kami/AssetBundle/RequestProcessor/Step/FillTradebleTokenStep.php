@@ -3,55 +3,23 @@
 
 namespace Kami\AssetBundle\RequestProcessor\Step;
 
-use Cassandra\SimpleStatement;
-use Kami\AssetBundle\Entity\Asset;
 use Kami\IcoBundle\Entity\Industry;
-//use Kami\StockBundle\ChangesHelper\ChangesHelper;
+use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\AssetBundle\Model\TradableToken;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
 use Symfony\Component\HttpFoundation\Request;
-use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
 
 class FillTradebleTokenStep extends AbstractStep
 {
-
     /**
-     * @var CassandraClient
+     * @var ChangesHelper
      */
-    private $client;
+    private $changesHelper;
 
-    private $endOfLastYear;
-
-    private $startOfCurrentYear;
-
-    private $endOfLastWeek;
-
-    private $startOfCurrentWeek;
-
-    private $yesterday;
-
-    private $today;
-
-
-//    public function __construct(ChangesHelper $changesHelper)
-    public function __construct(CassandraClient $client)
+    public function __construct(ChangesHelper $changesHelper)
     {
-//        $this->changesHelper = $changesHelper;
-
-        $this->client = $client;
-        $this->endOfLastYear = (new \DateTime('@'.strtotime(date('Y') - 1 . '-12-31 23:55')))
-            ->format('Y-m-d H:i:s');
-        $this->startOfCurrentYear = (new \DateTime('@'.strtotime(date('Y') . '-01-01 00:00')))
-            ->format('Y-m-d H:i:s');
-        $this->endOfLastWeek = (new \DateTime('@'.strtotime(date("Y-m-d",strtotime("last sunday")) . ' 23:55')))
-            ->format('Y-m-d H:i:s');
-        $this->startOfCurrentWeek = (new \DateTime('@'.strtotime(date("Y-m-d",strtotime("last Monday", strtotime('tomorrow'))) . ' 00:00')))
-            ->format('Y-m-d H:i:s');
-        $this->yesterday = (new \DateTime('@'.strtotime(date("Y-m-d", time() - 60 * 60 * 24) . ' 23:55')))
-            ->format('Y-m-d H:i:s');
-        $this->today = (new \DateTime('@'.strtotime(date("Y-m-d", time()) . ' 00:00')))
-            ->format('Y-m-d H:i:s');
+        $this->changesHelper = $changesHelper;
     }
 
     /**
@@ -85,15 +53,9 @@ class FillTradebleTokenStep extends AbstractStep
                 $token->setVolume($marketCap->getVolume24());
             }
 
-            $token->setChange($this->setChanges($asset, $this->yesterday, $this->today));
-            $token->setWeeklyChange($this->setChanges($asset, $this->endOfLastWeek, $this->startOfCurrentWeek));
-            $token->setYearToDayChange($this->setChanges($asset, $this->endOfLastYear, $this->startOfCurrentYear));
-
-//            $token->setChange($this->changesHelper->setChanges($asset, 'day'));
-//            $token->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
-//            $token->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
-
-
+            $token->setChange($this->changesHelper->setChanges($asset, 'day'));
+            $token->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
+            $token->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
             array_push($tokens, $token);
         }
         $this->getArtifact('response_data')->setContent($tokens);
@@ -106,38 +68,4 @@ class FillTradebleTokenStep extends AbstractStep
         return ['response_data'];
     }
 
-    /**
-     * @param Asset $asset
-     * @param $from
-     * @param $to
-     * @return null|string
-     * @throws \Cassandra\Exception
-     */
-    private function setChanges($asset, $from, $to)
-    {
-        $ticker = $asset->getTicker();
-        $cassandra = $this->client;
-        $query = "SELECT volume, price, ticker, max(time) ".
-            "from svandis_asset_prices.average_price ".
-            "WHERE ticker = '$ticker' AND ".
-            "time > '$from' AND ".
-            "time < '$to' ".
-            "ALLOW FILTERING";
-        $statement = new SimpleStatement($query);
-        $result = $cassandra->execute($statement);
-        if($result[0]['price'] != null){
-            return $this->getChange($asset->getPrice(), $result[0]['price']->value());
-        } else {
-            return null;
-        }
-    }
-    private function getChange($price, $lastPrice)
-    {
-        if($price > $lastPrice){
-            $result = ((($price * 100) / $lastPrice) - 100);
-        } else {
-            $result = - ((($lastPrice * 100) / $price) - 100);
-        }
-        return $result;
-    }
 }
