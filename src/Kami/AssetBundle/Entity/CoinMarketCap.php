@@ -71,6 +71,7 @@ class CoinMarketCap
     public function setAsset($asset)
     {
         $this->asset = $asset;
+        $asset->setMarketCap($this);
 
         return $this;
     }
