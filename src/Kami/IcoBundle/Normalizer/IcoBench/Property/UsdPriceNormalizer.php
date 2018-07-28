@@ -3,7 +3,6 @@
 namespace Kami\IcoBundle\Normalizer\IcoBench\Property;
 
 use Doctrine\ORM\EntityManager;
-use function dump;
 use GuzzleHttp\Client;
 use Kami\IcoBundle\Normalizer\PropertyNormalizerInterface;
 use SimpleXMLElement;
@@ -24,10 +23,8 @@ class UsdPriceNormalizer implements PropertyNormalizerInterface
     public function normalize($remoteData)
     {
         if ($price = $this->getPriceFromAsset($remoteData['token'])) {
-            dump("FROM ASSETS " .$price);
             return $price;
         } else {
-            dump("From calculate " . $this->getPrice($remoteData));
             return $this->getPrice($remoteData);
         }
     }
