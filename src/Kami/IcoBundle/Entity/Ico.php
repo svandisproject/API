@@ -121,9 +121,9 @@ class Ico
     private $raised;
 
     /**
-     * @var string|null
+     * @var int|null
      *
-     * @ORM\Column(name="token_price", type="string", nullable=true)
+     * @ORM\Column(name="token_price", type="decimal", precision=25, scale=15, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -432,7 +432,7 @@ class Ico
     /**
      * Set raised.
      *
-     * @param string|null $raised
+     * @param int|null $raised
      *
      * @return Ico
      */
@@ -446,7 +446,7 @@ class Ico
     /**
      * Get raised.
      *
-     * @return string|null
+     * @return int|null
      */
     public function getRaised()
     {
@@ -456,7 +456,7 @@ class Ico
     /**
      * Set tokenPrice.
      *
-     * @param string|null $tokenPrice
+     * @param int|null $tokenPrice
      *
      * @return Ico
      */
@@ -470,7 +470,7 @@ class Ico
     /**
      * Get tokenPrice.
      *
-     * @return string|null
+     * @return int|null
      */
     public function getTokenPrice()
     {

@@ -7,8 +7,6 @@ namespace Kami\IcoBundle\Normalizer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManager;
 use Kami\IcoBundle\Entity\Ico;
-use Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer;
-use function ucfirst;
 
 abstract class AbstractIcoNormalizer implements IcoNormalizerInterface
 {
