@@ -154,18 +154,18 @@ class TradableToken
     }
 
     /**
-     * @return float
+     * @return float|null
      */
-    public function getPrice(): float
+    public function getPrice()
     {
         return $this->price;
     }
 
     /**
-     * @param float $price
+     * @param float|null $price
      * @return TradableToken
      */
-    public function setPrice(float $price): TradableToken
+    public function setPrice ($price): TradableToken
     {
         $this->price = $price;
 

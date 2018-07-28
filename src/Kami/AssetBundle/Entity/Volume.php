@@ -33,6 +33,7 @@ class Volume
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\AssetBundle\Entity\Asset", inversedBy="volumes")
+     * @ORM\JoinColumn(name="asset_id", referencedColumnName="id")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -110,7 +111,9 @@ class Volume
      */
     public function setAsset(Asset $asset): Volume
     {
+
         $this->asset = $asset;
+        $asset->addVolume($this);
 
         return $this;
     }

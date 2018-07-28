@@ -220,11 +220,11 @@ class Ico
      */
     public function __construct()
     {
-        $this->team = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->advisors = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->partners = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->competitors = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->industries = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->team = new ArrayCollection();
+        $this->advisors = new ArrayCollection();
+        $this->partners = new ArrayCollection();
+        $this->competitors = new ArrayCollection();
+        $this->industries = new ArrayCollection();
     }
 
     /**
@@ -288,13 +288,16 @@ class Ico
     /**
      * Set asset.
      *
-     * @param string|null $asset
+     * @param Asset|null $asset
      *
      * @return Ico
      */
     public function setAsset($asset = null)
     {
-        $this->asset = $asset;
+        if ($asset) {
+            $this->asset = $asset;
+            $asset->setIco($this);
+        }
 
         return $this;
     }
@@ -302,7 +305,7 @@ class Ico
     /**
      * Get asset.
      *
-     * @return string|null
+     * @return Asset|null
      */
     public function getAsset()
     {

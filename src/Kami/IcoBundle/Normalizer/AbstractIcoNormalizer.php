@@ -25,8 +25,11 @@ abstract class AbstractIcoNormalizer implements IcoNormalizerInterface
         $this->entityManager = $manager;
     }
 
-     public function normalize(Ico $ico, $remoteData) : Ico
+     public function normalize(Ico $ico, $remoteData, $asset) : Ico
      {
+         if ($asset) {
+             $ico->setAsset($asset);
+         }
          foreach ($this->getNormalizingMap() as $property => $config) {
              $normalizer = $this->getNormalizer($config['normalizer']);
              $method = 'set'.ucfirst($property);
