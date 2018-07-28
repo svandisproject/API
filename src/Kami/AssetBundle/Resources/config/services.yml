@@ -26,7 +26,7 @@ services:
     kami.request_processor.fill_tradeble_token_step.step:
         class: Kami\AssetBundle\RequestProcessor\Step\FillTradebleTokenStep
         arguments:
-            - "@kami_stock.changes_helper"
+            - '@m6web_cassandra.client.default'
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "fill_tradeble_token_step" }
     kami.request_processor.get_asset_step.step:
