@@ -105,8 +105,8 @@ class ChangesHelper
                 "ALLOW FILTERING";
             $statement = new SimpleStatement($query);
             $result = $cassandra->execute($statement);
-            if ($result[0]['price']) {
-                return $this->getChange($asset, $result[0]['price']->value());
+            if ($result[0]['price'] != null) {
+                return $this->getChange($asset->getPrice(), $result[0]['price']->value());
             }
             return 0;
         }

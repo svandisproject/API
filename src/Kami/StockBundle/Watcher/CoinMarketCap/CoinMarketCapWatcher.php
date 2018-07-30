@@ -68,13 +68,21 @@ class CoinMarketCapWatcher
      */
     private function findOrCreateAsset($ticker, $value): Asset
     {
-        if (!$asset = $this->em->getRepository(Asset::class)->findOneBy(['ticker' => $ticker])) {
-            $asset = new Asset();
-            $asset->setTitle($value['title']);
-            $asset->setTicker($ticker);
-            $this->em->persist($asset);
-            $this->em->flush();
+        if ($asset = $this->em->getRepository(Asset::class)->findOneBy(['ticker' => $ticker])) {
+            if($asset->getTitle() == null){
+                $asset->setTitle($value['title']);
+                $this->em->persist($asset);
+                $this->em->flush();
+            }
+            return $asset;
         }
+
+        $asset = new Asset();
+        $asset->setTitle($value['title']);
+        $asset->setTicker($ticker);
+        $this->em->persist($asset);
+        $this->em->flush();
+
         return $asset;
     }
 

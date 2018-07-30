@@ -22,11 +22,11 @@ class AssetNormalizer extends AbstractPropertyNormalizer
      *
      * @throws \Doctrine\ORM\ORMException
      */
-    protected function findAsset($symbol)
+    protected function findAsset($symbol): ?Asset
     {
         $asset = $this->entityManager
             ->getRepository(Asset::class)
-            ->findOneBy(['title' => $symbol]);
+            ->findOneBy(['ticker' => $symbol]);
 
         return $asset;
     }

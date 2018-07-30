@@ -36,7 +36,9 @@ class FillTradebleTokenStep extends AbstractStep
             $token = new TradableToken();
             $token->setTicker($asset->getTicker());
             $token->setPrice($asset->getPrice());
-            $asset->getTitle() ? $token->setTitle($asset->getTitle()) : $token->setTitle($asset->getTicker());
+            if ($asset->getTitle()) {
+                $token->setTitle($asset->getTitle());
+            }
 
             if($ico = $asset->getIco()){
                 if($industries = $ico->getIndustries()){
