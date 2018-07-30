@@ -118,7 +118,9 @@ class ChangesHelper
         if($price > $lastPrice){
             $result = ((($price * 100) / $lastPrice) - 100);
         } else {
-            $result = - ((($lastPrice * 100) / $price) - 100);
+            if ($price != 0) {
+                $result = - ((($lastPrice * 100) / $price) - 100);
+            } else $result = 0;
         }
 
         return $result;

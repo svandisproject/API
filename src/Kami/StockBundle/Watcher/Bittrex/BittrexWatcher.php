@@ -16,8 +16,10 @@ class BittrexWatcher extends AbstractExchangeWatcher
     public function updateAssetPrices()
     {
         $client = new BittrexClient();
-        $tickers = $client->getTickers();
 
+        if (!$tickers = $client->getTickers()) {
+            $this->logger->error('Couldn\'t get data from Bittrex API');
+        }
         $tickersArray = $this->getUsdPrices($tickers);
 
         foreach ($tickersArray as $tickerData) {

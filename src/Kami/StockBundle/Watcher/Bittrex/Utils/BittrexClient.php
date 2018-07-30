@@ -4,7 +4,6 @@
 namespace Kami\StockBundle\Watcher\Bittrex\Utils;
 
 use GuzzleHttp\Client;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 class BittrexClient implements ClientInterface
 {
@@ -18,7 +17,7 @@ class BittrexClient implements ClientInterface
             return $data;
 
         } catch (\Exception $exception) {
-            throw new Exception('Couldn\'t get data from Bittrex API.');
+            dump($exception->getMessage());
         }
 
     }
