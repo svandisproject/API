@@ -77,7 +77,8 @@ class SyncIcosCommand extends Command
             foreach ($response['results'] as $result) {
                 $remoteData = $this->icoBenchClient->getIco($result['id']);
                 $ico = $this->findOrCreateIco($result['id']);
-                $ico = $this->icoBenchNormalizer->normalize($ico, $remoteData);
+                $asset = $this->findAsset($remoteData['finance']['token']);
+                $ico = $this->icoBenchNormalizer->normalize($ico, $remoteData, $asset);
 
                 $this->manager->persist($ico);
                 $this->manager->flush();
@@ -105,5 +106,20 @@ class SyncIcosCommand extends Command
         }
 
         return $ico;
+    }
+
+    /**
+     * @param string $ticker
+     *
+     * @return Asset | null
+     */
+    protected function findAsset($ticker)
+    {
+        if ($asset = $this->manager->getRepository('KamiAssetBundle:Asset')
+            ->findOneBy(['ticker' => $ticker])
+        ) {
+            return $asset;
+        }
+        return null;
     }
 }

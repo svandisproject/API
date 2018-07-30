@@ -10,9 +10,10 @@ interface IcoNormalizerInterface
     /**
      * @param Ico $ico
      * @param mixed $remoteData
+     * @param Asset $asset | null
      * @return mixed
      */
-    public function normalize(Ico $ico, $remoteData) : Ico;
+    public function normalize(Ico $ico, $remoteData, $asset) : Ico;
 
     /**
      * @return array
