@@ -53,11 +53,11 @@ class ChangesHelper
             ->format('Y-m-d H:i:s');
         $this->endOfLastWeek = (new \DateTime("last sunday 23:55"))
             ->format('Y-m-d H:i:s');
-        $this->startOfCurrentWeek = (new \DateTime("last Monday 00:00"))
+        $this->startOfCurrentWeek = (new \DateTime())
+            ->setTimestamp(strtotime("last Monday", strtotime('tomorrow')))
             ->format('Y-m-d H:i:s');
         $this->yesterday = (new \DateTime('yesterday 23:55'))
             ->format('Y-m-d H:i:s');
-//        $this->today = (new \DateTime('@'.strtotime(date("Y-m-d", time()) . ' 00:00')))
         $this->today = (new \DateTime('now'))
             ->format('Y-m-d H:i:s');
     }
@@ -84,6 +84,7 @@ class ChangesHelper
                 $to = $this->startOfCurrentYear;
                 break;
         }
+        dump($from, $to);
         $ticker = $asset->getTicker();
         $cassandra = $this->client;
         $query = "SELECT volume, price, ticker, max(time) ".
