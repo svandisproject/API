@@ -84,7 +84,7 @@ class ChangesHelper
                 $to = $this->startOfCurrentYear;
                 break;
         }
-        dump($from, $to);
+
         $ticker = $asset->getTicker();
         $cassandra = $this->client;
         $query = "SELECT volume, price, ticker, max(time) ".
