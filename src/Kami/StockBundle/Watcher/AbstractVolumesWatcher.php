@@ -8,7 +8,6 @@ use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\AssetBundle\Entity\Volume;
-use Kami\StockBundle\Watcher\Bittrex\Utils\BittrexClient;
 use Predis\Client;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Client as HttpClient;
@@ -31,11 +30,6 @@ abstract class AbstractVolumesWatcher
     protected $useProxy = false;
 
     /**
-     * @var BittrexClient
-     */
-    protected $bittrexClient;
-
-    /**
      * @var Client
      */
     protected $redis;
@@ -44,21 +38,18 @@ abstract class AbstractVolumesWatcher
      * AbstractVolumeWatcher constructor.
      * @param EntityManager $manager
      * @param LoggerInterface $logger
-     * @param BittrexClient $bittrexClient
      * @param Client $redis
      * @param string $proxy
      */
     public function __construct(
         EntityManager $manager,
         LoggerInterface $logger,
-        BittrexClient $bittrexClient,
         Client $redis,
         $proxy
     )
     {
         $this->entityManager = $manager;
         $this->logger = $logger;
-        $this->bittrexClient = $bittrexClient;
         $this->redis = $redis;
 
         if ($this->useProxy) {
