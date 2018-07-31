@@ -8,6 +8,7 @@ use Kami\StockBundle\Watcher\Bitfinex\BitfinexWatcher;
 use Kami\StockBundle\Watcher\Bittrex\BittrexWatcher;
 use Kami\StockBundle\Watcher\CoinMarketCap\CoinMarketCapWatcher;
 use Kami\StockBundle\Watcher\Poloniex\PoloniexWatcher;
+use Kami\StockBundle\Watcher\CCXT\CcxtWatcher;
 
 class Watcher implements StockWatcherInterface
 {
@@ -32,6 +33,11 @@ class Watcher implements StockWatcherInterface
     public $poloniexWatcher;
 
     /**
+     * @var CcxtWatcher
+     */
+    public $ccxtWatcher;
+
+    /**
      * @var CoinMarketCapWatcher
      */
     private $coinMarketWatcher;
@@ -43,18 +49,22 @@ class Watcher implements StockWatcherInterface
      * @param BittrexWatcher $bittrexWatcher
      * @param PoloniexWatcher $poloniexWatcher
      * @param CoinMarketCapWatcher $coinMarketCapWatcher
+     * @param CcxtWatcher $ccxtWatcher
      */
     public function __construct(BinanceWatcher $binanceWatcher,
                                 BitfinexWatcher $bitfinexWatcher,
                                 BittrexWatcher $bittrexWatcher,
                                 PoloniexWatcher $poloniexWatcher,
-                                CoinMarketCapWatcher $coinMarketCapWatcher)
+                                CoinMarketCapWatcher $coinMarketCapWatcher,
+                                CcxtWatcher $ccxtWatcher
+)
     {
         $this->poloniexWatcher = $poloniexWatcher;
         $this->binanceWatcher = $binanceWatcher;
         $this->bitfinexWatcher = $bitfinexWatcher;
         $this->bittrexWatcher = $bittrexWatcher;
         $this->coinMarketWatcher = $coinMarketCapWatcher;
+        $this->ccxtWatcher = $ccxtWatcher;
     }
 
     /**
@@ -64,15 +74,17 @@ class Watcher implements StockWatcherInterface
      */
     public function tick()
     {
-        $this->poloniexWatcher->updateAssetPrices();
+        $this->ccxtWatcher->updateAssetPrices();
 
-        $this->binanceWatcher->updateAssetPrices();
-
-        $this->bitfinexWatcher->updateAssetPrices();
-
-        $this->bittrexWatcher->updateAssetPrices();
-
-        $this->coinMarketWatcher->sync();
+//        $this->poloniexWatcher->updateAssetPrices();
+//
+//        $this->binanceWatcher->updateAssetPrices();
+//
+//        $this->bitfinexWatcher->updateAssetPrices();
+//
+//        $this->bittrexWatcher->updateAssetPrices();
+//
+//        $this->coinMarketWatcher->sync();
 
     }
 }
