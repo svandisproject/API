@@ -3,9 +3,9 @@
 
 namespace Kami\StockBundle\Watcher;
 
-use Kami\StockBundle\Watcher\Binance\BinanceWatcher;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexWatcher;
-use Kami\StockBundle\Watcher\Bittrex\BittrexWatcher;
+use Kami\StockBundle\Watcher\CCXT\Binance\BinanceAssetsWatcher;
+use Kami\StockBundle\Watcher\CCXT\Bittrex\BittrexAssetsWatcher;
 use Kami\StockBundle\Watcher\CoinMarketCap\CoinMarketCapWatcher;
 use Kami\StockBundle\Watcher\Poloniex\PoloniexWatcher;
 
