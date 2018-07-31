@@ -22,3 +22,6 @@ doctrine:
     dbal:
         driver: pdo_sqlite
         path: '%kernel.project_dir%/var/cache/test/data.sqlite'
+
+service:
+    - redis-server
