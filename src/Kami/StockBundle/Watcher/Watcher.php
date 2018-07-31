@@ -28,7 +28,7 @@ class Watcher implements StockWatcherInterface
     public $poloniexWatcher;
 
     /**
-     * @var CcxtWatcher
+     * @var BittrexAssetsWatcher
      */
     public $bittrexAssetsWatcher;
 
