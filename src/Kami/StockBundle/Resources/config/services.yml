@@ -7,6 +7,7 @@ services:
           - '@kami_stock.bittrex.watcher'
           - '@kami_stock.poloniex.watcher'
           - '@kami_stock.coin_market.watcher'
+          - '@kami_stock.ccxt.watcher'
         public: true
 
     kami_stock.volumes.watcher:
@@ -86,3 +87,7 @@ services:
         arguments:
             - '@m6web_cassandra.client.default'
             - '@snc_redis.default'
+
+    kami_stock.ccxt.watcher:
+            class: Kami\StockBundle\Watcher\CCXT\CcxtWatcher
+            parent: kami_stock.abstract.watcher
