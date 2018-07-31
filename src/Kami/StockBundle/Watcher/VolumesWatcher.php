@@ -21,6 +21,10 @@ use Pusher\PusherException;
 
 class VolumesWatcher
 {
+    private $change;
+    private $weeklyChange;
+    private $yearToDayChange;
+
     /**
      * @var BittrexVolumeWatcher
      */
@@ -158,6 +162,7 @@ class VolumesWatcher
                 $this->em->persist($asset);
                 $this->em->flush();
 
+                $this->setChanges($asset);
                 $this->push($asset, $avgPrice, array_sum($data));
                 $this->storeAvgPrice($ticker, $avgPrice, array_sum($data));
             }
@@ -202,13 +207,31 @@ class VolumesWatcher
                     'ticker' => $asset->getTicker(),
                     'price' => $avgPrice,
                     'volume' => $volume,
-                    'change' => $this->changesHelper->setChanges($asset, 'day'),
-                    'weeklyChange' => $this->changesHelper->setChanges($asset, 'week'),
-                    'yearToDayChange' => $this->changesHelper->setChanges($asset, 'year'),
+                    'change' => $this->change,
+                    'weeklyChange' => $this->weeklyChange,
+                    'yearToDayChange' => $this->yearToDayChange,
                 ]
             ]);
         } catch (PusherException $exception) {
             $this->logger->error('Failed to send a pusher message');
         }
+    }
+
+    /**
+     * @param Asset $asset
+     * @throws \Cassandra\Exception
+     */
+    private function setChanges(Asset $asset):void
+    {
+        $this->change = $this->changesHelper->setChanges($asset, 'day');
+        $this->weeklyChange = $this->changesHelper->setChanges($asset, 'week');
+        $this->yearToDayChange = $this->changesHelper->setChanges($asset, 'year');
+        $ticker = $asset->getTicker();
+        $data = $this->redis->get($ticker);
+        $newData = json_decode($data);
+        $newData->change = $this->change;
+        $newData->weeklyChange = $this->weeklyChange;
+        $newData->yearToDayChange = $this->yearToDayChange;
+        $this->redis->set($ticker, json_encode($newData));
     }
 }
