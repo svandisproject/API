@@ -4,22 +4,28 @@
 namespace Kami\AssetBundle\RequestProcessor\Step;
 
 use Kami\IcoBundle\Entity\Industry;
-use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\AssetBundle\Model\TradableToken;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
+use Predis\Client;
 use Symfony\Component\HttpFoundation\Request;
 
 class FillTradebleTokenStep extends AbstractStep
 {
-    /**
-     * @var ChangesHelper
-     */
-    private $changesHelper;
+    private $change = 0;
 
-    public function __construct(ChangesHelper $changesHelper)
+    private $weeklyChange = 0;
+
+    private $yearToDayChange = 0;
+
+    /**
+     * @var Client
+     */
+    private $redis;
+
+    public function __construct(Client $redis)
     {
-        $this->changesHelper = $changesHelper;
+        $this->redis = $redis;
     }
 
     /**
@@ -55,9 +61,16 @@ class FillTradebleTokenStep extends AbstractStep
                 $token->setVolume($marketCap->getVolume24());
             }
 
-            $token->setChange($this->changesHelper->setChanges($asset, 'day'));
-            $token->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
-            $token->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
+
+            if($data = $this->redis->get($asset->getTicker())){
+                $data = json_decode($data);
+                $this->change = $data->change;
+                $this->weeklyChange = $data->weeklyChange;
+                $this->yearToDayChange = $data->yearToDayChange;
+            }
+            $token->setChange($this->change);
+            $token->setWeeklyChange($this->weeklyChange);
+            $token->setYearToDayChange($this->yearToDayChange);
             array_push($tokens, $token);
         }
         $this->getArtifact('response_data')->setContent($tokens);
