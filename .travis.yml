@@ -32,9 +32,6 @@ install:
   - bin/generate-token
   - cp app/config/parameters.yml.dist app/config/parameters.yml
 
-before_script:
-    - sudo redis-server /etc/redis/redis.conf --port 6379
-
 # Run script
 script:
   - vendor/bin/simple-phpunit
