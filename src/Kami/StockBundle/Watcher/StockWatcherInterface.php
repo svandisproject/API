@@ -8,6 +8,7 @@ use Kami\StockBundle\Watcher\Bitfinex\BitfinexWatcher;
 use Kami\StockBundle\Watcher\Bittrex\BittrexWatcher;
 use Kami\StockBundle\Watcher\CoinMarketCap\CoinMarketCapWatcher;
 use Kami\StockBundle\Watcher\Poloniex\PoloniexWatcher;
+use Kami\StockBundle\Watcher\CCXT\CcxtWatcher;
 
 interface StockWatcherInterface
 {
@@ -15,7 +16,9 @@ interface StockWatcherInterface
                                 BitfinexWatcher $bitfinexWatcher,
                                 BittrexWatcher $bittrexWatcher,
                                 PoloniexWatcher $poloniexWatcher,
-                                CoinMarketCapWatcher $coinMarketCapWatcher);
+                                CoinMarketCapWatcher $coinMarketCapWatcher,
+                                CcxtWatcher $ccxtWatcher
+    );
 
     /**
      * Returns graph points to store
