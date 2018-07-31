@@ -10,7 +10,6 @@ class BittrexWatcher extends AbstractExchangeWatcher
 {
 
     /**
-     * @throws \Cassandra\Exception
      * @throws \Doctrine\ORM\ORMException
      */
     public function updateAssetPrices()
