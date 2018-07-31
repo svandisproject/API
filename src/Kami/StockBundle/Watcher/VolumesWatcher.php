@@ -10,8 +10,8 @@ use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
-use Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher;
-use Kami\StockBundle\Watcher\Binance\BinanceVolumeWatcher;
+use Kami\StockBundle\Watcher\CCXT\Binance\BinanceVolumesWatcher;
+use Kami\StockBundle\Watcher\CCXT\Bittrex\BittrexVolumesWatcher;
 use Kami\StockBundle\Watcher\Poloniex\PoloniexVolumeWatcher;
 use Predis\Client;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
@@ -21,15 +21,11 @@ use Pusher\PusherException;
 
 class VolumesWatcher
 {
-    /**
-     * @var BittrexVolumeWatcher
-     */
-    public $bittrexVolumeWatcher;
 
     /**
-     * @var BinanceVolumeWatcher
+     * @var BinanceVolumesWatcher
      */
-    public $binanceVolumeWatcher;
+    public $binanceVolumesWatcher;
 
     /**
      * @var PoloniexVolumeWatcher
@@ -40,6 +36,11 @@ class VolumesWatcher
      * @var BitfinexVolumeWatcher
      */
     public $bitfinexVolumeWatcher;
+
+    /**
+     * @var BittrexVolumesWatcher
+     */
+    public $bittrexVolumesWatcher;
 
     /**
      * @var EntityManager
@@ -73,10 +74,10 @@ class VolumesWatcher
 
     /**
      * VolumesWatcher constructor.
-     * @param BittrexVolumeWatcher $bittrexVolumeWatcher
-     * @param BinanceVolumeWatcher $binanceVolumeWatcher
+     * @param BinanceVolumesWatcher $binanceVolumesWatcher
      * @param BitfinexVolumeWatcher $bitfinexVolumeWatcher
      * @param PoloniexVolumeWatcher $poloniexVolumeWatcher
+     * @param BittrexVolumesWatcher $bittrexVolumesWatcher
      * @param EntityManager $em
      * @param Client $redis
      * @param CassandraClient $cassandra
@@ -85,10 +86,10 @@ class VolumesWatcher
      * @param LoggerInterface $logger
      */
     function __construct(
-        BittrexVolumeWatcher $bittrexVolumeWatcher,
-        BinanceVolumeWatcher $binanceVolumeWatcher,
+        BinanceVolumesWatcher $binanceVolumesWatcher,
         BitfinexVolumeWatcher $bitfinexVolumeWatcher,
         PoloniexVolumeWatcher $poloniexVolumeWatcher,
+        BittrexVolumesWatcher $bittrexVolumesWatcher,
         EntityManager $em,
         Client $redis,
         CassandraClient $cassandra,
@@ -97,8 +98,8 @@ class VolumesWatcher
         LoggerInterface $logger
     )
     {
-        $this->bittrexVolumeWatcher = $bittrexVolumeWatcher;
-        $this->binanceVolumeWatcher = $binanceVolumeWatcher;
+        $this->bittrexVolumesWatcher = $bittrexVolumesWatcher;
+        $this->binanceVolumesWatcher = $binanceVolumesWatcher;
         $this->bitfinexVolumeWatcher = $bitfinexVolumeWatcher;
         $this->poloniexVolumeWatcher = $poloniexVolumeWatcher;
         $this->em = $em;
@@ -116,9 +117,9 @@ class VolumesWatcher
      */
     public function getVolumes()
     {
-        $this->bittrexVolumeWatcher->updateVolumes();
+        $this->bittrexVolumesWatcher->updateVolumes();
 
-        $this->binanceVolumeWatcher->updateVolumes();
+        $this->binanceVolumesWatcher->updateVolumes();
 
         $this->bitfinexVolumeWatcher->updateVolumes();
 

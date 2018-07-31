@@ -42,7 +42,6 @@ class BinanceVolumeWatcher extends AbstractVolumesWatcher
                 }
             }
         }
-
         return $points;
 
     }
