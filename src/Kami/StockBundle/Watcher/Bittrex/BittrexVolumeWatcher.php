@@ -3,7 +3,6 @@
 
 namespace Kami\StockBundle\Watcher\Bittrex;
 
-
 use Kami\StockBundle\Watcher\AbstractVolumesWatcher;
 
 class BittrexVolumeWatcher extends AbstractVolumesWatcher

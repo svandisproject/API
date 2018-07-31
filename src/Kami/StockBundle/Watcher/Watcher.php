@@ -3,24 +3,19 @@
 
 namespace Kami\StockBundle\Watcher;
 
-use Kami\StockBundle\Watcher\Binance\BinanceWatcher;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexWatcher;
-use Kami\StockBundle\Watcher\Bittrex\BittrexWatcher;
+use Kami\StockBundle\Watcher\CCXT\Binance\BinanceAssetsWatcher;
 use Kami\StockBundle\Watcher\CoinMarketCap\CoinMarketCapWatcher;
 use Kami\StockBundle\Watcher\Poloniex\PoloniexWatcher;
-use Kami\StockBundle\Watcher\CCXT\CcxtWatcher;
+use Kami\StockBundle\Watcher\CCXT\Bittrex\BittrexAssetsWatcher;
 
 class Watcher implements StockWatcherInterface
 {
-    /**
-     * @var BinanceWatcher
-     */
-    public $binanceWatcher;
 
     /**
-     * @var BittrexWatcher
+     * @var BinanceAssetsWatcher
      */
-    public $bittrexWatcher;
+    public $binanceAssetsWatcher;
 
     /**
      * @var BitfinexWatcher
@@ -35,7 +30,7 @@ class Watcher implements StockWatcherInterface
     /**
      * @var CcxtWatcher
      */
-    public $ccxtWatcher;
+    public $bittrexAssetsWatcher;
 
     /**
      * @var CoinMarketCapWatcher
@@ -44,27 +39,25 @@ class Watcher implements StockWatcherInterface
 
     /**
      * Watcher constructor.
-     * @param BinanceWatcher $binanceWatcher
+     * @param BinanceAssetsWatcher $binanceAssetsWatcher
      * @param BitfinexWatcher $bitfinexWatcher
-     * @param BittrexWatcher $bittrexWatcher
      * @param PoloniexWatcher $poloniexWatcher
      * @param CoinMarketCapWatcher $coinMarketCapWatcher
-     * @param CcxtWatcher $ccxtWatcher
+     * @param BittrexAssetsWatcher $bittrexAssetsWatcher
      */
-    public function __construct(BinanceWatcher $binanceWatcher,
+    public function __construct(
+                                BinanceAssetsWatcher $binanceAssetsWatcher,
                                 BitfinexWatcher $bitfinexWatcher,
-                                BittrexWatcher $bittrexWatcher,
                                 PoloniexWatcher $poloniexWatcher,
                                 CoinMarketCapWatcher $coinMarketCapWatcher,
-                                CcxtWatcher $ccxtWatcher
+                                BittrexAssetsWatcher $bittrexAssetsWatcher
 )
     {
         $this->poloniexWatcher = $poloniexWatcher;
-        $this->binanceWatcher = $binanceWatcher;
+        $this->binanceAssetsWatcher = $binanceAssetsWatcher;
         $this->bitfinexWatcher = $bitfinexWatcher;
-        $this->bittrexWatcher = $bittrexWatcher;
         $this->coinMarketWatcher = $coinMarketCapWatcher;
-        $this->ccxtWatcher = $ccxtWatcher;
+        $this->bittrexAssetsWatcher = $bittrexAssetsWatcher;
     }
 
     /**
@@ -74,17 +67,16 @@ class Watcher implements StockWatcherInterface
      */
     public function tick()
     {
-        $this->ccxtWatcher->updateAssetPrices();
 
-//        $this->poloniexWatcher->updateAssetPrices();
-//
-//        $this->binanceWatcher->updateAssetPrices();
-//
-//        $this->bitfinexWatcher->updateAssetPrices();
-//
-//        $this->bittrexWatcher->updateAssetPrices();
-//
-//        $this->coinMarketWatcher->sync();
+        $this->bittrexAssetsWatcher->updateAssetPrices();
+
+        $this->poloniexWatcher->updateAssetPrices();
+
+        $this->binanceAssetsWatcher->updateAssetPrices();
+
+        $this->bitfinexWatcher->updateAssetPrices();
+
+        $this->coinMarketWatcher->sync();
 
     }
 }
