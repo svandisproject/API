@@ -6,8 +6,7 @@ namespace Tests\KamiStockBundle\Watcher\Binance;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\AssetBundle\Repository\AssetRepository;
-use Kami\StockBundle\Watcher\Binance\BinanceVolumeWatcher;
-use Kami\StockBundle\Watcher\Bittrex\Utils\BittrexClient;
+use Kami\StockBundle\Watcher\CCXT\Binance\BinanceVolumesWatcher;
 use Predis\Client;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Tests\Functional\WebTestCase;
@@ -24,9 +23,8 @@ class BinanceVolumeWatcherTest extends WebTestCase
         $em = $this->createMock(EntityManager::class);
         $em->expects($this->any())->method('getRepository')->willReturn($assetRepoMock);
         $logger = $this->createMock(LoggerInterface::class);
-        $client = $this->createMock(BittrexClient::class);
         $redis = $this->createMock(Client::class);
-        $watcher = new BinanceVolumeWatcher($em, $logger, $client, $redis, false);
+        $watcher = new BinanceVolumesWatcher($em, $logger, $redis, false);
         $this->assertNull($watcher->updateVolumes());
     }
 }
