@@ -6,7 +6,6 @@ php:
 # Define an environment variable
 env:
   - SYMFONY_ENV=test
-  - REDIS_URL=redis://localhost
 
 # Update composer
 before-install:
