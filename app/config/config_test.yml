@@ -25,6 +25,6 @@ doctrine:
 
 snc_redis:
     clients:
-        cache:
+        default:
             type: predis
             dsn: "redis://localhost"
