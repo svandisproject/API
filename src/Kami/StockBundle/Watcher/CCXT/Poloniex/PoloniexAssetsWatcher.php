@@ -1,11 +1,18 @@
 <?php
 
 
-namespace Kami\StockBundle\Watcher\Poloniex;
+namespace Kami\StockBundle\Watcher\CCXT\Poloniex;
 
+
+use ccxt\ExchangeError;
+use ccxt\NetworkError;
+use ccxt\poloniex;
+use function dump;
 use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
 
-class PoloniexWatcher extends AbstractExchangeWatcher
+include_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))).'/vendor/ccxt/ccxt/ccxt.php';
+
+class PoloniexAssetsWatcher extends AbstractExchangeWatcher
 {
 
     protected $useProxy = true;
@@ -17,18 +24,40 @@ class PoloniexWatcher extends AbstractExchangeWatcher
      */
     public function updateAssetPrices()
     {
+        $poloniexExchange = new poloniex();
+
         try {
-            $body = $this->httpClient->get('https://poloniex.com/public?command=returnTicker')->getBody();
-            $data = (array) json_decode($body);
-            $tickersArray = $this->getUsdPrices($data);
+            $poloniexTickers = $poloniexExchange->fetch_tickers();
+
+        } catch (NetworkError $e) {
+            $this->logger->error('[Network Error] ' . $e->getMessage ());
+        } catch (ExchangeError $e) {
+            $this->logger->error('[Exchange Error] ' . $e->getMessage ());
+        } catch (\Exception $e) {
+            $this->logger->error('[Error] ' . $e->getMessage ());
+        }
+
+        if ($poloniexTickers) {
+            $tickersArray = $this->getUsdPrices($poloniexTickers);
+
             foreach ($tickersArray as $tickerData) {
                 $point = $this->createNewPoint($tickerData);
-
                 $this->persistPoint($point, 'Poloniex');
             }
-        } catch (\Exception $exception) {
-            $this->logger->error('Could\'t update poloniex prices');
         }
+
+//        try {
+//            $body = $this->httpClient->get('https://poloniex.com/public?command=returnTicker')->getBody();
+//            $data = (array) json_decode($body);
+//            $tickersArray = $this->getUsdPrices($data);
+//            foreach ($tickersArray as $tickerData) {
+//                $point = $this->createNewPoint($tickerData);
+//
+//                $this->persistPoint($point, 'Poloniex');
+//            }
+//        } catch (\Exception $exception) {
+//            $this->logger->error('Could\'t update poloniex prices');
+//        }
 
     }
 
@@ -42,6 +71,7 @@ class PoloniexWatcher extends AbstractExchangeWatcher
         $usdPrices = [];
 
         foreach ($data as $pair => $dataObject) {
+            dump($pair, $dataObject); die;
             $currenciesArr = explode('_', $pair);
             if($currenciesArr[0] == "USDT"){
                 $usdPrices[$pair] = floatval($dataObject->last);
@@ -64,12 +94,12 @@ class PoloniexWatcher extends AbstractExchangeWatcher
     }
 
     /**
-    * Get average arithmetic of asset price in USD
-    *
-    * @param array
-    *
-    * @return array
-    */
+     * Get average arithmetic of asset price in USD
+     *
+     * @param array
+     *
+     * @return array
+     */
     private function usdPriceNormalize($tickersArray) :array
     {
         $normalizeArray = [];
@@ -87,7 +117,5 @@ class PoloniexWatcher extends AbstractExchangeWatcher
 
         return $resultArray;
     }
-
-
 
 }

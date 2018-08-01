@@ -5,7 +5,7 @@ services:
           - '@kami_stock.binance.assets.watcher'
           - '@kami_stock.bitfinex.watcher'
           - '@kami_stock.poloniex.watcher'
-          - '@kami_stock.coin_market.watcher'
+          - '@kami_stock.coin_market.assets.watcher'
           - '@kami_stock.bittrex.assets.watcher'
         public: true
 
@@ -61,6 +61,12 @@ services:
         arguments:
             - '@doctrine.orm.entity_manager'
 
+    kami_stock.coin_market.assets.watcher:
+        class: Kami\StockBundle\Watcher\CCXT\CoinMarketCap\CoinMarketCapAssetsWatcher
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+
     kami_stock.changes_helper:
         class: Kami\StockBundle\ChangesHelper\ChangesHelper
         arguments:
@@ -81,3 +87,15 @@ services:
     kami_stock.binance.volumes.watcher:
                 class: Kami\StockBundle\Watcher\CCXT\Binance\BinanceVolumesWatcher
                 parent: kami_stock.abstract.volumes.watcher
+
+    kami_stock.bitfinex.assets.watcher:
+                class: Kami\StockBundle\Watcher\CCXT\Bitfinex\BitfinexAssetsWatcher
+                parent: kami_stock.abstract.watcher
+
+    kami_stock.bitfinex.volumes.watcher:
+                class: Kami\StockBundle\Watcher\CCXT\Bitfinex\BitfinexVolumesWatcher
+                parent: kami_stock.abstract.volumes.watcher
+
+    kami_stock.poloniex.assets.watcher:
+                    class: Kami\StockBundle\Watcher\CCXT\Poloniex\PoloniexAssetsWatcher
+                    parent: kami_stock.abstract.watcher
