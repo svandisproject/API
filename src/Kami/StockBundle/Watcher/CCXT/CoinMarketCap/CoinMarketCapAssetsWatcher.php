@@ -108,5 +108,4 @@ class CoinMarketCapAssetsWatcher
         $this->em->flush();
     }
 
-
 }
