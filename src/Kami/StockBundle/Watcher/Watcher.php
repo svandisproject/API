@@ -57,6 +57,8 @@ class Watcher implements StockWatcherInterface
         $this->coinMarketWatcher = $coinMarketCapWatcher;
     }
 
+
+
     /**
      * Returns graph points to store
      * @throws \Exception
