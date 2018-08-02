@@ -50,7 +50,7 @@ class CoinMarketCapAssetsWatcher
         if (isset($marketCapData)) {
             foreach ($marketCapData as $key => $data) {
                if (($volume = $data['info']['24h_volume_usd'] >= 1000) &&
-                   $circulatingSupply = $data['info']['total_supply']) {
+                   $circulatingSupply = $data['info']['available_supply']) {
                    $value = [
                        'title' => $data['info']['name'],
                        'circulating_supply' => $circulatingSupply,
