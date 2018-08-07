@@ -65,7 +65,7 @@ class ChangesHelper
             ->format('Y-m-d H:i:s');
         $this->yesterday = (new \DateTime('yesterday 23:55'))
             ->format('Y-m-d H:i:s');
-        $this->today = (new \DateTime('now'))
+        $this->today = (new \DateTime('today midnight'))
             ->format('Y-m-d H:i:s');
     }
 
