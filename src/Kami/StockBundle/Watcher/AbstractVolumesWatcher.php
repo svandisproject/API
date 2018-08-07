@@ -82,7 +82,7 @@ abstract class AbstractVolumesWatcher
             $newData = json_decode($data);
             $newData->$exchange = $usdVolume;
             $this->redis->set($asset->getTicker(), json_encode($newData));
-        } else{
+        } else {
             $this->redis->set($asset->getTicker(), json_encode([$exchange => $usdVolume]));
         }
         $volume = new Volume();

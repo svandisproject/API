@@ -45,7 +45,6 @@ class BittrexWatcher extends AbstractExchangeWatcher
         }
         foreach ($tickers as $ticker) {
             foreach ($ticker as $pair => $price) {
-
                     $coinsArray = explode('-', $pair);
                     $currency = $coinsArray[0];
                     $asset = $coinsArray[1];
