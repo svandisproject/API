@@ -6,7 +6,6 @@ namespace Kami\StockBundle\Watcher\History;
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
 use Cassandra\Uuid;
-use function floatval;
 use Kami\AssetBundle\Entity\Asset;
 
 class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
