@@ -3,6 +3,7 @@
 namespace Kami\StockBundle\ChangesHelper;
 
 use Cassandra\SimpleStatement;
+use Predis\Client;
 use Kami\AssetBundle\Entity\Asset;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
 
@@ -12,6 +13,11 @@ class ChangesHelper
      * @var CassandraClient
      */
     private $client;
+
+    /**
+     * @var Client
+     */
+    public $redis;
 
     /**
      * @var \DateTime
@@ -43,9 +49,10 @@ class ChangesHelper
      */
     private $today;
 
-    public function __construct(CassandraClient $client)
+    public function __construct(CassandraClient $client, Client $redis)
     {
         $this->client = $client;
+        $this->redis = $redis;
 
         $this->endOfLastYear = (new \DateTime(date('Y') - 1 . '-12-31 23:55'))
             ->format('Y-m-d H:i:s');
@@ -68,20 +75,23 @@ class ChangesHelper
      * @return null|string
      * @throws \Cassandra\Exception
      */
-    public function setChanges($asset,$period)
+    public function setChanges(Asset $asset, string $period)
     {
         switch ($period){
             case 'day':
                 $from = $this->yesterday;
                 $to = $this->today;
+                $change = 'change';
                 break;
             case 'week':
                 $from = $this->endOfLastWeek;
                 $to = $this->startOfCurrentWeek;
+                $change = 'weeklyChange';
                 break;
             case 'year':
                 $from = $this->endOfLastYear;
                 $to = $this->startOfCurrentYear;
+                $change = 'yearToDayChange';
                 break;
         }
 
@@ -97,7 +107,7 @@ class ChangesHelper
         $result = $cassandra->execute($statement);
 
         if($result[0]['price'] != null){
-            return $this->getChange($asset->getPrice(), $result[0]['price']->value());
+            return $this->getChange($asset, $result[0]['price']->value(), $change);
         } else {
             $query = "SELECT volume, price, ticker, max(time) ".
                 "from svandis_asset_prices.average_price ".
@@ -107,14 +117,21 @@ class ChangesHelper
             $statement = new SimpleStatement($query);
             $result = $cassandra->execute($statement);
             if ($result[0]['price'] != null) {
-                return $this->getChange($asset->getPrice(), $result[0]['price']->value());
+                return $this->getChange($asset, $result[0]['price']->value(), $change);
             }
             return 0;
         }
     }
 
-    private function getChange($price, $lastPrice)
+    /**
+     * @param Asset $asset
+     * @param float $lastPrice
+     * @param string $change
+     * @return float|int
+     */
+    private function getChange(Asset $asset, float $lastPrice, string $change)
     {
+        $price = $asset->getPrice();
         if($price > $lastPrice){
             $result = ((($price * 100) / $lastPrice) - 100);
         } else {
@@ -123,6 +140,19 @@ class ChangesHelper
             } else $result = 0;
         }
 
+        $this->setRedisChanges($asset->getTicker(), $result, $change);
         return $result;
+    }
+
+    /**
+     * @param string $ticker
+     * @param float $result
+     * @param string $change
+     */
+    public function setRedisChanges(string $ticker, float $result, string $change):void
+    {
+        $data = json_decode($this->redis->get($ticker));
+        $data->$change = $result;
+        $this->redis->set($ticker, json_encode($data));
     }
 }
