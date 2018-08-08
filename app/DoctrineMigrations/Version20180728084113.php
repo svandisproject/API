@@ -16,7 +16,7 @@ final class Version20180728084113 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
         $this->addSql('ALTER TABLE ico DROP column token_price');
-        $this->addSql('ALTER TABLE table_name ADD COLUMN token_price NUMERIC(25, 15);');
+        $this->addSql('ALTER TABLE ico ADD COLUMN token_price NUMERIC(25, 15);');
         $this->addSql('ALTER TABLE ico ALTER token_price DROP DEFAULT');
     }
 
