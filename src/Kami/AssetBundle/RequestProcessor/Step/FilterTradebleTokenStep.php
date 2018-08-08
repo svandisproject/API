@@ -47,6 +47,14 @@ class FilterTradebleTokenStep extends AbstractStep
                     $filter['property'] = 'volume24';
                     $queryModel = 'market_cap';
                     break;
+                case 'weekly_change':
+                    $property = $reflection->getProperty('weeklyChange');
+                    $filter['property'] = 'weeklyChange';
+                    break;
+                case 'year_to_day_change':
+                    $property = $reflection->getProperty('yearToDayChange');
+                    $filter['property'] = 'yearToDayChange';
+                    break;
                 default:
                     $property = $reflection->getProperty($filter['property']);
             }

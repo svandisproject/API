@@ -54,7 +54,7 @@ class BittrexClient implements ClientInterface
         return $this->query('getticker?market=' . $market);
     }
 
-    /*
+    /**
      * Get markets list from Bittrex API
      *
      */

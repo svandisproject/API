@@ -116,11 +116,35 @@ class Asset
     private $marketCap;
 
     /**
+     * @ORM\Column(name="change", type="float", nullable=true)
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $change;
+
+    /**
+     * @ORM\Column(name="weekly_change", type="float", nullable=true)
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $weeklyChange;
+
+    /**
+     * @ORM\Column(name="year_to_day_change", type="float", nullable=true)
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $yearToDayChange;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new ArrayCollection();
         $this->volumes = new ArrayCollection();
     }
 
@@ -356,6 +380,54 @@ class Asset
     public function getMarketCap()
     {
         return $this->marketCap;
+    }
+
+    /**
+     * @return float
+     */
+    public function getChange()
+    {
+        return $this->change;
+    }
+
+    /**
+     * @param float $change
+     */
+    public function setChange($change): void
+    {
+        $this->change = $change;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWeeklyChange()
+    {
+        return $this->weeklyChange;
+    }
+
+    /**
+     * @param float $weeklyChange
+     */
+    public function setWeeklyChange($weeklyChange): void
+    {
+        $this->weeklyChange = $weeklyChange;
+    }
+
+    /**
+     * @return float
+     */
+    public function getYearToDayChange()
+    {
+        return $this->yearToDayChange;
+    }
+
+    /**
+     * @param float $yearToDayChange
+     */
+    public function setYearToDayChange($yearToDayChange): void
+    {
+        $this->yearToDayChange = $yearToDayChange;
     }
 
 }
