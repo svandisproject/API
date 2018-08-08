@@ -50,7 +50,7 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         'ESS' => 'essentia',
         'eBoost' => 'eboostcoin',
         'ERC' => 'europecoin',
-        'DOPE' => 'dopecoin',
+        'DopeCoin' => 'dopecoin',
         'BYC' => 'bytecent',
         'XMG' => 'magi',
         'GBG' => 'golos-gold',
@@ -116,13 +116,14 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         'Peerguess' => 'guess',
         'LocalCoinSwap' => 'local-coin-swap',
         'Gems' => 'gems-protocol',
-        'Cofound.it' => 'cofound-it'
+        'Cofound.it' => 'cofound-it',
+        'SoMee.Social' => 'ongsocial'
     ];
 
     public function updateVolumes()
     {
         $assets = $this->getAssets();
-        $this->persistHistoryVolumes($this->getRemoteData($assets));
+        $this->persistHistoryVolumes($this->normalizeRemoteData($this->getRemoteData($assets)));
     }
 
     /**
@@ -141,12 +142,12 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
     {
         foreach ($assets as $asset) {
 
-            $title = str_replace(' ', '-', strtolower($asset->getTitle()));
-            if($asset->getTitle() == null){
+            $title = trim(str_replace(' ', '-', strtolower($asset->getTitle())), '-');
+
+            if ($asset->getTitle() == null) {
                 $title = strtolower($asset->getTicker());
-            } elseif (array_key_exists($asset->getTitle(), $this->wrongTitle) || array_key_exists($asset->getTicker(), $this->wrongTitle)) {
-                $title = $this->wrongTitle[$asset->getTitle()] ?: $this->wrongTitle[$asset->getTicker()];
             }
+
             try {
                 $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
                 $data = (array) json_decode($body);
@@ -156,7 +157,20 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                     'volume_usd' => $data['volume_usd']
                 ];
             } catch (\Exception $exception) {
-                $this->logger->error('Could\'t get remote history data for ' . $title );
+                try {
+                    if (array_key_exists($asset->getTitle(), $this->wrongTitle) || array_key_exists($asset->getTicker(), $this->wrongTitle)) {
+                        $title = $this->wrongTitle[$asset->getTitle()] ?: $this->wrongTitle[$asset->getTicker()];
+                    }
+                    $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
+                    $data = (array) json_decode($body);
+                    $this->historyDataAsset[$asset->getTicker()] = [
+                        'available_supply' => $data['market_cap_by_available_supply'],
+                        'price_usd' => $data['price_usd'],
+                        'volume_usd' => $data['volume_usd']
+                    ];
+                } catch (\Exception $exception) {
+                    $this->logger->error('Could\'t get remote history data for ' . $title );
+                }
             }
         }
         return $this->historyDataAsset;
@@ -172,19 +186,20 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         try {
             foreach ($historyData as $symbol => $itemData) {
                 foreach ($itemData as $value) {
-
-                    $prepared = $this->client->prepare(
-                        'INSERT INTO svandis_asset_prices.average_price (price, ticker, time, volume)
+                    if ($value['price'] != null) {
+                        $prepared = $this->client->prepare(
+                            'INSERT INTO svandis_asset_prices.average_price (price, ticker, time, volume)
                     VALUES (?, ?, toTimestamp('. new Timeuuid(intval($value['time'])) . '), ?);'
-                    );
-                    $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
+                        );
+                        $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
 
-                    $batch->add($prepared, [
-                        'price' =>  new \Cassandra\Float($value['price']),
-                        'ticker' => $symbol,
-                        'volume' =>  new \Cassandra\Float($value['volume'])
-                    ]);
-                    $this->client->execute($batch);
+                        $batch->add($prepared, [
+                            'price' =>  new \Cassandra\Float($value['price']),
+                            'ticker' => $symbol,
+                            'volume' =>  new \Cassandra\Float($value['volume'])
+                        ]);
+                        $this->client->execute($batch);
+                    }
                 }
             }
 
@@ -221,7 +236,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                 }
             }
         }
-
         return $all;
     }
 
