@@ -12,10 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class FillTradebleTokenStep extends AbstractStep
 {
-    private $change = 0;
-    private $weeklyChange = 0;
-    private $yearToDayChange = 0;
-
     /**
      * @var Client
      */
@@ -59,15 +55,9 @@ class FillTradebleTokenStep extends AbstractStep
                 $token->setVolume($marketCap->getVolume24());
             }
 
-            if($data = $this->redis->get($asset->getTicker())){
-                $data = json_decode($data);
-                $this->change = $data->change;
-                $this->weeklyChange = $data->weeklyChange;
-                $this->yearToDayChange = $data->yearToDayChange;
-            }
-            $token->setChange($this->change);
-            $token->setWeeklyChange($this->weeklyChange);
-            $token->setYearToDayChange($this->yearToDayChange);
+            $token->setChange($asset->getChange());
+            $token->setWeeklyChange($asset->getWeeklyChange());
+            $token->setYearToDayChange($asset->getYearToDayChange());
             array_push($tokens, $token);
         }
         $this->getArtifact('response_data')->setContent($tokens);
