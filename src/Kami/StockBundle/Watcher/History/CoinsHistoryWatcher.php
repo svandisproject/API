@@ -6,6 +6,7 @@ namespace Kami\StockBundle\Watcher\History;
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
 use Cassandra\Uuid;
+use function floatval;
 use Kami\AssetBundle\Entity\Asset;
 
 class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
@@ -136,11 +137,13 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
     {
         foreach ($assets as $asset) {
 
-            $title = str_replace(' ', '-', strtolower($asset->getTitle()));
+            $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
             if($asset->getTitle() == null){
                 $title = strtolower($asset->getTicker());
-            } elseif (array_key_exists($asset->getTitle(), $this->wrongTitle) || array_key_exists($asset->getTicker(), $this->wrongTitle)) {
-                 $title = $this->wrongTitle[$asset->getTitle()] ?: $this->wrongTitle[$asset->getTicker()];
+            } elseif (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
+                $title = $this->wrongTitle[$asset->getTitle()];
+            } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
+                $title = $this->wrongTitle[$asset->getTicker()];
             }
             try {
                 $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
@@ -177,7 +180,7 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
                     $batch->add($prepared, [
                         'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
                         'ticker' => $ticker,
-                        'price' =>  new \Cassandra\Float($data[1]),
+                        'price' =>  new \Cassandra\Float(floatval($data[1])),
                         'exchange' =>  'CoinMarketCap'
                     ]);
                     $cassandra->execute($batch);
