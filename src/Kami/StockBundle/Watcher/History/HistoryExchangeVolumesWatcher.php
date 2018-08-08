@@ -5,6 +5,7 @@ namespace Kami\StockBundle\Watcher\History;
 
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
+use function floatval;
 use Kami\AssetBundle\Entity\Asset;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
