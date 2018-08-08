@@ -99,6 +99,7 @@ services:
         class: Kami\StockBundle\ChangesHelper\ChangesHelper
         arguments:
             - '@m6web_cassandra.client.default'
+            - '@snc_redis.default'
 
     kami_stock.coins_history_data.watcher:
             class: Kami\StockBundle\Watcher\History\CoinsHistoryWatcher
