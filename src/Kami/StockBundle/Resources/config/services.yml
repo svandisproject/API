@@ -101,6 +101,7 @@ services:
             - '@m6web_cassandra.client.default'
             - '@snc_redis.default'
 
+
     kami_stock.coins_history_data.watcher:
             class: Kami\StockBundle\Watcher\History\CoinsHistoryWatcher
             parent: kami_stock.abstract.history_exchange.watcher
