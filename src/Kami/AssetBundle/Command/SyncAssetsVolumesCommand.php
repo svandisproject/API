@@ -30,7 +30,7 @@ class SyncAssetsVolumesCommand extends Command
 
     public function configure()
     {
-        $this->setName('svandis:volumes:sync'); 
+        $this->setName('svandis:volumes:sync');
     }
 
     /**
