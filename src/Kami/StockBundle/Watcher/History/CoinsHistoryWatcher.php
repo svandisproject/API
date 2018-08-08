@@ -6,6 +6,7 @@ namespace Kami\StockBundle\Watcher\History;
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
 use Cassandra\Uuid;
+use function floatval;
 use Kami\AssetBundle\Entity\Asset;
 
 class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
@@ -179,7 +180,7 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
                     $batch->add($prepared, [
                         'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
                         'ticker' => $ticker,
-                        'price' =>  new \Cassandra\Float($data[1]),
+                        'price' =>  new \Cassandra\Float(floatval($data[1])),
                         'exchange' =>  'CoinMarketCap'
                     ]);
                     $cassandra->execute($batch);

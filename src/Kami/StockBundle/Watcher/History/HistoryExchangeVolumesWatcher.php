@@ -5,6 +5,7 @@ namespace Kami\StockBundle\Watcher\History;
 
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
+use function floatval;
 use Kami\AssetBundle\Entity\Asset;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
@@ -196,9 +197,9 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
 
                         $batch->add($prepared, [
-                            'price' =>  new \Cassandra\Float($value['price']),
+                            'price' =>  new \Cassandra\Float(floatval($value['price'])),
                             'ticker' => $symbol,
-                            'volume' =>  new \Cassandra\Float($value['volume'])
+                            'volume' =>  new \Cassandra\Float(floatval($value['volume']))
                         ]);
                         $this->client->execute($batch);
                     }
