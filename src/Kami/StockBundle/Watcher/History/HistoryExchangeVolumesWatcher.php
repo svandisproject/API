@@ -142,7 +142,7 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
     {
         foreach ($assets as $asset) {
 
-            $title = trim(str_replace(' ', '-', strtolower($asset->getTitle())), '-');
+            $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
 
             if ($asset->getTitle() == null) {
                 $title = strtolower($asset->getTicker());
@@ -158,8 +158,10 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                 ];
             } catch (\Exception $exception) {
                 try {
-                    if (array_key_exists($asset->getTitle(), $this->wrongTitle) || array_key_exists($asset->getTicker(), $this->wrongTitle)) {
-                        $title = $this->wrongTitle[$asset->getTitle()] ?: $this->wrongTitle[$asset->getTicker()];
+                    if (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
+                        $title = $this->wrongTitle[$asset->getTitle()];
+                    } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
+                        $title = $this->wrongTitle[$asset->getTicker()];
                     }
                     $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
                     $data = (array) json_decode($body);

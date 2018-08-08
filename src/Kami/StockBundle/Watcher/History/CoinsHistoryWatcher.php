@@ -136,11 +136,13 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
     {
         foreach ($assets as $asset) {
 
-            $title = str_replace(' ', '-', strtolower($asset->getTitle()));
+            $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
             if($asset->getTitle() == null){
                 $title = strtolower($asset->getTicker());
-            } elseif (array_key_exists($asset->getTitle(), $this->wrongTitle) || array_key_exists($asset->getTicker(), $this->wrongTitle)) {
-                 $title = $this->wrongTitle[$asset->getTitle()] ?: $this->wrongTitle[$asset->getTicker()];
+            } elseif (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
+                $title = $this->wrongTitle[$asset->getTitle()];
+            } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
+                $title = $this->wrongTitle[$asset->getTicker()];
             }
             try {
                 $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
