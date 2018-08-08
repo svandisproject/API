@@ -4,7 +4,7 @@ parameters:
         - validate_resource_access
         - get_query_builder
         - build_select_query
-        - sort
+        - sort_token
         - paginate
         - fill_tradeble_token_step
         - build_serializer
@@ -16,7 +16,7 @@ parameters:
         - get_query_builder
         - build_select_query
         - filter_token_step
-        - sort
+        - sort_token
         - paginate
         - fill_tradeble_token_step
         - build_serializer
@@ -29,6 +29,12 @@ services:
             - "@snc_redis.default"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "fill_tradeble_token_step" }
+    kami.request_processor.sort_token.step:
+        class: Kami\AssetBundle\RequestProcessor\Step\SortStep
+        arguments:
+            - "@kami.api_core.access_manager"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "sort_token" }
     kami.request_processor.get_asset_step.step:
         class: Kami\AssetBundle\RequestProcessor\Step\GetAssetReflectionFromRequestStep
         tags:
