@@ -3,7 +3,6 @@
 
 namespace Kami\StockBundle\Watcher\Poloniex;
 
-use GuzzleHttp\Client;
 use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
 
 class PoloniexWatcher extends AbstractExchangeWatcher
