@@ -51,7 +51,7 @@ class FillTradebleTokenStep extends AbstractStep
             }
 
             if($marketCap = $asset->getMarketCap()){
-                $token->setMarketCap($marketCap->getCirculatingSupply() * $asset->getPrice());
+                $token->setMarketCap($marketCap->getCirculatingSupply());
                 $token->setVolume($marketCap->getVolume24());
             }
 

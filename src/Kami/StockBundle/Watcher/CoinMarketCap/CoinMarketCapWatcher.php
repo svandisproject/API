@@ -98,7 +98,7 @@ class CoinMarketCapWatcher
             $marketCap = new CoinMarketCap();
         }
         $marketCap->setAsset($asset);
-        $marketCap->setCirculatingSupply($value['circulating_supply']);
+        $marketCap->setCirculatingSupply($value['circulating_supply'] * $asset->getPrice());
         $marketCap->setVolume24($value['volume']);
 
         $this->em->persist($marketCap);
