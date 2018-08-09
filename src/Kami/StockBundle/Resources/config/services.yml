@@ -103,33 +103,6 @@ services:
             - '@m6web_cassandra.client.default'
             - '@doctrine.orm.entity_manager'
 
-    kami_stock.bittrex.assets.watcher:
-            class: Kami\StockBundle\Watcher\CCXT\Bittrex\BittrexAssetsWatcher
-            parent: kami_stock.abstract.watcher
-
-    kami_stock.bittrex.volumes.watcher:
-            class: Kami\StockBundle\Watcher\CCXT\Bittrex\BittrexVolumesWatcher
-            parent: kami_stock.abstract.volumes.watcher
-
-    kami_stock.binance.assets.watcher:
-                class: Kami\StockBundle\Watcher\CCXT\Binance\BinanceAssetsWatcher
-                parent: kami_stock.abstract.watcher
-
-    kami_stock.binance.volumes.watcher:
-                class: Kami\StockBundle\Watcher\CCXT\Binance\BinanceVolumesWatcher
-                parent: kami_stock.abstract.volumes.watcher
-
-    kami_stock.bitfinex.assets.watcher:
-                class: Kami\StockBundle\Watcher\CCXT\Bitfinex\BitfinexAssetsWatcher
-                parent: kami_stock.abstract.watcher
-
-    kami_stock.bitfinex.volumes.watcher:
-                class: Kami\StockBundle\Watcher\CCXT\Bitfinex\BitfinexVolumesWatcher
-                parent: kami_stock.abstract.volumes.watcher
-
-    kami_stock.poloniex.assets.watcher:
-                    class: Kami\StockBundle\Watcher\CCXT\Poloniex\PoloniexAssetsWatcher
-                    parent: kami_stock.abstract.watcher
     kami_stock.coins_history_data.watcher:
             class: Kami\StockBundle\Watcher\History\CoinsHistoryWatcher
             parent: kami_stock.abstract.history_exchange.watcher
