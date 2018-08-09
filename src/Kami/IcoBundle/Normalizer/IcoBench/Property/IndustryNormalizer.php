@@ -11,11 +11,11 @@ class IndustryNormalizer extends AbstractPropertyNormalizer
 {
     public function normalize($remoteData): array
     {
+        $uniqueIndustries = array_unique($remoteData, SORT_REGULAR);
         $industries = [];
-        foreach ($remoteData as $industry) {
+        foreach ($uniqueIndustries as $industry) {
            $industries[] = $this->findOrCreateIndustry($industry);
         }
-
         return $industries;
     }
 
