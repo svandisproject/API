@@ -11,8 +11,6 @@ use Kami\StockBundle\Watcher\AbstractVolumesWatcher;
 use GuzzleHttp\Client;
 use SimpleXMLElement;
 
-include_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))).'/vendor/ccxt/ccxt/ccxt.php';
-
 class BitfinexVolumesWatcher extends AbstractVolumesWatcher
 {
 

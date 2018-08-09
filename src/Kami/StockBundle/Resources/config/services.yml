@@ -47,12 +47,12 @@ services:
            - '@logger'
 
     kami_stock.abstract.volumes.watcher:
-            abstract: true
-            arguments:
-                - '@doctrine.orm.entity_manager'
-                - '@logger'
-                - '@snc_redis.default'
-                - '%proxy_url%'
+        abstract: true
+        arguments:
+          - '@doctrine.orm.entity_manager'
+          - '@logger'
+          - '@snc_redis.default'
+          - '%proxy_url%'
 
     kami_stock.binance.assets.watcher:
          class: Kami\StockBundle\Watcher\CCXT\Binance\BinanceAssetsWatcher
