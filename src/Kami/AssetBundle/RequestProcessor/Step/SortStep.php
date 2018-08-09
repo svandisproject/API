@@ -49,7 +49,7 @@ class SortStep extends AbstractStep
             case 'market_cap':
                 $reflection = new \ReflectionClass(CoinMarketCap::class);
                 $query = 'market_cap.%s';
-                $sort = 'circulatingSupply';
+                $sort = 'marketCap';
                 break;
         }
 
