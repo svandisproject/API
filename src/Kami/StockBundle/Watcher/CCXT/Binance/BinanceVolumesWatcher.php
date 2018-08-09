@@ -9,8 +9,6 @@ use Exception;
 use Kami\StockBundle\Watcher\AbstractVolumesWatcher;
 use \ccxt\binance;
 
-include_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))).'/vendor/ccxt/ccxt/ccxt.php';
-
 class BinanceVolumesWatcher extends AbstractVolumesWatcher
 {
     public function updateVolumes()

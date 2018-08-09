@@ -7,8 +7,6 @@ use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
 use ccxt\ExchangeError;
 use ccxt\NetworkError;
 
-include_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))).'/vendor/ccxt/ccxt/ccxt.php';
-
 class BinanceAssetsWatcher extends AbstractExchangeWatcher
 {
 

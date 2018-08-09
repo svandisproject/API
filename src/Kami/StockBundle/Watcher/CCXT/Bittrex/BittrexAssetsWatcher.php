@@ -8,8 +8,6 @@ use ccxt\ExchangeError;
 use ccxt\NetworkError;
 use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
 
-include_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))).'/vendor/ccxt/ccxt/ccxt.php';
-
 class BittrexAssetsWatcher extends AbstractExchangeWatcher
 {
 

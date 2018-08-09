@@ -5,7 +5,6 @@ namespace Kami\StockBundle\Watcher\History;
 
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
-use function floatval;
 use Kami\AssetBundle\Entity\Asset;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
@@ -189,7 +188,7 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         try {
             foreach ($historyData as $symbol => $itemData) {
                 foreach ($itemData as $value) {
-                    if ($value['price'] != null) {
+                    if ($value['price'] != null && $value['price'] > 0) {
                         $prepared = $this->client->prepare(
                             'INSERT INTO svandis_asset_prices.average_price (price, ticker, time, volume)
                     VALUES (?, ?, toTimestamp('. new Timeuuid(intval($value['time'])) . '), ?);'

@@ -102,8 +102,7 @@ class ChangesHelper
             "ALLOW FILTERING";
         $statement = new SimpleStatement($query);
         $result = $cassandra->execute($statement);
-
-        if($result[0]['price'] != null){
+        if($result[0]['price'] != null && $result[0]['price']->value() > 0){
             return $this->getChange($asset, $result[0]['price']->value());
         } else {
             $query = "SELECT volume, price, ticker, max(time) ".
@@ -113,7 +112,7 @@ class ChangesHelper
                 "ALLOW FILTERING";
             $statement = new SimpleStatement($query);
             $result = $cassandra->execute($statement);
-            if ($result[0]['price'] != null) {
+            if ($result[0]['price'] != null && $result[0]['price']->value() > 0) {
                 return $this->getChange($asset, $result[0]['price']->value());
             }
             return 0;

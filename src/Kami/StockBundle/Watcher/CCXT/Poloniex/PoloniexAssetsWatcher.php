@@ -7,10 +7,7 @@ namespace Kami\StockBundle\Watcher\CCXT\Poloniex;
 use ccxt\ExchangeError;
 use ccxt\NetworkError;
 use ccxt\poloniex;
-use function dump;
 use Kami\StockBundle\Watcher\AbstractExchangeWatcher;
-
-include_once dirname(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__))))))).'/vendor/ccxt/ccxt/ccxt.php';
 
 class PoloniexAssetsWatcher extends AbstractExchangeWatcher
 {
@@ -71,7 +68,6 @@ class PoloniexAssetsWatcher extends AbstractExchangeWatcher
         $usdPrices = [];
 
         foreach ($data as $pair => $dataObject) {
-            dump($pair, $dataObject); die;
             $currenciesArr = explode('_', $pair);
             if($currenciesArr[0] == "USDT"){
                 $usdPrices[$pair] = floatval($dataObject->last);
