@@ -7,6 +7,7 @@ namespace Kami\AssetBundle\RequestProcessor\Step;
 use Doctrine\ORM\QueryBuilder;
 use Kami\ApiCoreBundle\Security\AccessManager;
 use Kami\Component\RequestProcessor\Artifact;
+use Kami\AssetBundle\Entity\CoinMarketCap;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,6 +27,11 @@ class SortStep extends AbstractStep
     {
         /** @var QueryBuilder $queryBuilder */
         $queryBuilder = $this->getArtifact('query_builder');
+
+        /** @var \ReflectionClass $reflection */
+        $reflection = $this->getArtifact('reflection');
+        $query = 'e.%s';
+
         $sort = $request->get('sort', $request->attributes->get('_sort'));
 
         switch ($sort){
@@ -35,14 +41,22 @@ class SortStep extends AbstractStep
             case 'year_to_day_change':
                 $sort = 'yearToDayChange';
                 break;
+            case 'volume':
+                $reflection = new \ReflectionClass(CoinMarketCap::class);
+                $query = 'market_cap.%s';
+                $sort = 'volume24';
+                break;
+            case 'market_cap':
+                $reflection = new \ReflectionClass(CoinMarketCap::class);
+                $query = 'market_cap.%s';
+                $sort = 'circulatingSupply';
+                break;
         }
 
         $direction = $request->get('direction', $request->attributes->get('_sort_direction'));
         if (!in_array($direction, ['asc', 'desc'])) {
             throw new BadRequestHttpException();
         }
-        /** @var \ReflectionClass $reflection */
-        $reflection = $this->getArtifact('reflection');
         $property = $reflection->getProperty($sort);
 
         if ($sort !== $request->attributes->get('_sort')
@@ -50,7 +64,7 @@ class SortStep extends AbstractStep
             throw new AccessDeniedHttpException();
         }
 
-        $queryBuilder->orderBy(sprintf('e.%s', $sort), $direction);
+        $queryBuilder->orderBy(sprintf($query, $sort), $direction);
         return new ArtifactCollection([
             new Artifact('sort_applied', true)
         ]);

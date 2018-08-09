@@ -38,6 +38,15 @@ class CoinMarketCap
     private $circulatingSupply;
 
     /**
+     * @ORM\Column(name="market_cap", type="float", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $marketCap;
+
+    /**
      * @ORM\Column(name="volume24", type="float", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
@@ -61,6 +70,22 @@ class CoinMarketCap
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return float
+     */
+    public function getMarketCap()
+    {
+        return $this->marketCap;
+    }
+
+    /**
+     * @param float $marketCap
+     */
+    public function setMarketCap($marketCap): void
+    {
+        $this->marketCap = $marketCap;
     }
 
     /**
