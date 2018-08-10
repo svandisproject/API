@@ -6,8 +6,8 @@ namespace Kami\StockBundle\Watcher\History;
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
 use Cassandra\Uuid;
-use function floatval;
 use Kami\AssetBundle\Entity\Asset;
+use Psr\Http\Message\ResponseInterface;
 
 class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
 {
@@ -16,6 +16,11 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
      * @var array
      */
     private $historyDataAsset = [];
+
+    /**
+     * @var string
+     */
+    private $selfTicker;
 
     /**
      * @var array
@@ -146,13 +151,19 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
                 $title = $this->wrongTitle[$asset->getTicker()];
             }
             try {
-                $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
-                $data = (array) json_decode($body);
-                    $this->historyDataAsset[$asset->getTicker()] = [
-                        'available_supply' => $data['market_cap_by_available_supply'],
-                        'price_usd' => $data['price_usd'],
-                        'volume_usd' => $data['volume_usd']
-                    ];
+                $this->selfTicker = $asset->getTicker();
+                $promise = $this->httpClient->getAsync('https://graphs2.coinmarketcap.com/currencies/' . $title);
+                $promise->then(
+                    function (ResponseInterface $res) {
+                        $data = json_decode($res->getBody(), true);
+                        $this->historyDataAsset[$this->selfTicker] = [
+                            'available_supply' => $data['market_cap_by_available_supply'],
+                            'price_usd' => $data['price_usd'],
+                            'volume_usd' => $data['volume_usd']
+                        ];
+                    }
+                );
+                $promise->wait();
             } catch (\Exception $exception) {
                 $this->logger->error('Could\'t get remote history data for ' . $title );
             }

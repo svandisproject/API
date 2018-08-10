@@ -8,6 +8,7 @@ use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
 use Cassandra\Uuid;
 use Exception;
+use Psr\Http\Message\ResponseInterface;
 
 class AvailableExchangesHistoryWatcher extends AbstractHistoryExchangeWatcher
 {
@@ -16,6 +17,16 @@ class AvailableExchangesHistoryWatcher extends AbstractHistoryExchangeWatcher
      * @var array
      */
     private $historyDataAsset = [];
+
+    /**
+     * @var string
+     */
+    private $selfTicker;
+
+    /**
+     * @var string
+     */
+    private $selfExchange;
 
     /**
      * @var array
@@ -41,23 +52,28 @@ class AvailableExchangesHistoryWatcher extends AbstractHistoryExchangeWatcher
 
             foreach ($assets as $asset) {
                 try {
-                    $body = $this->httpClient
-                        ->get('https://min-api.cryptocompare.com/data/histoday?fsym=' . $asset->getTicker() . '&tsym=USD&aggregate=1&limit=3000&e=' . $exchange)
-                        ->getBody();
-                    $data = (array) json_decode($body);
-                    if ($data['Response'] === "Success") {
-                        foreach ($data['Data'] as $remoteData) {
-
-                            if ($remoteData->open != 0 && $remoteData->close != 0) {
-                                array_push($this->historyDataAsset,  [
-                                    'exchange' => $exchange,
-                                    'ticker' => $asset->getTicker(),
-                                    'time' => $remoteData->time,
-                                    'price' => $remoteData->close
-                                ]);
+                        $this->selfTicker = $asset->getTicker();
+                        $this->selfExchange = $exchange;
+                    $promise = $this->httpClient->getAsync(
+                        'https://min-api.cryptocompare.com/data/histoday?fsym=' . $asset->getTicker() . '&tsym=USD&aggregate=1&limit=3000&e=' . $exchange);
+                    $promise->then(
+                        function (ResponseInterface $res) {
+                            $data = json_decode($res->getBody(), true);
+                            if ($data['Response'] === "Success") {
+                                foreach ($data['Data'] as $remoteData) {
+                                    if ($remoteData['open'] != 0 && $remoteData['close'] != 0) {
+                                        array_push($this->historyDataAsset,  [
+                                            'exchange' => $this->selfExchange,
+                                            'ticker' => $this->selfTicker,
+                                            'time' => $remoteData['time'],
+                                            'price' => $remoteData['close']
+                                        ]);
+                                    }
+                                }
                             }
                         }
-                    }
+                    );
+                    $promise->wait();
                 } catch (\Exception $exception) {
                     $this->logger->error('Could\'t get remote history data for ' . $asset->getTicker() . ' from exchange ' . $exchange );
                 }
@@ -74,10 +90,9 @@ class AvailableExchangesHistoryWatcher extends AbstractHistoryExchangeWatcher
      */
     private function persistHistoryPrices($remoteDataArray): void
     {
-        $cassandra = $this->client;
         foreach ($remoteDataArray as $remoteData) {
             try {
-                $prepared = $cassandra->prepare(
+                $prepared = $this->client->prepare(
                     'INSERT INTO svandis_asset_prices.asset_price (id, ticker, price, exchange, time)
                     VALUES (?, ?, ?, ?, toUnixTimestamp('.new Timeuuid(intval($remoteData['time']) * 1000).'));'
                 );
@@ -87,11 +102,11 @@ class AvailableExchangesHistoryWatcher extends AbstractHistoryExchangeWatcher
                     [
                         'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
                         'ticker' => $remoteData['ticker'],
-                        'price' => new \Cassandra\Float($remoteData['price']),
+                        'price' => new \Cassandra\Float(floatval($remoteData['price'])),
                         'exchange' => $remoteData['exchange']
                     ]
                 );
-                $cassandra->execute($batch);
+                $this->client->execute($batch);
             } catch (Exception $e) {
                 $this->logger->error('Could\'t persist this data to Cassandra');
             }
