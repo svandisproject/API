@@ -5,8 +5,8 @@ namespace Kami\StockBundle\Watcher\History;
 
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
-use function floatval;
 use Kami\AssetBundle\Entity\Asset;
+use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
 
 class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
@@ -16,6 +16,11 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
      * @var array
      */
     private $historyDataAsset = [];
+
+    /**
+     * @var string
+     */
+    private $selfTicker;
 
     /**
      * @var array
@@ -147,33 +152,27 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
 
             if ($asset->getTitle() == null) {
                 $title = strtolower($asset->getTicker());
+            } elseif (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
+                $title = $this->wrongTitle[$asset->getTitle()];
+            } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
+                $title = $this->wrongTitle[$asset->getTicker()];
             }
-
             try {
-                $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
-                $data = (array) json_decode($body);
-                $this->historyDataAsset[$asset->getTicker()] = [
-                    'available_supply' => $data['market_cap_by_available_supply'],
-                    'price_usd' => $data['price_usd'],
-                    'volume_usd' => $data['volume_usd']
-                ];
-            } catch (\Exception $exception) {
-                try {
-                    if (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
-                        $title = $this->wrongTitle[$asset->getTitle()];
-                    } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
-                        $title = $this->wrongTitle[$asset->getTicker()];
+                $this->selfTicker = $asset->getTicker();
+                $promise = $this->httpClient->getAsync('https://graphs2.coinmarketcap.com/currencies/' . $title);
+                $promise->then(
+                    function (ResponseInterface $res) {
+                        $data = json_decode($res->getBody(), true);
+                        $this->historyDataAsset[$this->selfTicker] = [
+                            'available_supply' => $data['market_cap_by_available_supply'],
+                            'price_usd' => $data['price_usd'],
+                            'volume_usd' => $data['volume_usd']
+                        ];
                     }
-                    $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
-                    $data = (array) json_decode($body);
-                    $this->historyDataAsset[$asset->getTicker()] = [
-                        'available_supply' => $data['market_cap_by_available_supply'],
-                        'price_usd' => $data['price_usd'],
-                        'volume_usd' => $data['volume_usd']
-                    ];
-                } catch (\Exception $exception) {
-                    $this->logger->error('Could\'t get remote history data for ' . $title );
-                }
+                );
+                $promise->wait();
+            } catch (\Exception $exception) {
+                $this->logger->error('Could\'t get remote history data for ' . $title );
             }
         }
         return $this->historyDataAsset;
