@@ -153,15 +153,18 @@ class VolumesWatcher
                     }
                 }
 
-                $avgPrice = ($soldAsset != 0) ? (array_sum($data) / $soldAsset) : 0;
-                $asset->setPrice($avgPrice);
-                $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
-                $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
-                $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
-                $this->em->persist($asset);
+                if($soldAsset != 0){
+                    $avgPrice = array_sum($data) / $soldAsset;
+                    $asset->setPrice($avgPrice);
+                    $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
+                    $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
+                    $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
+                    $this->em->persist($asset);
 
-                $this->push($asset, $avgPrice, array_sum($data));
-                $this->storeAvgPrice($ticker, $avgPrice, array_sum($data));
+                    $this->push($asset, $avgPrice, array_sum($data));
+                    $this->storeAvgPrice($ticker, $avgPrice, array_sum($data));
+                }
+
             }
         }
         $this->em->flush();
