@@ -19,11 +19,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
     private $historyDataAsset = [];
 
     /**
-     * @var string
-     */
-    private $selfTicker;
-
-    /**
      * @var array
      */
     private $wrongTitle = [

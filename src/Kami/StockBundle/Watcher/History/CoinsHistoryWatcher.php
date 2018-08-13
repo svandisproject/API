@@ -19,11 +19,6 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
     private $historyDataAsset = [];
 
     /**
-     * @var string
-     */
-    private $selfTicker;
-
-    /**
      * @var array
      */
     private $wrongTitle = [
