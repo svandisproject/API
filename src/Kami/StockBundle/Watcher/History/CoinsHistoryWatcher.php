@@ -6,7 +6,7 @@ namespace Kami\StockBundle\Watcher\History;
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
 use Cassandra\Uuid;
-use function floatval;
+use GuzzleHttp\Promise\EachPromise;
 use Kami\AssetBundle\Entity\Asset;
 use Psr\Http\Message\ResponseInterface;
 
@@ -27,6 +27,11 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
      * @var array
      */
     private $wrongTitle = [
+        'BRX' => 'breakout-stake',
+        'GAM' => 'gambit',
+        'INCNT' => 'incent',
+        'IPL' => 'insurepal',
+        'DDF' => 'digital-developers-fund',
         'XRP' =>	'ripple',
         'Bytecoin' => 'bytecoin-bcn',
         'Golem' => 'golem-network-tokens',
@@ -123,7 +128,8 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
         'Peerguess' => 'guess',
         'LocalCoinSwap' => 'local-coin-swap',
         'Gems' => 'gems-protocol',
-        'Cofound.it' => 'cofound-it'
+        'Cofound.it' => 'cofound-it',
+        'SoMee.Social' => 'ongsocial'
     ];
 
     public function syncHistory()
@@ -141,9 +147,11 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
      */
     private function getRemoteData($assets)
     {
-        foreach ($assets as $asset) {
 
-            $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
+        $promises = (function () use ($assets) {
+            foreach ($assets as $asset) {
+
+                $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
             if($asset->getTitle() == null){
                 $title = strtolower($asset->getTicker());
             } elseif (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
@@ -151,24 +159,24 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
             } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
                 $title = $this->wrongTitle[$asset->getTicker()];
             }
-            try {
-                $this->selfTicker = $asset->getTicker();
-                $promise = $this->httpClient->getAsync('https://graphs2.coinmarketcap.com/currencies/' . $title);
-                $promise->then(
-                    function (ResponseInterface $res) {
-                        $data = json_decode($res->getBody(), true);
-                        $this->historyDataAsset[$this->selfTicker] = [
-                            'available_supply' => $data['market_cap_by_available_supply'],
-                            'price_usd' => $data['price_usd'],
-                            'volume_usd' => $data['volume_usd']
-                        ];
-                    }
-                );
-                $promise->wait();
-            } catch (\Exception $exception) {
-                $this->logger->error('Could\'t get remote history data for ' . $title );
+                yield $asset->getTicker() => $this->httpClient->requestAsync('GET', 'https://graphs2.coinmarketcap.com/currencies/'.$title);
             }
-        }
+        })();
+
+        (new EachPromise($promises, [
+            'concurrency' => 4,
+            'fulfilled' => function (ResponseInterface $response, $index) {
+                $data = json_decode($response->getBody(), true);
+                $this->historyDataAsset[$index] = [
+                    'available_supply' => $data['market_cap_by_available_supply'],
+                    'price_usd' => $data['price_usd'],
+                    'volume_usd' => $data['volume_usd']
+                ];
+            },
+            'rejected' => function ($reason, $index) {
+                $this->logger->error('Could\'t get remote history data for ' . $index );
+            }
+        ]))->promise()->wait();
         return $this->historyDataAsset;
     }
 

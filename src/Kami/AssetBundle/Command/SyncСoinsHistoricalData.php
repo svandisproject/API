@@ -22,11 +22,6 @@ class SyncСoinsHistoricalData extends Command
      */
     private $pusher;
 
-    /**
-     * @var bool
-     */
-    private $emergency = false;
-
     public function __construct(HistoryWatcher $watcher, Pusher $pusher){
 
         $this->historyWatcher = $watcher;

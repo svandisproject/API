@@ -5,7 +5,7 @@ namespace Kami\StockBundle\Watcher\History;
 
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
-use function floatval;
+use GuzzleHttp\Promise\EachPromise;
 use Kami\AssetBundle\Entity\Asset;
 use Psr\Http\Message\ResponseInterface;
 use Symfony\Component\Config\Definition\Exception\Exception;
@@ -27,6 +27,13 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
      * @var array
      */
     private $wrongTitle = [
+        'CHAT' => 'chatcoin',
+        'XRA' => 'ratecoin',
+        'BRX' => 'breakout-stake',
+        'GAM' => 'gambit',
+        'INCNT' => 'incent',
+        'IPL' => 'insurepal',
+        'DDF' => 'digital-developers-fund',
         'XRP' =>	'ripple',
         'Bytecoin' => 'bytecoin-bcn',
         'Golem' => 'golem-network-tokens',
@@ -45,7 +52,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         'BCC' => 'bitconnect',
         'Po.et' => 'poet',
         'Ambrosus' => 'amber',
-        'CHAT' => 'chatcoin',
         'DSH' => 'dashcoin',
         'SPK' => 'sparks',
         'NavCoin' => 'nav-coin',
@@ -122,7 +128,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         'WCOIN' => 'wawllet',
         'Peerguess' => 'guess',
         'LocalCoinSwap' => 'local-coin-swap',
-        'Gems' => 'gems-protocol',
         'Cofound.it' => 'cofound-it',
         'SoMee.Social' => 'ongsocial'
     ];
@@ -147,35 +152,39 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
      */
     private function getRemoteData ($assets)
     {
-        foreach ($assets as $asset) {
 
-            $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
+        $promises = (function () use ($assets) {
+            foreach ($assets as $asset) {
 
-            if ($asset->getTitle() == null) {
-                $title = strtolower($asset->getTicker());
-            } elseif (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
-                $title = $this->wrongTitle[$asset->getTitle()];
-            } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
-                $title = $this->wrongTitle[$asset->getTicker()];
+                if (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
+                    $title = $this->wrongTitle[$asset->getTitle()];
+                } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
+                    $title = $this->wrongTitle[$asset->getTicker()];
+                } elseif ($asset->getTitle() == null) {
+                    $title = strtolower($asset->getTicker());
+                } else {
+                    $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
+                }
+
+
+                yield $asset->getTicker() => $this->httpClient->requestAsync('GET', 'https://graphs2.coinmarketcap.com/currencies/'.$title);
             }
-            try {
-                $this->selfTicker = $asset->getTicker();
-                $promise = $this->httpClient->getAsync('https://graphs2.coinmarketcap.com/currencies/' . $title);
-                $promise->then(
-                    function (ResponseInterface $res) {
-                        $data = json_decode($res->getBody(), true);
-                        $this->historyDataAsset[$this->selfTicker] = [
-                            'available_supply' => $data['market_cap_by_available_supply'],
-                            'price_usd' => $data['price_usd'],
-                            'volume_usd' => $data['volume_usd']
-                        ];
-                    }
-                );
-                $promise->wait();
-            } catch (\Exception $exception) {
-                $this->logger->error('Could\'t get remote history data for ' . $title );
+        })();
+
+        (new EachPromise($promises, [
+            'concurrency' => 10,
+            'fulfilled' => function (ResponseInterface $response, $index) {
+                $data = json_decode($response->getBody(), true);
+                $this->historyDataAsset[$index] = [
+                    'available_supply' => $data['market_cap_by_available_supply'],
+                    'price_usd' => $data['price_usd'],
+                    'volume_usd' => $data['volume_usd']
+                ];
+            },
+            'rejected' => function ($reason, $index) {
+                $this->logger->error('Could\'t get history volumes for ' . $index );
             }
-        }
+        ]))->promise()->wait();
         return $this->historyDataAsset;
     }
 
