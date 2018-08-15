@@ -8,7 +8,6 @@ use Cassandra\Timeuuid;
 use GuzzleHttp\Promise\EachPromise;
 use Kami\AssetBundle\Entity\Asset;
 use Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Config\Definition\Exception\Exception;
 
 class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
 {
@@ -161,7 +160,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                     $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
                 }
 
-
                 yield $asset->getTicker() => $this->httpClient->requestAsync('GET', 'https://graphs2.coinmarketcap.com/currencies/'.$title);
             }
         })();
@@ -190,28 +188,22 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
      */
     private function persistHistoryVolumes ($historyData)
     {
-        try {
-            foreach ($historyData as $symbol => $itemData) {
-                foreach ($itemData as $value) {
-                    if ($value['price'] != null) {
-                        $prepared = $this->client->prepare(
-                            'INSERT INTO svandis_asset_prices.average_price (price, ticker, time, volume)
-                    VALUES (?, ?, toTimestamp('. new Timeuuid(intval($value['time'])) . '), ?);'
-                        );
-                        $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
-
-                        $batch->add($prepared, [
-                            'price' =>  new \Cassandra\Float(floatval($value['price'])),
-                            'ticker' => $symbol,
-                            'volume' =>  new \Cassandra\Float(floatval($value['volume']))
-                        ]);
-                        $this->client->execute($batch);
-                    }
+        foreach ($historyData as $symbol => $itemData) {
+            $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
+            foreach ($itemData as $value) {
+                if ($value['price'] != null) {
+                    $prepared = $this->client->prepare(
+                        'INSERT INTO svandis_asset_prices.average_price (price, ticker, time, volume)
+                VALUES (?, ?, toTimestamp('. new Timeuuid(intval($value['time'])) . '), ?);'
+                    );
+                    $batch->add($prepared, [
+                        'price' =>  new \Cassandra\Float(floatval($value['price'])),
+                        'ticker' => (string) $symbol,
+                        'volume' =>  new \Cassandra\Float(floatval($value['volume']))
+                    ]);
                 }
             }
-
-        } catch (Exception $e) {
-            $this->logger->error('Cant persists data to Cassandra' );
+            $this->client->executeAsync($batch);
         }
     }
 

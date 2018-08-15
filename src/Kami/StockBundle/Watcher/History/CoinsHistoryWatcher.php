@@ -198,7 +198,7 @@ class CoinsHistoryWatcher extends AbstractHistoryExchangeWatcher
                         'price' =>  new \Cassandra\Float(floatval($data[1])),
                         'exchange' =>  'CoinMarketCap'
                     ]);
-                    $cassandra->execute($batch);
+                    $cassandra->executeAsync($batch);
                 }
             }
         }

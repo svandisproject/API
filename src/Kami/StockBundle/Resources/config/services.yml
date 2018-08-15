@@ -42,7 +42,6 @@ services:
     kami_stock.abstract.history_volumes.watcher:
         abstract: true
         arguments:
-           - '@m6web_cassandra.client.default'
            - '@doctrine.orm.entity_manager'
            - '@logger'
 

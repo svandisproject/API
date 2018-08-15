@@ -3,7 +3,7 @@
 namespace Kami\StockBundle\Watcher\History;
 
 
-use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
+use Cassandra;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Client as HttpClient;
@@ -17,7 +17,7 @@ use GuzzleHttp\Client as HttpClient;
     protected $entityManager;
 
     /**
-    * @var CassandraClient
+    * @var Cassandra
     */
     protected $client;
 
@@ -28,17 +28,18 @@ use GuzzleHttp\Client as HttpClient;
 
     /**
      * AbstractVolumeWatcher constructor.
-     * @param CassandraClient $client
      * @param EntityManager $entityManager
      * @param LoggerInterface $logger
      */
     public function __construct(
-        CassandraClient $client,
         EntityManager $entityManager,
         LoggerInterface $logger
     )
     {
-        $this->client = $client;
+        $cluster = Cassandra::cluster()
+            ->withIOThreads(4)
+            ->build();
+        $this->client = $cluster->connect();
         $this->entityManager = $entityManager;
         $this->logger = $logger;
         $this->httpClient = new HttpClient();
