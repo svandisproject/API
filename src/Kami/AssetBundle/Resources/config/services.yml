@@ -68,14 +68,6 @@ services:
         tags:
             - { name: 'console.command' }
 
-    kami.sync_assets.historical_data.command:
-        class: Kami\AssetBundle\Command\SyncСoinsHistoricalData
-        arguments:
-            - "@kami_stock.history.watcher"
-            - "@lopi_pusher.pusher"
-        tags:
-            - { name: 'console.command' }
-
     kami.sync_assets.historical_volumes.command:
             class: Kami\AssetBundle\Command\SyncHistoryVolumesCommand
             arguments:
