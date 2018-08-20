@@ -37,6 +37,8 @@ use GuzzleHttp\Client as HttpClient;
     )
     {
         $cluster = Cassandra::cluster()
+            ->withContactPoints(['34.247.150.247', '34.254.25.212', '34.247.192.31'])
+            ->withPort(9042)
             ->withIOThreads(4)
             ->build();
         $this->client = $cluster->connect();
