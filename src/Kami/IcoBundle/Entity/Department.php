@@ -4,18 +4,14 @@ namespace Kami\IcoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
- * Industry
+ * Department
  *
- * @ORM\Table(name="industry")
- * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IndustryRepository")
- * @UniqueEntity({"title"})
- * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @ORM\Table(name="department")
+ * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\DepartmentRepository")
  */
-class Industry
+class Department
 {
     /**
      * @var int
@@ -29,23 +25,23 @@ class Industry
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=100)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="industries")
+     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Person", mappedBy="department")
      */
-    private $icos;
+    private $persons;
 
     /**
      * Constructor
      */
     public function __construct()
     {
-        $this->icos = new ArrayCollection();
+        $this->persons = new ArrayCollection();
     }
+
 
     /**
      * Get id.
@@ -62,7 +58,7 @@ class Industry
      *
      * @param string $title
      *
-     * @return Industry
+     * @return Department
      */
     public function setTitle($title)
     {
@@ -82,38 +78,38 @@ class Industry
     }
 
     /**
-     * Add ico.
+     * Add person.
      *
-     * @param \Kami\IcoBundle\Entity\Ico $ico
+     * @param Person $person
      *
-     * @return Industry
+     * @return self
      */
-    public function addIco(\Kami\IcoBundle\Entity\Ico $ico)
+    public function addPerson(Person $person): self
     {
-        $this->icos[] = $ico;
+        $this->persons[] = $person;
 
         return $this;
     }
 
     /**
-     * Remove ico.
+     * Remove person.
      *
-     * @param \Kami\IcoBundle\Entity\Ico $ico
+     * @param Person $person
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeIco(\Kami\IcoBundle\Entity\Ico $ico)
+    public function removePerson(Person $person)
     {
-        return $this->icos->removeElement($ico);
+        return $this->persons->removeElement($person);
     }
 
     /**
-     * Get icos.
+     * Get persons.
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getIcos()
+    public function getPersons()
     {
-        return $this->icos;
+        return $this->persons;
     }
 }

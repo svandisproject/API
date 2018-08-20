@@ -3,6 +3,7 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use const false;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -31,6 +32,16 @@ class Person
     private $name;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $title;
+
+    /**
+     * @ORM\Column(type="string", length=150, nullable=true)
+     */
+    private $nationality;
+
+    /**
      * @ORM\Column(name="links", type="string", nullable=true)
      */
     private $links;
@@ -39,6 +50,26 @@ class Person
      * @ORM\Column(name="url", type="string", unique=true)
      */
     private $url;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\SocialMedia", mappedBy="person", cascade={"persist"})
+     */
+    private $social_media_links;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $kyc = false;
+
+    /**
+     * @ORM\Column(type="array")
+     */
+    private $relevant_experience;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Department", inversedBy="person", cascade={"persist"})
+     */
+    private $department;
 
     /**
      * Get id.
@@ -112,5 +143,116 @@ class Person
     public function getLinks()
     {
         return $this->links;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return self
+     */
+    public function setTitle($title): self
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNationality(): ?string
+    {
+        return $this->nationality;
+    }
+
+    /**
+     * @param string $nationality
+     *
+     * @return self
+     */
+    public function setNationality($nationality): self
+    {
+        $this->nationality = $nationality;
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getKyc(): bool
+    {
+        return $this->kyc;
+    }
+
+    /**
+     * @param boolean $kyc
+     *
+     * @return self
+     */
+    public function setKyc($kyc): self
+    {
+        $this->kyc = $kyc;
+        return $this;
+    }
+
+    /**
+     * @return SocialMedia
+     */
+    public function getSocialMediaLinks()
+    {
+        return $this->social_media_links;
+    }
+
+    /**
+     * @param SocialMedia $social_media_links
+     *
+     * @return self
+     */
+    public function setSocialMediaLinks($social_media_links)
+    {
+        $this->social_media_links = $social_media_links;
+        return $this;
+    }
+
+    /**
+     * @return Department
+     */
+    public function getDepartment()
+    {
+        return $this->department;
+    }
+
+    /**
+     * @param Department $department
+     *
+     * @return self
+     */
+    public function setDepartment($department): self
+    {
+        $this->department = $department;
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getRelevantExperience()
+    {
+        return $this->relevant_experience;
+    }
+
+    /**
+     * @param string $relevant_experience
+     */
+    public function setRelevantExperience($relevant_experience)
+    {
+        $this->relevant_experience[] = $relevant_experience;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Kami\IcoBundle\Entity;
 
-use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\AssetBundle\Entity\Asset;
@@ -32,7 +31,7 @@ class Ico
     private $id;
 
     /**
-     * @ORM\Column(name="remote_id", type="integer", unique=true)
+     * @ORM\Column(name="remote_id", type="integer", unique=true, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -70,68 +69,6 @@ class Ico
     private $country;
 
     /**
-     * @ORM\Column(name="open_presale", type="datetime", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     */
-    private $openPresale;
-
-    /**
-     * @ORM\Column(name="kyc", type="boolean", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     */
-    private $kyc;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="hard_cap", type="string", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     */
-    private $hardCap;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="total_cap", type="integer", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     */
-    private $totalCap;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="raised", type="decimal", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     */
-    private $raised;
-
-    /**
-     * @var int|null
-     *
-     * @ORM\Column(name="token_price", type="decimal", precision=25, scale=15, nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     */
-    private $tokenPrice;
-
-    /**
      * @var int|null
      *
      * @ORM\Column(name="for_sale", type="smallint", nullable=true)
@@ -141,17 +78,6 @@ class Ico
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $forSale;
-
-    /**
-     * @var DateTime|null
-     *
-     * @ORM\Column(name="token_sale_date", type="datetime", nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     */
-    private $tokenSaleDate;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person", cascade={"persist"})
@@ -206,7 +132,6 @@ class Ico
      */
     private $industries;
 
-
     /**
      * @ORM\Column(type="array", name="restricted_countries")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
@@ -215,6 +140,52 @@ class Ico
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $restrictedCountries;
+
+    /**
+     * @ORM\OneToOne( targetEntity="Kami\IcoBundle\Entity\Dates", mappedBy="ico", cascade={"persist"})
+     */
+    private $dates;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $website_link;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $problem_to_solve;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $white_list;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Finance", mappedBy="ico", cascade={"persist"})
+     */
+    private $finance;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Development", mappedBy="ico", cascade={"persist"})
+     */
+    private $development;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Legal", mappedBy="ico", cascade={"persist"})
+     */
+    private $legal;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\SaleStage", inversedBy="icos", cascade={"persist"})
+     */
+    private $sale_stage;
+
     /**
      * Constructor
      */
@@ -337,150 +308,6 @@ class Ico
     }
 
     /**
-     * Set openPresale.
-     *
-     * @param \DateTime|null $openPresale
-     *
-     * @return Ico
-     */
-    public function setOpenPresale($openPresale = null)
-    {
-        $this->openPresale = $openPresale;
-
-        return $this;
-    }
-
-    /**
-     * Get openPresale.
-     *
-     * @return \DateTime|null
-     */
-    public function getOpenPresale()
-    {
-        return $this->openPresale;
-    }
-
-    /**
-     * Set kyc.
-     *
-     * @param bool|null $kyc
-     *
-     * @return Ico
-     */
-    public function setKyc($kyc = null)
-    {
-        $this->kyc = $kyc;
-
-        return $this;
-    }
-
-    /**
-     * Get kyc.
-     *
-     * @return bool|null
-     */
-    public function getKyc()
-    {
-        return $this->kyc;
-    }
-
-    /**
-     * Set hardCap.
-     *
-     * @param string|null $hardCap
-     *
-     * @return Ico
-     */
-    public function setHardCap($hardCap = null)
-    {
-        $this->hardCap = $hardCap;
-
-        return $this;
-    }
-
-    /**
-     * Get hardCap.
-     *
-     * @return string|null
-     */
-    public function getHardCap()
-    {
-        return $this->hardCap;
-    }
-
-    /**
-     * Set totalCap.
-     *
-     * @param int|null $totalCap
-     *
-     * @return Ico
-     */
-    public function setTotalCap($totalCap = null)
-    {
-        $this->totalCap = $totalCap;
-
-        return $this;
-    }
-
-    /**
-     * Get totalCap.
-     *
-     * @return int|null
-     */
-    public function getTotalCap()
-    {
-        return $this->totalCap;
-    }
-
-    /**
-     * Set raised.
-     *
-     * @param int|null $raised
-     *
-     * @return Ico
-     */
-    public function setRaised($raised = null)
-    {
-        $this->raised = $raised;
-
-        return $this;
-    }
-
-    /**
-     * Get raised.
-     *
-     * @return int|null
-     */
-    public function getRaised()
-    {
-        return $this->raised;
-    }
-
-    /**
-     * Set tokenPrice.
-     *
-     * @param int|null $tokenPrice
-     *
-     * @return Ico
-     */
-    public function setTokenPrice($tokenPrice = null)
-    {
-        $this->tokenPrice = $tokenPrice;
-
-        return $this;
-    }
-
-    /**
-     * Get tokenPrice.
-     *
-     * @return int|null
-     */
-    public function getTokenPrice()
-    {
-        return $this->tokenPrice;
-    }
-
-    /**
      * Set forSale.
      *
      * @param int|null $forSale
@@ -502,30 +329,6 @@ class Ico
     public function getForSale()
     {
         return $this->forSale;
-    }
-
-    /**
-     * Set tokenSaleDate.
-     *
-     * @param \DateTime|null $tokenSaleDate
-     *
-     * @return Ico
-     */
-    public function setTokenSaleDate($tokenSaleDate = null)
-    {
-        $this->tokenSaleDate = $tokenSaleDate;
-
-        return $this;
-    }
-
-    /**
-     * Get tokenSaleDate.
-     *
-     * @return \DateTime|null
-     */
-    public function getTokenSaleDate()
-    {
-        return $this->tokenSaleDate;
     }
 
     /**
@@ -555,11 +358,11 @@ class Ico
     /**
      * Add team.
      *
-     * @param \Kami\IcoBundle\Entity\Person $team
+     * @param Person $team
      *
      * @return Ico
      */
-    public function addTeam(\Kami\IcoBundle\Entity\Person $team)
+    public function addTeam(Person $team)
     {
         $this->team[] = $team;
 
@@ -569,11 +372,11 @@ class Ico
     /**
      * Remove team.
      *
-     * @param \Kami\IcoBundle\Entity\Person $team
+     * @param Person $team
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeTeam(\Kami\IcoBundle\Entity\Person $team)
+    public function removeTeam(Person $team)
     {
         return $this->team->removeElement($team);
     }
@@ -591,11 +394,11 @@ class Ico
     /**
      * Add advisor.
      *
-     * @param \Kami\IcoBundle\Entity\Person $advisor
+     * @param Person $advisor
      *
      * @return Ico
      */
-    public function addAdvisor(\Kami\IcoBundle\Entity\Person $advisor)
+    public function addAdvisor(Person $advisor)
     {
         $this->advisors[] = $advisor;
 
@@ -609,7 +412,7 @@ class Ico
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeAdvisor(\Kami\IcoBundle\Entity\Person $advisor)
+    public function removeAdvisor(Person $advisor)
     {
         return $this->advisors->removeElement($advisor);
     }
@@ -641,11 +444,11 @@ class Ico
     /**
      * Remove partner.
      *
-     * @param \Kami\IcoBundle\Entity\Ico $partner
+     * @param Ico $partner
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removePartner(\Kami\IcoBundle\Entity\Ico $partner)
+    public function removePartner(Ico $partner)
     {
         return $this->partners->removeElement($partner);
     }
@@ -663,11 +466,11 @@ class Ico
     /**
      * Add competitor.
      *
-     * @param \Kami\IcoBundle\Entity\Ico $competitor
+     * @param Ico $competitor
      *
      * @return Ico
      */
-    public function addCompetitor(\Kami\IcoBundle\Entity\Ico $competitor)
+    public function addCompetitor(Ico $competitor)
     {
         $this->competitors[] = $competitor;
 
@@ -782,4 +585,176 @@ class Ico
         return $this;
     }
 
+    /**
+     * @return Dates
+     */
+    public function getDates()
+    {
+        return $this->dates;
+    }
+
+    /**
+     * @param Dates $dates
+     *
+     * @return self
+     */
+    public function setDates(Dates $dates): self
+    {
+        $this->dates = $dates;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWebsiteLink(): ?string
+    {
+        return $this->website_link;
+    }
+
+    /**
+     * @param string $website_link
+     *
+     * @return self
+     */
+    public function setWebsiteLink($website_link): self
+    {
+        $this->website_link = $website_link;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     *
+     * @return self
+     */
+    public function setDescription($description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProblemToSolve(): ?string
+    {
+        return $this->problem_to_solve;
+    }
+
+    /**
+     * @param string $problem_to_solve
+     *
+     * @return self
+     */
+    public function setProblemToSolve($problem_to_solve): self
+    {
+        $this->problem_to_solve = $problem_to_solve;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getWhiteList(): ?string
+    {
+        return $this->white_list;
+    }
+
+    /**
+     * @param string $white_list
+     *
+     * @return self
+     */
+    public function setWhiteList($white_list): self
+    {
+        $this->white_list = $white_list;
+        return $this;
+    }
+
+    /**
+     * @return Finance
+     */
+    public function getFinance(): Finance
+    {
+        return $this->finance;
+    }
+
+    /**
+     * @param Finance $finance
+     *
+     * @return self
+     */
+    public function setFinance($finance): self
+    {
+        $this->finance = $finance;
+        return $this;
+    }
+
+    /**
+     * @return Development
+     */
+    public function getDevelopment(): Development
+    {
+        return $this->development;
+    }
+
+    /**
+     * @param Development $development
+     *
+     * @return self
+     */
+    public function setDevelopment($development): self
+    {
+        $this->development = $development;
+        return $this;
+    }
+
+    /**
+     * @return Legal
+     */
+    public function getLegal(): Legal
+    {
+        return $this->legal;
+    }
+
+    /**
+     * @param Legal $legal
+     *
+     * @return self
+     */
+    public function setLegal($legal): self
+    {
+        $this->legal = $legal;
+
+        return $this;
+    }
+
+    /**
+     * @return SaleStage
+     */
+    public function getSaleStage(): SaleStage
+    {
+        return $this->sale_stage;
+    }
+
+    /**
+     * @param SaleStage $sale_stage
+     *
+     * @return self
+     */
+    public function setSaleStage($sale_stage): self
+    {
+        $this->sale_stage = $sale_stage;
+        return $this;
+    }
 }
