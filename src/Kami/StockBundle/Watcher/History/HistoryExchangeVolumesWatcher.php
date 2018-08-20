@@ -5,8 +5,9 @@ namespace Kami\StockBundle\Watcher\History;
 
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
+use GuzzleHttp\Promise\EachPromise;
 use Kami\AssetBundle\Entity\Asset;
-use Symfony\Component\Config\Definition\Exception\Exception;
+use Psr\Http\Message\ResponseInterface;
 
 class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
 {
@@ -20,6 +21,13 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
      * @var array
      */
     private $wrongTitle = [
+        'CHAT' => 'chatcoin',
+        'XRA' => 'ratecoin',
+        'BRX' => 'breakout-stake',
+        'GAM' => 'gambit',
+        'INCNT' => 'incent',
+        'IPL' => 'insurepal',
+        'DDF' => 'digital-developers-fund',
         'XRP' =>	'ripple',
         'Bytecoin' => 'bytecoin-bcn',
         'Golem' => 'golem-network-tokens',
@@ -38,7 +46,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         'BCC' => 'bitconnect',
         'Po.et' => 'poet',
         'Ambrosus' => 'amber',
-        'CHAT' => 'chatcoin',
         'DSH' => 'dashcoin',
         'SPK' => 'sparks',
         'NavCoin' => 'nav-coin',
@@ -115,7 +122,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         'WCOIN' => 'wawllet',
         'Peerguess' => 'guess',
         'LocalCoinSwap' => 'local-coin-swap',
-        'Gems' => 'gems-protocol',
         'Cofound.it' => 'cofound-it',
         'SoMee.Social' => 'ongsocial'
     ];
@@ -140,41 +146,38 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
      */
     private function getRemoteData ($assets)
     {
-        foreach ($assets as $asset) {
 
-            $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
+        $promises = (function () use ($assets) {
+            foreach ($assets as $asset) {
 
-            if ($asset->getTitle() == null) {
-                $title = strtolower($asset->getTicker());
+                if (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
+                    $title = $this->wrongTitle[$asset->getTitle()];
+                } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
+                    $title = $this->wrongTitle[$asset->getTicker()];
+                } elseif ($asset->getTitle() == null) {
+                    $title = strtolower($asset->getTicker());
+                } else {
+                    $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
+                }
+
+                yield $asset->getTicker() => $this->httpClient->requestAsync('GET', 'https://graphs2.coinmarketcap.com/currencies/'.$title);
             }
+        })();
 
-            try {
-                $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
-                $data = (array) json_decode($body);
-                $this->historyDataAsset[$asset->getTicker()] = [
+        (new EachPromise($promises, [
+            'concurrency' => 10,
+            'fulfilled' => function (ResponseInterface $response, $index) {
+                $data = json_decode($response->getBody(), true);
+                $this->historyDataAsset[$index] = [
                     'available_supply' => $data['market_cap_by_available_supply'],
                     'price_usd' => $data['price_usd'],
                     'volume_usd' => $data['volume_usd']
                 ];
-            } catch (\Exception $exception) {
-                try {
-                    if (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
-                        $title = $this->wrongTitle[$asset->getTitle()];
-                    } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
-                        $title = $this->wrongTitle[$asset->getTicker()];
-                    }
-                    $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/' . $title)->getBody();
-                    $data = (array) json_decode($body);
-                    $this->historyDataAsset[$asset->getTicker()] = [
-                        'available_supply' => $data['market_cap_by_available_supply'],
-                        'price_usd' => $data['price_usd'],
-                        'volume_usd' => $data['volume_usd']
-                    ];
-                } catch (\Exception $exception) {
-                    $this->logger->error('Could\'t get remote history data for ' . $title );
-                }
+            },
+            'rejected' => function ($reason, $index) {
+                $this->logger->error('Could\'t get history volumes for ' . $index );
             }
-        }
+        ]))->promise()->wait();
         return $this->historyDataAsset;
     }
 
@@ -185,28 +188,22 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
      */
     private function persistHistoryVolumes ($historyData)
     {
-        try {
-            foreach ($historyData as $symbol => $itemData) {
-                foreach ($itemData as $value) {
-                    if ($value['price'] != null && $value['price'] > 0) {
-                        $prepared = $this->client->prepare(
-                            'INSERT INTO svandis_asset_prices.average_price (price, ticker, time, volume)
-                    VALUES (?, ?, toTimestamp('. new Timeuuid(intval($value['time'])) . '), ?);'
-                        );
-                        $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
-
-                        $batch->add($prepared, [
-                            'price' =>  new \Cassandra\Float(floatval($value['price'])),
-                            'ticker' => $symbol,
-                            'volume' =>  new \Cassandra\Float(floatval($value['volume']))
-                        ]);
-                        $this->client->execute($batch);
-                    }
+        foreach ($historyData as $symbol => $itemData) {
+            $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
+            foreach ($itemData as $value) {
+                if ($value['price'] != null) {
+                    $prepared = $this->client->prepare(
+                        'INSERT INTO svandis_asset_prices.average_price (price, ticker, time, volume)
+                VALUES (?, ?, toTimestamp('. new Timeuuid(intval($value['time'])) . '), ?);'
+                    );
+                    $batch->add($prepared, [
+                        'price' =>  new \Cassandra\Float(floatval($value['price'])),
+                        'ticker' => (string) $symbol,
+                        'volume' =>  new \Cassandra\Float(floatval($value['volume']))
+                    ]);
                 }
             }
-
-        } catch (Exception $e) {
-            $this->logger->error('Cant persists data to Cassandra' );
+            $this->client->executeAsync($batch);
         }
     }
 

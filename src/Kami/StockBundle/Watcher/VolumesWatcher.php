@@ -149,20 +149,21 @@ class VolumesWatcher
 
                     $statement = new SimpleStatement($query);
                     $result = $this->cassandra->execute($statement);
-                    if ($result[0]['price'] != null) {
+                    if ($result[0]['price'] != null && $result[0]['price']->value() != 0) {
                         $soldAsset += $volume / $result[0]['price']->value();
                     }
                 }
 
-                $avgPrice = ($soldAsset != 0) ? (array_sum($data) / $soldAsset) : 0;
-                $asset->setPrice($avgPrice);
-                $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
-                $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
-                $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
-                $this->em->persist($asset);
-
-                $this->push($asset, $avgPrice, array_sum($data));
-                $this->storeAvgPrice($ticker, $avgPrice, array_sum($data));
+                if($soldAsset != 0){
+                    $avgPrice = array_sum($data) / $soldAsset;
+                    $asset->setPrice($avgPrice);
+                    $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
+                    $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
+                    $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
+                    $this->em->persist($asset);
+                    $this->push($asset, $avgPrice, array_sum($data));
+                    $this->storeAvgPrice($ticker, $avgPrice, array_sum($data));
+                }
             }
         }
         $this->em->flush();
