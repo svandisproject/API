@@ -4,18 +4,14 @@ namespace Kami\IcoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
- * Industry
+ * SaleStage
  *
- * @ORM\Table(name="industry")
- * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IndustryRepository")
- * @UniqueEntity({"title"})
- * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @ORM\Table(name="sale_stage")
+ * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\SaleStageRepository")
  */
-class Industry
+class SaleStage
 {
     /**
      * @var int
@@ -29,13 +25,12 @@ class Industry
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=100)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="industries")
+     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="sale_stage")
      */
     private $icos;
 
@@ -46,6 +41,7 @@ class Industry
     {
         $this->icos = new ArrayCollection();
     }
+
 
     /**
      * Get id.
@@ -62,7 +58,7 @@ class Industry
      *
      * @param string $title
      *
-     * @return Industry
+     * @return SaleStage
      */
     public function setTitle($title)
     {
@@ -86,9 +82,9 @@ class Industry
      *
      * @param \Kami\IcoBundle\Entity\Ico $ico
      *
-     * @return Industry
+     * @return self
      */
-    public function addIco(\Kami\IcoBundle\Entity\Ico $ico)
+    public function addIco(Ico $ico): self
     {
         $this->icos[] = $ico;
 
@@ -98,11 +94,11 @@ class Industry
     /**
      * Remove ico.
      *
-     * @param \Kami\IcoBundle\Entity\Ico $ico
+     * @param Ico $ico
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeIco(\Kami\IcoBundle\Entity\Ico $ico)
+    public function removeIco(Ico $ico)
     {
         return $this->icos->removeElement($ico);
     }
