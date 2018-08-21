@@ -51,6 +51,10 @@ m6web_cassandra:
             credentials:
                 username: "%env(IC_USER)%"
                 password: "%env(IC_PASSWORD)%"
+            default_timeout: 10
+            timeout:
+                connect: 10
+                request: 10
 
 # Kami IcoBench Configuration
 kami_ico_bench:
