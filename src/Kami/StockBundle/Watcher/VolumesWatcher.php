@@ -152,8 +152,8 @@ class VolumesWatcher
                         $soldAsset += $volume / $result[0]['price']->value();
                     }
                 }
-
                 if($soldAsset != 0){
+
                     $avgPrice = array_sum($data) / $soldAsset;
                     $asset->setPrice($avgPrice);
                     $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
