@@ -139,7 +139,6 @@ class VolumesWatcher
             $ticker = $asset->getTicker();
             if($data = $this->redis->get($ticker))
             {
-                $this->logger->info("Get ticker - ".$ticker);
                 $data = (array) json_decode($data);
                 $soldAsset = 0;
 
@@ -153,7 +152,6 @@ class VolumesWatcher
                         $soldAsset += $volume / $result[0]['price']->value();
                     }
                 }
-                $this->logger->info("Sold asset - ".$soldAsset . " ticker = " . $ticker);
                 if($soldAsset != 0){
 
                     $avgPrice = array_sum($data) / $soldAsset;
@@ -161,8 +159,6 @@ class VolumesWatcher
                     $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
                     $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
                     $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
-                    $this->logger->info("Average price = ".$avgPrice . " ticker " .$ticker . " change = " . $asset->getChange());
-                    $this->logger->info("Weeckly change - ".$asset->getWeeklyChange() . " asset year change " . $asset->getYearToDayChange());
                     $this->em->persist($asset);
                     $this->push($asset, $avgPrice, array_sum($data));
                     $this->storeAvgPrice($ticker, $avgPrice, array_sum($data));
