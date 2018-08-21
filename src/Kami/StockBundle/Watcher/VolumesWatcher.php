@@ -6,6 +6,7 @@ namespace Kami\StockBundle\Watcher;
 
 use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
+use Cassandra;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
@@ -103,7 +104,11 @@ class VolumesWatcher
         $this->poloniexVolumeWatcher = $poloniexVolumeWatcher;
         $this->em = $em;
         $this->redis = $redis;
-        $this->cassandra = $cassandra;
+//        $this->cassandra = $cassandra;
+        $cluster = Cassandra::cluster('34.247.150.247')
+            ->build();
+        $this->cassandra = $cluster->connect('svandis_asset_prices');
+//        $this->cassandra = $cassandra;
         $this->changesHelper = $changesHelper;
         $this->pusher = $pusher;
         $this->logger = $logger;
