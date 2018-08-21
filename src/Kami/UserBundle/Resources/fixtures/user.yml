@@ -15,6 +15,83 @@ fixtures:
         email: user@apimonster.com
         plain_password: user
         enabled: true
+    nodari:
+        email: nodari@svandis.io
+        plain_password: nodari_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    yan:
+        email: yan@svandis.io
+        plain_password: yan_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    kate:
+        email: kate@svandis.io
+        plain_password: kate_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    hermann:
+        email: hermann@svandis.io
+        plain_password: hermann_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    marco:
+        email: marco@svandis.io
+        plain_password: marco_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    sebastian:
+        email: sebastian@svandis.io
+        plain_password: sebastian_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    victor:
+        email: victor@svandis.io
+        plain_password: victor_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    victorw:
+        email: victorw@svandis.io
+        plain_password: victorw_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    petur:
+        email: petur@svandis.io
+        plain_password: petur_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    andrey:
+        email: andrey@svandis.io
+        plain_password: andrey_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
+    cath:
+        email: cath@svandis.io
+        plain_password: cath_svandisApi
+        enabled: true
+        roles:
+          - ROLE_ADMIN
+          - ROLE_USER
 
     worker_user:
         email: worker@apimonster.com
