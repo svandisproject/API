@@ -3,7 +3,6 @@
 namespace Kami\StockBundle\ChangesHelper;
 
 use Cassandra\SimpleStatement;
-use Cassandra;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
@@ -52,11 +51,7 @@ class ChangesHelper
 
     public function __construct(CassandraClient $client, EntityManager $em)
     {
-        $cluster = Cassandra::cluster()
-            ->withContactPoints('34.247.150.247', '34.254.25.212', '34.247.192.31' )
-            ->withCredentials ( 'iccassandra', '94bf4145d00513abda0e919175ce9146' )
-            ->build();
-        $this->client = $cluster->connect();
+        $this->client = $client;
         $this->em = $em;
 
         $this->endOfLastYear = (new \DateTime(date('Y') - 1 . '-12-31 23:55'))

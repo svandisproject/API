@@ -104,10 +104,11 @@ class VolumesWatcher
         $this->poloniexVolumeWatcher = $poloniexVolumeWatcher;
         $this->em = $em;
         $this->redis = $redis;
-//        $this->cassandra = $cassandra;
+        $this->cassandra = $cassandra;
         $cluster = Cassandra::cluster()
             ->withContactPoints('34.247.150.247', '34.254.25.212', '34.247.192.31' )
             ->withCredentials ( 'iccassandra', '94bf4145d00513abda0e919175ce9146' )
+            ->withIOThreads(4)
             ->build();
         $this->cassandra = $cluster->connect('svandis_asset_prices');
 //        $this->cassandra = $cassandra;
@@ -124,14 +125,19 @@ class VolumesWatcher
     public function getVolumes()
     {
         $this->bittrexVolumeWatcher->updateVolumes();
+        $this->logger->info("Bittrex volunes get!");
 
         $this->binanceVolumeWatcher->updateVolumes();
+        $this->logger->info('Binance done!!!!');
 
         $this->bitfinexVolumeWatcher->updateVolumes();
+        $this->logger->info('Bitfinex done!!!!');
 
         $this->poloniexVolumeWatcher->updateVolumes();
+        $this->logger->info('Poloniex done!!!!');
 
         $this->setAssetsPrices();
+        $this->logger->info('Asset prices calculate done!!!!');
     }
 
     /**
