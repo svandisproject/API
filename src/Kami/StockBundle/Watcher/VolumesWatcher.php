@@ -117,6 +117,7 @@ class VolumesWatcher
      */
     public function getVolumes()
     {
+        $this->redis->flushall();
         $this->bittrexVolumeWatcher->updateVolumes();
         $this->logger->warning("Bittrex volunes get!");
 
