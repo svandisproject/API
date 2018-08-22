@@ -8,6 +8,7 @@ use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
 use Cassandra;
 use Doctrine\ORM\EntityManager;
+use function dump;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
@@ -105,13 +106,12 @@ class VolumesWatcher
         $this->em = $em;
         $this->redis = $redis;
         $this->cassandra = $cassandra;
-        $cluster = Cassandra::cluster()
-            ->withContactPoints('34.247.150.247', '34.254.25.212', '34.247.192.31' )
-            ->withCredentials ( 'iccassandra', '94bf4145d00513abda0e919175ce9146' )
-            ->withIOThreads(4)
-            ->build();
-        $this->cassandra = $cluster->connect('svandis_asset_prices');
-//        $this->cassandra = $cassandra;
+//        $cluster = Cassandra::cluster()
+//            ->withContactPoints('34.247.150.247', '34.254.25.212', '34.247.192.31' )
+//            ->withCredentials ( 'iccassandra', '94bf4145d00513abda0e919175ce9146' )
+//            ->withIOThreads(4)
+//            ->build();
+//        $this->cassandra = $cluster->connect('svandis_asset_prices');
         $this->changesHelper = $changesHelper;
         $this->pusher = $pusher;
         $this->logger = $logger;
@@ -125,19 +125,19 @@ class VolumesWatcher
     public function getVolumes()
     {
         $this->bittrexVolumeWatcher->updateVolumes();
-        $this->logger->info("Bittrex volunes get!");
+        $this->logger->warning("Bittrex volunes get!");
 
         $this->binanceVolumeWatcher->updateVolumes();
-        $this->logger->info('Binance done!!!!');
+        $this->logger->warning('Binance done!!!!');
 
         $this->bitfinexVolumeWatcher->updateVolumes();
-        $this->logger->info('Bitfinex done!!!!');
+        $this->logger->warning('Bitfinex done!!!!');
 
         $this->poloniexVolumeWatcher->updateVolumes();
-        $this->logger->info('Poloniex done!!!!');
+        $this->logger->warning('Poloniex done!!!!');
 
         $this->setAssetsPrices();
-        $this->logger->info('Asset prices calculate done!!!!');
+        $this->logger->warning('Asset prices calculate done!!!!');
     }
 
     /**
@@ -160,14 +160,12 @@ class VolumesWatcher
                         "WHERE ticker = '$ticker' AND exchange = '$exhange' ALLOW FILTERING";
 
                     $statement = new SimpleStatement($query);
-                    $result = $this->cassandra->executeAsync($statement)->get();
-                        foreach ($result as $row) {
-                            if ($row['price'] != null && $row['price']->value() != 0) {
-                            $soldAsset += $volume / $row['price']->value();
-                        }
+                    $result = $this->cassandra->execute($statement);
+                    if ($result[0]['price'] != null && $result[0]['price']->value() != 0) {
+                        $soldAsset += $volume / $result[0]['price']->value();
                     }
                 }
-
+                $this->logger->warning($ticker . ' sold asset = ' . $soldAsset);
                 if($soldAsset != 0){
                     $avgPrice = array_sum($data) / $soldAsset;
                     $asset->setPrice($avgPrice);
