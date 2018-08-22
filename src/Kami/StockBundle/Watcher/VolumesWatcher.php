@@ -155,6 +155,10 @@ class VolumesWatcher
                 $soldAsset = 0;
 
                 foreach ($data as $exhange => $volume){
+                    if ($ticker == 'EGC') {
+                        $this->logger->warning("Exchange - " . $exhange);
+                        $this->logger->warning("Volume - " . $volume);
+                    }
                     $query = "SELECT id, exchange, price, ticker, max(time) FROM svandis_asset_prices.asset_price ".
                         "WHERE ticker = '$ticker' AND exchange = '$exhange' ALLOW FILTERING";
 
