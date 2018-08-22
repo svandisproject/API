@@ -177,7 +177,15 @@ class VolumesWatcher
                     $this->logger->warning("Sold assets = " . $soldAsset);
                 }
                 if($soldAsset != 0){
+
                     $avgPrice = array_sum($data) / $soldAsset;
+                    if ($ticker == 'EGC') {
+                        $this->logger->warning("Array sum = " . array_sum($data));
+                        $this->logger->warning("Data = " . $data);
+                        $this->logger->warning("Average price = " . $avgPrice);
+                        $this->logger->warning("Average price calculate= " . array_sum($data) / $soldAsset);
+                    }
+
                     $asset->setPrice($avgPrice);
                     $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
                     $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
