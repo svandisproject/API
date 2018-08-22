@@ -139,7 +139,7 @@ class VolumesWatcher
             $ticker = $asset->getTicker();
             if($data = $this->redis->get($ticker))
             {
-                $data = (array) json_decode($data);
+                $data = json_decode($data, true);
                 $soldAsset = 0;
 
                 foreach ($data as $exhange => $volume){
@@ -147,9 +147,11 @@ class VolumesWatcher
                         "WHERE ticker = '$ticker' AND exchange = '$exhange' ALLOW FILTERING";
 
                     $statement = new SimpleStatement($query);
-                    $result = $this->cassandra->execute($statement);
-                    if ($result[0]['price'] != null && $result[0]['price']->value() != 0) {
-                        $soldAsset += $volume / $result[0]['price']->value();
+                    $result = $this->cassandra->executeAsync($statement);
+                    foreach ($result->get() as $row) {
+                        if ($row['price'] != null && $row['price']->value() != 0) {
+                            $soldAsset += $volume / $row['price']->value();
+                        }
                     }
                 }
 
@@ -189,7 +191,7 @@ class VolumesWatcher
             'volume' =>  new \Cassandra\Float($volume),
         ]);
 
-        $this->cassandra->execute($batch);
+        $this->cassandra->executeAsync($batch);
     }
 
 

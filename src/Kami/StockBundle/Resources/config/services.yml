@@ -32,12 +32,6 @@ services:
             - '@logger'
             - '%proxy_url%'
 
-    kami_stock.abstract.history_volumes.watcher:
-        abstract: true
-        arguments:
-           - '@doctrine.orm.entity_manager'
-           - '@logger'
-
     kami_stock.abstract.volumes.watcher:
         abstract: true
         arguments:
@@ -92,12 +86,3 @@ services:
         arguments:
             - '@m6web_cassandra.client.default'
             - '@doctrine.orm.entity_manager'
-
-    kami_stock.history_exchange_volumes.watcher:
-            class: Kami\StockBundle\Watcher\History\HistoryExchangeVolumesWatcher
-            parent: kami_stock.abstract.history_volumes.watcher
-
-    kami_stock.history_volumes.watcher:
-            class: Kami\StockBundle\Watcher\History\HistoryVolumesWatcher
-            arguments:
-              - '@kami_stock.history_exchange_volumes.watcher'
