@@ -7,6 +7,7 @@ namespace Kami\StockBundle\Watcher;
 use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
 use Doctrine\ORM\EntityManager;
+use function dump;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
@@ -117,14 +118,19 @@ class VolumesWatcher
     public function getVolumes()
     {
         $this->bittrexVolumeWatcher->updateVolumes();
+        $this->logger->warning("Bittrex volunes get!");
 
         $this->binanceVolumeWatcher->updateVolumes();
+        $this->logger->warning('Binance done!!!!');
 
         $this->bitfinexVolumeWatcher->updateVolumes();
+        $this->logger->warning('Bitfinex done!!!!');
 
         $this->poloniexVolumeWatcher->updateVolumes();
+        $this->logger->warning('Poloniex done!!!!');
 
         $this->setAssetsPrices();
+        $this->logger->warning('Asset prices calculate done!!!!');
     }
 
     /**
@@ -139,22 +145,51 @@ class VolumesWatcher
             $ticker = $asset->getTicker();
             if($data = $this->redis->get($ticker))
             {
+
                 $data = (array) json_decode($data);
+
+                if ($ticker == 'EGC') {
+                    $this->logger->warning($data);
+                }
+//                continue;
                 $soldAsset = 0;
 
                 foreach ($data as $exhange => $volume){
+                    if ($ticker == 'EGC') {
+                        $this->logger->warning("Exchange - " . $exhange);
+                        $this->logger->warning("Volume - " . $volume);
+                    }
                     $query = "SELECT id, exchange, price, ticker, max(time) FROM svandis_asset_prices.asset_price ".
                         "WHERE ticker = '$ticker' AND exchange = '$exhange' ALLOW FILTERING";
 
                     $statement = new SimpleStatement($query);
-                    $result = $this->cassandra->execute($statement);
-                    if ($result[0]['price'] != null && $result[0]['price']->value() != 0) {
-                        $soldAsset += $volume / $result[0]['price']->value();
+                    $result = $this->cassandra->executeAsync($statement);
+                    foreach ($result->get() as $row) {
+//                        dump($row['price']->value());
+                        if ($row['price'] != null && $row['price']->value() != 0) {
+                        $soldAsset += $volume / $row['price']->value();
+                            if ($ticker == 'EGC') {
+                                $this->logger->warning("Volume = " . $volume . " price = ".  $row['price']->value());
+                            }
                     }
+                    }
+//                    if ($result[0]['price'] != null && $result[0]['price']->value() != 0) {
+//                        $soldAsset += $volume / $result[0]['price']->value();
+//                    }
                 }
-
+                if ($ticker == 'EGC') {
+                    $this->logger->warning("Sold assets = " . $soldAsset);
+                }
                 if($soldAsset != 0){
+
                     $avgPrice = array_sum($data) / $soldAsset;
+                    if ($ticker == 'EGC') {
+                        $this->logger->warning("Array sum = " . array_sum($data));
+                        $this->logger->warning("Data = " . $data);
+                        $this->logger->warning("Average price = " . $avgPrice);
+                        $this->logger->warning("Average price calculate= " . array_sum($data) / $soldAsset);
+                    }
+
                     $asset->setPrice($avgPrice);
                     $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
                     $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
@@ -165,6 +200,7 @@ class VolumesWatcher
                 }
             }
         }
+        $this->cassandra->close();
         $this->em->flush();
 
     }

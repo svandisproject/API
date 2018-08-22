@@ -68,10 +68,3 @@ services:
         tags:
             - { name: 'console.command' }
 
-    kami.sync_assets.historical_volumes.command:
-            class: Kami\AssetBundle\Command\SyncHistoryVolumesCommand
-            arguments:
-                - "@kami_stock.history_volumes.watcher"
-            tags:
-                - { name: 'console.command' }
-
