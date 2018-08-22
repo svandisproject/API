@@ -7,6 +7,7 @@ namespace Kami\StockBundle\Watcher;
 use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
 use Doctrine\ORM\EntityManager;
+use function dump;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
@@ -144,7 +145,13 @@ class VolumesWatcher
             $ticker = $asset->getTicker();
             if($data = $this->redis->get($ticker))
             {
+
                 $data = (array) json_decode($data);
+
+                if ($ticker == 'EGC') {
+                    $this->logger->warning($data);
+                }
+//                continue;
                 $soldAsset = 0;
 
                 foreach ($data as $exhange => $volume){
@@ -152,12 +159,23 @@ class VolumesWatcher
                         "WHERE ticker = '$ticker' AND exchange = '$exhange' ALLOW FILTERING";
 
                     $statement = new SimpleStatement($query);
-                    $result = $this->cassandra->execute($statement);
-                    if ($result[0]['price'] != null && $result[0]['price']->value() != 0) {
-                        $soldAsset += $volume / $result[0]['price']->value();
+                    $result = $this->cassandra->executeAsync($statement);
+                    foreach ($result->get() as $row) {
+//                        dump($row['price']->value());
+                        if ($row['price'] != null && $row['price']->value() != 0) {
+                        $soldAsset += $volume / $row['price']->value();
+                            if ($ticker == 'EGC') {
+                                $this->logger->warning("Volume = " . $volume . " price = ".  $row['price']->value());
+                            }
                     }
+                    }
+//                    if ($result[0]['price'] != null && $result[0]['price']->value() != 0) {
+//                        $soldAsset += $volume / $result[0]['price']->value();
+//                    }
                 }
-                $this->logger->warning($ticker . ' sold asset = ' . $soldAsset);
+                if ($ticker == 'EGC') {
+                    $this->logger->warning("Sold assets = " . $soldAsset);
+                }
                 if($soldAsset != 0){
                     $avgPrice = array_sum($data) / $soldAsset;
                     $asset->setPrice($avgPrice);
