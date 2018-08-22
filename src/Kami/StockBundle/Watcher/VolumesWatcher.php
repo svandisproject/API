@@ -6,9 +6,7 @@ namespace Kami\StockBundle\Watcher;
 
 use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
-use Cassandra;
 use Doctrine\ORM\EntityManager;
-use function dump;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
@@ -106,12 +104,6 @@ class VolumesWatcher
         $this->em = $em;
         $this->redis = $redis;
         $this->cassandra = $cassandra;
-//        $cluster = Cassandra::cluster()
-//            ->withContactPoints('34.247.150.247', '34.254.25.212', '34.247.192.31' )
-//            ->withCredentials ( 'iccassandra', '94bf4145d00513abda0e919175ce9146' )
-//            ->withIOThreads(4)
-//            ->build();
-//        $this->cassandra = $cluster->connect('svandis_asset_prices');
         $this->changesHelper = $changesHelper;
         $this->pusher = $pusher;
         $this->logger = $logger;
@@ -178,6 +170,7 @@ class VolumesWatcher
                 }
             }
         }
+        $this->cassandra->close();
         $this->em->flush();
 
     }
