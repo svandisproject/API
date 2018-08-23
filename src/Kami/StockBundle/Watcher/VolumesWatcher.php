@@ -140,6 +140,7 @@ class VolumesWatcher
             if($data = $this->redis->get($ticker))
             {
                 $data = json_decode($data, true);
+                dump($ticker, $data);
                 $soldAsset = 0;
 
                 foreach ($data as $exhange => $volume){
@@ -150,10 +151,13 @@ class VolumesWatcher
                     $result = $this->cassandra->executeAsync($statement);
                     foreach ($result->get() as $row) {
                         if ($row['price'] != null && $row['price']->value() != 0) {
+                            dump('Volume = ' . $volume . ' price = ' . $row['price']->value());
                             $soldAsset += $volume / $row['price']->value();
                         }
                     }
                 }
+
+                dump('Sold asset ' . $soldAsset);
 
                 if($soldAsset != 0){
                     $avgPrice = array_sum($data) / $soldAsset;
