@@ -57,7 +57,7 @@ class UrlController extends Controller
      *
      *
      * @return JsonResponse
-     * @Route("/api/user/me/crawled", methods={"POST"})
+     * @Route("/api/user/me/crawled", methods={"GET"})
      */
     public function getCrawledUrlsByCurrentUserAction()
     {
@@ -68,7 +68,7 @@ class UrlController extends Controller
         }
 
         $posts = $this->getDoctrine()->getRepository(Post::class)
-            ->findBy(['createdBy', $user]);
+            ->findBy(['createdBy' => $user]);
 
         return new JsonResponse(['posts' => $posts]);
     }
