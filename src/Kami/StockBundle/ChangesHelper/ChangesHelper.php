@@ -100,7 +100,7 @@ class ChangesHelper
                 $result = - ((($lastPrice * 100) / $price) - 100);
             } else $result = 0;
         }
-
+        dump("Result change = " . $result);
         return $result;
     }
 }
