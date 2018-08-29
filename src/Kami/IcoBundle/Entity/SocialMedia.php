@@ -29,7 +29,7 @@ class SocialMedia
     /**
      * @var int
      *
-     * @ORM\Column(name="twitter_followers", type="integer" nullable=true)
+     * @ORM\Column(name="twitter_followers", type="integer", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -62,7 +62,7 @@ class SocialMedia
     /**
      * @var int
      *
-     * @ORM\Column(name="reddit_subscribers", type="integer" nullable=true)
+     * @ORM\Column(name="reddit_subscribers", type="integer", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
