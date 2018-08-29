@@ -29,7 +29,7 @@ class Links
     /**
      * @var string|null
      *
-     * @ORM\Column(name="twitter_account", type="string", length=255, nullable=true)
+     * @ORM\Column(name="twitter_account", type="string", length=255)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -40,7 +40,7 @@ class Links
     /**
      * @var string|null
      *
-     * @ORM\Column(name="telegram_chatroom", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="telegram_chatroom", type="string", length=255, nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -51,7 +51,7 @@ class Links
     /**
      * @var string|null
      *
-     * @ORM\Column(name="reddit_channel", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="reddit_channel", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -62,7 +62,7 @@ class Links
     /**
      * @var string|null
      *
-     * @ORM\Column(name="facebook_page", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="facebook_page", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -73,7 +73,7 @@ class Links
     /**
      * @var string|null
      *
-     * @ORM\Column(name="medium_page", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="medium_page", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -84,7 +84,7 @@ class Links
     /**
      * @var string|null
      *
-     * @ORM\Column(name="steemit_page", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="steemit_page", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -95,7 +95,7 @@ class Links
     /**
      * @var string|null
      *
-     * @ORM\Column(name="discord_page", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="discord_page", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -106,7 +106,7 @@ class Links
     /**
      * @var string|null
      *
-     * @ORM\Column(name="website_link", type="string", length=255, nullable=true, unique=true)
+     * @ORM\Column(name="website_link", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
