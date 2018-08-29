@@ -216,8 +216,8 @@ class Ico
     /**
      * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Development", inversedBy="ico")
      * @Api\Relation()
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $development;

@@ -83,8 +83,7 @@ class Development
 
     /**
      * @var string|null
-     *
-     * @ORM\Column(name="github_link, type="string", length=255, nullable=true)
+     * @ORM\Column(name="github_link", type="string", length=255, nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})

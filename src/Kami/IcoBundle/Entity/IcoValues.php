@@ -124,7 +124,7 @@ class IcoValues
     private $ico;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\MoodSignal", inversedBy="icoValues"
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\MoodSignal", inversedBy="icoValues")
      * @Api\Relation()
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
