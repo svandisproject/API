@@ -73,6 +73,15 @@ class Asset
     private $tokenType;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Kami\AssetBundle\Entity\TokenTypeStandard", inversedBy="assets")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $tokenTypeStandard;
+
+    /**
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="assets")
      * @ORM\JoinTable(name="asset_posts")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
@@ -428,6 +437,22 @@ class Asset
     public function setYearToDayChange($yearToDayChange): void
     {
         $this->yearToDayChange = $yearToDayChange;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTokenTypeStandard()
+    {
+        return $this->tokenTypeStandard;
+    }
+
+    /**
+     * @param string $tokenTypeStandard
+     */
+    public function setTokenTypeStandard($tokenTypeStandard)
+    {
+        $this->tokenTypeStandard[] = $tokenTypeStandard;
     }
 
 }

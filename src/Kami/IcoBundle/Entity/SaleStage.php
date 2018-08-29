@@ -4,12 +4,18 @@ namespace Kami\IcoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * SaleStage
  *
  * @ORM\Table(name="sale_stage")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\SaleStageRepository")
+ * @UniqueEntity({"title"})
+ * @Api\AnonymousAccess()
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  */
 class SaleStage
 {
@@ -25,12 +31,16 @@ class SaleStage
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=255)
+     * @ORM\Column(name="title", type="string", length=255, unique=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="sale_stage")
+     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="saleStage")
      */
     private $icos;
 

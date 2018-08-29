@@ -2,23 +2,21 @@
 
 namespace Kami\IcoBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
- * Industry
+ * ConsensusType
  *
- * @ORM\Table(name="industry")
- * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IndustryRepository")
+ * @ORM\Table(name="consensus_type")
+ * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\ConsensusTypeRepository")
  * @UniqueEntity({"title"})
  * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  */
-class Industry
+class ConsensusType
 {
     /**
      * @var int
@@ -32,7 +30,7 @@ class Industry
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=100)
+     * @ORM\Column(name="title", type="string", length=255, unique=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -41,22 +39,15 @@ class Industry
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="industries")
+     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Development", mappedBy="consensusType")
      * @Api\AnonymousAccess()
+     * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\Relation()
      */
-    private $icos;
+    private $development;
 
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->icos = new ArrayCollection();
-    }
 
     /**
      * Get id.
@@ -73,7 +64,7 @@ class Industry
      *
      * @param string $title
      *
-     * @return Industry
+     * @return ConsensusType
      */
     public function setTitle($title)
     {
@@ -93,38 +84,20 @@ class Industry
     }
 
     /**
-     * Add ico.
-     *
-     * @param \Kami\IcoBundle\Entity\Ico $ico
-     *
-     * @return Industry
+     * @return Development
      */
-    public function addIco(\Kami\IcoBundle\Entity\Ico $ico)
+    public function getDevelopment()
     {
-        $this->icos[] = $ico;
+        return $this->development;
+    }
 
+    /**
+     * @param Development $development
+     * @return self
+     */
+    public function setDevelopment($development)
+    {
+        $this->development = $development;
         return $this;
-    }
-
-    /**
-     * Remove ico.
-     *
-     * @param \Kami\IcoBundle\Entity\Ico $ico
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeIco(\Kami\IcoBundle\Entity\Ico $ico)
-    {
-        return $this->icos->removeElement($ico);
-    }
-
-    /**
-     * Get icos.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIcos()
-    {
-        return $this->icos;
     }
 }

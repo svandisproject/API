@@ -5,20 +5,19 @@ namespace Kami\IcoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
- * Industry
+ * MoodSignal
  *
- * @ORM\Table(name="industry")
- * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IndustryRepository")
+ * @ORM\Table(name="mood_signal")
+ * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\MoodSignalRepository")
  * @UniqueEntity({"title"})
- * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\AnonymousAccess()
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  */
-class Industry
+class MoodSignal
 {
     /**
      * @var int
@@ -32,31 +31,32 @@ class Industry
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=100)
-     * @Api\AnonymousAccess()
+     * @ORM\Column(name="title", type="string", length=255, unique=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="industries")
-     * @Api\AnonymousAccess()
+     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\IcoValues", mappedBy="moodSignal")
+     * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\Relation()
      */
-    private $icos;
+    private $icoValues;
 
     /**
-     * Constructor
+     * MoodSignal constructor.
      */
-    public function __construct()
+    function __construct()
     {
-        $this->icos = new ArrayCollection();
+        $this->icoValues = new ArrayCollection();
     }
+
 
     /**
      * Get id.
@@ -73,7 +73,7 @@ class Industry
      *
      * @param string $title
      *
-     * @return Industry
+     * @return MoodSignal
      */
     public function setTitle($title)
     {
@@ -93,38 +93,20 @@ class Industry
     }
 
     /**
-     * Add ico.
-     *
-     * @param \Kami\IcoBundle\Entity\Ico $ico
-     *
-     * @return Industry
+     * @return ArrayCollection
      */
-    public function addIco(\Kami\IcoBundle\Entity\Ico $ico)
+    public function getIcoValues()
     {
-        $this->icos[] = $ico;
+        return $this->icoValues;
+    }
 
+    /**
+     * @param IcoValues $icoValues
+     * @return self
+     */
+    public function setIcoValues($icoValues)
+    {
+        $this->icoValues = $icoValues;
         return $this;
-    }
-
-    /**
-     * Remove ico.
-     *
-     * @param \Kami\IcoBundle\Entity\Ico $ico
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeIco(\Kami\IcoBundle\Entity\Ico $ico)
-    {
-        return $this->icos->removeElement($ico);
-    }
-
-    /**
-     * Get icos.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getIcos()
-    {
-        return $this->icos;
     }
 }
