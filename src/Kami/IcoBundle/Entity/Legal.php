@@ -3,13 +3,16 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use const false;
 
 /**
  * Legal
  *
  * @ORM\Table(name="legal")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\LegalRepository")
+ * @Api\AnonymousAccess()
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  */
 class Legal
 {
@@ -26,46 +29,97 @@ class Legal
      * @var string|null
      *
      * @ORM\Column(name="company_name", type="string", length=255, nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $companyName;
 
     /**
      * @var string|null
      *
+     * @ORM\Column(name="company_url", type="string", length=255, nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $companyUrl;
+
+    /**
+     * @var string|null
+     *
      * @ORM\Column(name="company_address", type="text", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $companyAddress;
 
     /**
-     * @var bool
+     * @var array|null
      *
-     * @ORM\Column(name="KYC_for_participant", type="boolean")
+     * @ORM\Column(name="ofice_locations", type="array", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $kYCForParticipant = false;
+    private $oficeLocations;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="business_model", type="boolean")
+     * @ORM\Column(name="team_kyc", type="boolean")
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $businessModel;
-
-    /**
-     * @var bool
-     *
-     * @ORM\Column(name="GDPR", type="boolean")
-     */
-    private $gDPR;
+    private $teamKYC;
 
     /**
      * @var array|null
      *
      * @ORM\Column(name="partnership", type="array", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $partnership;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="legal")
+     * @var bool
+     *
+     * @ORM\Column(name="buisness_model", type="boolean")
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $buisnessModel;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="GDPR_compliant", type="boolean")
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $gDPRCompliant;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="legal")
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
      */
     private $ico;
 
@@ -105,6 +159,30 @@ class Legal
     }
 
     /**
+     * Set companyUrl.
+     *
+     * @param string|null $companyUrl
+     *
+     * @return Legal
+     */
+    public function setCompanyUrl($companyUrl = null)
+    {
+        $this->companyUrl = $companyUrl;
+
+        return $this;
+    }
+
+    /**
+     * Get companyUrl.
+     *
+     * @return string|null
+     */
+    public function getCompanyUrl()
+    {
+        return $this->companyUrl;
+    }
+
+    /**
      * Set companyAddress.
      *
      * @param string|null $companyAddress
@@ -129,89 +207,63 @@ class Legal
     }
 
     /**
-     * Set kYCForParticipant.
+     * Set oficeLocations.
      *
-     * @param bool $kYCForParticipant
+     * @param array|null $oficeLocations
      *
      * @return Legal
      */
-    public function setKYCForParticipant($kYCForParticipant)
+    public function setOficeLocations($oficeLocations = null)
     {
-        $this->kYCForParticipant = $kYCForParticipant;
+        $this->oficeLocations = $oficeLocations;
 
         return $this;
     }
 
     /**
-     * Get kYCForParticipant.
+     * Get oficeLocations.
      *
-     * @return bool
+     * @return array|null
      */
-    public function getKYCForParticipant()
+    public function getOficeLocations()
     {
-        return $this->kYCForParticipant;
+        return $this->oficeLocations;
     }
 
     /**
-     * Set businessModel.
+     * Set teamKYC.
      *
-     * @param bool $businessModel
+     * @param bool $teamKYC
      *
      * @return Legal
      */
-    public function setBusinessModel($businessModel)
+    public function setTeamKYC($teamKYC)
     {
-        $this->businessModel = $businessModel;
+        $this->teamKYC = $teamKYC;
 
         return $this;
     }
 
     /**
-     * Get businessModel.
+     * Get teamKYC.
      *
      * @return bool
      */
-    public function getBusinessModel()
+    public function getTeamKYC()
     {
-        return $this->businessModel;
-    }
-
-    /**
-     * Set gDPR.
-     *
-     * @param bool $gDPR
-     *
-     * @return Legal
-     */
-    public function setGDPR($gDPR)
-    {
-        $this->gDPR = $gDPR;
-
-        return $this;
-    }
-
-    /**
-     * Get gDPR.
-     *
-     * @return bool
-     */
-    public function getGDPR()
-    {
-        return $this->gDPR;
+        return $this->teamKYC;
     }
 
     /**
      * Set partnership.
      *
-     * @param string|null $partnership
+     * @param array|null $partnership
      *
      * @return Legal
      */
     public function setPartnership($partnership = null)
     {
-        if ($partnership) {
-            $this->partnership[] = $partnership;
-        }
+        $this->partnership = $partnership;
 
         return $this;
     }
@@ -227,23 +279,68 @@ class Legal
     }
 
     /**
-     * @param Ico $ico
+     * Set buisnessModel.
      *
+     * @param bool $buisnessModel
+     *
+     * @return Legal
+     */
+    public function setBuisnessModel($buisnessModel)
+    {
+        $this->buisnessModel = $buisnessModel;
+
+        return $this;
+    }
+
+    /**
+     * Get buisnessModel.
+     *
+     * @return bool
+     */
+    public function getBuisnessModel()
+    {
+        return $this->buisnessModel;
+    }
+
+    /**
+     * Set gDPRCompliant.
+     *
+     * @param bool $gDPRCompliant
+     *
+     * @return Legal
+     */
+    public function setGDPRCompliant($gDPRCompliant)
+    {
+        $this->gDPRCompliant = $gDPRCompliant;
+
+        return $this;
+    }
+
+    /**
+     * Get gDPRCompliant.
+     *
+     * @return bool
+     */
+    public function getGDPRCompliant()
+    {
+        return $this->gDPRCompliant;
+    }
+
+    /**
+     * @param Ico $ico
      * @return self
      */
-    public function setIco($ico): self
+    public function setIco(Ico $ico)
     {
         $this->ico = $ico;
-
         return $this;
     }
 
     /**
      * @return Ico
      */
-    public function getIco(): Ico
+    public function getIco()
     {
         return $this->ico;
     }
-
 }

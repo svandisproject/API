@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="social_media")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\SocialMediaRepository")
+ * @Api\AnonymousAccess()
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  */
 class SocialMedia
 {
@@ -22,59 +26,58 @@ class SocialMedia
     private $id;
 
     /**
-     * @var string|null
+     * @var int
      *
-     * @ORM\Column(name="linked_in", type="string", length=255, nullable=true)
+     * @ORM\Column(name="twitter_followers", type="integer" nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $linkedIn;
+    private $twitterFollowers;
 
     /**
-     * @var string|null
+     * @var int
      *
-     * @ORM\Column(name="twitter", type="string", length=255, nullable=true)
+     * @ORM\Column(name="medium_followers", type="integer", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $twitter;
+    private $mediumFollowers;
 
     /**
-     * @var string|null
+     * @var int
      *
-     * @ORM\Column(name="medium", type="string", length=255, nullable=true)
+     * @ORM\Column(name="telegram_followers", type="integer", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $medium;
+    private $telegramFollowers;
 
     /**
-     * @var string|null
+     * @var int
      *
-     * @ORM\Column(name="telegram", type="string", length=255, nullable=true)
+     * @ORM\Column(name="reddit_subscribers", type="integer" nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $telegram;
+    private $redditSubscribers;
 
     /**
-     * @var string|null
-     *
-     * @ORM\Column(name="discord", type="string", length=255, nullable=true)
+     * @ORM\OneToOne(targetEntity="Ico", mappedBy="social_media")
+     * @Api\Relation()
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $discord;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="facebook", type="string", length=255, nullable=true)
-     */
-    private $facebook;
-
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="reddit", type="string", length=255, nullable=true)
-     */
-    private $reddit;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Person", inversedBy="social_media_links")
-     */
-    private $person;
-
+    protected $ico;
 
     /**
      * Get id.
@@ -87,188 +90,111 @@ class SocialMedia
     }
 
     /**
-     * Set linkedIn.
+     * Set twitterFollowers.
      *
-     * @param string|null $linkedIn
+     * @param int|null $twitterFollowers
      *
      * @return SocialMedia
      */
-    public function setLinkedIn($linkedIn = null)
+    public function setTwitterFollowers($twitterFollowers = null)
     {
-        $this->linkedIn = $linkedIn;
+        $this->twitterFollowers = $twitterFollowers;
 
         return $this;
     }
 
     /**
-     * Get linkedIn.
+     * Get twitterFollowers.
      *
      * @return string|null
      */
-    public function getLinkedIn()
+    public function getTwitterFollowers()
     {
-        return $this->linkedIn;
+        return $this->twitterFollowers;
     }
 
     /**
-     * Set twitter.
+     * Set mediumFollowers.
      *
-     * @param string|null $twitter
+     * @param int|null $mediumFollowers
      *
      * @return SocialMedia
      */
-    public function setTwitter($twitter = null)
+    public function setMediumFollowers($mediumFollowers = null)
     {
-        $this->twitter = $twitter;
+        $this->mediumFollowers = $mediumFollowers;
 
         return $this;
     }
 
     /**
-     * Get twitter.
+     * Get mediumFollowers.
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getTwitter()
+    public function getMediumFollowers()
     {
-        return $this->twitter;
+        return $this->mediumFollowers;
     }
 
     /**
-     * Set medium.
+     * Set telegramFollowers.
      *
-     * @param string|null $medium
+     * @param int|null $telegramFollowers
      *
      * @return SocialMedia
      */
-    public function setMedium($medium = null)
+    public function setTelegramFollowers($telegramFollowers = null)
     {
-        $this->medium = $medium;
+        $this->telegramFollowers = $telegramFollowers;
 
         return $this;
     }
 
     /**
-     * Get medium.
+     * Get telegramFollowers.
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getMedium()
+    public function getTelegramFollowers()
     {
-        return $this->medium;
+        return $this->telegramFollowers;
     }
 
     /**
-     * Set telegram.
+     * Set redditSubscribers.
      *
-     * @param string|null $telegram
+     * @param int|null $redditSubscribers
      *
      * @return SocialMedia
      */
-    public function setTelegram($telegram = null)
+    public function setRedditSubscribers($redditSubscribers = null)
     {
-        $this->telegram = $telegram;
+        $this->redditSubscribers = $redditSubscribers;
 
         return $this;
     }
 
     /**
-     * Get telegram.
+     * Get redditSubscribers.
      *
-     * @return string|null
+     * @return int|null
      */
-    public function getTelegram()
+    public function getRedditSubscribers()
     {
-        return $this->telegram;
+        return $this->redditSubscribers;
     }
 
     /**
-     * Set discord.
+     * @param Ico $ico
      *
-     * @param string|null $discord
-     *
-     * @return SocialMedia
-     */
-    public function setDiscord($discord = null)
-    {
-        $this->discord = $discord;
-
-        return $this;
-    }
-
-    /**
-     * Get discord.
-     *
-     * @return string|null
-     */
-    public function getDiscord()
-    {
-        return $this->discord;
-    }
-
-    /**
-     * Set facebook.
-     *
-     * @param string|null $facebook
-     *
-     * @return SocialMedia
-     */
-    public function setFacebook($facebook = null)
-    {
-        $this->facebook = $facebook;
-
-        return $this;
-    }
-
-    /**
-     * Get facebook.
-     *
-     * @return string|null
-     */
-    public function getFacebook()
-    {
-        return $this->facebook;
-    }
-
-    /**
-     * Set reddit.
-     *
-     * @param string|null $reddit
-     *
-     * @return SocialMedia
-     */
-    public function setReddit($reddit = null)
-    {
-        $this->reddit = $reddit;
-
-        return $this;
-    }
-
-    /**
-     * Get reddit.
-     *
-     * @return string|null
-     */
-    public function getReddit()
-    {
-        return $this->reddit;
-    }
-
-    /**
-     * @return Person
-     */
-    public function getPerson()
-    {
-        return $this->person;
-    }
-
-    /**
-     * @param Person $person
      * @return self
      */
-    public function setPerson($person): self
+    public function setIco($ico)
     {
-        $this->person = $person;
+        $this->ico = $ico;
+        $ico->setSocialMedia($this);
         return $this;
     }
+
 }

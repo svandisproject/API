@@ -2,8 +2,8 @@
 
 namespace Kami\IcoBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use const false;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -11,7 +11,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="person")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\PersonRepository")
- * @UniqueEntity({"url"})
+ * @Api\AnonymousAccess()
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  */
 class Person
 {
@@ -28,48 +31,105 @@ class Person
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=150, nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $nationality;
 
     /**
-     * @ORM\Column(name="links", type="string", nullable=true)
+     * @ORM\Column(name="links", type="array", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $links;
 
     /**
      * @ORM\Column(name="url", type="string", unique=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $url;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\SocialMedia", mappedBy="person", cascade={"persist"})
-     */
-    private $social_media_links;
-
-    /**
      * @ORM\Column(type="boolean")
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $kyc = false;
 
     /**
      * @ORM\Column(type="array")
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $relevant_experience;
+    private $relevantExperience;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Department", inversedBy="person", cascade={"persist"})
+     * @Api\Relation()
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $department;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Finance", mappedBy="majorInvestors")
+     * @Api\Relation()
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $finances;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="team")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $icos;
+
+    /**
+     * Person constructor.
+     */
+    function __construct()
+    {
+        $this->icos = new ArrayCollection();
+        $this->finances = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -128,9 +188,9 @@ class Person
      *
      * @return Person
      */
-    public function setLinks($links = null)
+    public function addLink($links = null)
     {
-        $this->links = $links;
+        $this->links[] = $links;
 
         return $this;
     }
@@ -203,25 +263,6 @@ class Person
     }
 
     /**
-     * @return SocialMedia
-     */
-    public function getSocialMediaLinks()
-    {
-        return $this->social_media_links;
-    }
-
-    /**
-     * @param SocialMedia $social_media_links
-     *
-     * @return self
-     */
-    public function setSocialMediaLinks($social_media_links)
-    {
-        $this->social_media_links = $social_media_links;
-        return $this;
-    }
-
-    /**
      * @return Department
      */
     public function getDepartment()
@@ -245,14 +286,69 @@ class Person
      */
     public function getRelevantExperience()
     {
-        return $this->relevant_experience;
+        return $this->relevantExperience;
     }
 
     /**
      * @param string $relevant_experience
      */
-    public function setRelevantExperience($relevant_experience)
+    public function addRelevantExperience($relevant_experience)
     {
-        $this->relevant_experience[] = $relevant_experience;
+        $this->relevantExperience[] = $relevant_experience;
+    }
+
+    /**
+     * @param Ico $ico
+     * @return self
+     */
+    public function addIco($ico)
+    {
+        $this->icos[] = $ico;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getIcos()
+    {
+        return $this->icos;
+    }
+
+    /**
+     * remove Ico
+     * @param Ico $ico
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeIco(Ico $ico)
+    {
+        $this->icos->removeElement($ico);
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getFinances()
+    {
+        return $this->finances;
+    }
+
+    /**
+     * @param Finance $finance
+     * @return self
+     */
+    public function addFinance($finance)
+    {
+        $this->finances[] = $finance;
+        return $this;
+    }
+
+    /**
+     * @param Finance $finance
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     */
+    public function removeMajorInvestor(Finance $finance)
+    {
+        $this->finances->removeElement($finance);
     }
 }

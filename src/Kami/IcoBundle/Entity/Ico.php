@@ -13,7 +13,6 @@ use Kami\ApiCoreBundle\Annotation as Api;
  *
  * @ORM\Table(name="ico")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IcoRepository")
- * @UniqueEntity({"remoteId"})
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\AnonymousAccess()
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -31,7 +30,7 @@ class Ico
     private $id;
 
     /**
-     * @ORM\Column(name="remote_id", type="integer", unique=true, nullable=true)
+     * @ORM\Column(name="remote_id", type="integer", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -51,8 +50,38 @@ class Ico
     private $title;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(name="slogan", type="text")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $slogan;
+
+    /**
+     * @ORM\Column(name="problem", type="text")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $problem;
+
+    /**
      * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="ico")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation()
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -80,7 +109,7 @@ class Ico
     private $forSale;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person", inversedBy="icos", cascade={"persist"})
      * @ORM\JoinTable(name="ico_team")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
@@ -90,15 +119,13 @@ class Ico
     private $team;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Person", cascade={"persist"})
-     * @ORM\JoinTable(name="ico_advisors")
+     * @ORM\Column(type="integer", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\Relation()
+     *
      */
-    private $advisors;
+    private $staffSize;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\IcoBundle\Entity\Ico")
@@ -142,49 +169,76 @@ class Ico
     private $restrictedCountries;
 
     /**
-     * @ORM\OneToOne( targetEntity="Kami\IcoBundle\Entity\Dates", mappedBy="ico", cascade={"persist"})
+     * @ORM\OneToOne( targetEntity="Kami\IcoBundle\Entity\Dates", inversedBy="ico", cascade={"persist"})
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $dates;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $website_link;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $description;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $problem_to_solve;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $white_list;
-
-    /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Finance", mappedBy="ico", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Finance", inversedBy="ico", cascade={"persist"})
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $finance;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Development", mappedBy="ico", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\SaleStage", inversedBy="icos", cascade={"persist"})
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     */
+    private $saleStage;
+
+    /**
+     * @ORM\OneToOne(targetEntity="IcoValues", inversedBy="ico")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     */
+    private $values;
+
+    /**
+     * @ORM\OneToOne(targetEntity="SocialMedia", inversedBy="ico")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     */
+    private $social_media;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Development", inversedBy="ico")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
     private $development;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Legal", mappedBy="ico", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Links", inversedBy="ico")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
-    private $legal;
+    private $links;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\SaleStage", inversedBy="icos", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Legal", inversedBy="ico")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      */
-    private $sale_stage;
+    private $legal;
 
     /**
      * Constructor
@@ -192,7 +246,6 @@ class Ico
     public function __construct()
     {
         $this->team = new ArrayCollection();
-        $this->advisors = new ArrayCollection();
         $this->partners = new ArrayCollection();
         $this->competitors = new ArrayCollection();
         $this->industries = new ArrayCollection();
@@ -206,6 +259,24 @@ class Ico
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getStaffSize()
+    {
+        return $this->staffSize;
+    }
+
+    /**
+     * @param int $staffSize
+     * @return self
+     */
+    public function setStaffSize($staffSize)
+    {
+        $this->staffSize = $staffSize;
+        return $this;
     }
 
     /**
@@ -254,6 +325,42 @@ class Ico
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlogan()
+    {
+        return $this->slogan;
+    }
+
+    /**
+     * @param string $slogan
+     */
+    public function setSlogan($slogan)
+    {
+        $this->slogan = $slogan;
+    }
+
+    /**
+     * @return IcoValues
+     */
+    public function getValues()
+    {
+        return $this->values;
+    }
+
+    /**
+     * @param IcoValues $values
+     *
+     * @return self
+     */
+    public function setValues($values): self
+    {
+        $this->values = $values;
+        $values->setIco($this);
+        return $this;
     }
 
     /**
@@ -392,42 +499,6 @@ class Ico
     }
 
     /**
-     * Add advisor.
-     *
-     * @param Person $advisor
-     *
-     * @return Ico
-     */
-    public function addAdvisor(Person $advisor)
-    {
-        $this->advisors[] = $advisor;
-
-        return $this;
-    }
-
-    /**
-     * Remove advisor.
-     *
-     * @param \Kami\IcoBundle\Entity\Person $advisor
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeAdvisor(Person $advisor)
-    {
-        return $this->advisors->removeElement($advisor);
-    }
-
-    /**
-     * Get advisors.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getAdvisors()
-    {
-        return $this->advisors;
-    }
-
-    /**
      * Add partner.
      *
      * @param \Kami\IcoBundle\Entity\Ico $partner
@@ -546,16 +617,6 @@ class Ico
     }
 
     /**
-     * @param mixed $advisors
-     * @return Ico
-     */
-    public function setAdvisors($advisors)
-    {
-        $this->advisors = $advisors;
-        return $this;
-    }
-
-    /**
      * @param mixed $partners
      * @return Ico
      */
@@ -605,83 +666,6 @@ class Ico
     }
 
     /**
-     * @return string|null
-     */
-    public function getWebsiteLink(): ?string
-    {
-        return $this->website_link;
-    }
-
-    /**
-     * @param string $website_link
-     *
-     * @return self
-     */
-    public function setWebsiteLink($website_link): self
-    {
-        $this->website_link = $website_link;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     *
-     * @return self
-     */
-    public function setDescription($description): self
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getProblemToSolve(): ?string
-    {
-        return $this->problem_to_solve;
-    }
-
-    /**
-     * @param string $problem_to_solve
-     *
-     * @return self
-     */
-    public function setProblemToSolve($problem_to_solve): self
-    {
-        $this->problem_to_solve = $problem_to_solve;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getWhiteList(): ?string
-    {
-        return $this->white_list;
-    }
-
-    /**
-     * @param string $white_list
-     *
-     * @return self
-     */
-    public function setWhiteList($white_list): self
-    {
-        $this->white_list = $white_list;
-        return $this;
-    }
-
-    /**
      * @return Finance
      */
     public function getFinance(): Finance
@@ -701,60 +685,131 @@ class Ico
     }
 
     /**
+     * @return SaleStage
+     */
+    public function getSaleStage(): SaleStage
+    {
+        return $this->saleStage;
+    }
+
+    /**
+     * @param SaleStage $saleStage
+     *
+     * @return self
+     */
+    public function setSaleStage($saleStage): self
+    {
+        $this->saleStage = $saleStage;
+        return $this;
+    }
+
+    /**
+     * @return SocialMedia
+     */
+    public function getSocialMedia()
+    {
+        return $this->social_media;
+    }
+
+    /**
+     * @param SocialMedia $social_media
+     *
+     * @return self
+     */
+    public function setSocialMedia($social_media)
+    {
+        $this->social_media = $social_media;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     * @return self
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProblem()
+    {
+        return $this->problem;
+    }
+
+    /**
+     * @param string $problem
+     * @return self
+     */
+    public function setProblem($problem)
+    {
+        $this->problem = $problem;
+        return $this;
+    }
+
+    /**
      * @return Development
      */
-    public function getDevelopment(): Development
+    public function getDevelopment()
     {
         return $this->development;
     }
 
     /**
      * @param Development $development
-     *
      * @return self
      */
-    public function setDevelopment($development): self
+    public function setDevelopment($development)
     {
         $this->development = $development;
         return $this;
     }
 
     /**
+     * @return Links
+     */
+    public function getLinks()
+    {
+        return $this->links;
+    }
+
+    /**
+     * @param Links $links
+     * @return self
+     */
+    public function setLinks($links)
+    {
+        $this->links = $links;
+        return $this;
+    }
+
+    /**
      * @return Legal
      */
-    public function getLegal(): Legal
+    public function getLegal()
     {
         return $this->legal;
     }
 
     /**
      * @param Legal $legal
-     *
      * @return self
      */
-    public function setLegal($legal): self
+    public function setLegal($legal)
     {
         $this->legal = $legal;
-
-        return $this;
-    }
-
-    /**
-     * @return SaleStage
-     */
-    public function getSaleStage(): SaleStage
-    {
-        return $this->sale_stage;
-    }
-
-    /**
-     * @param SaleStage $sale_stage
-     *
-     * @return self
-     */
-    public function setSaleStage($sale_stage): self
-    {
-        $this->sale_stage = $sale_stage;
         return $this;
     }
 }

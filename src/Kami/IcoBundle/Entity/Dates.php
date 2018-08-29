@@ -9,6 +9,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="dates")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\DatesRepository")
+ * @Api\AnonymousAccess()
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  */
 class Dates
 {
@@ -25,6 +29,10 @@ class Dates
      * @var \DateTime|null
      *
      * @ORM\Column(name="private_sale_start", type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $privateSaleStart;
 
@@ -32,6 +40,10 @@ class Dates
      * @var \DateTime|null
      *
      * @ORM\Column(name="private_sale_end", type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $privateSaleEnd;
 
@@ -39,6 +51,10 @@ class Dates
      * @var \DateTime|null
      *
      * @ORM\Column(name="presale_start", type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $presaleStart;
 
@@ -46,42 +62,73 @@ class Dates
      * @var \DateTime|null
      *
      * @ORM\Column(name="presale_end", type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $presaleEnd;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="public_sale_start", type="datetime", nullable=true)
+     * @ORM\Column(name="crowdsale_start", type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $publicSaleStart;
+    private $crowdsaleStart;
 
     /**
      * @var \DateTime|null
      *
-     * @ORM\Column(name="public_sale_end", type="datetime", nullable=true)
-     */
-    private $publicSaleEnd;
-
-    /**
-     * @var \DateTime|null
+     * @ORM\Column(name="crowdsale_end", type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      *
-     * @ORM\Column(name="testnet_date", type="datetime", nullable=true)
      */
-    private $testnetDate;
+    private $crowdsaleEnd;
 
     /**
-     * @var \DateTime|null
+     * @var int
      *
-     * @ORM\Column(name="mainnet_date", type="datetime", nullable=true)
+     * @ORM\Column(name="days_left", type="integer")
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $mainnetDate;
+    private $daysLeft;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\ICO", inversedBy="dates")
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $lockup;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $vesting;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\ICO", mappedBy="dates")
+     * @Api\AnonymousAccess()
+     * @Api\Relation()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $ico;
-
 
     /**
      * Get id.
@@ -190,99 +237,63 @@ class Dates
     }
 
     /**
-     * Set publicSaleStart.
-     *
-     * @param \DateTime|null $publicSaleStart
-     *
-     * @return Dates
+     * @return \DateTime|null
      */
-    public function setPublicSaleStart($publicSaleStart = null)
+    public function getCrowdsaleEnd()
     {
-        $this->publicSaleStart = $publicSaleStart;
+        return $this->crowdsaleEnd;
+    }
+
+    /**
+     * @param \DateTime $crowdsaleEnd
+     *
+     * @return self
+     */
+    public function setCrowdsaleEnd($crowdsaleEnd): self
+    {
+        $this->crowdsaleEnd = $crowdsaleEnd;
 
         return $this;
     }
 
     /**
-     * Get publicSaleStart.
-     *
      * @return \DateTime|null
      */
-    public function getPublicSaleStart()
+    public function getCrowdsaleStart()
     {
-        return $this->publicSaleStart;
+        return $this->crowdsaleStart;
     }
 
     /**
-     * Set publicSaleEnd.
+     * @param \DateTime $crowdsaleStart
      *
-     * @param \DateTime|null $publicSaleEnd
-     *
-     * @return Dates
+     * @return self
      */
-    public function setPublicSaleEnd($publicSaleEnd = null)
+    public function setCrowdsaleStart($crowdsaleStart): self
     {
-        $this->publicSaleEnd = $publicSaleEnd;
+        $this->crowdsaleStart = $crowdsaleStart;
 
         return $this;
     }
 
     /**
-     * Get publicSaleEnd.
-     *
-     * @return \DateTime|null
+     * @return integer
      */
-    public function getPublicSaleEnd()
+    public function getDaysLeft()
     {
-        return $this->publicSaleEnd;
+        return $this->daysLeft;
     }
 
     /**
-     * Set testnetDate.
+     * @param integer $daysLeft
      *
-     * @param \DateTime|null $testnetDate
-     *
-     * @return Dates
+     * @return self
      */
-    public function setTestnetDate($testnetDate = null)
+    public function setDaysLeft($daysLeft): self
     {
-        $this->testnetDate = $testnetDate;
+        $this->daysLeft = $daysLeft;
 
         return $this;
-    }
-
-    /**
-     * Get testnetDate.
-     *
-     * @return \DateTime|null
-     */
-    public function getTestnetDate()
-    {
-        return $this->testnetDate;
-    }
-
-    /**
-     * Set mainnetDate.
-     *
-     * @param \DateTime|null $mainnetDate
-     *
-     * @return Dates
-     */
-    public function setMainnetDate($mainnetDate = null)
-    {
-        $this->mainnetDate = $mainnetDate;
-
-        return $this;
-    }
-
-    /**
-     * Get mainnetDate.
-     *
-     * @return \DateTime|null
-     */
-    public function getMainnetDate()
-    {
-        return $this->mainnetDate;
     }
 
     /**
@@ -307,5 +318,41 @@ class Dates
     public function getIco()
     {
         return $this->ico;
+    }
+
+    /**
+     * @return \DateTime | null
+     */
+    public function getLockup()
+    {
+        return $this->lockup;
+    }
+
+    /**
+     * @param \DateTime $lockup
+     * @return self
+     */
+    public function setLockup($lockup)
+    {
+        $this->lockup = $lockup;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime | null
+     */
+    public function getVesting()
+    {
+        return $this->vesting;
+    }
+
+    /**
+     * @param mixed $vesting
+     * @return self
+     */
+    public function setVesting($vesting)
+    {
+        $this->vesting = $vesting;
+        return $this;
     }
 }
