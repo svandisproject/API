@@ -5,6 +5,7 @@ namespace Kami\IcoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\AssetBundle\Entity\Asset;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * Finance

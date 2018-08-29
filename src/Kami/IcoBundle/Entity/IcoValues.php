@@ -3,8 +3,7 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use const false;
-use Kami\IcoBundle\Entity\Ico;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * IcoValues
