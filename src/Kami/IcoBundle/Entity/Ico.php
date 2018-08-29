@@ -52,7 +52,7 @@ class Ico
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -61,7 +61,7 @@ class Ico
     private $description;
 
     /**
-     * @ORM\Column(name="slogan", type="text")
+     * @ORM\Column(name="slogan", type="text", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -70,7 +70,7 @@ class Ico
     private $slogan;
 
     /**
-     * @ORM\Column(name="problem", type="text")
+     * @ORM\Column(name="problem", type="text", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -160,7 +160,7 @@ class Ico
     private $industries;
 
     /**
-     * @ORM\Column(type="array", name="restricted_countries")
+     * @ORM\Column(type="array", name="restricted_countries", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})

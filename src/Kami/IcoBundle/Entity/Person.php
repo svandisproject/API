@@ -5,7 +5,6 @@ namespace Kami\IcoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
-
 /**
  * Person
  *
@@ -66,7 +65,7 @@ class Person
     private $links;
 
     /**
-     * @ORM\Column(name="url", type="string", unique=true)
+     * @ORM\Column(name="url", type="string", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -75,7 +74,7 @@ class Person
     private $url;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -84,7 +83,7 @@ class Person
     private $kyc = false;
 
     /**
-     * @ORM\Column(type="array")
+     * @ORM\Column(type="array", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -256,7 +255,7 @@ class Person
      *
      * @return self
      */
-    public function setKyc($kyc): self
+    public function setKyc($kyc = false): self
     {
         $this->kyc = $kyc;
         return $this;

@@ -3,6 +3,7 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use const false;
 use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
@@ -35,12 +36,12 @@ class Development
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $nativeBlockchain;
+    private $nativeBlockchain = false;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="whitepaper_link", type="string", length=255)
+     * @ORM\Column(name="whitepaper_link", type="string", length=255, nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -57,7 +58,7 @@ class Development
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $openSource;
+    private $openSource = false;
 
     /**
      * @var bool
@@ -68,7 +69,7 @@ class Development
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $demoAvailability;
+    private $demoAvailability = false;
 
     /**
      * @var string|null
@@ -116,13 +117,13 @@ class Development
     /**
      * @var array
      *
-     * @ORM\Column(name="wallet_audit", type="array")
+     * @ORM\Column(name="wallet_audit", type="array", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $walletAudit = false;
+    private $walletAudit;
 
     /**
      * @ORM\Column(name="testnet_date", type="datetime", nullable=true)

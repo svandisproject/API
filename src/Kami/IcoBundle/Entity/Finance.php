@@ -43,7 +43,7 @@ class Finance
     /**
      * @var int
      *
-     * @ORM\Column(name="total_supply", type="integer")
+     * @ORM\Column(name="total_supply", type="integer", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -53,7 +53,7 @@ class Finance
     /**
      * @var int
      *
-     * @ORM\Column(name="sale_supply", type="integer")
+     * @ORM\Column(name="sale_supply", type="integer", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -62,7 +62,7 @@ class Finance
     private $saleSupply;
 
     /**
-     * @ORM\Column(name="tokens_being_sold", type="integer")
+     * @ORM\Column(name="tokens_being_sold", type="integer", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -164,7 +164,7 @@ class Finance
     /**
      * @var float
      *
-     * @ORM\Column(name="hard_cap", type="decimal")
+     * @ORM\Column(name="hard_cap", type="decimal", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -175,7 +175,7 @@ class Finance
     /**
      * @var float
      *
-     * @ORM\Column(name="raised_usd", type="decimal")
+     * @ORM\Column(name="raised_usd", type="decimal", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -186,7 +186,7 @@ class Finance
     /**
      * @var array
      *
-     * @ORM\Column(name="distribution", type="array")
+     * @ORM\Column(name="distribution", type="array", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
