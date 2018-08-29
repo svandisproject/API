@@ -96,7 +96,7 @@ class Dates
     /**
      * @var int
      *
-     * @ORM\Column(name="days_left", type="integer")
+     * @ORM\Column(name="days_left", type="integer", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -105,7 +105,7 @@ class Dates
     private $daysLeft;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -114,7 +114,7 @@ class Dates
     private $lockup;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime", nullable=true, nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})

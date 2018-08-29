@@ -8,7 +8,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20180829121956 extends AbstractMigration
+final class Version20180829130320 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
@@ -34,7 +34,7 @@ final class Version20180829121956 extends AbstractMigration
         $this->addSql('CREATE TABLE legal (id INT NOT NULL, company_name VARCHAR(255) DEFAULT NULL, company_url VARCHAR(255) DEFAULT NULL, company_address TEXT DEFAULT NULL, ofice_locations TEXT DEFAULT NULL, team_kyc BOOLEAN NOT NULL, partnership TEXT DEFAULT NULL, buisness_model BOOLEAN NOT NULL, GDPR_compliant BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN legal.ofice_locations IS \'(DC2Type:array)\'');
         $this->addSql('COMMENT ON COLUMN legal.partnership IS \'(DC2Type:array)\'');
-        $this->addSql('CREATE TABLE finance (id INT NOT NULL, total_supply INT NOT NULL, sale_supply INT NOT NULL, tokens_being_sold INT NOT NULL, private_sold_tokens INT DEFAULT NULL, presale_sold_tokens INT DEFAULT NULL, crowdsale_sold_tokens INT DEFAULT NULL, total_supply_valuation INT DEFAULT NULL, tokens_to_team INT DEFAULT NULL, individual_cap DOUBLE PRECISION DEFAULT NULL, circulating_supply DOUBLE PRECISION DEFAULT NULL, team_vesting_cliff INT DEFAULT NULL, advisors_vesting_clif INT DEFAULT NULL, presale_contributors_vesting_clif INT DEFAULT NULL, hard_cap NUMERIC(10, 0) NOT NULL, raised_usd NUMERIC(10, 0) NOT NULL, distribution TEXT NOT NULL, price_crypto DOUBLE PRECISION DEFAULT NULL, min_cap DOUBLE PRECISION DEFAULT NULL, debts VARCHAR(255) DEFAULT NULL, history_of_bankruptcy TEXT DEFAULT NULL, vested_tokens VARCHAR(255) DEFAULT NULL, bonuses TEXT DEFAULT NULL, day_to_liquidity INT DEFAULT NULL, price_adjusted_bonus NUMERIC(10, 0) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE finance (id INT NOT NULL, total_supply INT DEFAULT NULL, sale_supply INT DEFAULT NULL, tokens_being_sold INT DEFAULT NULL, private_sold_tokens INT DEFAULT NULL, presale_sold_tokens INT DEFAULT NULL, crowdsale_sold_tokens INT DEFAULT NULL, total_supply_valuation INT DEFAULT NULL, tokens_to_team INT DEFAULT NULL, individual_cap DOUBLE PRECISION DEFAULT NULL, circulating_supply DOUBLE PRECISION DEFAULT NULL, team_vesting_cliff INT DEFAULT NULL, advisors_vesting_clif INT DEFAULT NULL, presale_contributors_vesting_clif INT DEFAULT NULL, hard_cap NUMERIC(10, 0) DEFAULT NULL, raised_usd NUMERIC(10, 0) DEFAULT NULL, distribution TEXT DEFAULT NULL, price_crypto DOUBLE PRECISION DEFAULT NULL, min_cap DOUBLE PRECISION DEFAULT NULL, debts VARCHAR(255) DEFAULT NULL, history_of_bankruptcy TEXT DEFAULT NULL, vested_tokens VARCHAR(255) DEFAULT NULL, bonuses TEXT DEFAULT NULL, day_to_liquidity INT DEFAULT NULL, price_adjusted_bonus NUMERIC(10, 0) DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN finance.distribution IS \'(DC2Type:array)\'');
         $this->addSql('COMMENT ON COLUMN finance.bonuses IS \'(DC2Type:array)\'');
         $this->addSql('CREATE TABLE accepted_assets (finance_id INT NOT NULL, asset_id INT NOT NULL, PRIMARY KEY(finance_id, asset_id))');
@@ -47,26 +47,19 @@ final class Version20180829121956 extends AbstractMigration
         $this->addSql('CREATE UNIQUE INDEX UNIQ_CB0C2192B36786B ON dev_stages (title)');
         $this->addSql('CREATE TABLE department (id INT NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_CD1DE18A2B36786B ON department (title)');
-        $this->addSql('CREATE TABLE development (id INT NOT NULL, stages_id INT DEFAULT NULL, consensus_type_id INT DEFAULT NULL, native_blockchain BOOLEAN NOT NULL, whitepaper_link VARCHAR(255) NOT NULL, open_source BOOLEAN NOT NULL, demo_availability BOOLEAN NOT NULL, demo_link VARCHAR(255) DEFAULT NULL, github_link VARCHAR(255) DEFAULT NULL, smart_contract_audit BOOLEAN NOT NULL, code_audits BOOLEAN NOT NULL, wallet_audit TEXT NOT NULL, testnet_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, mainnet_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, projectCompletion INT DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE development (id INT NOT NULL, stages_id INT DEFAULT NULL, consensus_type_id INT DEFAULT NULL, native_blockchain BOOLEAN NOT NULL, whitepaper_link VARCHAR(255) DEFAULT NULL, open_source BOOLEAN NOT NULL, demo_availability BOOLEAN NOT NULL, demo_link VARCHAR(255) DEFAULT NULL, github_link VARCHAR(255) DEFAULT NULL, smart_contract_audit BOOLEAN NOT NULL, code_audits BOOLEAN NOT NULL, wallet_audit TEXT DEFAULT NULL, testnet_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, mainnet_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, projectCompletion INT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_C0D6212A8E55E70A ON development (stages_id)');
         $this->addSql('CREATE INDEX IDX_C0D6212ADF6F3D60 ON development (consensus_type_id)');
         $this->addSql('COMMENT ON COLUMN development.wallet_audit IS \'(DC2Type:array)\'');
         $this->addSql('CREATE TABLE consensus_type (id INT NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_BA804072B36786B ON consensus_type (title)');
-        $this->addSql('CREATE TABLE links (id INT NOT NULL, twitter_account VARCHAR(255) DEFAULT NULL, telegram_chatroom VARCHAR(255) DEFAULT NULL, reddit_channel VARCHAR(255) DEFAULT NULL, facebook_page VARCHAR(255) DEFAULT NULL, medium_page VARCHAR(255) DEFAULT NULL, steemit_page VARCHAR(255) DEFAULT NULL, discord_page VARCHAR(255) DEFAULT NULL, website_link VARCHAR(255) DEFAULT NULL, video_presentetion VARCHAR(255) DEFAULT NULL, airdrops VARCHAR(255) DEFAULT NULL, bounties VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_D182A1184BBB7F8C ON links (telegram_chatroom)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_D182A1183111D89F ON links (reddit_channel)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_D182A1187F3B5ED ON links (facebook_page)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_D182A1188C151CF1 ON links (medium_page)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_D182A118DBE7D68 ON links (steemit_page)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_D182A1186DDCB520 ON links (discord_page)');
-        $this->addSql('CREATE UNIQUE INDEX UNIQ_D182A11834A97085 ON links (website_link)');
-        $this->addSql('CREATE TABLE ico_values (id INT NOT NULL, mood_signal_id INT DEFAULT NULL, white_list BOOLEAN NOT NULL, staking BOOLEAN NOT NULL, masternodes BOOLEAN NOT NULL, dividend BOOLEAN NOT NULL, burning BOOLEAN NOT NULL, vesting BOOLEAN NOT NULL, vcs BOOLEAN NOT NULL, accredited_investors BOOLEAN NOT NULL, demoAvailability BOOLEAN NOT NULL, smartContractAudit BOOLEAN NOT NULL, project_completion INT NOT NULL, listing_order INT DEFAULT NULL, kyc NUMERIC(10, 0) DEFAULT NULL, open_presale BOOLEAN NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE links (id INT NOT NULL, twitter_account VARCHAR(255) NOT NULL, telegram_chatroom VARCHAR(255) DEFAULT NULL, reddit_channel VARCHAR(255) DEFAULT NULL, facebook_page VARCHAR(255) DEFAULT NULL, medium_page VARCHAR(255) DEFAULT NULL, steemit_page VARCHAR(255) DEFAULT NULL, discord_page VARCHAR(255) DEFAULT NULL, website_link VARCHAR(255) DEFAULT NULL, video_presentetion VARCHAR(255) DEFAULT NULL, airdrops VARCHAR(255) DEFAULT NULL, bounties VARCHAR(255) DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE ico_values (id INT NOT NULL, mood_signal_id INT DEFAULT NULL, white_list BOOLEAN NOT NULL, staking BOOLEAN NOT NULL, masternodes BOOLEAN NOT NULL, dividend BOOLEAN NOT NULL, burning BOOLEAN NOT NULL, vesting BOOLEAN NOT NULL, vcs BOOLEAN NOT NULL, accredited_investors BOOLEAN NOT NULL, demoAvailability BOOLEAN NOT NULL, smartContractAudit BOOLEAN NOT NULL, project_completion INT DEFAULT NULL, listing_order INT DEFAULT NULL, kyc NUMERIC(10, 0) DEFAULT NULL, open_presale BOOLEAN NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE INDEX IDX_FCA53CA170C107D ON ico_values (mood_signal_id)');
         $this->addSql('CREATE TABLE social_media (id INT NOT NULL, twitter_followers INT DEFAULT NULL, medium_followers INT DEFAULT NULL, telegram_followers INT DEFAULT NULL, reddit_subscribers INT DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE sale_stage (id INT NOT NULL, title VARCHAR(255) NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_12A0CBEA2B36786B ON sale_stage (title)');
-        $this->addSql('CREATE TABLE dates (id INT NOT NULL, private_sale_start TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, private_sale_end TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, presale_start TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, presale_end TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, crowdsale_start TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, crowdsale_end TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, days_left INT NOT NULL, lockup TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, vesting TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE dates (id INT NOT NULL, private_sale_start TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, private_sale_end TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, presale_start TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, presale_end TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, crowdsale_start TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, crowdsale_end TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, days_left INT DEFAULT NULL, lockup TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, vesting TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('ALTER TABLE accepted_assets ADD CONSTRAINT FK_8139C25E5E87A6C2 FOREIGN KEY (finance_id) REFERENCES finance (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE accepted_assets ADD CONSTRAINT FK_8139C25E5DA1941 FOREIGN KEY (asset_id) REFERENCES asset (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE finances_persons ADD CONSTRAINT FK_6387A2045E87A6C2 FOREIGN KEY (finance_id) REFERENCES finance (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -78,13 +71,15 @@ final class Version20180829121956 extends AbstractMigration
         $this->addSql('ALTER TABLE asset ADD token_type_standard_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE asset ADD CONSTRAINT FK_2AF5A5CC2A83742 FOREIGN KEY (token_type_standard_id) REFERENCES token_type_standard (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('CREATE INDEX IDX_2AF5A5CC2A83742 ON asset (token_type_standard_id)');
+        $this->addSql('DROP INDEX uniq_34dcd176f47645ae');
         $this->addSql('ALTER TABLE person ADD department_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE person ADD title VARCHAR(255) DEFAULT NULL');
         $this->addSql('ALTER TABLE person ADD nationality VARCHAR(150) DEFAULT NULL');
-        $this->addSql('ALTER TABLE person ADD kyc BOOLEAN NOT NULL');
-        $this->addSql('ALTER TABLE person ADD relevant_experience TEXT NOT NULL');
+        $this->addSql('ALTER TABLE person ADD kyc BOOLEAN DEFAULT NULL');
+        $this->addSql('ALTER TABLE person ADD relevant_experience TEXT DEFAULT NULL');
         $this->addSql('ALTER TABLE person ALTER links TYPE TEXT');
         $this->addSql('ALTER TABLE person ALTER links DROP DEFAULT');
+        $this->addSql('ALTER TABLE person ALTER url DROP NOT NULL');
         $this->addSql('COMMENT ON COLUMN person.relevant_experience IS \'(DC2Type:array)\'');
         $this->addSql('ALTER TABLE person ADD CONSTRAINT FK_34DCD176AE80F5DF FOREIGN KEY (department_id) REFERENCES department (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('CREATE INDEX IDX_34DCD176AE80F5DF ON person (department_id)');
@@ -96,9 +91,9 @@ final class Version20180829121956 extends AbstractMigration
         $this->addSql('ALTER TABLE ico ADD development_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE ico ADD links_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE ico ADD legal_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE ico ADD description TEXT NOT NULL');
-        $this->addSql('ALTER TABLE ico ADD slogan TEXT NOT NULL');
-        $this->addSql('ALTER TABLE ico ADD problem TEXT NOT NULL');
+        $this->addSql('ALTER TABLE ico ADD description TEXT DEFAULT NULL');
+        $this->addSql('ALTER TABLE ico ADD slogan TEXT DEFAULT NULL');
+        $this->addSql('ALTER TABLE ico ADD problem TEXT DEFAULT NULL');
         $this->addSql('ALTER TABLE ico ADD staff_size INT DEFAULT NULL');
         $this->addSql('ALTER TABLE ico DROP open_presale');
         $this->addSql('ALTER TABLE ico DROP kyc');
@@ -107,6 +102,7 @@ final class Version20180829121956 extends AbstractMigration
         $this->addSql('ALTER TABLE ico DROP token_price');
         $this->addSql('ALTER TABLE ico DROP token_sale_date');
         $this->addSql('ALTER TABLE ico ALTER remote_id DROP NOT NULL');
+        $this->addSql('ALTER TABLE ico ALTER restricted_countries DROP NOT NULL');
         $this->addSql('ALTER TABLE ico RENAME COLUMN total_cap TO dates_id');
         $this->addSql('ALTER TABLE ico ADD CONSTRAINT FK_2B9A6D103DA992C3 FOREIGN KEY (dates_id) REFERENCES dates (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE ico ADD CONSTRAINT FK_2B9A6D105E87A6C2 FOREIGN KEY (finance_id) REFERENCES finance (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
@@ -188,6 +184,8 @@ final class Version20180829121956 extends AbstractMigration
         $this->addSql('ALTER TABLE person DROP relevant_experience');
         $this->addSql('ALTER TABLE person ALTER links TYPE VARCHAR(255)');
         $this->addSql('ALTER TABLE person ALTER links DROP DEFAULT');
+        $this->addSql('ALTER TABLE person ALTER url SET NOT NULL');
+        $this->addSql('CREATE UNIQUE INDEX uniq_34dcd176f47645ae ON person (url)');
         $this->addSql('DROP INDEX IDX_2AF5A5CC2A83742');
         $this->addSql('ALTER TABLE asset DROP token_type_standard_id');
         $this->addSql('DROP INDEX UNIQ_2B9A6D103DA992C3');
@@ -218,6 +216,7 @@ final class Version20180829121956 extends AbstractMigration
         $this->addSql('ALTER TABLE ico DROP problem');
         $this->addSql('ALTER TABLE ico DROP staff_size');
         $this->addSql('ALTER TABLE ico ALTER remote_id SET NOT NULL');
+        $this->addSql('ALTER TABLE ico ALTER restricted_countries SET NOT NULL');
         $this->addSql('CREATE UNIQUE INDEX uniq_2b9a6d102a3e9c94 ON ico (remote_id)');
     }
 }

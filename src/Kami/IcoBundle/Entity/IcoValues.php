@@ -134,7 +134,7 @@ class IcoValues
 
     /**
      * @var int
-     * @ORM\Column(name="project_completion", type="integer")
+     * @ORM\Column(name="project_completion", type="integer", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})

@@ -3,6 +3,7 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use const false;
 use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
@@ -79,7 +80,7 @@ class Legal
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
-    private $teamKYC;
+    private $teamKYC =false;
 
     /**
      * @var array|null
