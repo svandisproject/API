@@ -4,6 +4,7 @@
 namespace Kami\StockBundle\Watcher\Bittrex;
 
 
+use function dump;
 use Kami\StockBundle\Watcher\AbstractVolumesWatcher;
 
 class BittrexVolumeWatcher extends AbstractVolumesWatcher
@@ -15,7 +16,7 @@ class BittrexVolumeWatcher extends AbstractVolumesWatcher
         $assetsValues = $this->getUsdValues($markets);
 
         foreach ($assetsValues as $assetKey => $usdVolume) {
-            $asset = $this->findAsset($assetKey);
+            $asset = $this->findOrCreateAsset($assetKey);
             $this->persistVolumes($asset, $usdVolume, 'Bittrex');
         }
     }
@@ -23,6 +24,7 @@ class BittrexVolumeWatcher extends AbstractVolumesWatcher
     private function getUsdValues($markets)
     {
         $valuesArray = [];
+
         $BTC = ($this->bittrexClient->getTicker("USD-BTC"))->result->Last;
         $ETH = ($this->bittrexClient->getTicker("USD-ETH"))->result->Last;
         $USDT = ($this->bittrexClient->getTicker("USD-USDT"))->result->Last;

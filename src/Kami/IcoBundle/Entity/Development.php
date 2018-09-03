@@ -3,8 +3,8 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use const false;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Development
@@ -15,6 +15,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Gedmo\Loggable
  */
 class Development
 {
@@ -35,6 +36,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $nativeBlockchain = false;
 
@@ -46,6 +48,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $whitepaperLink;
 
@@ -57,6 +60,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $openSource = false;
 
@@ -68,6 +72,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $demoAvailability = false;
 
@@ -79,6 +84,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $demoLink;
 
@@ -89,6 +95,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $githubLink;
 
@@ -100,6 +107,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $smartContractAudit = false;
 
@@ -111,6 +119,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $codeAudits = false;
 
@@ -122,6 +131,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $walletAudit;
 
@@ -131,6 +141,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $testnetDate;
 
@@ -140,6 +151,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $mainnetDate;
 
@@ -151,6 +163,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $projectCompletion;
 
@@ -161,6 +174,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $stages;
 
@@ -171,6 +185,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $consensusType;
 
@@ -181,6 +196,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $ico;
 

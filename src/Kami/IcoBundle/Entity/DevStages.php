@@ -5,6 +5,7 @@ namespace Kami\IcoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * DevStages
@@ -16,6 +17,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Gedmo\Loggable
  */
 class DevStages
 {
@@ -36,6 +38,7 @@ class DevStages
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $title;
 
@@ -46,6 +49,7 @@ class DevStages
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $development;
 

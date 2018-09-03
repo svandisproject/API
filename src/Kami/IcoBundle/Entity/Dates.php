@@ -4,6 +4,8 @@ namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Dates
@@ -14,6 +16,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Gedmo\Loggable
  */
 class Dates
 {
@@ -34,6 +37,7 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $privateSaleStart;
 
@@ -45,6 +49,7 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $privateSaleEnd;
 
@@ -56,6 +61,7 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $presaleStart;
 
@@ -67,8 +73,33 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $presaleEnd;
+
+    /**
+     *  @var \DateTime|null
+     *
+     * @ORM\Column(name="ico_start", type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
+     */
+    private $icoStart;
+
+    /**
+     *  @var \DateTime|null
+     *
+     * @ORM\Column(name="ico_end", type="datetime", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
+     */
+    private $icoEnd;
 
     /**
      * @var \DateTime|null
@@ -78,6 +109,7 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $crowdsaleStart;
 
@@ -89,6 +121,7 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      *
      */
     private $crowdsaleEnd;
@@ -101,6 +134,7 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $daysLeft;
 
@@ -110,6 +144,7 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $lockup;
 
@@ -119,6 +154,7 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $vesting;
 
@@ -128,6 +164,7 @@ class Dates
      * @Api\Relation()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $ico;
 
@@ -354,6 +391,42 @@ class Dates
     public function setVesting($vesting)
     {
         $this->vesting = $vesting;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getIcoStart()
+    {
+        return $this->icoStart;
+    }
+
+    /**
+     * @param \DateTime|null $icoStart
+     * @return self
+     */
+    public function setIcoStart($icoStart)
+    {
+        $this->icoStart = $icoStart;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime|null
+     */
+    public function getIcoEnd()
+    {
+        return $this->icoEnd;
+    }
+
+    /**
+     * @param \DateTime|null $icoEnd
+     * @return self
+     */
+    public function setIcoEnd($icoEnd)
+    {
+        $this->icoEnd = $icoEnd;
         return $this;
     }
 }

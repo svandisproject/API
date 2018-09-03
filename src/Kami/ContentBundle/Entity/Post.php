@@ -135,6 +135,12 @@ class Post
     private $assets;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Ico", inversedBy="icoNews")
+     * @ORM\JoinColumn(name="ico_id", referencedColumnName="id")
+     */
+    private $ico;
+
+    /**
      * Constructor
      */
     public function __construct()

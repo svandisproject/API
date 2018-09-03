@@ -18,7 +18,7 @@ class BinanceVolumeWatcher extends AbstractVolumesWatcher
         $usdValues = $this->getUsdValues($volume, $ticker);
 
         foreach ($usdValues as $assetKey => $usdVolume) {
-            $asset = $this->findAsset($assetKey);
+            $asset = $this->findOrCreateAsset($assetKey);
             $this->persistVolumes($asset, $usdVolume, 'Binance');
         }
     }

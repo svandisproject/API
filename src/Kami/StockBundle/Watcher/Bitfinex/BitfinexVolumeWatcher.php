@@ -20,7 +20,7 @@ class BitfinexVolumeWatcher extends AbstractVolumesWatcher
         $usdValues = $this->getUsdValues($normalizeArray);
 
         foreach ($usdValues as $assetKey => $usdVolume) {
-            $asset = $this->findAsset($assetKey);
+            $asset = $this->findOrCreateAsset($assetKey);
             $this->persistVolumes($asset, $usdVolume, 'Bitfinex');
         }
 

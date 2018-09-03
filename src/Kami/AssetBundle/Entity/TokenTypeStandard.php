@@ -10,6 +10,10 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="token_type_standard")
  * @ORM\Entity(repositoryClass="Kami\AssetBundle\Repository\TokenTypeStandardRepository")
+ * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+ * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class TokenTypeStandard
 {
@@ -26,11 +30,19 @@ class TokenTypeStandard
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $title;
 
     /**
      * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="tokenTypeStandard")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $assets;
 

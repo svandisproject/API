@@ -3,8 +3,8 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use const false;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Legal
@@ -15,6 +15,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Gedmo\Loggable
  */
 class Legal
 {
@@ -35,6 +36,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $companyName;
 
@@ -46,6 +48,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $companyUrl;
 
@@ -57,6 +60,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $companyAddress;
 
@@ -68,6 +72,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $oficeLocations;
 
@@ -79,6 +84,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $teamKYC =false;
 
@@ -90,6 +96,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $partnership;
 
@@ -101,6 +108,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $buisnessModel;
 
@@ -112,6 +120,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $gDPRCompliant;
 
@@ -122,6 +131,7 @@ class Legal
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation()
+     * @Gedmo\Versioned
      */
     private $ico;
 

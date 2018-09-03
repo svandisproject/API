@@ -13,7 +13,7 @@ class CountryNormalizer extends AbstractPropertyNormalizer
      * @param $remoteData
      * @return string
      */
-    public function normalize($remoteData): ?string
+    public function normalize($remoteData, $ico): ?string
     {
         try {
             return Country::getCodeFromName($remoteData);

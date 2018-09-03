@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 
 /**
  * Finance
@@ -16,6 +18,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Gedmo\Loggable
  */
 class Finance
 {
@@ -29,35 +32,46 @@ class Finance
     private $id;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Asset")
-     * @ORM\JoinTable(name="accepted_assets", joinColumns={@ORM\JoinColumn(name="finance_id", referencedColumnName="id")},
-     *     inverseJoinColumns={@ORM\JoinColumn(name="asset_id", referencedColumnName="id")})
-     * @Api\Relation()
+     * @var float
+     * @ORM\Column(name="token_price_usd", type="decimal", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
+     */
+    private $tokenPriceUsd;
+
+    /**
+     * @ORM\Column(name="accepted_currencies", type="array", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $acceptedCurrencies;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="total_supply", type="integer", nullable=true)
+     * @ORM\Column(name="total_supply", type="bigint", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $totalSupply;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="sale_supply", type="integer", nullable=true)
+     * @ORM\Column(name="sale_supply", type="bigint", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $saleSupply;
 
@@ -67,6 +81,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $tokensBeingSold;
 
@@ -76,6 +91,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $privateSoldTokens;
 
@@ -85,6 +101,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $presaleSoldTokens;
 
@@ -94,6 +111,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $crowdsaleSoldTokens;
 
@@ -103,6 +121,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $totalSupplyValuation;
 
@@ -112,6 +131,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $tokensToTeam;
 
@@ -121,15 +141,17 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $individualCap;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
+     * @ORM\Column(type="bigint", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $circulatingSupply;
 
@@ -139,6 +161,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $teamVestingClif;
 
@@ -148,6 +171,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $advisorsVestingClif;
 
@@ -157,6 +181,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $presaleContributorsVestingClif;
 
@@ -169,6 +194,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $hardCap;
 
@@ -180,6 +206,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $raisedUsd;
 
@@ -191,6 +218,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $distribution;
 
@@ -201,6 +229,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $priceCrypto;
 
@@ -212,6 +241,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $minCap;
 
@@ -221,6 +251,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $debts;
 
@@ -230,6 +261,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $historyOfBankruptcy;
 
@@ -240,15 +272,17 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $ico;
 
-    /**
+    /**@Gedmo\Versioned
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $vestedTokens;
 
@@ -258,6 +292,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $bonuses;
 
@@ -267,6 +302,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $dayToLiquidity;
 
@@ -278,6 +314,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $majorInvestors;
 
@@ -287,6 +324,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $priceAdjustedBonus;
 
@@ -294,7 +332,6 @@ class Finance
      * Finance constructor.
      */
     public function __construct() {
-        $this->acceptedCurrencies = new ArrayCollection();
         $this->majorInvestors = new ArrayCollection();
     }
 
@@ -311,13 +348,13 @@ class Finance
     /**
      * Set acceptedCurrency.
      *
-     * @param Asset $acceptedCurrency
+     * @param array $acceptedCurrencies
      *
      * @return Finance
      */
-    public function setAcceptedCurrency($acceptedCurrency): self
+    public function setAcceptedCurrency($acceptedCurrencies): self
     {
-        $this->acceptedCurrencies[] = $acceptedCurrency;
+        $this->acceptedCurrencies = $acceptedCurrencies;
 
         return $this;
     }
@@ -325,7 +362,7 @@ class Finance
     /**
      * Get acceptedCurrencies.
      *
-     * @return ArrayCollection
+     * @return array
      */
     public function getAcceptedCurrencies()
     {
@@ -838,6 +875,24 @@ class Finance
     public function setPriceAdjustedBonus($priceAdjustedBonus)
     {
         $this->priceAdjustedBonus = $priceAdjustedBonus;
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getTokenPriceUsd(): ?float
+    {
+        return $this->tokenPriceUsd;
+    }
+
+    /**
+     * @param float $tokenPriceUsd
+     * @return self
+     */
+    public function setTokenPriceUsd($tokenPriceUsd)
+    {
+        $this->tokenPriceUsd = $tokenPriceUsd;
         return $this;
     }
 }
