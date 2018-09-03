@@ -67,26 +67,28 @@ class SyncIcosCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $hour = date('H');
+        if($hour == 23){
+            $totalPages =  $this->icoBenchClient->getIcos()['pages'];
 
-        $totalPages =  $this->icoBenchClient->getIcos()['pages'];
+            for($i = 0; $i < $totalPages; $i++) {
+                $output->writeln('Processing Page: '.$i.' from '.$totalPages);
 
-        for($i = 0; $i < $totalPages; $i++) {
-            $output->writeln('Processing Page: '.$i.' from '.$totalPages);
+                $response = $this->icoBenchClient->getIcos('all', ['page'=> $i]);
+                foreach ($response['results'] as $result) {
+                    $remoteData = $this->icoBenchClient->getIco($result['id']);
+                    $ico = $this->findOrCreateIco($result['id']);
+                    $asset = $this->findAsset($remoteData['finance']['token']);
+                    $ico = $this->icoBenchNormalizer->normalize($ico, $remoteData, $asset);
 
-            $response = $this->icoBenchClient->getIcos('all', ['page'=> $i]);
-            foreach ($response['results'] as $result) {
-                $remoteData = $this->icoBenchClient->getIco($result['id']);
-                $ico = $this->findOrCreateIco($result['id']);
-                $asset = $this->findAsset($remoteData['finance']['token']);
-                $ico = $this->icoBenchNormalizer->normalize($ico, $remoteData, $asset);
-
-                $this->manager->persist($ico);
-                $this->manager->flush();
-                $output->writeln('Successfully updated ICO '.$ico->getTitle());
+                    $this->manager->persist($ico);
+                    $this->manager->flush();
+                    $output->writeln('Successfully updated ICO '.$ico->getTitle());
+                }
             }
-        }
 
-        $output->writeln('Successfully updated ICOs');
+            $output->writeln('Successfully updated ICOs');
+        }
     }
 
     /**
