@@ -111,7 +111,6 @@ class SyncIcosCommand extends Command
             ->findOneBy(['remoteId' => $remoteId])) {
             $ico = new Ico();
         }
-
         return $ico;
     }
 
