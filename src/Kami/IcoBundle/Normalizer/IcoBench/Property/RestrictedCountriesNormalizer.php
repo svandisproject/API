@@ -9,7 +9,7 @@ use Kami\IcoBundle\Normalizer\AbstractPropertyNormalizer;
 class RestrictedCountriesNormalizer extends AbstractPropertyNormalizer
 {
 
-    public function normalize($remoteData): array
+    public function normalize($remoteData, $ico): array
     {
         $restricted = [];
         if (!empty($remoteData)) {
@@ -20,7 +20,6 @@ class RestrictedCountriesNormalizer extends AbstractPropertyNormalizer
                 } catch (InvalidCountryName $exception) {}
             }
         }
-
         return $restricted;
     }
 }

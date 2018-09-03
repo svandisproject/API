@@ -9,37 +9,47 @@ use Kami\IcoBundle\Normalizer\AbstractPropertyNormalizer;
 class TeamNormalizer extends AbstractPropertyNormalizer
 {
 
-    public function normalize($remoteData): array
+    public function normalize($remoteData, $ico): array
     {
         $unique = [];
         $team = [];
-        foreach ($remoteData as $person) {
-            if(!in_array($person['url'], $unique)) {
-                $team[] = $this->findOrCreatePerson($person);
+        foreach ($remoteData as $remotePersonData) {
+            if ($remotePersonData['name'] !== "Benchy") {
+                if (!in_array($remotePersonData['url'], $unique)) {
+                    $team[] = $this->findOrCreatePerson($remotePersonData);
+                }
+                array_push($unique, $remotePersonData['url']);
             }
-            array_push($unique, $person['url']);
         }
         return $team;
     }
 
     /**
-     * @param array $person
+     * @param array $remotePersonData
      * @return Person
      *
      * @throws \Doctrine\ORM\ORMException
      */
-    protected function findOrCreatePerson($person) : Person
+    protected function findOrCreatePerson($remotePersonData) : Person
     {
-        $teamMember = $this->entityManager->getRepository(Person::class)->findOneBy(['url' => $person['url']]);
-        if (!$teamMember) {
+
+        if (!$teamMember = $this->entityManager->getRepository(Person::class)->findOneBy(['url' => $remotePersonData['url']])) {
             $teamMember = new Person();
-            $teamMember->setName($person['name']);
-            if ($person['links'] && strlen($person['links']) <= 255) {
-                $teamMember->setLinks($person['links']);
-            }
-            $teamMember->setUrl($person['url']);
-            $this->entityManager->persist($teamMember);
         }
+        $teamMember->setName($remotePersonData['name']);
+        $teamMember->setTitle($remotePersonData['title']);
+        if (!empty($remotePersonData['socials'])) {
+            $teamMember->setLinks($remotePersonData['socials']);
+        }
+        $teamMember->setUrl($remotePersonData['url']);
+        if ($remotePersonData['group'] == 'Advisor') {
+            $teamMember->setAdvisor(true);
+        }
+        if ($remotePersonData['photo']) {
+            $teamMember->setPhoto($remotePersonData['photo']);
+        }
+        $this->entityManager->persist($teamMember);
+
         return $teamMember;
     }
 

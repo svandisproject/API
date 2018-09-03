@@ -4,6 +4,7 @@ namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * IcoValues
@@ -13,6 +14,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Gedmo\Loggable
  */
 class IcoValues
 {
@@ -30,6 +32,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $whiteList = false;
 
@@ -39,6 +42,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $staking = false;
 
@@ -48,6 +52,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $masternodes = false;
 
@@ -57,6 +62,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $dividend = false;
 
@@ -66,6 +72,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $burning = false;
 
@@ -75,6 +82,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $vesting = false;
 
@@ -84,6 +92,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $vcs = false;
 
@@ -93,6 +102,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $accreditedInvestors = false;
 
@@ -102,6 +112,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $demoAvailability = false;
 
@@ -111,6 +122,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $smartContractAudit = false;
 
@@ -120,6 +132,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $ico;
 
@@ -129,6 +142,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $moodSignal;
 
@@ -138,6 +152,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $projectCompletion;
 
@@ -146,6 +161,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $listingOrder;
 
@@ -154,6 +170,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $kyc;
 
@@ -162,6 +179,7 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $openPresale = false;
 

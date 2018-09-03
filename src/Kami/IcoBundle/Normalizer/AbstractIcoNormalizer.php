@@ -33,7 +33,7 @@ abstract class AbstractIcoNormalizer implements IcoNormalizerInterface
          foreach ($this->getNormalizingMap() as $property => $config) {
              $normalizer = $this->getNormalizer($config['normalizer']);
              $method = 'set'.ucfirst($property);
-             $ico->$method($normalizer->normalize($this->getValueByPath($remoteData, $config['property'])));
+             $ico->$method($normalizer->normalize($this->getValueByPath($remoteData, $config['property']), $ico));
          }
 
          return $ico;

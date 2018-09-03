@@ -4,11 +4,11 @@ namespace Kami\AssetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Kami\ContentBundle\Entity\Post;
 use Kami\IcoBundle\Entity\Ico;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Asset
@@ -47,7 +47,7 @@ class Asset
     /**
      * @var string
      *
-     * @ORM\Column(name="ticker", type="string", length=10)
+     * @ORM\Column(name="ticker", type="string", length=25)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
@@ -69,6 +69,7 @@ class Asset
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $tokenType;
 
@@ -78,6 +79,7 @@ class Asset
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $tokenTypeStandard;
 
@@ -111,6 +113,7 @@ class Asset
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation()
+     * @MaxDepth(2)
      */
     private $ico;
 

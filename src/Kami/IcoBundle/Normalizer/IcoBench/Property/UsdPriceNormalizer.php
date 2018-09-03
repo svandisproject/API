@@ -20,7 +20,7 @@ class UsdPriceNormalizer implements PropertyNormalizerInterface
         $this->em = $em;
     }
 
-    public function normalize($remoteData)
+    public function normalize($remoteData, $ico)
     {
         if ($price = $this->getPriceFromAsset($remoteData['token'])) {
             return $price;

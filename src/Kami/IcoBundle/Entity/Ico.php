@@ -5,12 +5,15 @@ namespace Kami\IcoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\AssetBundle\Entity\Asset;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Kami\ContentBundle\Entity\Post;
 use Kami\ApiCoreBundle\Annotation as Api;
+use JMS\Serializer\Annotation\MaxDepth;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Ico
  *
+ * @Gedmo\Loggable
  * @ORM\Table(name="ico")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\IcoRepository")
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
@@ -46,6 +49,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $title;
 
@@ -57,6 +61,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $description;
 
@@ -66,6 +71,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $slogan;
 
@@ -75,6 +81,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $problem;
 
@@ -85,6 +92,8 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @MaxDepth(1)
+     * @Gedmo\Versioned
      */
     private $asset;
 
@@ -94,6 +103,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $country;
 
@@ -105,6 +115,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $forSale;
 
@@ -115,6 +126,8 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\Relation()
+     * @MaxDepth(2)
+     * @Gedmo\Versioned
      */
     private $team;
 
@@ -123,7 +136,7 @@ class Ico
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     *
+     *@Gedmo\Versioned
      */
     private $staffSize;
 
@@ -135,6 +148,8 @@ class Ico
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation()
+     * @MaxDepth(1)
+     * @Gedmo\Versioned
      */
     private $partners;
 
@@ -146,6 +161,8 @@ class Ico
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation()
+     * @MaxDepth(1)
+     * @Gedmo\Versioned
      */
     private $competitors;
 
@@ -156,6 +173,8 @@ class Ico
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation()
+     * @MaxDepth(1)
+     * @Gedmo\Versioned
      */
     private $industries;
 
@@ -165,6 +184,7 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $restrictedCountries;
 
@@ -174,6 +194,8 @@ class Ico
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @MaxDepth(1)
+     * @Gedmo\Versioned
      */
     private $dates;
 
@@ -183,6 +205,8 @@ class Ico
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @MaxDepth(2)
+     * @Gedmo\Versioned
      */
     private $finance;
 
@@ -192,6 +216,8 @@ class Ico
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @MaxDepth(1)
+     * @Gedmo\Versioned
      */
     private $saleStage;
 
@@ -201,15 +227,17 @@ class Ico
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $values;
 
     /**
-     * @ORM\OneToOne(targetEntity="SocialMedia", inversedBy="ico")
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\SocialMedia", inversedBy="ico")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $social_media;
 
@@ -219,15 +247,16 @@ class Ico
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $development;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Links", inversedBy="ico")
-     * @Api\Relation()
+     * @ORM\Column(type="array", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $links;
 
@@ -237,8 +266,21 @@ class Ico
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $legal;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Post", mappedBy="ico", cascade={"persist"})
+     *
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @MaxDepth(1)
+     * @Gedmo\Versioned
+     */
+    private $icoNews;
 
     /**
      * Constructor
@@ -249,6 +291,7 @@ class Ico
         $this->partners = new ArrayCollection();
         $this->competitors = new ArrayCollection();
         $this->industries = new ArrayCollection();
+        $this->icoNews = new ArrayCollection();
     }
 
     /**
@@ -647,9 +690,9 @@ class Ico
     }
 
     /**
-     * @return Dates
+     * @return Dates|null
      */
-    public function getDates()
+    public function getDates(): ?Dates
     {
         return $this->dates;
     }
@@ -666,9 +709,9 @@ class Ico
     }
 
     /**
-     * @return Finance
+     * @return Finance|null
      */
-    public function getFinance(): Finance
+    public function getFinance(): ?Finance
     {
         return $this->finance;
     }
@@ -778,7 +821,7 @@ class Ico
     }
 
     /**
-     * @return Links
+     * @return array
      */
     public function getLinks()
     {
@@ -786,7 +829,7 @@ class Ico
     }
 
     /**
-     * @param Links $links
+     * @param array $links
      * @return self
      */
     public function setLinks($links)
@@ -810,6 +853,24 @@ class Ico
     public function setLegal($legal)
     {
         $this->legal = $legal;
+        return $this;
+    }
+
+    /**
+     * @return Post
+     */
+    public function getIcoNews()
+    {
+        return $this->icoNews;
+    }
+
+    /**
+     * @param Post $icoNews
+     * @return self
+     */
+    public function setIcoNews($icoNews)
+    {
+        $this->icoNews = $icoNews;
         return $this;
     }
 }

@@ -35,6 +35,10 @@ class IcoBenchNormalizer extends AbstractIcoNormalizer
                 'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
                 'property' => 'name'
             ],
+            'description' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
+                'property' => 'intro'
+            ],
             'asset' => [
                 'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\AssetNormalizer',
                  'property' => 'finance.token'
@@ -43,45 +47,30 @@ class IcoBenchNormalizer extends AbstractIcoNormalizer
                 'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\CountryNormalizer',
                 'property' => 'country'
             ],
+
+            'finance' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\FinanceNormalizer',
+                'property' => 'finance'
+            ],
+            'dates' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\DatesNormalizer',
+                'property' => 'dates'
+            ],
             'restrictedCountries' => [
                 'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\RestrictedCountriesNormalizer',
                 'property' => 'restrictions'
-            ],
-            'openPresale' => [
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\DateTimeNormalizer',
-                'property' => 'dates.preIcoStart'
-            ],
-            'kyc' => [
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\KycNormalizer',
-                'property' => 'kyc'
-            ],
-            'hardCap' => [
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
-                'property' => 'finance.hardcap'
-            ],
-            'raised' => [
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
-                'property' => 'finance.raised'
-            ],
-            'tokenPrice' => [
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\UsdPriceNormalizer',
-                'property' => 'finance'
-            ],
-            'tokenSaleDate' => [
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\DateTimeNormalizer',
-                'property' => 'dates.icoStart'
             ],
             'team' => [
                 'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\TeamNormalizer',
                 'property' => 'team'
             ],
-            'advisors' => [
-                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\AdvisorsNormalizer',
-                'property' => 'ratings'
-            ],
             'industries' => [
                 'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\IndustryNormalizer',
                 'property' => 'categories'
+            ],
+            'links' => [
+                'normalizer' => 'Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer',
+                'property' => 'links'
             ]
         ];
     }

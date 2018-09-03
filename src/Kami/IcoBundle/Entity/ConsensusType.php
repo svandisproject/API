@@ -5,6 +5,7 @@ namespace Kami\IcoBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * ConsensusType
@@ -12,10 +13,10 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Table(name="consensus_type")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\ConsensusTypeRepository")
  * @UniqueEntity({"title"})
- * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Gedmo\Loggable
  */
 class ConsensusType
 {
@@ -32,20 +33,20 @@ class ConsensusType
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $title;
 
     /**
      * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Development", mappedBy="consensusType")
-     * @Api\AnonymousAccess()
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
      */
     private $development;
 

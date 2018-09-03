@@ -9,7 +9,7 @@ use Kami\IcoBundle\Normalizer\AbstractPropertyNormalizer;
 
 class IndustryNormalizer extends AbstractPropertyNormalizer
 {
-    public function normalize($remoteData): array
+    public function normalize($remoteData, $ico): array
     {
         $uniqueIndustries = array_unique($remoteData, SORT_REGULAR);
         $industries = [];

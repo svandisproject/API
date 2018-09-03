@@ -31,23 +31,16 @@ services:
             - "@doctrine.orm.entity_manager"
             -
               - "@kami.ico_property_normalizer.icobench.scalar"
-              - "@kami.ico_property_normalizer.icobench.price"
               - "@kami.ico_property_normalizer.icobench.team"
               - "@kami.ico_property_normalizer.icobench.restrictions"
-              - "@kami.ico_property_normalizer.icobench.kyc"
-              - "@kami.ico_property_normalizer.icobench.advisors"
               - "@kami.ico_property_normalizer.icobench.industries"
               - "@kami.ico_property_normalizer.icobench.asset"
               - "@kami.ico_property_normalizer.icobench.country"
-              - "@kami.ico_property_normalizer.icobench.datetime"
+              - "@kami.ico_property_normalizer.icobench.finance"
+              - "@kami.ico_property_normalizer.icobench.dates"
 
     kami.ico_property_normalizer.icobench.scalar:
         class: Kami\IcoBundle\Normalizer\IcoBench\Property\ScalarNormalizer
-
-    kami.ico_property_normalizer.icobench.price:
-        class: Kami\IcoBundle\Normalizer\IcoBench\Property\UsdPriceNormalizer
-        arguments:
-            - "@doctrine.orm.entity_manager"
 
     kami.ico_property_normalizer.icobench.asset:
         class: Kami\IcoBundle\Normalizer\IcoBench\Property\AssetNormalizer
@@ -61,14 +54,6 @@ services:
         class: Kami\IcoBundle\Normalizer\IcoBench\Property\RestrictedCountriesNormalizer
         parent: "kami.ico_property_normalizer.abstract"
 
-    kami.ico_property_normalizer.icobench.kyc:
-        class: Kami\IcoBundle\Normalizer\IcoBench\Property\KycNormalizer
-        parent: "kami.ico_property_normalizer.abstract"
-
-    kami.ico_property_normalizer.icobench.advisors:
-        class: Kami\IcoBundle\Normalizer\IcoBench\Property\AdvisorsNormalizer
-        parent: "kami.ico_property_normalizer.abstract"
-
     kami.ico_property_normalizer.icobench.industries:
         class: Kami\IcoBundle\Normalizer\IcoBench\Property\IndustryNormalizer
         parent: "kami.ico_property_normalizer.abstract"
@@ -76,8 +61,13 @@ services:
     kami.ico_property_normalizer.icobench.country:
         class: Kami\IcoBundle\Normalizer\IcoBench\Property\CountryNormalizer
         parent: "kami.ico_property_normalizer.abstract"
-    kami.ico_property_normalizer.icobench.datetime:
-        class: Kami\IcoBundle\Normalizer\IcoBench\Property\DateTimeNormalizer
-        parent: "kami.ico_property_normalizer.abstract"
 
+    kami.ico_property_normalizer.icobench.finance:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\FinanceNormalizer
+        arguments:
+            - "@doctrine.orm.entity_manager"
 
+    kami.ico_property_normalizer.icobench.dates:
+        class: Kami\IcoBundle\Normalizer\IcoBench\Property\DatesNormalizer
+        arguments:
+            - "@doctrine.orm.entity_manager"
