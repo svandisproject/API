@@ -3,6 +3,7 @@
 namespace Kami\AssetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * TokenType

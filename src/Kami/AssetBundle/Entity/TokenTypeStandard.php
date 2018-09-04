@@ -4,6 +4,7 @@ namespace Kami\AssetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * TokenTypeStandart
