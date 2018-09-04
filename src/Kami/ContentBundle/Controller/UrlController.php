@@ -72,9 +72,6 @@ class UrlController extends Controller
         $posts = $this->getDoctrine()->getRepository(Post::class)
             ->findBy(['createdBy' => $workers]);
 
-//        $posts = $this->getDoctrine()->getRepository(Post::class)
-//            ->findBy(['createdBy' => $user]);
-
         return new JsonResponse(['posts' => $posts]);
     }
 }
