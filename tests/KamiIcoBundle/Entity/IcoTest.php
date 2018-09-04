@@ -158,7 +158,7 @@ class IcoTest extends ApiTestCase
         $response = $this->request('PUT', '/api/ico/1', [
             'ico' => [
                 'remote_id' => '1',
-                'title' => 'test2',
+                'title' => 'test3',
                 'description' => 'test',
                 'slogan' => 'test',
                 'problem' => 'test',
@@ -171,14 +171,14 @@ class IcoTest extends ApiTestCase
 
         $this->assertJsonResponse($response, 200);
         $this->assertContainsKeys($response);
-        $this->assertEquals('test2', $this->getResponseData($response)['title']);
+        $this->assertEquals('test3', $this->getResponseData($response)['title']);
     }
 
     public function getModelKeys()
     {
         return [
             'remote_id', 'title', 'description', 'slogan', 'problem', 'country',
-            'for_sale', 'staff_size', 'restricted_countries', 'links'
+            'for_sale', 'staff_size', 'restricted_countries'
         ];
     }
 }
