@@ -33,14 +33,14 @@ class Finance
 
     /**
      * @var float
-     * @ORM\Column(name="token_price_usd", type="decimal", nullable=true)
+     * @ORM\Column(name="token_price_eth", type="decimal", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
-    private $tokenPriceUsd;
+    private $tokenPriceEth;
 
     /**
      * @ORM\Column(name="accepted_currencies", type="array", nullable=true)
@@ -881,18 +881,18 @@ class Finance
     /**
      * @return float|null
      */
-    public function getTokenPriceUsd(): ?float
+    public function getTokenPriceEth(): ?float
     {
-        return $this->tokenPriceUsd;
+        return $this->tokenPriceEth;
     }
 
     /**
-     * @param float $tokenPriceUsd
+     * @param float $tokenPriceEth
      * @return self
      */
-    public function setTokenPriceUsd($tokenPriceUsd)
+    public function setTokenPriceEth($tokenPriceEth)
     {
-        $this->tokenPriceUsd = $tokenPriceUsd;
+        $this->tokenPriceEth = $tokenPriceEth;
         return $this;
     }
 }

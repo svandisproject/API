@@ -2,6 +2,9 @@
 
 namespace Kami\IcoBundle\Normalizer\IcoBench\Property;
 
+use function dump;
+use function floatval;
+use Kami\AssetBundle\Entity\Asset;
 use Kami\IcoBundle\Entity\Finance;
 use Kami\IcoBundle\Normalizer\PropertyNormalizerInterface;
 use Doctrine\ORM\EntityManager;
@@ -39,6 +42,7 @@ class FinanceNormalizer implements PropertyNormalizerInterface
         if (!empty($remoteData)) {
             if ($remoteData['price']) {
                 $this->setAssetPrice($remoteData);
+                $finance->setTokenPriceEth( $this->getEthPrice($remoteData));
             }
             if ($remoteData['hardcap']) {
                 $finance->setHardCap($this->getUsdPrice($remoteData['hardcap']));
@@ -152,6 +156,25 @@ class FinanceNormalizer implements PropertyNormalizerInterface
             }
         }
         return true;
+    }
+
+    private function getEthPrice ($remoteData)
+    {
+        $parts = explode('=', str_replace(',','.',$remoteData['price']));
+        $part0 = trim($parts[0]);
+        $part1 = trim($parts[1]);
+
+        if (strpos($part1, 'ETH')) {;
+            return floatval($part1);
+        } elseif (strpos($part0, 'ETH')) {
+            return floatval($part0)/floatval($part1);
+        } else {
+            $ethPrice = ($this->em->getRepository(Asset::class)->findOneBy(['ticker'=>'ETH']))->getPrice();
+            if (!$price = ($this->em->getRepository(Asset::class)->findOneBy(['ticker'=> $remoteData['token']]))->getPrice()) {
+                $price = $this->getPrice($remoteData);
+            }
+            return $price / $ethPrice;
+        }
     }
 
 }
