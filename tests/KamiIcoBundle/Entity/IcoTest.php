@@ -34,13 +34,13 @@ class IcoTest extends ApiTestCase
             'ico' => [
                 'remote_id' => '1',
                 'title' => 'test',
-                'asset' => '',
-                'kyc' => '',
-                'hard_cap' => '',
-                'total_cap' => '',
-                'raised' => 1,
-                'token_price' => 'test',
+                'description' => 'test',
+                'slogan' => 'test',
+                'problem' => 'test',
+                'country' => 'tst',
                 'for_sale' => 0,
+                'staff_size' => 1,
+                'restricted_countries' => ['test', 'test1']
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -53,13 +53,13 @@ class IcoTest extends ApiTestCase
             'ico' => [
                 'remote_id' => '1',
                 'title' => 'test',
-                'asset' => '',
-                'kyc' => '',
-                'hard_cap' => '',
-                'total_cap' => '',
-                'raised' => 1,
-                'token_price' => 'test',
+                'description' => 'test',
+                'slogan' => 'test',
+                'problem' => 'test',
+                'country' => 'tst',
                 'for_sale' => 0,
+                'staff_size' => 1,
+                'restricted_countries' => ['test', 'test1']
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -72,13 +72,13 @@ class IcoTest extends ApiTestCase
             'ico' => [
                 'remote_id' => '1',
                 'title' => 'test',
-                'asset' => '',
-                'kyc' => '',
-                'hard_cap' => '1000 tests',
-                'total_cap' => '2000 tests',
-                'raised' => 1,
-                'token_price' => 'test',
+                'description' => 'test',
+                'slogan' => 'test',
+                'problem' => 'test',
+                'country' => 'tst',
                 'for_sale' => 0,
+                'staff_size' => 1,
+                'restricted_countries' => ['test1', 'test2']
             ]
         ]);
         $this->assertContainsKeys($response);
@@ -89,15 +89,15 @@ class IcoTest extends ApiTestCase
     {
         $response = $this->requestByWorker('POST', '/api/ico', [
             'ico' => [
-                'remote_id' => '1',
-                'title' => 'test',
-                'asset' => '',
-                'kyc' => '',
-                'hard_cap' => '',
-                'total_cap' => '',
-                'raised' => 1,
-                'token_price' => 'test',
+                'remote_id' => '2',
+                'title' => 'test2',
+                'description' => 'test2',
+                'slogan' => 'test2',
+                'problem' => 'test2',
+                'country' => 'ts2',
                 'for_sale' => 0,
+                'staff_size' => 1,
+                'restricted_countries' => ['test2', 'test3']
             ]
         ]);
 
@@ -119,13 +119,13 @@ class IcoTest extends ApiTestCase
             'ico' => [
                 'remote_id' => '1',
                 'title' => 'test2',
-                'asset' => '',
-                'kyc' => '',
-                'hard_cap' => '',
-                'total_cap' => '',
-                'raised' => 12,
-                'token_price' => 'test2',
+                'description' => 'test',
+                'slogan' => 'test',
+                'problem' => 'test',
+                'country' => 'tst',
                 'for_sale' => 0,
+                'staff_size' => 1,
+                'restricted_countries' => ['test', 'test1']
             ]
         ]);
 
@@ -139,13 +139,13 @@ class IcoTest extends ApiTestCase
             'ico' => [
                 'remote_id' => '1',
                 'title' => 'test2',
-                'asset' => '',
-                'kyc' => '',
-                'hard_cap' => '',
-                'total_cap' => '',
-                'raised' => 12,
-                'token_price' => 'test2',
+                'description' => 'test',
+                'slogan' => 'test',
+                'problem' => 'test',
+                'country' => 'tst',
                 'for_sale' => 0,
+                'staff_size' => 1,
+                'restricted_countries' => ['test', 'test1']
             ]
         ]);
 
@@ -159,12 +159,13 @@ class IcoTest extends ApiTestCase
             'ico' => [
                 'remote_id' => '1',
                 'title' => 'test2',
-                'kyc' => '',
-                'hard_cap' => '1000 tests',
-                'total_cap' => '1000 tests',
-                'raised' => 12,
-                'token_price' => 'test2',
+                'description' => 'test',
+                'slogan' => 'test',
+                'problem' => 'test',
+                'country' => 'tst',
                 'for_sale' => 0,
+                'staff_size' => 1,
+                'restricted_countries' => ['test', 'test1']
             ]
         ]);
 
@@ -176,8 +177,8 @@ class IcoTest extends ApiTestCase
     public function getModelKeys()
     {
         return [
-            'remote_id', 'title', 'kyc', 'hard_cap', 'total_cap', 'raised',
-            'token_price', 'for_sale',
+            'remote_id', 'title', 'description', 'slogan', 'problem', 'country',
+            'for_sale', 'staff_size', 'restricted_countries', 'links'
         ];
     }
 }
