@@ -5,6 +5,7 @@ namespace Kami\ContentBundle\Controller;
 
 
 use Kami\ContentBundle\Entity\Post;
+use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
