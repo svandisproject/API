@@ -136,7 +136,7 @@ class Ico
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     *@Gedmo\Versioned
+     * @Gedmo\Versioned
      */
     private $staffSize;
 
@@ -252,10 +252,11 @@ class Ico
     private $development;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(type="array", name="links", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $links;
@@ -728,9 +729,9 @@ class Ico
     }
 
     /**
-     * @return SaleStage
+     * @return SaleStage|null
      */
-    public function getSaleStage(): SaleStage
+    public function getSaleStage(): ?SaleStage
     {
         return $this->saleStage;
     }
@@ -829,8 +830,10 @@ class Ico
     }
 
     /**
+     * Set links
+     *
      * @param array $links
-     * @return self
+     * @return Ico
      */
     public function setLinks($links)
     {
