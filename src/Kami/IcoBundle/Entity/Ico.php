@@ -460,11 +460,8 @@ class Ico
     }
 
     /**
-     * Set forSale.
-     *
-     * @param int|null $forSale
-     *
-     * @return Ico
+     * @param null $forSale
+     * @return $this
      */
     public function setForSale($forSale = null)
     {
@@ -594,13 +591,10 @@ class Ico
     }
 
     /**
-     * Remove competitor.
-     *
-     * @param \Kami\IcoBundle\Entity\Ico $competitor
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @param Ico $competitor
+     * @return bool
      */
-    public function removeCompetitor(\Kami\IcoBundle\Entity\Ico $competitor)
+    public function removeCompetitor(Ico $competitor)
     {
         return $this->competitors->removeElement($competitor);
     }
@@ -616,13 +610,10 @@ class Ico
     }
 
     /**
-     * Add industry.
-     *
-     * @param \Kami\IcoBundle\Entity\Industry $industry
-     *
-     * @return Ico
+     * @param Industry $industry
+     * @return $this
      */
-    public function addIndustry(\Kami\IcoBundle\Entity\Industry $industry)
+    public function addIndustry(Industry $industry)
     {
         $this->industries[] = $industry;
 
@@ -630,13 +621,10 @@ class Ico
     }
 
     /**
-     * Remove industry.
-     *
-     * @param \Kami\IcoBundle\Entity\Industry $industry
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
+     * @param Industry $industry
+     * @return bool
      */
-    public function removeIndustry(\Kami\IcoBundle\Entity\Industry $industry)
+    public function removeIndustry(Industry $industry)
     {
         return $this->industries->removeElement($industry);
     }
@@ -757,9 +745,8 @@ class Ico
     }
 
     /**
-     * @param SocialMedia $social_media
-     *
-     * @return self
+     * @param $social_media
+     * @return $this
      */
     public function setSocialMedia($social_media)
     {
@@ -861,7 +848,7 @@ class Ico
     }
 
     /**
-     * @return Post
+     * @return ArrayCollection
      */
     public function getIcoNews()
     {
@@ -869,8 +856,8 @@ class Ico
     }
 
     /**
-     * @param Post $icoNews
-     * @return self
+     * @param $icoNews
+     * @return $this
      */
     public function setIcoNews($icoNews)
     {
