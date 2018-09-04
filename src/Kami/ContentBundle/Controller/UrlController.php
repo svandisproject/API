@@ -67,8 +67,12 @@ class UrlController extends Controller
             throw new HttpException(401, 'Authorization required');
         }
 
+        $workers = $this->getDoctrine()->getRepository(Worker::class)->findByUser($user);
         $posts = $this->getDoctrine()->getRepository(Post::class)
-            ->findBy(['createdBy' => $user]);
+            ->findBy(['createdBy' => $workers]);
+
+//        $posts = $this->getDoctrine()->getRepository(Post::class)
+//            ->findBy(['createdBy' => $user]);
 
         return new JsonResponse(['posts' => $posts]);
     }
