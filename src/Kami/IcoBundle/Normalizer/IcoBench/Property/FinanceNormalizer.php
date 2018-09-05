@@ -123,7 +123,7 @@ class FinanceNormalizer implements PropertyNormalizerInterface
         $fiatPairs = ['EURUSD', 'GBPUSD'];
         $body = $this->httpClient->get('https://rates.fxcm.com/RatesXML')->getBody()->getContents();
         $xml = new SimpleXMLElement($body);
-
+        $normalizeArray = [];
         foreach ($xml->children() as $rate){
             if(in_array($symbol = (string) $rate['Symbol'], $fiatPairs)){
                 $averagePrice = (floatval($rate->Bid) + floatval($rate->Ask)) / 2;
@@ -146,7 +146,7 @@ class FinanceNormalizer implements PropertyNormalizerInterface
     private function setAssetPrice($remoteData)
     {
         if ($asset = $this->em->getRepository('KamiAssetBundle:Asset')->findOneBy(['ticker' => $remoteData['token']])) {
-            if (!$price = $asset->getPrice()) {
+            if (!$asset->getPrice()) {
                 $asset->setPrice($this->getPrice($remoteData));
                 $this->em->persist($asset);
             }

@@ -280,9 +280,9 @@ class Person
     }
 
     /**
-     * @return boolean
+     * @return boolean|null
      */
-    public function getKyc(): bool
+    public function getKyc(): ?bool
     {
         return $this->kyc;
     }

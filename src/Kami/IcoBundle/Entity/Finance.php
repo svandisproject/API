@@ -806,16 +806,6 @@ class Finance
     }
 
     /**
-     * @param mixed $vested_tokens
-     * @return self
-     */
-    public function setVestedTokens($vested_tokens)
-    {
-        $this->vested_tokens = $vested_tokens;
-        return $this;
-    }
-
-    /**
      * @return integer
      */
     public function getDayToLiquidity()
