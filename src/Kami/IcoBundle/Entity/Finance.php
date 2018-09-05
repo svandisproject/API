@@ -4,7 +4,6 @@ namespace Kami\IcoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Kami\AssetBundle\Entity\Asset;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -189,7 +188,7 @@ class Finance
     /**
      * @var float
      *
-     * @ORM\Column(name="hard_cap", type="decimal", nullable=true)
+     * @ORM\Column(name="hard_cap", type="decimal", precision=25, scale=5, nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -197,6 +196,18 @@ class Finance
      * @Gedmo\Versioned
      */
     private $hardCap;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="hard_cap_eth", type="decimal", precision=25, scale=5,  nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Gedmo\Versioned
+     */
+    private $hardCapEth;
 
     /**
      * @var float
@@ -236,7 +247,7 @@ class Finance
     /**
      * @var float|null
      *
-     * @ORM\Column(name="min_cap", type="float", nullable=true)
+     * @ORM\Column(name="min_cap", type="decimal", precision=25, scale=5, nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -883,6 +894,25 @@ class Finance
     public function setTokenPriceEth($tokenPriceEth)
     {
         $this->tokenPriceEth = $tokenPriceEth;
+        return $this;
+    }
+
+    /**
+     * @return float | null
+     */
+    public function getHardCapEth(): ?float
+    {
+        return $this->hardCapEth;
+    }
+
+    /**
+     * @param float $hardCapEth
+     *
+     * @return self
+     */
+    public function setHardCapEth(float $hardCapEth): self
+    {
+        $this->hardCapEth = $hardCapEth;
         return $this;
     }
 }

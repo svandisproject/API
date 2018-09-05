@@ -2,8 +2,6 @@
 
 namespace Kami\IcoBundle\Normalizer\IcoBench\Property;
 
-use function dump;
-use function floatval;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\IcoBundle\Entity\Finance;
 use Kami\IcoBundle\Normalizer\PropertyNormalizerInterface;
@@ -17,6 +15,10 @@ class FinanceNormalizer implements PropertyNormalizerInterface
     private $httpClient;
 
     private $em;
+
+    private $ethPrice = 0;
+
+    private $asset;
 
     /**
      * FinanceNormalizer constructor.
@@ -40,15 +42,19 @@ class FinanceNormalizer implements PropertyNormalizerInterface
             $finance = new Finance();
         }
         if (!empty($remoteData)) {
+            $this->asset = $this->getAsset($remoteData['token']);
+            $this->ethPrice = $this->getEthPriceGlobal();
+
             if ($remoteData['price']) {
                 $this->setAssetPrice($remoteData);
                 $finance->setTokenPriceEth( $this->getEthPrice($remoteData));
             }
             if ($remoteData['hardcap']) {
-                $finance->setHardCap($this->getUsdPrice($remoteData['hardcap']));
+                $finance->setHardCap($this->getUsdHardCap($remoteData));
+                $finance->setHardCapEth($this->getEthHardCap($remoteData));
             }
             if ($remoteData['softcap']) {
-                $finance->setMinCap($this->getUsdPrice($remoteData['softcap']));
+                $finance->setMinCap($this->getUsdMinCap($remoteData));
             }
             if ($remoteData['tokens']) {
                 $finance->setTotalSupply($remoteData['tokens']);
@@ -82,7 +88,7 @@ class FinanceNormalizer implements PropertyNormalizerInterface
      */
     private function getUsdPrice($price)
     {
-        $cost = floatval(str_replace(",", ".", $price));
+        $cost = floatval(str_replace(",", "", $price));
         $currency = trim(preg_replace('/[0-9]+/', '', $price), $character_mask = ". |, ");
 
         if ($currency == 'USD') {
@@ -102,7 +108,13 @@ class FinanceNormalizer implements PropertyNormalizerInterface
             } else return 0;
             if (isset($part1)) {
                 if (strpos($part0, $token)) {
-                    return  $this->getUsdPrice($part1);
+                    if (floatval($part0) == 1) {
+                        return  $this->getUsdPrice($part1);
+                    } else {
+                        if (floatval($part0) != 0) {
+                            return $this->getUsdPrice($part1) / floatval($part0);
+                        } else return 0;
+                    }
                 } elseif(strpos($part1, $token)) {
                     return $this->getUsdPrice($part0) / floatval($part1);
                 }
@@ -111,6 +123,11 @@ class FinanceNormalizer implements PropertyNormalizerInterface
         return 0;
     }
 
+    /**
+     * @param float $priceInCurrency
+     * @param string $currency
+     * @return mixed
+     */
     private function getPriceCurrencyInUsd($priceInCurrency, $currency)
     {
         $fiat = ['EUR', 'GBP'];
@@ -122,6 +139,9 @@ class FinanceNormalizer implements PropertyNormalizerInterface
         }
     }
 
+    /**
+     * @return mixed
+     */
     private function getFiatUsdPrice()
     {
         $fiatPairs = ['EURUSD', 'GBPUSD'];
@@ -137,6 +157,10 @@ class FinanceNormalizer implements PropertyNormalizerInterface
         return $normalizeArray;
     }
 
+    /**
+     * @param $ticker
+     * @return int|float
+     */
     private function getPriceFromAsset($ticker)
     {
         if($asset = $this->em->getRepository('KamiAssetBundle:Asset')->findOneBy(['ticker' => $ticker])){
@@ -147,34 +171,113 @@ class FinanceNormalizer implements PropertyNormalizerInterface
         return 0;
     }
 
+    /**
+     * @param $remoteData
+     * @return bool
+     */
     private function setAssetPrice($remoteData)
     {
-        if ($asset = $this->em->getRepository('KamiAssetBundle:Asset')->findOneBy(['ticker' => $remoteData['token']])) {
-            if (!$asset->getPrice()) {
-                $asset->setPrice($this->getPrice($remoteData));
-                $this->em->persist($asset);
+        if ($this->asset) {
+            if (!$price = $this->asset->getPrice()) {
+                $this->asset->setPrice($this->getPrice($remoteData));
+                $this->em->persist($this->asset);
             }
         }
         return true;
     }
 
+    /**
+     * @param array $remoteData
+     * @return float|int
+     */
     private function getEthPrice ($remoteData)
     {
-        $parts = explode('=', str_replace(',','.',$remoteData['price']));
-        $part0 = trim($parts[0]);
-        $part1 = trim($parts[1]);
+        if (strripos($remoteData['price'], "=") !== false) {
+            $parts = explode('=', str_replace(',','.',$remoteData['price']));
+            $part0 = trim($parts[0]);
+            $part1 = trim($parts[1]);
 
-        if (strpos($part1, 'ETH')) {;
-            return floatval($part1);
-        } elseif (strpos($part0, 'ETH')) {
-            return floatval($part0)/floatval($part1);
-        } else {
-            $ethPrice = ($this->em->getRepository(Asset::class)->findOneBy(['ticker'=>'ETH']))->getPrice();
-            if (!$price = ($this->em->getRepository(Asset::class)->findOneBy(['ticker'=> $remoteData['token']]))->getPrice()) {
-                $price = $this->getPrice($remoteData);
+            if (strpos($part1, 'ETH')) {;
+                return floatval($part1);
+            } elseif (strpos($part0, 'ETH')) {
+                return floatval($part0)/floatval($part1);
+            } else {
+                if ($this->asset) {
+                    $price = $this->asset->getPrice();
+                } else {
+                    $price = $this->getPrice($remoteData);
+                }
+                return $price / $this->ethPrice;
             }
-            return $price / $ethPrice;
+        } else return 0;
+    }
+
+    /**
+     * @param array $remoteData
+     * @return float|int
+     */
+    private function getUsdHardCap ($remoteData) {
+            $preCost = str_replace(".", "", $remoteData['hardcap']);
+            $cost = floatval(str_replace(",", "", $preCost));
+            $currency = trim(preg_replace('/[0-9]+/', '', $remoteData['hardcap']), $character_mask = ". |, ");
+            if ($currency == $remoteData['token']) {
+                if ( $this->asset) {
+                    if ($price = $this->asset->getPrice()) {
+                        return $cost * $price;
+                    }   else return 0;
+                } else return 0;
+            } elseif ($currency == "USD") {
+                return $cost;
+            } else return $this->getUsdPrice($remoteData['hardcap']);
         }
+
+    /**
+     * @param array $remoteData
+     * @return float|int
+     */
+    private function getUsdMinCap ($remoteData) {
+        $preCost = str_replace(".", "", $remoteData['softcap']);
+        $cost = floatval(str_replace(",", "", $preCost));
+        $currency = trim(preg_replace('/[0-9]+/', '', $remoteData['softcap']), $character_mask = ". |, ");
+        if ($currency == $remoteData['token']) {
+            if ( $this->asset) {
+                if ($price = $this->asset->getPrice()) {
+                    return $cost * $price;
+                }   else return 0;
+            } else return 0;
+        } elseif ($currency == "USD") {
+            return $cost;
+        } else return $this->getUsdPrice($remoteData['softcap']);
+    }
+
+    /**
+     * @param array $remoteData
+     * @return float
+     */
+    private function getEthHardCap ($remoteData) {
+        $preCost = str_replace(".", "", $remoteData['hardcap']);
+        $cost = floatval(str_replace(",", "", $preCost));
+        $currency = trim(preg_replace('/[0-9]+/', '', $remoteData['hardcap']), $character_mask = ". |, ");
+        if ($currency == "ETH") {
+            return $cost;
+        } else return $this->getUsdHardCap($remoteData) / $this->ethPrice;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function getEthPriceGlobal ()
+    {
+        return ($this->em->getRepository(Asset::class)->findOneBy(['ticker'=>'ETH']))->getPrice();
+    }
+
+    /**
+     * @param string $token
+     * @return mixed
+     */
+    private function getAsset($token): ?Asset
+    {
+        return $this->em->getRepository(Asset::class)->findOneBy(['ticker'=> $token]);
     }
 
 }
