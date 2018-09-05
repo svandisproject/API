@@ -236,7 +236,7 @@ class Person
      *
      * @return array|null
      */
-    public function getLinks()
+    public function getLinks(): ?array
     {
         return $this->links;
     }
