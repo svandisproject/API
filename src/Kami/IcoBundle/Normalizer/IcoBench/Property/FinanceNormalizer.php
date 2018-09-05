@@ -176,7 +176,7 @@ class FinanceNormalizer implements PropertyNormalizerInterface
     private function setAssetPrice($remoteData)
     {
         if ($this->asset) {
-            if (!$price = $this->asset->getPrice()) {
+            if (!$this->asset->getPrice()) {
                 $this->asset->setPrice($this->getPrice($remoteData));
                 $this->em->persist($this->asset);
             }
