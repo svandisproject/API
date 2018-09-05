@@ -90,7 +90,6 @@ class FinanceNormalizer implements PropertyNormalizerInterface
     {
         $cost = floatval(str_replace(",", "", $price));
         $currency = trim(preg_replace('/[0-9]+/', '', $price), $character_mask = ". |, ");
-
         if ($currency == 'USD') {
             return $cost;
         } else {
@@ -131,7 +130,6 @@ class FinanceNormalizer implements PropertyNormalizerInterface
     private function getPriceCurrencyInUsd($priceInCurrency, $currency)
     {
         $fiat = ['EUR', 'GBP'];
-
         if (in_array($currency, $fiat)) {
             return $priceInCurrency * $this->getFiatUsdPrice()[$currency.'USD'];
         } else {
