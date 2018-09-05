@@ -460,7 +460,7 @@ class Ico
     }
 
     /**
-     * @param null $forSale
+     * @param int $forSale
      * @return $this
      */
     public function setForSale($forSale = null)

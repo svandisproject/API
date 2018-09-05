@@ -337,7 +337,7 @@ class Dates
     /**
      * Set ico.
      *
-     * @param string $ico
+     * @param Ico $ico
      *
      * @return Dates
      */
