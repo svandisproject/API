@@ -6,6 +6,7 @@ namespace Kami\CassandraMigrationsBundle\MigrationHelper;
 
 use Kami\CassandraMigrationsBundle\AbstractMigration;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\Filesystem\Filesystem;
 
 class MigrationHelper
@@ -68,11 +69,15 @@ class MigrationHelper
         return $migrations;
     }
 
+    /**
+     * @param $version
+     * @throws \Cassandra\Exception
+     */
     private function storeExecutedMigration($version)
     {
         $statement = $this->client->prepare('INSERT INTO kami_migrations.migrations (id, version) VALUES (?, ?)');
         $this->client->execute($statement, ['arguments' => [
-            'id' => new \Cassandra\Uuid(),
+            'id' => new \Cassandra\Uuid(Uuid::uuid1()->toString()),
             'version' => $version
         ]]);
 

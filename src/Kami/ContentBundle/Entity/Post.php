@@ -295,7 +295,7 @@ class Post
     /**
      * Set publishedAt.
      *
-     * @param \DateTime $publishedAt
+     * @param $publishedAt
      *
      * @return Post
      */
@@ -404,7 +404,11 @@ class Post
         return $this->createdBy;
     }
 
-    public function setValidatedBy(array $validatedBy)
+    /**
+     * @param $validatedBy
+     * @return $this
+     */
+    public function setValidatedBy($validatedBy)
     {
         $this->validatedBy = $validatedBy;
 
@@ -448,11 +452,13 @@ class Post
     }
 
     /**
-     * @param array $tags
+     * @param $tags
+     * @return $this
      */
     public function setTags($tags)
     {
         $this->tags = $tags;
+        return $this;
     }
 
 
