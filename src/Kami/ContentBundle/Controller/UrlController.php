@@ -41,7 +41,7 @@ class UrlController extends Controller
         if ($result->count() === 1) {
             $statement = $client->prepare('update svandis_url_cache.crawled_urls set confirmations = ? where hash = ?' );
             $confirmations = $result[0]['confirmations']-1;
-            if($confirmations == $this->container->getParameter('invalid_url_confirmations')){
+            if($confirmations >= $this->container->getParameter('invalid_url_confirmations')){
                 throw new HttpException(400, 'Reached max number of invalid confirmation for ' . $url);
             }
             $client->execute($statement, ['arguments' => [new \Cassandra\Tinyint($confirmations), $hash]]);
