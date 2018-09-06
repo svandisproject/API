@@ -15,7 +15,7 @@ class BittrexVolumeWatcher extends AbstractVolumesWatcher
         $assetsValues = $this->getUsdValues($markets);
 
         foreach ($assetsValues as $assetKey => $usdVolume) {
-            $asset = $this->findAsset($assetKey);
+            $asset = $this->findOrCreateAsset($assetKey);
             $this->persistVolumes($asset, $usdVolume, 'Bittrex');
         }
     }

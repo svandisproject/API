@@ -6,7 +6,9 @@ namespace Kami\StockBundle\Watcher;
 
 use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
+use function date;
 use Doctrine\ORM\EntityManager;
+use function dump;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
@@ -147,8 +149,8 @@ class VolumesWatcher
                         "WHERE ticker = '$ticker' AND exchange = '$exhange' ALLOW FILTERING";
 
                     $statement = new SimpleStatement($query);
-                    $result = $this->cassandra->executeAsync($statement);
-                    foreach ($result->get() as $row) {
+                    $result = $this->cassandra->execute($statement);
+                    foreach ($result as $row) {
                         if ($row['price'] != null && $row['price']->value() != 0) {
                             $soldAsset += $volume / $row['price']->value();
                         }

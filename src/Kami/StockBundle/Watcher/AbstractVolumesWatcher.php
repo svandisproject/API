@@ -100,8 +100,13 @@ abstract class AbstractVolumesWatcher
      *
      * @return Asset
      */
-    protected function findAsset($ticker): Asset
+    protected function findOrCreateAsset($ticker): Asset
     {
-        return $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $ticker]);
+        if (!$asset = $this->entityManager->getRepository(Asset::class)->findOneBy(['ticker' => $ticker])) {
+            $asset = new Asset();
+            $asset->setTicker($ticker);
+            $this->entityManager->persist($asset);
+        }
+        return $asset;
     }
 }
