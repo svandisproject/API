@@ -42,7 +42,7 @@ class FinanceNormalizer implements PropertyNormalizerInterface
             $finance = new Finance();
         }
         if (!empty($remoteData)) {
-            $this->asset = $this->getAsset($remoteData['token']);
+            $this->asset = $ico->getAsset();
             $this->ethPrice = $this->getEthPriceGlobal();
 
             if ($remoteData['price']) {
@@ -177,12 +177,10 @@ class FinanceNormalizer implements PropertyNormalizerInterface
      */
     private function setAssetPrice($remoteData)
     {
-        if ($this->asset) {
             if (!$this->asset->getPrice()) {
                 $this->asset->setPrice($this->getPrice($remoteData));
                 $this->em->persist($this->asset);
             }
-        }
         return true;
     }
 
@@ -270,14 +268,4 @@ class FinanceNormalizer implements PropertyNormalizerInterface
     {
         return ($this->em->getRepository(Asset::class)->findOneBy(['ticker'=>'ETH']))->getPrice();
     }
-
-    /**
-     * @param string $token
-     * @return mixed
-     */
-    private function getAsset($token): ?Asset
-    {
-        return $this->em->getRepository(Asset::class)->findOneBy(['ticker'=> $token]);
-    }
-
 }

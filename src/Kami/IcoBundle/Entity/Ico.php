@@ -174,7 +174,7 @@ class Ico
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation()
-     * @MaxDepth(1)
+     * @MaxDepth(2)
      * @Gedmo\Versioned
      */
     private $industries;
