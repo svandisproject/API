@@ -41,6 +41,7 @@ class UrlController extends Controller
         if ($result->count() === 1) {
             $statement = $client->prepare('update svandis_url_cache.crawled_urls set confirmations = ? where hash = ?' );
             $confirmations = $result[0]['confirmations']-1;
+
             $client->execute($statement, ['arguments' => [new \Cassandra\Tinyint($confirmations), $hash]]);
         } else {
             $statement = $client->prepare('insert into svandis_url_cache.crawled_urls
