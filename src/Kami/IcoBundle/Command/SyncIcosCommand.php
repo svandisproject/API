@@ -73,8 +73,8 @@ class SyncIcosCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         while (!$this->emergency) {
-            $hour = date('H');
-            if($hour == 23){
+//            $hour = date('H');
+//            if($hour == 23){
                 $totalPages =  $this->icoBenchClient->getIcos()['pages'];
 
                 for($i = 0; $i < $totalPages; $i++) {
@@ -84,7 +84,7 @@ class SyncIcosCommand extends Command
                     foreach ($response['results'] as $result) {
                         $remoteData = $this->icoBenchClient->getIco($result['id']);
                         $ico = $this->findOrCreateIco($result['id']);
-                        $asset = $this->findAsset($remoteData['finance']['token']);
+                        $asset = $this->findOrCreateAsset($remoteData['finance']['token']);
                         $ico = $this->icoBenchNormalizer->normalize($ico, $remoteData, $asset);
 
                         $this->manager->persist($ico);
@@ -94,7 +94,7 @@ class SyncIcosCommand extends Command
                 }
 
                 $output->writeln('Successfully updated ICOs');
-            } else sleep(3600);
+//            } else sleep(3600);
         }
     }
 
