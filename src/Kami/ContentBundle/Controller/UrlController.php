@@ -5,6 +5,7 @@ namespace Kami\ContentBundle\Controller;
 
 
 use Kami\ContentBundle\Entity\Post;
+use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -70,8 +71,9 @@ class UrlController extends Controller
             throw new HttpException(401, 'Authorization required');
         }
 
+        $workers = $this->getDoctrine()->getRepository(Worker::class)->findByUser($user);
         $posts = $this->getDoctrine()->getRepository(Post::class)
-            ->findBy(['createdBy' => $user]);
+            ->findBy(['createdBy' => $workers]);
 
         return new JsonResponse(['posts' => $posts]);
     }
