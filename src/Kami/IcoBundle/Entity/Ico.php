@@ -561,7 +561,7 @@ class Ico
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removePartner(\Kami\IcoBundle\Entity\Ico $partner)
+    public function removePartner(Ico $partner)
     {
         return $this->partners->removeElement($partner);
     }
