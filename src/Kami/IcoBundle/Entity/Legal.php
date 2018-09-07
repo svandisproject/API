@@ -355,4 +355,5 @@ class Legal
     {
         return $this->ico;
     }
+
 }
