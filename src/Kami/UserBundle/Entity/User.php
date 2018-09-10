@@ -24,7 +24,7 @@ class User extends BaseUser
 
     /**
      * @var string
-     * @ORM\Column(type="string", length=16)
+     * @ORM\Column(type="string", length=16, name="worker_token")
      */
     private $workerToken;
 
