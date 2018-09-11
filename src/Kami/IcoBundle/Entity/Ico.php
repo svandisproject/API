@@ -5,7 +5,6 @@ namespace Kami\IcoBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\AssetBundle\Entity\Asset;
-use Kami\ContentBundle\Entity\Post;
 use Kami\ApiCoreBundle\Annotation as Api;
 use JMS\Serializer\Annotation\MaxDepth;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -273,18 +272,6 @@ class Ico
     private $legal;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Post", mappedBy="ico", cascade={"persist"})
-     *
-     * @Api\Relation()
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @MaxDepth(1)
-     * @Gedmo\Versioned
-     */
-    private $icoNews;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -293,7 +280,6 @@ class Ico
         $this->partners = new ArrayCollection();
         $this->competitors = new ArrayCollection();
         $this->industries = new ArrayCollection();
-        $this->icoNews = new ArrayCollection();
     }
 
     /**
@@ -844,24 +830,6 @@ class Ico
     public function setLegal($legal)
     {
         $this->legal = $legal;
-        return $this;
-    }
-
-    /**
-     * @return ArrayCollection
-     */
-    public function getIcoNews()
-    {
-        return $this->icoNews;
-    }
-
-    /**
-     * @param $icoNews
-     * @return $this
-     */
-    public function setIcoNews($icoNews)
-    {
-        $this->icoNews = $icoNews;
         return $this;
     }
 }
