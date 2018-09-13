@@ -31,3 +31,12 @@ kami_api_core:
           create: "kami.common.not_found_strategy"
           update: "kami.common.not_found_strategy"
           delete: "kami.common.not_found_strategy"
+
+    - name: log
+      entity: Kami\WorkerBundle\Logger\Log
+      strategies:
+          index: "kami.logger.index_strategy"
+          filter: "kami.logger.filter_strategy"
+          create: "kami.logger.creation_strategy"
+          update: "kami.common.not_found_strategy"
+          delete: "kami.common.not_found_strategy"
