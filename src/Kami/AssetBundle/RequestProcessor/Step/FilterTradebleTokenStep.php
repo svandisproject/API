@@ -5,7 +5,7 @@ namespace Kami\AssetBundle\RequestProcessor\Step;
 
 use Doctrine\ORM\QueryBuilder;
 use Kami\ApiCoreBundle\Security\AccessManager;
-use Kami\AssetBundle\Entity\CoinMarketCap;
+use Kami\AssetBundle\Entity\MarketCap;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
 use Kami\IcoBundle\Entity\Industry;
@@ -42,7 +42,7 @@ class FilterTradebleTokenStep extends AbstractStep
                     $queryModel = 'industry';
                     break;
                 case 'volume':
-                    $marketCapReflection = new \ReflectionClass(CoinMarketCap::class);
+                    $marketCapReflection = new \ReflectionClass(MarketCap::class);
                     $property = $marketCapReflection->getProperty('volume24');
                     $filter['property'] = 'volume24';
                     $queryModel = 'market_cap';

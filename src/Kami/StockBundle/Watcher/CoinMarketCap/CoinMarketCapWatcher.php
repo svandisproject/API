@@ -5,7 +5,7 @@ namespace Kami\StockBundle\Watcher\CoinMarketCap;
 use Doctrine\ORM\EntityManager;
 use GuzzleHttp\Client;
 use Kami\AssetBundle\Entity\Asset;
-use Kami\AssetBundle\Entity\CoinMarketCap;
+use Kami\AssetBundle\Entity\MarketCap;
 
 class CoinMarketCapWatcher
 {
@@ -54,7 +54,7 @@ class CoinMarketCapWatcher
             } while($start < $activeCryptocurrencies);
             $assets = $this->em->getRepository(Asset::class)->findByMarketCap(null);
             foreach ($assets as $asset){
-                $marketCap = new CoinMarketCap();
+                $marketCap = new MarketCap();
                 $marketCap->setMarketCap(0);
                 $marketCap->setAsset($asset);
                 $marketCap->setVolume24(0);
@@ -105,7 +105,7 @@ class CoinMarketCapWatcher
     {
 
         if (!$marketCap = $asset->getMarketCap()) {
-            $marketCap = new CoinMarketCap();
+            $marketCap = new MarketCap();
         }
         $marketCap->setAsset($asset);
         $marketCap->setCirculatingSupply($value['circulating_supply']);

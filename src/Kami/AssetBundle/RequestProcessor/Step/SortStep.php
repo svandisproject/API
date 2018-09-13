@@ -7,7 +7,7 @@ namespace Kami\AssetBundle\RequestProcessor\Step;
 use Doctrine\ORM\QueryBuilder;
 use Kami\ApiCoreBundle\Security\AccessManager;
 use Kami\Component\RequestProcessor\Artifact;
-use Kami\AssetBundle\Entity\CoinMarketCap;
+use Kami\AssetBundle\Entity\MarketCap;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,12 +42,12 @@ class SortStep extends AbstractStep
                 $sort = 'yearToDayChange';
                 break;
             case 'volume':
-                $reflection = new \ReflectionClass(CoinMarketCap::class);
+                $reflection = new \ReflectionClass(MarketCap::class);
                 $query = 'market_cap.%s';
                 $sort = 'volume24';
                 break;
             case 'market_cap':
-                $reflection = new \ReflectionClass(CoinMarketCap::class);
+                $reflection = new \ReflectionClass(MarketCap::class);
                 $query = 'market_cap.%s';
                 $sort = 'marketCap';
                 break;
