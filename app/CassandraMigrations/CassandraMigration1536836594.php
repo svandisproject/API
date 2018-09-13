@@ -11,8 +11,7 @@ class CassandraMigration1536836594 extends AbstractMigration
     {
         $statement = $client->prepare(
             'CREATE TABLE if NOT EXISTS svandis_url_cache.logs 
-                    ( task_type text, user_id DECIMAL, time timestamp, log text, PRIMARY KEY ((user_id, task_type), time) )
-                    with clustering order by (time desc);'
+                    ( task_type text, user_id DECIMAL, time timestamp, log text, PRIMARY KEY ((user_id, task_type), time));'
         );
         $client->execute($statement);
     }

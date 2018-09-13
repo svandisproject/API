@@ -18,9 +18,7 @@ parameters:
     kami.logger.index_strategy:
             - get_reflection_from_request
             - validate_resource_access
-            - get_query_builder
-            - build_select_query
-            - sort
+            - select_data_sort_logger
             - paginate
             - build_serializer
             - serialize
@@ -41,6 +39,13 @@ services:
             - "@m6web_cassandra.client.default"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "persist_log" }
+
+    kami.logger.index_strategy:
+        class: Kami\WorkerBundle\RequestProcessor\SelectDataSortLoggerStep
+        arguments:
+            - "@m6web_cassandra.client.default"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "select_data_sort_logger" }
 
     kami_worker.user_provider:
         class: "%kami_worker.user_provider.class%"
