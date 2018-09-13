@@ -118,7 +118,7 @@ class Asset
     private $ico;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\CoinMarketCap", inversedBy="asset")
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\CoinMarketCap", inversedBy="asset", cascade={"persist"})
      * @ORM\JoinColumn(name="market_cap_id", referencedColumnName="id")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -375,7 +375,7 @@ class Asset
     }
 
     /**
-     * @param CoinMarketCap $marketCap
+     * @param $marketCap
      *
      * @return self
      */

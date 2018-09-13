@@ -52,6 +52,16 @@ class CoinMarketCapWatcher
                     echo $e->getMessage();
                 }
             } while($start < $activeCryptocurrencies);
+            $assets = $this->em->getRepository(Asset::class)->findByMarketCap(null);
+            foreach ($assets as $asset){
+                $marketCap = new CoinMarketCap();
+                $marketCap->setMarketCap(0);
+                $marketCap->setAsset($asset);
+                $marketCap->setVolume24(0);
+                $marketCap->setCirculatingSupply(0);
+                $this->em->persist($marketCap);
+            }
+            $this->em->flush();
         } catch (\Exception $e){
             echo $e->getMessage();
         }
