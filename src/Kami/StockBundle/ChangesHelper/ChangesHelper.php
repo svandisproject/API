@@ -69,12 +69,10 @@ class ChangesHelper
         }
 
         $ticker = $asset->getTicker();
+        $preparedTicker = strtolower(str_replace(" ", "_", trim($ticker)));
         $cassandra = $this->client;
-
-        $query = "SELECT volume, price, ticker, max(time) ".
-            "from svandis_asset_prices.average_price ".
-            "WHERE ticker = '$ticker' AND ".
-            "time < '$to'".
+        $query = "SELECT volume, price, max(time) ".
+            "from svandis_asset_prices.avg_price_" . $preparedTicker . " WHERE time < '$to'".
             "ALLOW FILTERING";
         $statement = new SimpleStatement($query);
         $result = $cassandra->execute($statement);

@@ -30,6 +30,7 @@ services:
             - '@m6web_cassandra.client.default'
             - '@doctrine.orm.entity_manager'
             - '@logger'
+            - '@snc_redis.default'
             - '%proxy_url%'
 
     kami_stock.abstract.volumes.watcher:
