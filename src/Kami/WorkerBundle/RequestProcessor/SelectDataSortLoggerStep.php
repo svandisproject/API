@@ -40,9 +40,9 @@ class SelectDataSortLoggerStep extends AbstractStep
 
         foreach ($result as $row) {
             $log = [
-                'userId' => $row['user_id'],
+                'user_id' => $row['user_id'],
                 'log' => $row['log'],
-                'taskType' => $row['task_type'],
+                'task_type' => $row['task_type'],
                 'time' => (new \DateTime())->setTimestamp(time($row['time'])),
             ];
             array_push($data, $log);
