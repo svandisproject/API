@@ -21,7 +21,7 @@ kami_api_core:
     - { name: indusry, entity: Kami\IcoBundle\Entity\Industry }
     - { name: modd-signals, entity: Kami\IcoBundle\Entity\MoodSignal}
     - { name: person, entity: Kami\IcoBundle\Entity\Person}
-    - { name: sale-stages, entity: Kami\IcoBundle\Entity\SaleStages}
+    - { name: sale-stages, entity: Kami\IcoBundle\Entity\SaleStage}
 
     - name: token
       entity: Kami\AssetBundle\Model\TradableToken
