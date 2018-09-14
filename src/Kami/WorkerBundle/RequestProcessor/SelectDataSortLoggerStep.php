@@ -3,14 +3,13 @@
 
 namespace Kami\WorkerBundle\RequestProcessor;
 
-use Cassandra\BatchStatement;
 use Cassandra\SimpleStatement;
 use Kami\Component\RequestProcessor\Artifact;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SelectDataSortLoggerStep extends AbstractStep
 {
@@ -24,19 +23,43 @@ class SelectDataSortLoggerStep extends AbstractStep
         $this->cassandra = $cassandra;
     }
 
+    /**
+     * @param Request $request
+     * @return ArtifactCollection
+     * @throws \Cassandra\Exception
+     */
     public function execute(Request $request) : ArtifactCollection
     {
-//        /** @var \ReflectionClass $reflection */
-//        $reflection = $this->getArtifact('reflection');
+        $perPage = $request->query->getInt('per_page', 10);
+        $currentPage = $request->query->getInt('page', 1);
 
-        $sort = $request->get('sort', 'time');
-        $direction = $request->get('direction', $request->attributes->get('_sort_direction'));
-        if (!in_array($direction, ['asc', 'desc'])) {
-            throw new BadRequestHttpException();
+        $data = [];
+        $pageData = [];
+        $statement = new SimpleStatement('SELECT * FROM svandis_url_cache.logs ALLOW FILTERING;');
+        $result = $this->cassandra->execute($statement);
+
+        foreach ($result as $row) {
+            $log = [
+                'userId' => $row['user_id'],
+                'log' => $row['log'],
+                'taskType' => $row['task_type'],
+                'time' => (new \DateTime())->setTimestamp(time($row['time'])),
+            ];
+            array_push($data, $log);
         }
 
-        dump($sort);die;
-        $statement = new SimpleStatement('SELECT * FROM svandis_url_cache.logs');
+        $pagesCount = ceil(count($data)/$perPage);
+        if ($currentPage < 1 || $currentPage > $pagesCount) {
+            throw new NotFoundHttpException();
+        }
+        for($i = ($currentPage*$perPage) -1; $i >= ($currentPage*$perPage) - $perPage; $i--){
+            if(isset($data[$i])) array_push($pageData, $data[$i]);
+        }
+
+        return new ArtifactCollection([
+            new Artifact('response_data', array_reverse($pageData)),
+            new Artifact('status', 200)
+        ]);
 
     }
 
