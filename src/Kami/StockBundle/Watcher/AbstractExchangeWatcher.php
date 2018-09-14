@@ -8,11 +8,15 @@ use Cassandra\Uuid;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;
+use function dump;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\Model\Point;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Client as HttpClient;
+use function str_replace;
+use function strtolower;
+use function trim;
 
 abstract class AbstractExchangeWatcher
 {
@@ -72,6 +76,8 @@ abstract class AbstractExchangeWatcher
     protected function persistPoint(Point $point, $exchange)
     {
         $cassandra = $this->client;
+        $this->createCassandraAssetPriceTable($cassandra, ( $point->toDatabaseValues())['asset']);
+        die;
         $prepared = $cassandra->prepare(
             'INSERT INTO svandis_asset_prices.asset_price (id, ticker, price, exchange, time) 
               VALUES (?, ?, ?, ?, toUnixTimestamp(now()));'
@@ -105,6 +111,19 @@ abstract class AbstractExchangeWatcher
         }
 
         return $asset;
+    }
+
+    protected function createCassandraAssetPriceTable ($cassandra, $ticker)
+    {
+        $prepareTicker = strtolower(str_replace(" ", "_", trim($ticker)));
+        dump($prepareTicker);
+        $statement = $cassandra->prepare(
+            'CREATE TABLE if NOT EXISTS svandis_asset_prices.' . $prepareTicker . '_price 
+                    ( id uuid, exchange text, price float, year decimal, time timestamp , PRIMARY KEY (year, time) )
+                    with clustering order by (time desc);'
+        );
+        $cassandra->execute($statement);
+
     }
 
     /**
