@@ -7,6 +7,7 @@ use Cassandra\SimpleStatement;
 use Kami\Component\RequestProcessor\Artifact;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
+use Kami\WorkerBundle\Logger\Log;
 use Symfony\Component\HttpFoundation\Request;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -39,12 +40,12 @@ class SelectDataSortLoggerStep extends AbstractStep
         $result = $this->cassandra->execute($statement);
 
         foreach ($result as $row) {
-            $log = [
-                'user_id' => $row['user_id'],
-                'log' => $row['log'],
-                'task_type' => $row['task_type'],
-                'time' => (new \DateTime())->setTimestamp(time($row['time'])),
-            ];
+            $log = new Log();
+            $log->setLog($row['log']);
+            $log->setUserId($row['user_id']);
+            $log->setTaskType($row['task_type']);
+            $log->setTime((new \DateTime())->setTimestamp(time($row['time'])));
+
             array_push($data, $log);
         }
 
