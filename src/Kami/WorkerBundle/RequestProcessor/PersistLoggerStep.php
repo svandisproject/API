@@ -40,7 +40,7 @@ class PersistLoggerStep extends AbstractStep
 
             $batch->add($prepared, [
                 'task_type' => $entity->getTaskType(),
-                'user_id' =>  new \Cassandra\Decimal($entity->getUserId()),
+                'user_id' =>  $entity->getUserId(),
                 'log' =>  $entity->getLog(),
             ]);
 
