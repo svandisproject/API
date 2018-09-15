@@ -5,6 +5,7 @@ namespace Kami\StockBundle\Watcher\History;
 
 use Cassandra\BatchStatement;
 use Cassandra\Timeuuid;
+use Cassandra\Uuid;
 use GuzzleHttp\Promise\EachPromise;
 use Kami\AssetBundle\Entity\Asset;
 use Psr\Http\Message\ResponseInterface;
@@ -189,21 +190,29 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
     private function persistHistoryVolumes ($historyData)
     {
         foreach ($historyData as $symbol => $itemData) {
-            $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
-            foreach ($itemData as $value) {
-                if ($value['price'] != null) {
-                    $prepared = $this->client->prepare(
-                        'INSERT INTO svandis_asset_prices.average_price (price, ticker, time, volume)
-                VALUES (?, ?, toTimestamp('. new Timeuuid(intval($value['time'])) . '), ?);'
-                    );
-                    $batch->add($prepared, [
-                        'price' =>  new \Cassandra\Float(floatval($value['price'])),
-                        'ticker' => (string) $symbol,
-                        'volume' =>  new \Cassandra\Float(floatval($value['volume']))
-                    ]);
+            $ticker = strtolower(str_replace(" ", "_", trim($symbol)));
+            if ($this->redis->get('price_'.$symbol) && $this->redis->get('avg_price_' . $ticker)) {
+                $this->logger->info("Start persist history data for " . $symbol);
+                $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
+                foreach ($itemData as $value) {
+                    if ($value['price'] != null) {
+                        $prepared = $this->client->prepare(
+                            'INSERT INTO svandis_asset_prices.avg_price_'.$ticker.' (id, price, volume, time) 
+                        VALUES (?, ?, ?, toTimestamp('.new Timeuuid(intval($value['time'])).'));'
+                        );
+                        $batch->add(
+                            $prepared,
+                            [
+                                'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
+                                'price' => new \Cassandra\Float(floatval($value['price'])),
+                                'volume' => new \Cassandra\Float(floatval($value['volume']))
+                            ]
+                        );
+                        $this->client->executeAsync($batch);
+                    }
                 }
+                $this->logger->info("Complete persist history data for " . $symbol);
             }
-            $this->client->executeAsync($batch);
         }
     }
 

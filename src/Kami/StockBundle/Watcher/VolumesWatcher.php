@@ -208,7 +208,8 @@ class VolumesWatcher
         try {
             $statement = $cassandra->prepare(
                 'CREATE TABLE if NOT EXISTS svandis_asset_prices.avg_price_' . $ticker . '
-                    ( id uuid, price float, volume float, time timestamp , PRIMARY KEY (id, time ));'
+                    ( id uuid, price float, volume float, time timestamp , PRIMARY KEY (id, time ))
+                    with clustering order by (time desc);'
             );
             $cassandra->execute($statement);
         } catch (ExecutionException $exception) {

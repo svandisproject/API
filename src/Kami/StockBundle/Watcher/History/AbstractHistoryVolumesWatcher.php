@@ -7,8 +7,9 @@ use Cassandra;
 use Doctrine\ORM\EntityManager;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Client as HttpClient;
+use Predis\Client;
 
- abstract class AbstractHistoryVolumesWatcher
+abstract class AbstractHistoryVolumesWatcher
 {
 
      /**
@@ -26,14 +27,21 @@ use GuzzleHttp\Client as HttpClient;
      */
     protected $httpClient;
 
+     /**
+      * @var Client
+      */
+     protected $redis;
+
     /**
      * AbstractVolumeWatcher constructor.
      * @param EntityManager $entityManager
      * @param LoggerInterface $logger
+     * @param Client $redis
      */
     public function __construct(
         EntityManager $entityManager,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        Client $redis
     )
     {
         $cluster = Cassandra::cluster()
@@ -42,6 +50,7 @@ use GuzzleHttp\Client as HttpClient;
         $this->client = $cluster->connect();
         $this->entityManager = $entityManager;
         $this->logger = $logger;
+        $this->redis = $redis;
         $this->httpClient = new HttpClient();
     }
 
