@@ -45,6 +45,7 @@ abstract class AbstractHistoryVolumesWatcher
     )
     {
         $cluster = Cassandra::cluster()
+            ->withContactPoints('34.247.192.31', '34.254.25.212', '34.247.150.247')
             ->withIOThreads(4)
             ->build();
         $this->client = $cluster->connect();
