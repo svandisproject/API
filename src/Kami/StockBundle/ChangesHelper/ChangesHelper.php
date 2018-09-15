@@ -73,7 +73,7 @@ class ChangesHelper
         $cassandra = $this->client;
         $query = "SELECT volume, price, max(time) ".
             "from svandis_asset_prices.avg_price_" . $preparedTicker . " WHERE time < '$to'".
-            "ALLOW FILTERING";
+            " ALLOW FILTERING";
         $statement = new SimpleStatement($query);
         $result = $cassandra->execute($statement);
         if ($result[0]['price'] != null) {
