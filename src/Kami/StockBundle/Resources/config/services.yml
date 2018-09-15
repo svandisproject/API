@@ -42,6 +42,15 @@ services:
             - '@snc_redis.default'
             - '%proxy_url%'
 
+    kami_stock.abstract.history.watcher:
+            abstract: true
+            arguments:
+                - '@doctrine.orm.entity_manager'
+                - '@logger'
+                - '@kami_stock.bittrex.client'
+                - '@snc_redis.default'
+                - '%proxy_url%'
+
     kami_stock.binance.watcher:
         class: Kami\StockBundle\Watcher\Binance\BinanceWatcher
         parent: kami_stock.abstract.watcher
