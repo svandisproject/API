@@ -192,10 +192,10 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         foreach ($historyData as $symbol => $itemData) {
             $ticker = strtolower(str_replace(" ", "_", trim($symbol)));
             if ($this->redis->get('price_'.$symbol) && $this->redis->get('avg_price_' . $ticker)) {
-                $this->logger->info("Start persist history data for " . $symbol);
-                $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
+                $this->logger->info("Start persist history data for" . $symbol);
                 foreach ($itemData as $value) {
                     if ($value['price'] != null) {
+                        $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
                         $prepared = $this->client->prepare(
                             'INSERT INTO svandis_asset_prices.avg_price_'.$ticker.' (id, price, volume, time) 
                         VALUES (?, ?, ?, toTimestamp('.new Timeuuid(intval($value['time'])).'));'
@@ -208,10 +208,10 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                                 'volume' => new \Cassandra\Float(floatval($value['volume']))
                             ]
                         );
-                        $this->client->executeAsync($batch);
+                        $this->client->execute($batch);
                     }
                 }
-                $this->logger->info("Complete persist history data for " . $symbol);
+                $this->logger->info("Done for " . $symbol . " !!!");
             }
         }
     }
