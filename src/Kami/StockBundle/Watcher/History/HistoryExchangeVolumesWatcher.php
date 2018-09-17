@@ -4,6 +4,7 @@
 namespace Kami\StockBundle\Watcher\History;
 
 use Cassandra\BatchStatement;
+use Cassandra\Exception\ExecutionException;
 use Cassandra\Timeuuid;
 use Cassandra\Uuid;
 use GuzzleHttp\Promise\EachPromise;
@@ -192,26 +193,33 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         foreach ($historyData as $symbol => $itemData) {
             $ticker = strtolower(str_replace(" ", "_", trim($symbol)));
             if ($this->redis->get('price_'.$symbol) && $this->redis->get('avg_price_' . $ticker)) {
-                $this->logger->info("Start persist history data for" . $symbol);
+                dump("Start persist history data for" . $symbol);
                 foreach ($itemData as $value) {
                     if ($value['price'] != null) {
-                        $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
-                        $prepared = $this->client->prepare(
-                            'INSERT INTO svandis_asset_prices.avg_price_'.$ticker.' (id, price, volume, time) 
-                        VALUES (?, ?, ?, toTimestamp('.new Timeuuid(intval($value['time'])).'));'
-                        );
-                        $batch->add(
-                            $prepared,
-                            [
-                                'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
-                                'price' => new \Cassandra\Float(floatval($value['price'])),
-                                'volume' => new \Cassandra\Float(floatval($value['volume']))
-                            ]
-                        );
-                        $this->client->execute($batch);
+                        if (!$this->redis->get('history_for_'.$ticker)) {
+                            try {
+                                $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
+                                $prepared = $this->client->prepare(
+                                    'INSERT INTO svandis_asset_prices.avg_price_'.$ticker.' (id, price, volume, time) 
+                                    VALUES (?, ?, ?, toTimestamp('.new Timeuuid(intval($value['time'])).'));'
+                                );
+                                $batch->add(
+                                    $prepared,
+                                    [
+                                        'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
+                                        'price' => new \Cassandra\Float(floatval($value['price'])),
+                                        'volume' => new \Cassandra\Float(floatval($value['volume']))
+                                    ]
+                                );
+                                $this->client->execute($batch);
+                                $this->redis->set('history_for_'.$ticker, $symbol);
+                            } catch (ExecutionException $exception) {
+                                echo $exception->getMessage();
+                            }
+                        }
                     }
                 }
-                $this->logger->info("Done for " . $symbol . " !!!");
+                dump("Done for " . $symbol . " !!!");
             }
         }
     }
