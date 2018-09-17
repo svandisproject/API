@@ -8,7 +8,7 @@ use Kami\IcoBundle\Normalizer\PropertyNormalizerInterface;
 
 class ScalarNormalizer implements PropertyNormalizerInterface
 {
-    public function normalize($value)
+    public function normalize($value, $ico)
     {
         return $value;
     }

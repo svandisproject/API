@@ -11,7 +11,7 @@ use Kami\IcoBundle\Normalizer\AbstractPropertyNormalizer;
 class AssetNormalizer extends AbstractPropertyNormalizer
 {
 
-    public function normalize($remoteData): ?Asset
+    public function normalize($remoteData, $ico): ?Asset
     {
        return $this->findAsset($remoteData);
     }

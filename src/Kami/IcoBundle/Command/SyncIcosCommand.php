@@ -84,7 +84,7 @@ class SyncIcosCommand extends Command
                     foreach ($response['results'] as $result) {
                         $remoteData = $this->icoBenchClient->getIco($result['id']);
                         $ico = $this->findOrCreateIco($result['id']);
-                        $asset = $this->findAsset($remoteData['finance']['token']);
+                        $asset = $this->findOrCreateAsset($remoteData['finance']['token']);
                         $ico = $this->icoBenchNormalizer->normalize($ico, $remoteData, $asset);
 
                         $this->manager->persist($ico);
@@ -107,28 +107,27 @@ class SyncIcosCommand extends Command
      */
     protected function findOrCreateIco(int $remoteId) : Ico
     {
-        $ico = $this->manager->getRepository('KamiIcoBundle:Ico')
-            ->findOneBy(['remoteId' => $remoteId]);
-
-        if(!$ico) {
-            return new Ico();
+        if(!$ico = $this->manager->getRepository('KamiIcoBundle:Ico')
+            ->findOneBy(['remoteId' => $remoteId])) {
+            $ico = new Ico();
         }
-
         return $ico;
     }
 
     /**
      * @param string $ticker
      *
-     * @return Asset | null
+     * @return Asset
      */
-    protected function findAsset($ticker)
+    protected function findOrCreateAsset($ticker): Asset
     {
-        if ($asset = $this->manager->getRepository('KamiAssetBundle:Asset')
+        if (!$asset = $this->manager->getRepository('KamiAssetBundle:Asset')
             ->findOneBy(['ticker' => $ticker])
         ) {
-            return $asset;
+            $asset = new Asset();
+            $asset->setTicker($ticker);
+            $this->manager->persist($asset);
         }
-        return null;
+        return $asset;
     }
 }

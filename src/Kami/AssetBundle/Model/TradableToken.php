@@ -230,9 +230,9 @@ class TradableToken
     }
 
     /**
-     * @return int
+     * @return float
      */
-    public function getVolume(): int
+    public function getVolume(): float
     {
         return $this->volume;
     }

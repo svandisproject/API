@@ -21,7 +21,7 @@ class PoloniexVolumeWatcher extends AbstractVolumesWatcher
             $usdValues = $this->getUsdValues($data);
 
             foreach ($usdValues as $assetKey => $usdVolume) {
-                $asset = $this->findAsset($assetKey);
+                $asset = $this->findOrCreateAsset($assetKey);
                 $this->persistVolumes($asset, $usdVolume, 'Poloniex');
             }
         } catch (\Exception $exception) {

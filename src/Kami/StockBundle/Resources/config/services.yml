@@ -30,6 +30,7 @@ services:
             - '@m6web_cassandra.client.default'
             - '@doctrine.orm.entity_manager'
             - '@logger'
+            - '@snc_redis.default'
             - '%proxy_url%'
 
     kami_stock.abstract.volumes.watcher:
@@ -39,6 +40,15 @@ services:
             - '@logger'
             - '@kami_stock.bittrex.client'
             - '@snc_redis.default'
+            - '%proxy_url%'
+
+    kami_stock.abstract.history_volumes.watcher:
+          abstract: true
+          arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+            - '@snc_redis.default'
+            - '@m6web_cassandra.client.default'
             - '%proxy_url%'
 
     kami_stock.binance.watcher:
@@ -86,3 +96,12 @@ services:
         arguments:
             - '@m6web_cassandra.client.default'
             - '@doctrine.orm.entity_manager'
+
+    kami_stock.history_exchange_volumes.watcher:
+        class: Kami\StockBundle\Watcher\History\HistoryExchangeVolumesWatcher
+        parent: kami_stock.abstract.history_volumes.watcher
+
+    kami_stock.history_volumes.watcher:
+        class: Kami\StockBundle\Watcher\History\HistoryVolumesWatcher
+        arguments:
+          - '@kami_stock.history_exchange_volumes.watcher'

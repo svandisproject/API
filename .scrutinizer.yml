@@ -2,6 +2,9 @@ filter:
     paths:
         - 'src/*'
         - 'tests/*'
+    excluded_paths:
+        - 'src/Kami/IcoBundle/Entity/Finance.php'
+        - 'src/Kami/IcoBundle/Entity/Ico.php'
 tools:
     php_mess_detector:
         config:

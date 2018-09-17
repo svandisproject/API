@@ -4,11 +4,11 @@ namespace Kami\AssetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Kami\ContentBundle\Entity\Post;
 use Kami\IcoBundle\Entity\Ico;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Symfony\Component\Validator\Constraints as Assert;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Asset
@@ -47,7 +47,7 @@ class Asset
     /**
      * @var string
      *
-     * @ORM\Column(name="ticker", type="string", length=10)
+     * @ORM\Column(name="ticker", type="string", length=25)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
@@ -69,8 +69,19 @@ class Asset
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $tokenType;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Kami\AssetBundle\Entity\TokenTypeStandard", inversedBy="assets")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $tokenTypeStandard;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="assets")
@@ -102,11 +113,12 @@ class Asset
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation()
+     * @MaxDepth(2)
      */
     private $ico;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\CoinMarketCap", inversedBy="asset")
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\MarketCap", inversedBy="asset", cascade={"persist"})
      * @ORM\JoinColumn(name="market_cap_id", referencedColumnName="id")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -363,7 +375,7 @@ class Asset
     }
 
     /**
-     * @param CoinMarketCap $marketCap
+     * @param $marketCap
      *
      * @return self
      */
@@ -375,7 +387,7 @@ class Asset
     }
 
     /**
-     * @return CoinMarketCap
+     * @return MarketCap
      */
     public function getMarketCap()
     {
@@ -428,6 +440,22 @@ class Asset
     public function setYearToDayChange($yearToDayChange): void
     {
         $this->yearToDayChange = $yearToDayChange;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getTokenTypeStandard()
+    {
+        return $this->tokenTypeStandard;
+    }
+
+    /**
+     * @param string $tokenTypeStandard
+     */
+    public function setTokenTypeStandard($tokenTypeStandard)
+    {
+        $this->tokenTypeStandard[] = $tokenTypeStandard;
     }
 
 }

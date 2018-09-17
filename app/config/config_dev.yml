@@ -47,3 +47,11 @@ kami_ico_bench:
     public_key: "%ico_bench_public_key%"
     guzzle_options:
         proxy: http://vw520rzfhacf1p:5eQVQyie4_ILLX_YOtlsvDqmCw@eu-west-static-01.quotaguard.com:9293
+
+# KhepinYamlFixtures Configuration
+khepin_yaml_fixtures:
+    resources:
+        - KamiUserBundle
+        - KamiWorkerBundle
+        - KamiContentBundle
+    directory: Resources/fixtures

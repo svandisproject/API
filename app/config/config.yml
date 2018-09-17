@@ -111,14 +111,6 @@ stof_doctrine_extensions:
 vich_uploader:
     db_driver: orm
 
-# KhepinYamlFixtures Configuration
-khepin_yaml_fixtures:
-    resources:
-        - KamiUserBundle
-        - KamiWorkerBundle
-        - KamiContentBundle
-    directory: Resources/fixtures
-
 # LopiPusher Configuration
 lopi_pusher:
     scheme: "%pusher_scheme%"

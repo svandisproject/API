@@ -8,7 +8,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
 
 
 /**
- * CoinMarketCap
+ * MarketCap
  *
  * @ORM\Table(name="coin_market_cap")
  * @ORM\Entity(repositoryClass="Kami\AssetBundle\Repository\MarketCapRepository")
@@ -17,7 +17,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  */
-class CoinMarketCap
+class MarketCap
 {
     /**
      * @var int

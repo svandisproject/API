@@ -15,6 +15,13 @@ kami_api_core:
     - { name: asset, entity: Kami\AssetBundle\Entity\Asset }
     - { name: filter-settings, entity: Kami\FilterBundle\Entity\FilterSettings }
     - { name: ico, entity: Kami\IcoBundle\Entity\Ico }
+    - { name: consensus-type, entity: Kami\IcoBundle\Entity\ConsensusType }
+    - { name: department, entity: Kami\IcoBundle\Entity\Department }
+    - { name: dev-stages, entity: Kami\IcoBundle\Entity\DevStages }
+    - { name: indusry, entity: Kami\IcoBundle\Entity\Industry }
+    - { name: modd-signals, entity: Kami\IcoBundle\Entity\MoodSignal}
+    - { name: person, entity: Kami\IcoBundle\Entity\Person}
+    - { name: sale-stages, entity: Kami\IcoBundle\Entity\SaleStage}
 
     - name: token
       entity: Kami\AssetBundle\Model\TradableToken

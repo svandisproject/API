@@ -4,6 +4,7 @@ namespace Kami\StockBundle\Watcher;
 
 
 use Cassandra\BatchStatement;
+use Cassandra\Exception\ExecutionException;
 use Cassandra\Uuid;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
@@ -13,6 +14,7 @@ use Kami\StockBundle\Model\Point;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
 use Psr\Log\LoggerInterface;
 use GuzzleHttp\Client as HttpClient;
+use Predis\Client;
 
 abstract class AbstractExchangeWatcher
 {
@@ -37,6 +39,11 @@ abstract class AbstractExchangeWatcher
     protected $httpClient;
 
     /**
+     * @var Client
+     */
+    protected $redis;
+
+    /**
      * @var bool
      */
     protected $useProxy = false;
@@ -46,13 +53,21 @@ abstract class AbstractExchangeWatcher
      * @param CassandraClient $client
      * @param EntityManager $manager
      * @param LoggerInterface $logger
+     * @param Client $redis
      * @param string $proxy
      */
-    public function __construct(CassandraClient $client, EntityManager $manager, LoggerInterface $logger, $proxy)
+    public function __construct(
+        CassandraClient $client,
+        EntityManager $manager,
+        LoggerInterface $logger,
+        Client $redis,
+        $proxy
+    )
     {
         $this->entityManager = $manager;
         $this->client = $client;
         $this->logger = $logger;
+        $this->redis = $redis;
 
         if ($this->useProxy) {
             $this->httpClient = new HttpClient(['proxy'=>$proxy]);
@@ -72,16 +87,23 @@ abstract class AbstractExchangeWatcher
     protected function persistPoint(Point $point, $exchange)
     {
         $cassandra = $this->client;
+        $pointDbValues = $point->toDatabaseValues();
+        $ticker = $pointDbValues['asset'];
+        $preparedTicker = strtolower(str_replace(" ", "_", trim($ticker)));
+
+        if(!$this->redis->get('price_' . $ticker)){
+            $this->createCassandraAssetPriceTable($cassandra, $preparedTicker);
+            $this->redis->set('price_' . $ticker, $preparedTicker);
+        }
+
         $prepared = $cassandra->prepare(
-            'INSERT INTO svandis_asset_prices.asset_price (id, ticker, price, exchange, time) 
+            'INSERT INTO svandis_asset_prices.price_' . $preparedTicker . ' (id, year, price, exchange, time) 
               VALUES (?, ?, ?, ?, toUnixTimestamp(now()));'
         );
         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
-        $pointDbValues = $point->toDatabaseValues();
-
         $batch->add($prepared, [
             'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
-            'ticker' => $pointDbValues['asset'],
+            'year' => intval(date("Y")),
             'price' =>  new \Cassandra\Float($pointDbValues['price']),
             'exchange' =>  $exchange,
         ]);
@@ -105,6 +127,19 @@ abstract class AbstractExchangeWatcher
         }
 
         return $asset;
+    }
+
+    protected function createCassandraAssetPriceTable ($cassandra, $ticker)
+    {
+        try {
+            $statement = $cassandra->prepare(
+                'CREATE TABLE if NOT EXISTS svandis_asset_prices.price_' . $ticker . '
+                    ( id uuid, exchange text, price float, year int, time timestamp , PRIMARY KEY ((id, year), exchange) );'
+            );
+            $cassandra->execute($statement);
+        } catch (ExecutionException $exception) {
+            echo $exception->getMessage();
+        }
     }
 
     /**

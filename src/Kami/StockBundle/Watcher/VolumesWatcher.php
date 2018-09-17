@@ -3,9 +3,10 @@
 
 namespace Kami\StockBundle\Watcher;
 
-
 use Cassandra\BatchStatement;
+use Cassandra\Exception\ExecutionException;
 use Cassandra\SimpleStatement;
+use Cassandra\Uuid;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
@@ -136,34 +137,42 @@ class VolumesWatcher
     {
         $assets = $this->em->getRepository(Asset::class)->findAll();
         foreach ($assets as $asset){
+
             $ticker = $asset->getTicker();
-            if($data = $this->redis->get($ticker))
+            $preparedTicker = strtolower(str_replace(" ", "_", trim($ticker)));
+            if($data = $this->redis->get($ticker) )
             {
-                $data = json_decode($data, true);
-                $soldAsset = 0;
+                if ($this->redis->get('price_' . $ticker)) {
+                    $data = json_decode($data, true);
+                    $soldAsset = 0;
+                    foreach ($data as $exhange => $volume){
+                        $query = "SELECT id, exchange, price, year, max(time) FROM svandis_asset_prices.price_" .
+                            $preparedTicker . " WHERE exchange = '$exhange' ALLOW FILTERING";
 
-                foreach ($data as $exhange => $volume){
-                    $query = "SELECT id, exchange, price, ticker, max(time) FROM svandis_asset_prices.asset_price ".
-                        "WHERE ticker = '$ticker' AND exchange = '$exhange' ALLOW FILTERING";
-
-                    $statement = new SimpleStatement($query);
-                    $result = $this->cassandra->executeAsync($statement);
-                    foreach ($result->get() as $row) {
-                        if ($row['price'] != null && $row['price']->value() != 0) {
-                            $soldAsset += $volume / $row['price']->value();
+                        $statement = new SimpleStatement($query);
+                        $result = $this->cassandra->executeAsync($statement);
+                        foreach ($result->get() as $row) {
+                            if ($row['price'] != null && $row['price']->value() != 0) {
+                                $soldAsset += $volume / $row['price']->value();
+                            }
                         }
                     }
-                }
 
-                if($soldAsset != 0){
-                    $avgPrice = array_sum($data) / $soldAsset;
-                    $asset->setPrice($avgPrice);
-                    $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
-                    $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
-                    $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
-                    $this->em->persist($asset);
-                    $this->push($asset, $avgPrice, array_sum($data));
-                    $this->storeAvgPrice($ticker, $avgPrice, array_sum($data));
+                    if($soldAsset != 0){
+                        $avgPrice = array_sum($data) / $soldAsset;
+
+                        if(!$this->redis->get('avg_price_' . $preparedTicker)) {
+                            $this->createCassandraAveragePriceTable($preparedTicker, $this->cassandra);
+                            $this->redis->set('avg_price_' . $preparedTicker, $preparedTicker);
+                        }
+                        $this->storeAvgPrice($preparedTicker, $avgPrice, array_sum($data));
+                        $asset->setPrice($avgPrice);
+                        $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
+                        $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
+                        $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
+                        $this->em->persist($asset);
+                        $this->push($asset, $avgPrice, array_sum($data));
+                    }
                 }
             }
         }
@@ -180,18 +189,32 @@ class VolumesWatcher
     private function storeAvgPrice($ticker, $avgPrice, $volume)
     {
         $prepared = $this->cassandra->prepare(
-            'INSERT INTO svandis_asset_prices.average_price (ticker, price, volume, time) 
+            'INSERT INTO svandis_asset_prices.avg_price_' . $ticker . ' (id, price, volume, time) 
                         VALUES (?, ?, ?, toUnixTimestamp(now()));'
         );
         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
 
         $batch->add($prepared, [
-            'ticker' => $ticker,
-            'price' =>  new \Cassandra\Float($avgPrice),
-            'volume' =>  new \Cassandra\Float($volume),
+            'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
+            'price' =>  new \Cassandra\Float(floatval($avgPrice)),
+            'volume' =>  new \Cassandra\Float(floatval($volume)),
         ]);
 
         $this->cassandra->executeAsync($batch);
+    }
+
+    private function createCassandraAveragePriceTable($ticker, $cassandra)
+    {
+        try {
+            $statement = $cassandra->prepare(
+                'CREATE TABLE if NOT EXISTS svandis_asset_prices.avg_price_' . $ticker . '
+                    ( id uuid, price float, volume float, time timestamp , PRIMARY KEY (id, time ))
+                    with clustering order by (time desc);'
+            );
+            $cassandra->execute($statement);
+        } catch (ExecutionException $exception) {
+            echo $exception->getMessage();
+        }
     }
 
 
