@@ -39,9 +39,12 @@ class PersistLoggerStep extends AbstractStep
             $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
 
             $batch->add($prepared, [
-                'task_type' => $entity->getTaskType(),
-                'user_id' =>  intval($entity->getUserId()),
-                'log' =>  $entity->getLog(),
+                'task_type' => 'test123',
+                'user_id' =>  1,
+                'log' =>  'test123',
+//                'task_type' => $entity->getTaskType(),
+//                'user_id' =>  intval($entity->getUserId()),
+//                'log' =>  $entity->getLog(),
             ]);
 
             $this->cassandra->execute($batch);
