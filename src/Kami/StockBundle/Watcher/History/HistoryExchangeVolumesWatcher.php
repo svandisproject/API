@@ -131,7 +131,10 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
     public function updateVolumes()
     {
         $assets = $this->getAssets();
-        $this->persistHistoryVolumes($this->normalizeRemoteData($this->getRemoteData($assets)));
+        foreach ($assets as $asset) {
+            $this->persistHistoryVolumes($this->normalizeRemoteData($this->getRemoteData($asset)));
+        }
+
     }
 
     /**
@@ -146,12 +149,10 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
      *
      * @return array
      */
-    private function getRemoteData ($assets)
+    private function getRemoteData ($asset)
     {
-
-        $promises = (function () use ($assets) {
-            foreach ($assets as $asset) {
-
+        $promises = (function () use ($asset) {
+//            foreach ($assets as $asset) {
                 if (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
                     $title = $this->wrongTitle[$asset->getTitle()];
                 } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
@@ -161,11 +162,9 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                 } else {
                     $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
                 }
-
                 yield $asset->getTicker() => $this->httpClient->requestAsync('GET', 'https://graphs2.coinmarketcap.com/currencies/'.$title);
-            }
+//            }
         })();
-
         (new EachPromise($promises, [
             'concurrency' => 10,
             'fulfilled' => function (ResponseInterface $response, $index) {
@@ -234,6 +233,7 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         $all = [];
 
         foreach ($remoteData as $ticker => $remoteHistoryData) {
+            dump('Normalize ' . $ticker);
             $all[$ticker] = [];
             $volume = $remoteHistoryData['volume_usd'];
             $price = $remoteHistoryData['price_usd'];
