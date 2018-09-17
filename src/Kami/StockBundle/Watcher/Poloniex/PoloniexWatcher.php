@@ -17,7 +17,7 @@ class PoloniexWatcher extends AbstractExchangeWatcher
      */
     public function updateAssetPrices()
     {
-        $this->redis->flushall();
+        $this->redis->flushall(); die;
         try {
             $body = $this->httpClient->get('https://poloniex.com/public?command=returnTicker')->getBody();
             $data = (array) json_decode($body);
