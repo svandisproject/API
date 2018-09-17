@@ -160,7 +160,8 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
             $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
         }
         $response = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/'.$title);
-        if($response->getStatusCode() == 200) {
+
+        if($response->getStatusCode() != 404) {
             $body = $response->getBody();
 
             $data = json_decode($body, true);
