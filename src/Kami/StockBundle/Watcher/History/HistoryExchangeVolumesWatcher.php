@@ -192,7 +192,7 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         foreach ($historyData as $symbol => $itemData) {
             $ticker = strtolower(str_replace(" ", "_", trim($symbol)));
             if ($this->redis->get('price_'.$symbol) && $this->redis->get('avg_price_' . $ticker)) {
-                dump("Start persist history data for" . $symbol);
+                echo "Start persist history data for" . $symbol. " !!!\n";
                 foreach ($itemData as $value) {
                     if ($value['price'] != null) {
                         if (!$this->redis->get('history_for_'.$ticker)) {
@@ -218,7 +218,7 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                         }
                     }
                 }
-                dump("Done for " . $symbol . " !!!");
+                echo "Done for " . $symbol . " !!!\n";
             }
         }
     }
@@ -233,7 +233,7 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         $all = [];
 
         foreach ($remoteData as $ticker => $remoteHistoryData) {
-            dump('Normalize ' . $ticker);
+            echo "Normalize " . $ticker . "\n";
             $all[$ticker] = [];
             $volume = $remoteHistoryData['volume_usd'];
             $price = $remoteHistoryData['price_usd'];
