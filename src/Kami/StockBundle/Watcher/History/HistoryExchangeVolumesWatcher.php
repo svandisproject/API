@@ -7,6 +7,7 @@ use Cassandra\BatchStatement;
 use Cassandra\Exception\ExecutionException;
 use Cassandra\Timeuuid;
 use Cassandra\Uuid;
+use Exception;
 use Kami\AssetBundle\Entity\Asset;
 
 class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
@@ -130,7 +131,8 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
     {
         $assets = $this->getAssets();
         foreach ($assets as $asset) {
-            $this->persistHistoryVolumes($this->normalizeRemoteData($this->getRemoteData($asset)));
+            $arr = $this->getRemoteData($asset);
+            if(is_array($arr)) $this->persistHistoryVolumes($this->normalizeRemoteData($arr));
         }
 
     }
@@ -159,9 +161,8 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         } else {
             $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
         }
-        $response = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/'.$title);
-
-        if($response->getStatusCode() != 404) {
+        try {
+            $response = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/'.$title);
             $body = $response->getBody();
 
             $data = json_decode($body, true);
@@ -173,6 +174,8 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
             ];
 
             return $this->historyDataAsset;
+        } catch ( Exception $e) {
+
         }
     }
 
