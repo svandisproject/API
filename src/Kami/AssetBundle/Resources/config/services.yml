@@ -7,7 +7,7 @@ parameters:
         - sort_token
         - paginate
         - fill_tradeble_token_step
-        - build_serializer
+        - build_token_serializer
         - serialize
     kami.token_screener.filter_strategy:
         - get_asset_step
@@ -19,7 +19,7 @@ parameters:
         - sort_token
         - paginate
         - fill_tradeble_token_step
-        - build_serializer
+        - build_token_serializer
         - serialize
 
 services:
@@ -52,6 +52,13 @@ services:
             - "@kami.api_core.access_manager"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "filter_token_step" }
+    kami.request_processor.build_token_serializer.step:
+        class: Kami\AssetBundle\RequestProcessor\Step\BuildSerializerStep
+        arguments:
+            - "@kami.api_core.access_manager"
+            - "@jms_serializer"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "build_token_serializer" }
 
     kami.sync_assets.command:
         class: Kami\AssetBundle\Command\SyncAssetsCommand
