@@ -7,9 +7,7 @@ use Cassandra\BatchStatement;
 use Cassandra\Exception\ExecutionException;
 use Cassandra\Timeuuid;
 use Cassandra\Uuid;
-use GuzzleHttp\Promise\EachPromise;
 use Kami\AssetBundle\Entity\Asset;
-use Psr\Http\Message\ResponseInterface;
 
 class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
 {
@@ -145,40 +143,32 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
     }
 
     /**
-     * @param  array $assets
+     * @param  Asset $asset
      *
      * @return array
      */
     private function getRemoteData ($asset)
     {
-        $promises = (function () use ($asset) {
-//            foreach ($assets as $asset) {
-                if (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
-                    $title = $this->wrongTitle[$asset->getTitle()];
-                } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
-                    $title = $this->wrongTitle[$asset->getTicker()];
-                } elseif ($asset->getTitle() == null) {
-                    $title = strtolower($asset->getTicker());
-                } else {
-                    $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
-                }
-                yield $asset->getTicker() => $this->httpClient->requestAsync('GET', 'https://graphs2.coinmarketcap.com/currencies/'.$title);
-//            }
-        })();
-        (new EachPromise($promises, [
-            'concurrency' => 10,
-            'fulfilled' => function (ResponseInterface $response, $index) {
-                $data = json_decode($response->getBody(), true);
-                $this->historyDataAsset[$index] = [
+            $this->historyDataAsset = [];
+        if (array_key_exists($asset->getTitle(), $this->wrongTitle)) {
+            $title = $this->wrongTitle[$asset->getTitle()];
+        } elseif (array_key_exists($asset->getTicker(), $this->wrongTitle)) {
+            $title = $this->wrongTitle[$asset->getTicker()];
+        } elseif ($asset->getTitle() == null) {
+            $title = strtolower($asset->getTicker());
+        } else {
+            $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
+        }
+        $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/'.$title)->getBody();
+
+        $data = json_decode($body, true);
+
+        $this->historyDataAsset[$asset->getTicker()] = [
                     'available_supply' => $data['market_cap_by_available_supply'],
                     'price_usd' => $data['price_usd'],
                     'volume_usd' => $data['volume_usd']
                 ];
-            },
-            'rejected' => function ($reason, $index) {
-                $this->logger->error('Could\'t get history volumes for ' . $index );
-            }
-        ]))->promise()->wait();
+
         return $this->historyDataAsset;
     }
 
@@ -195,7 +185,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                 echo "Start persist history data for" . $symbol. " !!!\n";
                 foreach ($itemData as $value) {
                     if ($value['price'] != null) {
-//                        if (!$this->redis->get('history_for_'.$ticker)) {
                             try {
                                 $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
                                 $prepared = $this->client->prepare(
@@ -215,7 +204,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                             } catch (ExecutionException $exception) {
                                 echo $exception->getMessage();
                             }
-//                        }
                     }
                 }
                 echo "Done for " . $symbol . " !!!\n";
