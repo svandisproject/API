@@ -12,8 +12,8 @@ class CassandraMigration1528729951 extends AbstractMigration
         $statement = $client->prepare(
             'CREATE KEYSPACE IF NOT EXISTS svandis_asset_prices
              WITH REPLICATION = { 
-                  \'class\' : \'SimpleStrategy\', 
-                  \'replication_factor\' : 1 
+                  \'class\' : \'NetworkTopologyStrategy\', 
+                  \'EU_WEST_1\' : 3
                }'
         );
         $client->execute($statement);
