@@ -40,7 +40,7 @@ class PersistLoggerStep extends AbstractStep
 
             $batch->add($prepared, [
                 'task_type' => $entity->getTaskType(),
-                'user_id' =>  $entity->getUserId(),
+                'user_id' =>  intval($entity->getUserId()),
                 'log' =>  $entity->getLog(),
             ]);
 
