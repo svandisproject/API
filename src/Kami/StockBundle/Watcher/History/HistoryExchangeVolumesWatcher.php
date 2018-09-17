@@ -195,7 +195,7 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                 echo "Start persist history data for" . $symbol. " !!!\n";
                 foreach ($itemData as $value) {
                     if ($value['price'] != null) {
-                        if (!$this->redis->get('history_for_'.$ticker)) {
+//                        if (!$this->redis->get('history_for_'.$ticker)) {
                             try {
                                 $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
                                 $prepared = $this->client->prepare(
@@ -215,7 +215,7 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                             } catch (ExecutionException $exception) {
                                 echo $exception->getMessage();
                             }
-                        }
+//                        }
                     }
                 }
                 echo "Done for " . $symbol . " !!!\n";
