@@ -52,6 +52,7 @@ services:
             - "@kami.api_core.access_manager"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "filter_token_step" }
+
     kami.request_processor.build_token_serializer.step:
         class: Kami\AssetBundle\RequestProcessor\Step\BuildSerializerStep
         arguments:
