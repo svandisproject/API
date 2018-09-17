@@ -159,17 +159,20 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         } else {
             $title = str_replace(' ', '-', strtolower(trim($asset->getTitle())));
         }
-        $body = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/'.$title)->getBody();
+        $response = $this->httpClient->get('https://graphs2.coinmarketcap.com/currencies/'.$title);
+        if($response->getStatusCode() == 200) {
+            $body = $response->getBody();
 
-        $data = json_decode($body, true);
+            $data = json_decode($body, true);
 
-        $this->historyDataAsset[$asset->getTicker()] = [
-                    'available_supply' => $data['market_cap_by_available_supply'],
-                    'price_usd' => $data['price_usd'],
-                    'volume_usd' => $data['volume_usd']
-                ];
+            $this->historyDataAsset[$asset->getTicker()] = [
+                'available_supply' => $data['market_cap_by_available_supply'],
+                'price_usd' => $data['price_usd'],
+                'volume_usd' => $data['volume_usd']
+            ];
 
-        return $this->historyDataAsset;
+            return $this->historyDataAsset;
+        }
     }
 
     /**
