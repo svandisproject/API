@@ -5,8 +5,52 @@ parameters:
     kami_worker.socket_server_authenticator.class: Kami\WorkerBundle\Security\SocketServerAuthenticator
     kami_worker.scheduler.class:                   Kami\WorkerBundle\Scheduler\Scheduler
     kami_worker.post_creation_listener.class:      Kami\WorkerBundle\Listener\PostCreationListener
+    kami.logger.creation_strategy:
+            - get_reflection_from_request
+            - validate_resource_access
+            - get_entity_from_reflection
+            - build_create_form
+            - handle_request
+            - validate_form
+            - persist_log
+            - build_serializer
+            - serialize
+    kami.logger.index_strategy:
+            - get_reflection_from_request
+            - validate_resource_access
+            - select_data_sort_logger
+            - build_serializer
+            - serialize
+    kami.logger.filter_strategy:
+            - get_reflection_from_request
+            - validate_resource_access
+            - validate_filters
+            - filter_sort_paginate_logger
+            - build_serializer
+            - serialize
 
 services:
+    kami.logger.creation_strategy:
+        class: Kami\WorkerBundle\RequestProcessor\PersistLoggerStep
+        arguments:
+            - "@m6web_cassandra.client.default"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "persist_log" }
+
+    kami.logger.filter_strategy:
+        class: Kami\WorkerBundle\RequestProcessor\FilterSortPaginateLoggerStep
+        arguments:
+            - "@m6web_cassandra.client.default"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "filter_sort_paginate_logger" }
+
+    kami.logger.index_strategy:
+        class: Kami\WorkerBundle\RequestProcessor\SelectDataSortLoggerStep
+        arguments:
+            - "@m6web_cassandra.client.default"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "select_data_sort_logger" }
+
     kami_worker.user_provider:
         class: "%kami_worker.user_provider.class%"
         arguments:
