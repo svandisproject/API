@@ -47,10 +47,10 @@ monolog:
 m6web_cassandra:
     clients:
         default:
-            contact_endpoints: [34.247.150.247, 34.254.25.212, 34.247.192.31]
+            contact_endpoints: [18.202.128.219, 18.202.139.34, 34.253.68.126]
             credentials:
-                username: "%env(IC_USER)%"
-                password: "%env(IC_PASSWORD)%"
+                username: "%env(INSTACLUSTR_BROWN_USER)%"
+                password: "%env(INSTACLUSTR_BROWN_PASSWORD)%"
 
 # Kami IcoBench Configuration
 kami_ico_bench:
