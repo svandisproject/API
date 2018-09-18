@@ -189,13 +189,13 @@ class VolumesWatcher
     private function storeAvgPrice($ticker, $avgPrice, $volume)
     {
         $prepared = $this->cassandra->prepare(
-            'INSERT INTO svandis_asset_prices.avg_price_' . $ticker . ' (id, price, volume, time) 
+            'INSERT INTO svandis_asset_prices.avg_price_' . $ticker . ' (ticker, price, volume, time) 
                         VALUES (?, ?, ?, toUnixTimestamp(now()));'
         );
         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
 
         $batch->add($prepared, [
-            'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
+            'ticker' => $ticker,
             'price' =>  new \Cassandra\Float(floatval($avgPrice)),
             'volume' =>  new \Cassandra\Float(floatval($volume)),
         ]);
@@ -208,7 +208,7 @@ class VolumesWatcher
         try {
             $statement = $cassandra->prepare(
                 'CREATE TABLE if NOT EXISTS svandis_asset_prices.avg_price_' . $ticker . '
-                    ( id uuid, price float, volume float, time timestamp , PRIMARY KEY (id, time ))
+                    ( ticker text, price float, volume float, time timestamp , PRIMARY KEY (ticker, time ))
                     with clustering order by (time desc);'
             );
             $cassandra->execute($statement);

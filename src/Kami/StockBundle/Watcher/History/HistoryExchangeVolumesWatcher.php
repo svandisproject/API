@@ -131,8 +131,14 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
     {
         $assets = $this->getAssets();
         foreach ($assets as $asset) {
-            $arr = $this->getRemoteData($asset);
-            if(is_array($arr)) $this->persistHistoryVolumes($this->normalizeRemoteData($arr));
+            $symbol = $asset->getTicker();
+            $ticker = strtolower(str_replace(" ", "_", trim($symbol)));
+            if ($this->redis->get('price_'.$symbol) && $this->redis->get('avg_price_' . $ticker)) {
+                $arr = $this->getRemoteData($asset);
+                if (is_array($arr)) {
+                    $this->persistHistoryVolumes($this->normalizeRemoteData($arr));
+                }
+            }
         }
 
     }
@@ -188,20 +194,19 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
     {
         foreach ($historyData as $symbol => $itemData) {
             $ticker = strtolower(str_replace(" ", "_", trim($symbol)));
-            if ($this->redis->get('price_'.$symbol) && $this->redis->get('avg_price_' . $ticker)) {
                 echo "Start persist history data for" . $symbol. " !!!\n";
                 foreach ($itemData as $value) {
                     if ($value['price'] != null) {
                             try {
                                 $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
                                 $prepared = $this->client->prepare(
-                                    'INSERT INTO svandis_asset_prices.avg_price_'.$ticker.' (id, price, volume, time) 
+                                    'INSERT INTO svandis_asset_prices.avg_price_'.$ticker.' (ticker, price, volume, time) 
                                     VALUES (?, ?, ?, toTimestamp('.new Timeuuid(intval($value['time'])).'));'
                                 );
                                 $batch->add(
                                     $prepared,
                                     [
-                                        'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
+                                        'ticker' => $ticker,
                                         'price' => new \Cassandra\Float(floatval($value['price'])),
                                         'volume' => new \Cassandra\Float(floatval($value['volume']))
                                     ]
@@ -214,7 +219,6 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
                     }
                 }
                 echo "Done for " . $symbol . " !!!\n";
-            }
         }
     }
 
@@ -230,14 +234,14 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
         foreach ($remoteData as $ticker => $remoteHistoryData) {
             echo "Normalize " . $ticker . "\n";
             $all[$ticker] = [];
-            $volume = $remoteHistoryData['volume_usd'];
-            $price = $remoteHistoryData['price_usd'];
-            foreach ($price as $data) {
-                $historyTimePrice = $data[0];
-                $historyPrice = $data[1];
-                foreach ($volume as $mata) {
-                    $historyTimeVolume = $mata[0];
-                    $historyVolume = $mata[1];
+            $remoteVolume = $remoteHistoryData['volume_usd'];
+            $remotePrice = $remoteHistoryData['price_usd'];
+            foreach ($remotePrice as $price) {
+                $historyTimePrice = $price[0];
+                $historyPrice = $price[1];
+                foreach ($remoteVolume as $volume) {
+                    $historyTimeVolume = $volume[0];
+                    $historyVolume = $volume[1];
                     if ($historyTimePrice == $historyTimeVolume) {
                         array_push(
                             $all[$ticker],

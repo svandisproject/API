@@ -4,6 +4,7 @@ namespace Kami\StockBundle\ChangesHelper;
 
 use Cassandra\SimpleStatement;
 use Doctrine\ORM\EntityManager;
+use function dump;
 use Kami\AssetBundle\Entity\Asset;
 use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
 
@@ -72,8 +73,8 @@ class ChangesHelper
         $preparedTicker = strtolower(str_replace(" ", "_", trim($ticker)));
         $cassandra = $this->client;
         $query = "SELECT volume, price, max(time) ".
-            "from svandis_asset_prices.avg_price_" . $preparedTicker . " WHERE time < '$to'".
-            " ALLOW FILTERING";
+            "from svandis_asset_prices.avg_price_" . $preparedTicker . " WHERE ticker = '$preparedTicker'" .
+            " AND time < '$to' ALLOW FILTERING";
         $statement = new SimpleStatement($query);
         $result = $cassandra->execute($statement);
         if ($result[0]['price'] != null) {
