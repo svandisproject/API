@@ -6,7 +6,6 @@ namespace Kami\StockBundle\Watcher;
 use Cassandra\BatchStatement;
 use Cassandra\Exception\ExecutionException;
 use Cassandra\SimpleStatement;
-use Cassandra\Uuid;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
@@ -148,7 +147,7 @@ class VolumesWatcher
                     $thisYear = intval(date("Y"));
                     foreach ($data as $exhange => $volume){
                         $query = "SELECT id, exchange, price, year, max(time) FROM svandis_asset_prices.price_" .
-                            $preparedTicker . " WHERE year='$thisYear' AND exchange = '$exhange' ALLOW FILTERING";
+                            $preparedTicker . " WHERE year=" . $thisYear . " AND exchange = '$exhange' ALLOW FILTERING";
 
                         $statement = new SimpleStatement($query);
                         $result = $this->cassandra->executeAsync($statement);
