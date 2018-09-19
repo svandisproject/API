@@ -8,6 +8,7 @@ use Cassandra\Exception\ExecutionException;
 use Cassandra\SimpleStatement;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
+use Kami\AssetBundle\Model\TradableToken;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
 use Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher;
@@ -134,14 +135,17 @@ class VolumesWatcher
      */
     private function setAssetsPrices()
     {
+//        dump(1);
         $assets = $this->em->getRepository(Asset::class)->findAll();
         foreach ($assets as $asset){
-
+//            dump(2);
             $ticker = $asset->getTicker();
             $preparedTicker = strtolower(str_replace(" ", "_", trim($ticker)));
             if($data = $this->redis->get($ticker) )
             {
+//                dump(3);
                 if ($this->redis->get('price_' . $ticker)) {
+//                    dump(4);
                     $data = json_decode($data, true);
                     $soldAsset = 0;
                     $thisYear = intval(date("Y"));
@@ -158,6 +162,7 @@ class VolumesWatcher
                     }
 
                     if($soldAsset != 0){
+//                        dump(5);
                         $avgPrice = array_sum($data) / $soldAsset;
 
                         if(!$this->redis->get('avg_price_' . $preparedTicker)) {
@@ -169,6 +174,7 @@ class VolumesWatcher
                         $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
                         $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
                         $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
+//                        $asset = $this->assetSetTradableToken($asset);
                         $this->em->persist($asset);
                         $this->push($asset, $avgPrice, array_sum($data));
                     }
@@ -177,6 +183,63 @@ class VolumesWatcher
         }
         $this->em->flush();
 
+    }
+
+    /**
+     * @param Asset $asset
+     * @return Asset
+     */
+    private function assetSetTradableToken(Asset $asset)
+    {
+        $token = $asset->getTradableToken() ?: new TradableToken();
+        if($marketCap = $asset->getMarketCap()){
+            if($result = $marketCap->getMarketCap()){
+                $token->setMarketCap($result);
+            }
+        }
+
+        $token->setPrice($asset->getPrice());
+        $token->setTicker($asset->getTicker());
+        $token->setTitle($asset->getTitle());
+        dump(6);
+        if(!$volumes = $asset->getVolumes()){
+            dump($volumes);die;
+        }
+//        $token->setVolume();
+//        $token->setAge();
+//        $token->setAlgorithm();
+//        $token->setAvgVolumeWeeks52();
+//        $token->setCirculatingSupply();
+//        $token->setDiscord();
+//        $token->setFacebook();
+//        $token->setIcoAmount();
+//        $token->setInitialPrice();
+//        $token->setVolumeDay();
+//        $token->setType();
+//        $token->setTwitterFollowers();
+//        $token->setTwitter();
+//        $token->setTelegrammFollowers();
+//        $token->setTelegramm();
+//        $token->setSteemit();
+//        $token->setSector();
+//        $token->setReturnOnIco();
+//        $token->setRedditSubscriber();
+//        $token->setReddit();
+//        $token->setPriceChangeYear();
+//        $token->setPriceChangeWeek();
+//        $token->setPriceChangeSixMonth();
+//        $token->setPriceChangePercent();
+//        $token->setPriceChangeMonth();
+//        $token->setPriceChangeHour();
+//        $token->setPriceChangeDay();
+//        $token->setMediumFollowers();
+//        $token->setMedium();
+//        $token->setMaxSupply();
+//        $token->setLastPrice();
+
+        $asset->setTradableToken($token);
+
+        return $asset;
     }
 
     /**

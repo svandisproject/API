@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Kami\AssetBundle\Model;
+namespace Kami\AssetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
 
 /**
  * Class TradableToken
- * @package Kami\AssetBundle\Model
+ *
  * @ORM\Entity(repositoryClass="Kami\AssetBundle\Repository\TradableTokenRepository")
  * @ORM\Table(name="tradable_token")
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})

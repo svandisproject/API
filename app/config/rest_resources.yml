@@ -22,15 +22,13 @@ kami_api_core:
     - { name: modd-signals, entity: Kami\IcoBundle\Entity\MoodSignal}
     - { name: person, entity: Kami\IcoBundle\Entity\Person}
     - { name: sale-stages, entity: Kami\IcoBundle\Entity\SaleStage}
-
-    - name: token
-      entity: Kami\AssetBundle\Model\TradableToken
-      strategies:
-          index: "kami.token_screener.index_strategy"
-          filter: "kami.token_screener.filter_strategy"
-          create: "kami.common.not_found_strategy"
-          update: "kami.common.not_found_strategy"
-          delete: "kami.common.not_found_strategy"
+    - { name: token, entity: Kami\AssetBundle\Model\TradableToken}
+#      strategies:
+#          index: "kami.token_screener.index_strategy"
+#          filter: "kami.token_screener.filter_strategy"
+#          create: "kami.common.not_found_strategy"
+#          update: "kami.common.not_found_strategy"
+#          delete: "kami.common.not_found_strategy"
 
     - name: log
       entity: Kami\WorkerBundle\Logger\Log
