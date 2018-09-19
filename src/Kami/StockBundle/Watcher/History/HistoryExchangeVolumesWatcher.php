@@ -5,8 +5,8 @@ namespace Kami\StockBundle\Watcher\History;
 
 use Cassandra\BatchStatement;
 use Cassandra\Exception\ExecutionException;
+use Cassandra\SimpleStatement;
 use Cassandra\Timeuuid;
-use Cassandra\Uuid;
 use Exception;
 use Kami\AssetBundle\Entity\Asset;
 
@@ -134,10 +134,14 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
             $symbol = $asset->getTicker();
             $ticker = strtolower(str_replace(" ", "_", trim($symbol)));
             if ($this->redis->get('price_'.$symbol) && $this->redis->get('avg_price_' . $ticker)) {
-                $arr = $this->getRemoteData($asset);
-                if (is_array($arr)) {
-                    $this->persistHistoryVolumes($this->normalizeRemoteData($arr));
-                }
+               $countRows = $this->getCountRows($ticker);
+
+               if ($countRows < 100 ) {
+                   $arr = $this->getRemoteData($asset);
+                   if (is_array($arr)) {
+                       $this->persistHistoryVolumes($this->normalizeRemoteData($arr));
+                   }
+               }
             }
         }
 
@@ -252,6 +256,15 @@ class HistoryExchangeVolumesWatcher extends AbstractHistoryVolumesWatcher
             }
         }
         return $all;
+    }
+
+    private function getCountRows($ticker)
+    {
+        $query = "SELECT count(*) FROM svandis_asset_prices.avg_price_" . $ticker . " WHERE ticker = '$ticker'";
+        $statement = new SimpleStatement($query);
+        $result = $this->client->execute($statement);
+
+        return intval($result[0]['count']->value());
     }
 
 }

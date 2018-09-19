@@ -73,6 +73,5 @@ class Watcher implements StockWatcherInterface
         $this->bittrexWatcher->updateAssetPrices();
 
         $this->coinMarketWatcher->sync();
-
     }
 }
