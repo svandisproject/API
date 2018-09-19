@@ -4,7 +4,7 @@ namespace Kami\AssetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Kami\AssetBundle\Model\TradableToken;
+use Kami\AssetBundle\Entity\TradableToken;
 use Kami\IcoBundle\Entity\Ico;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
@@ -103,7 +103,7 @@ class Asset
     private $convertable = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Volume", mappedBy="asset")
+     * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Volume", mappedBy="asset", cascade={"persist"})
      */
     private $volumes;
 

@@ -18,6 +18,35 @@ use Kami\ApiCoreBundle\Annotation as Api;
 class TradableToken
 {
     /**
+     * @var float
+     *
+     * @ORM\Column(name="change", type="decimal", precision=25, scale=15, nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     */
+    private $change;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="weekly_change", type="decimal", precision=25, scale=15, nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     */
+    private $weeklyChange;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="year_to_day_change", type="decimal", precision=25, scale=15, nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
+     */
+    private $yearToDayChange;
+    /**
      * @var int
      *
      * @ORM\Column(name="id", type="integer")
@@ -48,7 +77,7 @@ class TradableToken
     /**
      * @var string
      *
-     * @ORM\Column(name="title", type="string", length=25, nullable=true)
+     * @ORM\Column(name="title", type="string", length=255, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
@@ -228,7 +257,7 @@ class TradableToken
     /**
      * @var integer
      *
-     * @ORM\Column(name="circulating_supply", type="integer", nullable=true)
+     * @ORM\Column(name="circulating_supply", type="bigint", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
@@ -238,7 +267,7 @@ class TradableToken
     /**
      * @var integer
      *
-     * @ORM\Column(name="max_supply", type="integer", nullable=true)
+     * @ORM\Column(name="max_supply", type="bigint", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
@@ -967,5 +996,53 @@ class TradableToken
     public function getId(): int
     {
         return $this->id;
+    }
+
+    /**
+     * @return float
+     */
+    public function getChange(): float
+    {
+        return $this->change;
+    }
+
+    /**
+     * @param float $change
+     */
+    public function setChange(float $change): void
+    {
+        $this->change = $change;
+    }
+
+    /**
+     * @return float
+     */
+    public function getWeeklyChange(): float
+    {
+        return $this->weeklyChange;
+    }
+
+    /**
+     * @param float $weeklyChange
+     */
+    public function setWeeklyChange(float $weeklyChange): void
+    {
+        $this->weeklyChange = $weeklyChange;
+    }
+
+    /**
+     * @return float
+     */
+    public function getYearToDayChange(): float
+    {
+        return $this->yearToDayChange;
+    }
+
+    /**
+     * @param float $yearToDayChange
+     */
+    public function setYearToDayChange(float $yearToDayChange): void
+    {
+        $this->yearToDayChange = $yearToDayChange;
     }
 }
