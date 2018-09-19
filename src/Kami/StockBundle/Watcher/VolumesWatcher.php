@@ -148,7 +148,6 @@ class VolumesWatcher
                     foreach ($data as $exhange => $volume){
                         $query = "SELECT id, exchange, price, year, max(time) FROM svandis_asset_prices.price_" .
                             $preparedTicker . " WHERE year=" . $thisYear . " AND exchange = '$exhange' ALLOW FILTERING";
-
                         $statement = new SimpleStatement($query);
                         $result = $this->cassandra->executeAsync($statement);
                         foreach ($result->get() as $row) {
