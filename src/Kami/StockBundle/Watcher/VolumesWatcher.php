@@ -8,6 +8,7 @@ use Cassandra\Exception\ExecutionException;
 use Cassandra\SimpleStatement;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
+use Kami\AssetBundle\Entity\TradableToken;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
 use Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher;
@@ -136,7 +137,6 @@ class VolumesWatcher
     {
         $assets = $this->em->getRepository(Asset::class)->findAll();
         foreach ($assets as $asset){
-
             $ticker = $asset->getTicker();
             $preparedTicker = strtolower(str_replace(" ", "_", trim($ticker)));
             if($data = $this->redis->get($ticker) )
@@ -169,6 +169,7 @@ class VolumesWatcher
                         $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
                         $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
                         $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
+                        $asset = $this->assetSetTradableToken($asset);
                         $this->em->persist($asset);
                         $this->push($asset, $avgPrice, array_sum($data));
                     }
@@ -177,6 +178,73 @@ class VolumesWatcher
         }
         $this->em->flush();
 
+    }
+
+    /**
+     * @param Asset $asset
+     * @return Asset
+     */
+    private function assetSetTradableToken(Asset $asset)
+    {
+        $token = $asset->getTradableToken() ?: new TradableToken();
+
+        $token->setPrice($asset->getPrice());
+        $token->setTicker($asset->getTicker());
+        $token->setTitle(substr($asset->getTitle(), 0, 20));
+        $token->setType($asset->getTokenType());
+        $token->setChange($asset->getChange());
+        $token->setWeeklyChange($asset->getWeeklyChange());
+        $token->setYearToDayChange($asset->getYearToDayChange());
+
+        if($marketCap = $asset->getMarketCap()){
+            if($mCap = $marketCap->getMarketCap()){
+                $token->setMarketCap($mCap);
+            }
+            if($vol24 = $marketCap->getVolume24()){
+                $token->setVolume($vol24);//???
+            }
+            if($circSupply = $marketCap->getCirculatingSupply()){
+                $token->setCirculatingSupply($circSupply);
+            }
+        }
+
+        if($ico = $asset->getIco()){
+            if($finance = $ico->getFinance()){
+                if($raised = $finance->getRaisedUsd()){
+                    $token->setIcoAmount($raised);//???
+                }
+                if($totalSupply = $finance->getTotalSupply()){
+                    $token->setMaxSupply($totalSupply);//???
+                }
+            }
+        }
+//        $token->setAge();
+//        $token->setAlgorithm();
+//        $token->setAvgVolumeWeeks52();
+//        $token->setDiscord();
+//        $token->setFacebook();
+//        $token->setMediumFollowers();
+//        $token->setMedium();
+//        $token->setTwitterFollowers();
+//        $token->setTwitter();
+//        $token->setTelegrammFollowers();
+//        $token->setTelegramm();
+//        $token->setSteemit();
+//        $token->setRedditSubscriber();
+//        $token->setReddit();
+//        $token->setInitialPrice();
+//        $token->setLastPrice();
+//        $token->setVolumeDay();
+//        $token->setSector();//Industry? string?
+//        $token->setReturnOnIco();
+//        $token->setPriceChangeSixMonth();
+//        $token->setPriceChangePercent();
+//        $token->setPriceChangeMonth();
+//        $token->setPriceChangeHour();
+//        $token->setPriceChangeDay();
+        $asset->setTradableToken($token);
+
+        return $asset;
     }
 
     /**

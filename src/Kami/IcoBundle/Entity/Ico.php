@@ -34,7 +34,6 @@ class Ico
     /**
      * @ORM\Column(name="remote_id", type="integer", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
