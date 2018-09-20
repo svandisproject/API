@@ -147,7 +147,7 @@ class TradableToken
     /**
      * @var float
      *
-     * @ORM\Column(name="market_cap", type="decimal", precision=25, scale=15, nullable=true)
+     * @ORM\Column(name="market_cap", type="decimal", precision=35, scale=15, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
