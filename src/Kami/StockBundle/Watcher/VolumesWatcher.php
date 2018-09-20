@@ -190,11 +190,11 @@ class VolumesWatcher
 
         $token->setPrice($asset->getPrice());
         $token->setTicker($asset->getTicker());
-        $token->setTitle(substr($asset->getTitle(), 0, 20));
+        $token->setTitle($asset->getTitle());
         $token->setType($asset->getTokenType());
-        $token->setChange($asset->getChange());
-        $token->setWeeklyChange($asset->getWeeklyChange());
-        $token->setYearToDayChange($asset->getYearToDayChange());
+        $token->setChange(round($asset->getChange(), 5));
+        $token->setWeeklyChange(round($asset->getWeeklyChange(), 5));
+        $token->setYearToDayChange(round($asset->getYearToDayChange(), 5));
 
         if($marketCap = $asset->getMarketCap()){
             if($mCap = $marketCap->getMarketCap()){
