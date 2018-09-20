@@ -117,13 +117,13 @@ class VolumesWatcher
      */
     public function getVolumes()
     {
-//        $this->bittrexVolumeWatcher->updateVolumes();
-//
-//        $this->binanceVolumeWatcher->updateVolumes();
-//
-//        $this->bitfinexVolumeWatcher->updateVolumes();
-//
-//        $this->poloniexVolumeWatcher->updateVolumes();
+        $this->bittrexVolumeWatcher->updateVolumes();
+
+        $this->binanceVolumeWatcher->updateVolumes();
+
+        $this->bitfinexVolumeWatcher->updateVolumes();
+
+        $this->poloniexVolumeWatcher->updateVolumes();
 
         $this->setAssetsPrices();
     }
