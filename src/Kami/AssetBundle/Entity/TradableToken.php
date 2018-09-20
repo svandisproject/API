@@ -217,16 +217,6 @@ class TradableToken
     /**
      * @var float
      *
-     * @ORM\Column(name="price_change_week", type="decimal", precision=25, scale=15, nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
-     */
-    private $priceChangeWeek;
-
-    /**
-     * @var float
-     *
      * @ORM\Column(name="price_change_month", type="decimal", precision=25, scale=15, nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
@@ -243,16 +233,6 @@ class TradableToken
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      */
     private $priceChangeSixMonth;
-
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="price_change_year", type="decimal", precision=25, scale=15, nullable=true)
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_WORKER"})
-     */
-    private $priceChangeYear;
 
     /**
      * @var integer
@@ -716,38 +696,6 @@ class TradableToken
     public function setPriceChangeSixMonth($priceChangeSixMonth): void
     {
         $this->priceChangeSixMonth = $priceChangeSixMonth;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getPriceChangeWeek(): ?float
-    {
-        return $this->priceChangeWeek;
-    }
-
-    /**
-     * @param float|null $priceChangeWeek
-     */
-    public function setPriceChangeWeek($priceChangeWeek): void
-    {
-        $this->priceChangeWeek = $priceChangeWeek;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getPriceChangeYear(): ?float
-    {
-        return $this->priceChangeYear;
-    }
-
-    /**
-     * @param float|null $priceChangeYear
-     */
-    public function setPriceChangeYear($priceChangeYear): void
-    {
-        $this->priceChangeYear = $priceChangeYear;
     }
 
     /**

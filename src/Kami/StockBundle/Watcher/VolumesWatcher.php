@@ -187,6 +187,15 @@ class VolumesWatcher
     private function assetSetTradableToken(Asset $asset)
     {
         $token = $asset->getTradableToken() ?: new TradableToken();
+
+        $token->setPrice($asset->getPrice());
+        $token->setTicker($asset->getTicker());
+        $token->setTitle(substr($asset->getTitle(), 0, 20));
+        $token->setType($asset->getTokenType());
+        $token->setChange($asset->getChange());
+        $token->setWeeklyChange($asset->getWeeklyChange());
+        $token->setYearToDayChange($asset->getYearToDayChange());
+
         if($marketCap = $asset->getMarketCap()){
             if($mCap = $marketCap->getMarketCap()){
                 $token->setMarketCap($mCap);
@@ -199,14 +208,19 @@ class VolumesWatcher
             }
         }
 
-        $token->setPrice($asset->getPrice());
-        $token->setTicker($asset->getTicker());
-        $token->setTitle(substr($asset->getTitle(), 0, 20));
-
+        if($ico = $asset->getIco()){
+            if($finance = $ico->getFinance()){
+                if($raised = $finance->getRaisedUsd()){
+                    $token->setIcoAmount($raised);//???
+                }
+                if($totalSupply = $finance->getTotalSupply()){
+                    $token->setMaxSupply($totalSupply);//???
+                }
+            }
+        }
 //        $token->setAge();
 //        $token->setAlgorithm();
 //        $token->setAvgVolumeWeeks52();
-
 //        $token->setDiscord();
 //        $token->setFacebook();
 //        $token->setMediumFollowers();
@@ -218,38 +232,16 @@ class VolumesWatcher
 //        $token->setSteemit();
 //        $token->setRedditSubscriber();
 //        $token->setReddit();
-
-        if($ico = $asset->getIco()){
-            if($finance = $ico->getFinance()){
-                if($raised = $finance->getRaisedUsd()){
-                    $token->setIcoAmount($raised);//???
-                }
-                if($totalSupply = $finance->getTotalSupply()){
-                    $token->setMaxSupply($totalSupply);//???
-                }
-            }
-        }
-
 //        $token->setInitialPrice();
 //        $token->setLastPrice();
 //        $token->setVolumeDay();
-        $token->setType($asset->getTokenType());
 //        $token->setSector();//Industry? string?
 //        $token->setReturnOnIco();
-
-        $token->setPriceChangeYear($asset->getYearToDayChange());
-        $token->setPriceChangeWeek($asset->getWeeklyChange());
 //        $token->setPriceChangeSixMonth();
 //        $token->setPriceChangePercent();
 //        $token->setPriceChangeMonth();
 //        $token->setPriceChangeHour();
 //        $token->setPriceChangeDay();
-
-
-
-        $token->setChange($asset->getChange());
-        $token->setWeeklyChange($asset->getWeeklyChange());
-        $token->setYearToDayChange($asset->getYearToDayChange());
         $asset->setTradableToken($token);
 
         return $asset;
