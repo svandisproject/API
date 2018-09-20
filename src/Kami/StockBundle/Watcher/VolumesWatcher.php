@@ -117,13 +117,13 @@ class VolumesWatcher
      */
     public function getVolumes()
     {
-        $this->bittrexVolumeWatcher->updateVolumes();
-
-        $this->binanceVolumeWatcher->updateVolumes();
-
-        $this->bitfinexVolumeWatcher->updateVolumes();
-
-        $this->poloniexVolumeWatcher->updateVolumes();
+//        $this->bittrexVolumeWatcher->updateVolumes();
+//
+//        $this->binanceVolumeWatcher->updateVolumes();
+//
+//        $this->bitfinexVolumeWatcher->updateVolumes();
+//
+//        $this->poloniexVolumeWatcher->updateVolumes();
 
         $this->setAssetsPrices();
     }
@@ -188,7 +188,7 @@ class VolumesWatcher
     {
         $token = $asset->getTradableToken() ?: new TradableToken();
 
-        $token->setPrice($asset->getPrice());
+        $token->setPrice(round($asset->getPrice(), 5));
         $token->setTicker($asset->getTicker());
         $token->setTitle($asset->getTitle());
         $token->setType($asset->getTokenType());
