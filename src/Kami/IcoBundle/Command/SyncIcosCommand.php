@@ -75,7 +75,7 @@ class SyncIcosCommand extends Command
     {
         while (!$this->emergency) {
             $hour = date('H');
-//            if($hour == 23){
+            if($hour == 23){
                 $totalPages =  $this->icoBenchClient->getIcos('all', [], false)['pages'];
 
                 for($i = 0; $i < $totalPages; $i++) {
@@ -107,7 +107,7 @@ class SyncIcosCommand extends Command
                 }
 
                 $output->writeln('Successfully updated ICOs');
-//            } else sleep(3600);
+            } else sleep(3600);
         }
     }
 
