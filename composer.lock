@@ -2582,7 +2582,11 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
+<<<<<<< HEAD
             "time": "2018-09-20 13:01:21"
+=======
+            "time": "2018-09-20T13:01:21+00:00"
+>>>>>>> 3df7f2f6c4fca3fd6f4432f7c8d38b4f9534e911
         },
         {
             "name": "kami/icobench-bundle",
