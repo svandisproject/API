@@ -144,10 +144,9 @@ class VolumesWatcher
                 if ($this->redis->get('price_' . $ticker)) {
                     $data = json_decode($data, true);
                     $soldAsset = 0;
-                    $thisYear = intval(date("Y"));
                     foreach ($data as $exhange => $volume){
-                        $query = "SELECT id, exchange, price, year, max(time) FROM svandis_asset_prices.price_" .
-                            $preparedTicker . " WHERE year=" . $thisYear . " AND exchange = '$exhange' ALLOW FILTERING";
+                        $query = "SELECT  exchange, price, time FROM svandis_asset_prices.price_" .
+                            $preparedTicker . " WHERE exchange = '$exhange' ORDER BY time DESC LIMIT 1 ALLOW FILTERING";
                         $statement = new SimpleStatement($query);
                         $result = $this->cassandra->executeAsync($statement);
                         foreach ($result->get() as $row) {

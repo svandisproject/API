@@ -97,13 +97,11 @@ abstract class AbstractExchangeWatcher
         }
 
         $prepared = $cassandra->prepare(
-            'INSERT INTO svandis_asset_prices.price_' . $preparedTicker . ' (id, year, price, exchange, time) 
-              VALUES (?, ?, ?, ?, toUnixTimestamp(now()));'
+            'INSERT INTO svandis_asset_prices.price_' . $preparedTicker . ' (price, exchange, time) 
+              VALUES (?, ?, toUnixTimestamp(now()));'
         );
         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
         $batch->add($prepared, [
-            'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
-            'year' => intval(date("Y")),
             'price' =>  new \Cassandra\Float($pointDbValues['price']),
             'exchange' =>  $exchange,
         ]);
@@ -134,7 +132,8 @@ abstract class AbstractExchangeWatcher
         try {
             $statement = $cassandra->prepare(
                 'CREATE TABLE if NOT EXISTS svandis_asset_prices.price_' . $ticker . '
-                    ( id uuid, exchange text, price float, year int, time timestamp , PRIMARY KEY ((id, year), exchange) );'
+                    ( exchange text, price float, time timestamp , PRIMARY KEY (exchange, time)) 
+                    WITH CLUSTERING ORDER BY (time DESC);'
             );
             $cassandra->execute($statement);
         } catch (ExecutionException $exception) {
