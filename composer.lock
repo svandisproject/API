@@ -2582,11 +2582,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-<<<<<<< HEAD
             "time": "2018-09-20 13:01:21"
-=======
-            "time": "2018-09-20T13:01:21+00:00"
->>>>>>> 3df7f2f6c4fca3fd6f4432f7c8d38b4f9534e911
         },
         {
             "name": "kami/icobench-bundle",
@@ -2665,11 +2661,7 @@
                 }
             ],
             "description": "ICOBench API Client",
-<<<<<<< HEAD
-            "time": "2018-07-03 12:18:57"
-=======
-            "time": "2018-09-21T12:30:32+00:00"
->>>>>>> da967a294c6aef5d5efacd3f9c2d0cb84b2a79de
+            "time": "2018-09-21 12:30:32"
         },
         {
             "name": "kami/request-processor",
