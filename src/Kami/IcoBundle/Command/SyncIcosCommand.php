@@ -5,6 +5,7 @@ namespace Kami\IcoBundle\Command;
 
 
 use Doctrine\ORM\EntityManager;
+use GuzzleHttp\Promise\EachPromise;
 use Kami\AssetBundle\Entity\Asset;
 use Kami\IcoBench\Client;
 use Kami\IcoBundle\Entity\Ico;
@@ -74,27 +75,39 @@ class SyncIcosCommand extends Command
     {
         while (!$this->emergency) {
             $hour = date('H');
-            if($hour == 23){
-                $totalPages =  $this->icoBenchClient->getIcos()['pages'];
+//            if($hour == 23){
+                $totalPages =  $this->icoBenchClient->getIcos('all', [], false)['pages'];
 
                 for($i = 0; $i < $totalPages; $i++) {
                     $output->writeln('Processing Page: '.$i.' from '.$totalPages);
 
                     $response = $this->icoBenchClient->getIcos('all', ['page'=> $i]);
                     foreach ($response['results'] as $result) {
-                        $remoteData = $this->icoBenchClient->getIco($result['id']);
-                        $ico = $this->findOrCreateIco($result['id']);
-                        $asset = $this->findOrCreateAsset($remoteData['finance']['token']);
-                        $ico = $this->icoBenchNormalizer->normalize($ico, $remoteData, $asset);
+                        $promises = (function () use ($result) {
+                            yield $this->icoBenchClient->getIco($result['id']);
+                        })();
 
-                        $this->manager->persist($ico);
-                        $this->manager->flush();
-                        $output->writeln('Successfully updated ICO '.$ico->getTitle());
+                        (new EachPromise($promises, [
+                            'concurrency' => 10,
+                            'fulfilled' => function ($res) use ($result, $output) {
+                                $ico = $this->findOrCreateIco($result['id']);
+                                $asset = $this->findOrCreateAsset($res['finance']['token']);
+                                $ico = $this->icoBenchNormalizer->normalize($ico, $res, $asset);
+
+                                $this->manager->persist($ico);
+                                $this->manager->flush();
+                                $output->writeln('Successfully updated ICO '.$ico->getTitle());
+
+                            },
+                            'rejected' => function ($reason, $index) {
+                                $this->logger->error('Could\'t get history volumes for ' . $index );
+                            }
+                        ]))->promise()->wait();
                     }
                 }
 
                 $output->writeln('Successfully updated ICOs');
-            } else sleep(3600);
+//            } else sleep(3600);
         }
     }
 
