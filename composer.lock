@@ -2582,7 +2582,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-            "time": "2018-09-20 13:01:21"
+            "time": "2018-09-20T13:01:21+00:00"
         },
         {
             "name": "kami/icobench-bundle",
@@ -2622,7 +2622,7 @@
                 }
             ],
             "description": "IcoBench API Client Bundle",
-            "time": "2018-06-15 09:31:19"
+            "time": "2018-06-15T09:31:19+00:00"
         },
         {
             "name": "kami/icobench-client",
@@ -2661,7 +2661,7 @@
                 }
             ],
             "description": "ICOBench API Client",
-            "time": "2018-09-21 12:30:32"
+            "time": "2018-09-21T12:30:32+00:00"
         },
         {
             "name": "kami/request-processor",
@@ -2707,7 +2707,7 @@
                 }
             ],
             "description": "Request processor component",
-            "time": "2018-06-01 10:38:23"
+            "time": "2018-06-01T10:38:23+00:00"
         },
         {
             "name": "khepin/yaml-fixtures-bundle",
@@ -3754,16 +3754,16 @@
         },
         {
             "name": "paragonie/sodium_compat",
-            "version": "v1.6.6",
+            "version": "v1.7.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/paragonie/sodium_compat.git",
-                "reference": "a19c29c6c2a66dd01a6c532ae022e438d4e396e9"
+                "reference": "7b73005be3c224f12c47bd75a23ce24b762e47e8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/a19c29c6c2a66dd01a6c532ae022e438d4e396e9",
-                "reference": "a19c29c6c2a66dd01a6c532ae022e438d4e396e9",
+                "url": "https://api.github.com/repos/paragonie/sodium_compat/zipball/7b73005be3c224f12c47bd75a23ce24b762e47e8",
+                "reference": "7b73005be3c224f12c47bd75a23ce24b762e47e8",
                 "shasum": ""
             },
             "require": {
@@ -3832,7 +3832,7 @@
                 "secret-key cryptography",
                 "side-channel resistant"
             ],
-            "time": "2018-09-21T01:45:19+00:00"
+            "time": "2018-09-22T03:59:58+00:00"
         },
         {
             "name": "phpcollection/phpcollection",
@@ -5214,7 +5214,7 @@
                 "redis",
                 "symfony"
             ],
-            "time": "2018-08-16 21:31:44"
+            "time": "2018-08-16T21:31:44+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
