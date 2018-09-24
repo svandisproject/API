@@ -6,6 +6,12 @@ kami_api_core:
       strategies:
           create: "kami.post_creation_strategy"
 
+    - name: ico
+      entity: Kami\IcoBundle\Entity\Ico
+      strategies:
+          index: "kami.ico_index_strategy"
+          filter: "kami.ico_filter_strategy"
+
     - { name: tag, entity: Kami\ContentBundle\Entity\Tag }
     - { name: worker, entity: Kami\WorkerBundle\Entity\Worker }
     - { name: web-feed, entity: Kami\WorkerBundle\Entity\WebFeed }
@@ -14,7 +20,6 @@ kami_api_core:
     - { name: reddit-feed, entity: Kami\WorkerBundle\Entity\RedditFeed }
     - { name: asset, entity: Kami\AssetBundle\Entity\Asset }
     - { name: filter-settings, entity: Kami\FilterBundle\Entity\FilterSettings }
-    - { name: ico, entity: Kami\IcoBundle\Entity\Ico }
     - { name: consensus-type, entity: Kami\IcoBundle\Entity\ConsensusType }
     - { name: department, entity: Kami\IcoBundle\Entity\Department }
     - { name: dev-stages, entity: Kami\IcoBundle\Entity\DevStages }
