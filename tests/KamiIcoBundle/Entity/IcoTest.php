@@ -177,7 +177,7 @@ class IcoTest extends ApiTestCase
     public function getModelKeys()
     {
         return [
-            'remote_id', 'title', 'description', 'slogan', 'problem', 'country',
+            'title', 'description', 'slogan', 'problem', 'country',
             'for_sale', 'staff_size', 'restricted_countries'
         ];
     }
