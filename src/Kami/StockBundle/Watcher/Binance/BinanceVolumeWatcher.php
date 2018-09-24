@@ -18,6 +18,7 @@ class BinanceVolumeWatcher extends AbstractVolumesWatcher
         $usdValues = $this->getUsdValues($volume, $ticker);
 
         foreach ($usdValues as $assetKey => $usdVolume) {
+            $assetKey = ($assetKey == 'BCC') ? 'BCH' : $assetKey; // for Binance Bitcoin Cash
             $asset = $this->findOrCreateAsset($assetKey);
             $this->persistVolumes($asset, $usdVolume, 'Binance');
         }

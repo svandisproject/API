@@ -44,6 +44,7 @@ class BinanceWatcher extends AbstractExchangeWatcher
             foreach ($this->convertableTickers as $currency) {
                 if (strpos($pair, $currency) >= 1) {
                     $asset = strstr($pair, $currency, true);
+                    $asset = ($asset == 'BCC') ? 'BCH' : $asset; // for Binance Bitcoin Cash
 
                     if ($currency == 'USDT') {
                         $rate = $price;
