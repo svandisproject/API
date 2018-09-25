@@ -3,6 +3,7 @@
 namespace Kami\IcoBundle\RequestProcessor;
 
 
+use Doctrine\Common\Inflector\Inflector;
 use Doctrine\ORM\QueryBuilder;
 use Kami\ApiCoreBundle\Security\AccessManager;
 use Kami\AssetBundle\Entity\Asset;
@@ -33,7 +34,7 @@ class IcoSortStep extends AbstractStep
         /** @var \ReflectionClass $reflection */
         $reflection = $this->getArtifact('reflection');
         $query = 'e.%s';
-        $sort = $request->get('sort', $request->attributes->get('_sort'));
+        $sort = Inflector::camelize($request->get('sort', $request->attributes->get('_sort')));
         switch ($sort){
             case 'competitors':
                 $reflection = new \ReflectionClass(Ico::class);
