@@ -22,7 +22,7 @@ class BitfinexWatcher extends AbstractExchangeWatcher
     /**
      * @var array
      */
-    private $tokenSynonymsArray = [
+    private $synonyms = [
         'SEE' => 'SEER',
         'DSH' => 'DASH',
         'QTM' => 'QTUM',
@@ -69,8 +69,8 @@ class BitfinexWatcher extends AbstractExchangeWatcher
                     $price = $datum[7];
                 }
             }
-            if (array_key_exists($presentedCurrency, $this->tokenSynonymsArray)) {
-                $presentedCurrency = $this->tokenSynonymsArray[$presentedCurrency];
+            if (array_key_exists($presentedCurrency, $this->synonyms)) {
+                $presentedCurrency = $this->synonyms[$presentedCurrency];
             }
             array_push($this->tickersArray, ['asset' => $presentedCurrency, 'price' => floatval($price)]);
         }

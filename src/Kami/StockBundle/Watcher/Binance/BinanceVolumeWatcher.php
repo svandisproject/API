@@ -16,7 +16,7 @@ class BinanceVolumeWatcher extends AbstractVolumesWatcher
     /**
      * @var array
      */
-    private $tokenSynonymsArray = [
+    private $synonyms = [
         'BCC' => 'BCH',
         'BQX' => 'ETHOS'
     ];
@@ -30,8 +30,8 @@ class BinanceVolumeWatcher extends AbstractVolumesWatcher
 
         foreach ($usdValues as $assetKey => $usdVolume) {
 
-            if (array_key_exists($assetKey, $this->tokenSynonymsArray)) {
-                $assetKey = $this->tokenSynonymsArray[$assetKey];
+            if (array_key_exists($assetKey, $this->synonyms)) {
+                $assetKey = $this->synonyms[$assetKey];
             }
             $asset = $this->findOrCreateAsset($assetKey);
             $this->persistVolumes($asset, $usdVolume, 'Binance');

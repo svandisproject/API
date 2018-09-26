@@ -13,7 +13,7 @@ class BitfinexVolumeWatcher extends AbstractVolumesWatcher
     /**
      * @var array
      */
-    private $tokenSynonymsArray = [
+    private $synonyms = [
         'SEE' => 'SEER',
         'DSH' => 'DASH',
         'QTM' => 'QTUM',
@@ -33,8 +33,8 @@ class BitfinexVolumeWatcher extends AbstractVolumesWatcher
 
         foreach ($usdValues as $assetKey => $usdVolume) {
 
-            if (array_key_exists($assetKey, $this->tokenSynonymsArray)) {
-                $assetKey = $this->tokenSynonymsArray[$assetKey];
+            if (array_key_exists($assetKey, $this->synonyms)) {
+                $assetKey = $this->synonyms[$assetKey];
             }
 
             $asset = $this->findOrCreateAsset($assetKey);
