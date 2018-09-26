@@ -16,7 +16,7 @@ class BinanceWatcher extends AbstractExchangeWatcher
     /**
      * @var array
      */
-    private $tokenSynonymsArray = [
+    private $synonyms = [
         'BCC' => 'BCH',
         'BQX' => 'ETHOS'
     ];
@@ -34,8 +34,8 @@ class BinanceWatcher extends AbstractExchangeWatcher
         $tickersArray = $this->getUsdPrices($tickers);
         foreach ($tickersArray as $tickerData) {
 
-            if (array_key_exists($tickerData['asset'], $this->tokenSynonymsArray)) {
-                $tickerData['asset'] = $this->tokenSynonymsArray[$tickerData['asset']];
+            if (array_key_exists($tickerData['asset'], $this->synonyms)) {
+                $tickerData['asset'] = $this->synonyms[$tickerData['asset']];
             }
             $point = $this->createNewPoint($tickerData);
 
