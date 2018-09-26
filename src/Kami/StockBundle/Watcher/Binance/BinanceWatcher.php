@@ -14,6 +14,14 @@ class BinanceWatcher extends AbstractExchangeWatcher
     private $convertableTickers = ['USDT', 'BTC', 'ETH', 'BNB'];
 
     /**
+     * @var array
+     */
+    private $tokenSynonymsArray = [
+        'BCC' => 'BCH',
+        'BQX' => 'ETHOS'
+    ];
+
+    /**
      * @throws \Exception
      * @throws \Cassandra\Exception
      * @return void
@@ -25,6 +33,10 @@ class BinanceWatcher extends AbstractExchangeWatcher
         $tickers = $api->prices();
         $tickersArray = $this->getUsdPrices($tickers);
         foreach ($tickersArray as $tickerData) {
+
+            if (array_key_exists($tickerData['asset'], $this->tokenSynonymsArray)) {
+                $tickerData['asset'] = $this->tokenSynonymsArray[$tickerData['asset']];
+            }
             $point = $this->createNewPoint($tickerData);
 
             $this->persistPoint($point, 'Binance');

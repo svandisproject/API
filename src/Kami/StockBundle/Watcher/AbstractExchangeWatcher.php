@@ -2,10 +2,8 @@
 
 namespace Kami\StockBundle\Watcher;
 
-
 use Cassandra\BatchStatement;
 use Cassandra\Exception\ExecutionException;
-use Cassandra\Uuid;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMException;
 use Doctrine\ORM\ORMInvalidArgumentException;

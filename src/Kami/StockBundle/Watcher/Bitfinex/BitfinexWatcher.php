@@ -20,6 +20,18 @@ class BitfinexWatcher extends AbstractExchangeWatcher
     private $tickersArray = [];
 
     /**
+     * @var array
+     */
+    private $tokenSynonymsArray = [
+        'SEE' => 'SEER',
+        'DSH' => 'DASH',
+        'QTM' => 'QTUM',
+        'IOT' => 'IOTA',
+        'IOS' => 'IOST',
+        'MIT' => 'MITH'
+    ];
+
+    /**
      * @throws ORMInvalidArgumentException
      * @throws \Cassandra\Exception
      * @return void
@@ -56,6 +68,9 @@ class BitfinexWatcher extends AbstractExchangeWatcher
                 if($datum[0] == 't'.$presentedCurrency.'USD'){
                     $price = $datum[7];
                 }
+            }
+            if (array_key_exists($presentedCurrency, $this->tokenSynonymsArray)) {
+                $presentedCurrency = $this->tokenSynonymsArray[$presentedCurrency];
             }
             array_push($this->tickersArray, ['asset' => $presentedCurrency, 'price' => floatval($price)]);
         }
