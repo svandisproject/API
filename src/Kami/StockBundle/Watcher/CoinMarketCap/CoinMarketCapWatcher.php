@@ -14,6 +14,10 @@ class CoinMarketCapWatcher
      */
     private $em;
 
+    /**
+     * CoinMarketCapWatcher constructor.
+     * @param EntityManager $entityManager
+     */
     function __construct(EntityManager $entityManager)
     {
         $this->em = $entityManager;

@@ -10,6 +10,18 @@ use SimpleXMLElement;
 class BitfinexVolumeWatcher extends AbstractVolumesWatcher
 {
 
+    /**
+     * @var array
+     */
+    private $tokenSynonymsArray = [
+        'SEE' => 'SEER',
+        'DSH' => 'DASH',
+        'QTM' => 'QTUM',
+        'IOT' => 'IOTA',
+        'IOS' => 'IOST',
+        'MIT' => 'MITH'
+    ];
+
     public function updateVolumes()
     {
         $guzzle = new Client();
@@ -20,6 +32,11 @@ class BitfinexVolumeWatcher extends AbstractVolumesWatcher
         $usdValues = $this->getUsdValues($normalizeArray);
 
         foreach ($usdValues as $assetKey => $usdVolume) {
+
+            if (array_key_exists($assetKey, $this->tokenSynonymsArray)) {
+                $assetKey = $this->tokenSynonymsArray[$assetKey];
+            }
+
             $asset = $this->findOrCreateAsset($assetKey);
             $this->persistVolumes($asset, $usdVolume, 'Bitfinex');
         }

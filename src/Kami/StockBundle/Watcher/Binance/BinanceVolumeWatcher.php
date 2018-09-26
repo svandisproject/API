@@ -8,7 +8,18 @@ use Kami\StockBundle\Watcher\AbstractVolumesWatcher;
 
 class BinanceVolumeWatcher extends AbstractVolumesWatcher
 {
+    /**
+     * @var array
+     */
     private $convertableTickersVolume = ['USDT', 'BTC', 'ETH', 'BNB'];
+
+    /**
+     * @var array
+     */
+    private $tokenSynonymsArray = [
+        'BCC' => 'BCH',
+        'BQX' => 'ETHOS'
+    ];
 
     public function updateVolumes()
     {
@@ -18,7 +29,10 @@ class BinanceVolumeWatcher extends AbstractVolumesWatcher
         $usdValues = $this->getUsdValues($volume, $ticker);
 
         foreach ($usdValues as $assetKey => $usdVolume) {
-            $assetKey = ($assetKey == 'BCC') ? 'BCH' : $assetKey; // for Binance Bitcoin Cash
+
+            if (array_key_exists($assetKey, $this->tokenSynonymsArray)) {
+                $assetKey = $this->tokenSynonymsArray[$assetKey];
+            }
             $asset = $this->findOrCreateAsset($assetKey);
             $this->persistVolumes($asset, $usdVolume, 'Binance');
         }
