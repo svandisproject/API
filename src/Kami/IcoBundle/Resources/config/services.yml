@@ -1,42 +1,7 @@
 parameters:
     kami.ico_normalizer.abstract.class: Kami\IcoBundle\Normalizer\AbstractIcoNormalizer
-    kami.ico_index_strategy:
-        - get_reflection_from_request
-        - validate_resource_access
-        - get_query_builder
-        - build_select_query
-        - sort_ico
-        - paginate
-        - build_serializer
-        - serialize
-    kami.ico_filter_strategy:
-        - get_reflection_from_request
-        - validate_resource_access
-        - validate_filters
-        - get_query_builder
-        - build_select_query
-        - filter_ico
-        - sort_ico
-        - paginate
-        - build_serializer
-        - serialize
 
 services:
-
-    kami.request_processor.sort_ico.step:
-        class: Kami\IcoBundle\RequestProcessor\IcoSortStep
-        arguments:
-            - "@kami.api_core.access_manager"
-        tags:
-            - { name: "kami_api_core.strategy_step", shortcut: "sort_ico" }
-
-    kami.request_processor.filter_ico.step:
-        class: Kami\IcoBundle\RequestProcessor\IcoFilterStep
-        arguments:
-            - "@kami.api_core.access_manager"
-        tags:
-            - { name: "kami_api_core.strategy_step", shortcut: "filter_ico" }
-
     kami.sync_icos.command:
         class: Kami\IcoBundle\Command\SyncIcosCommand
         arguments:

@@ -42,6 +42,7 @@ class SaleStage
 
     /**
      * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="saleStage")
+     * @Api\Relation()
      */
     private $icos;
 

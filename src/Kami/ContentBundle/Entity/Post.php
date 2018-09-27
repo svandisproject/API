@@ -109,6 +109,7 @@ class Post
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="posts")
      * @ORM\JoinTable(name="post_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation
      */
@@ -116,6 +117,7 @@ class Post
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker")
+     * @Api\Relation()
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
     private $createdBy;
@@ -125,12 +127,17 @@ class Post
      * @var ArrayCollection
      *
      * @ORM\ManyToMany(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="validatedPosts")
+     * @Api\Relation()
      * @ORM\JoinTable(name="worker_validated_posts")
      */
     private $validatedBy;
 
     /**
      * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="posts")
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation
      */
     private $assets;
 

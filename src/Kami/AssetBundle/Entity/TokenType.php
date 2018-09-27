@@ -40,6 +40,7 @@ class TokenType
     /**
      * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="tokenType")
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Relation()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})

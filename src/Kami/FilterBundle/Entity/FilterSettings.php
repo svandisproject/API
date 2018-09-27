@@ -24,37 +24,43 @@ class FilterSettings
 
     /**
      * @var string
-     *  @ORM\Column(name="search_query", type="string", length=255)
+     * @ORM\Column(name="search_query", type="string", length=255)
      */
     private $searchQuery;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
+     * @Api\Relation()
      */
     private $assets;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
+     * @Api\Relation()
      */
     private $region;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
+     * @Api\Relation()
      */
    private $activityFields;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id"))
+     * @ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id"))
+     * @Api\Relation()
      */
     private $importanceFilters;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
+     * @ORM\OneToMany(targetEntity="App\FilterBundle\Entity\FilterItem", mappedBy="id")
+     * @Api\Relation()
      */
     private $votingFilters;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="filterSettings")
+     * @Api\Relation()
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
