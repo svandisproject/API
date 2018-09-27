@@ -104,6 +104,7 @@ class Asset
 
     /**
      * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Volume", mappedBy="asset", cascade={"persist"})
+     * @Api\Relation()
      */
     private $volumes;
 
