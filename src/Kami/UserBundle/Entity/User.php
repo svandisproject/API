@@ -4,8 +4,10 @@ namespace Kami\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Kami\ContentBundle\Entity\TagPost;
 use Kami\Util\TokenGenerator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 
 /**
@@ -28,10 +30,39 @@ class User extends BaseUser
      */
     private $workerToken;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\TagPost", mappedBy="user")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $tagPost;
+
     public function __construct()
     {
         $this->workerToken = TokenGenerator::generate(16);
         parent::__construct();
+    }
+
+    /**
+     * @return TagPost
+     */
+    public function getTagPost() :TagPost
+    {
+        return $this->tagPost;
+    }
+
+    /**
+     * @param TagPost $tagPost
+     * @return $this
+     */
+    public function setTagPost(TagPost $tagPost)
+    {
+        $this->tagPost = $tagPost;
+
+        return $this;
     }
 
     /**

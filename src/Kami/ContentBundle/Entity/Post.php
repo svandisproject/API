@@ -103,11 +103,10 @@ class Post
      */
     private $createdAt;
 
-
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="posts")
-     * @ORM\JoinTable(name="post_tags")
+     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\TagPost", inversedBy="posts")
+     * @ORM\JoinTable(name="posts_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
