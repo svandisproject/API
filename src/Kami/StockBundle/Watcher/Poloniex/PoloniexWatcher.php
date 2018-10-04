@@ -88,6 +88,4 @@ class PoloniexWatcher extends AbstractExchangeWatcher
         return $resultArray;
     }
 
-
-
 }

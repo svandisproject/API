@@ -89,7 +89,7 @@ abstract class AbstractExchangeWatcher
         $ticker = $pointDbValues['asset'];
         $preparedTicker = strtolower(str_replace(" ", "_", trim($ticker)));
 
-        if(!$this->redis->get('price_' . $ticker)){
+        if(!$this->redis->get('price_' . $ticker)) {
             $this->createCassandraAssetPriceTable($cassandra, $preparedTicker);
             $this->redis->set('price_' . $ticker, $preparedTicker);
         }

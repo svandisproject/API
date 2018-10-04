@@ -10,21 +10,37 @@ services:
         public: true
 
     kami_stock.volumes.watcher:
-            class: Kami\StockBundle\Watcher\VolumesWatcher
-            arguments:
-              - '@kami_stock.bittrex.volume.watcher'
-              - '@kami_stock.binance.volume.watcher'
-              - '@kami_stock.bitfinex.volume.watcher'
-              - '@kami_stock.poloniex.volume.watcher'
-              - '@doctrine.orm.entity_manager'
-              - '@snc_redis.default'
-              - '@m6web_cassandra.client.default'
-              - '@kami_stock.changes_helper'
-              - '@lopi_pusher.pusher'
-              - '@logger'
-            public: true
+        class: Kami\StockBundle\Watcher\VolumesWatcher
+        arguments:
+          - '@kami_stock.bittrex.volume.watcher'
+          - '@kami_stock.binance.volume.watcher'
+          - '@kami_stock.bitfinex.volume.watcher'
+          - '@kami_stock.poloniex.volume.watcher'
+          - '@doctrine.orm.entity_manager'
+          - '@snc_redis.default'
+          - '@m6web_cassandra.client.default'
+          - '@kami_stock.changes_helper'
+          - '@lopi_pusher.pusher'
+          - '@logger'
+        public: true
+
+    kami_stock.candles_watcher:
+        class: Kami\StockBundle\Watcher\CandlesWatcher
+        arguments:
+          - '@kami_stock.binance_candles.watcher'
+          - '@kami_stock.bitfinex_candles.watcher'
+        public: true
 
     kami_stock.abstract.watcher:
+        abstract: true
+        arguments:
+            - '@m6web_cassandra.client.default'
+            - '@doctrine.orm.entity_manager'
+            - '@logger'
+            - '@snc_redis.default'
+            - '%proxy_url%'
+
+    kami_stock.abstract_candles.watcher:
         abstract: true
         arguments:
             - '@m6web_cassandra.client.default'
@@ -55,6 +71,10 @@ services:
         class: Kami\StockBundle\Watcher\Binance\BinanceWatcher
         parent: kami_stock.abstract.watcher
 
+    kami_stock.binance_candles.watcher:
+        class: Kami\StockBundle\Watcher\Binance\BinanceCandlesWatcher
+        parent: kami_stock.abstract_candles.watcher
+
     kami_stock.binance.volume.watcher:
         class: Kami\StockBundle\Watcher\Binance\BinanceVolumeWatcher
         parent: kami_stock.abstract.volumes.watcher
@@ -62,6 +82,10 @@ services:
     kami_stock.bitfinex.watcher:
         class: Kami\StockBundle\Watcher\Bitfinex\BitfinexWatcher
         parent: kami_stock.abstract.watcher
+
+    kami_stock.bitfinex_candles.watcher:
+            class: Kami\StockBundle\Watcher\Bitfinex\BitfinexCandlesWatcher
+            parent: kami_stock.abstract.watcher
 
     kami_stock.bitfinex.volume.watcher:
         class: Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher

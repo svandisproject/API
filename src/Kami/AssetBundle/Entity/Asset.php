@@ -2,8 +2,10 @@
 
 namespace Kami\AssetBundle\Entity;
 
+use function contains;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use const false;
 use Kami\AssetBundle\Entity\TradableToken;
 use Kami\IcoBundle\Entity\Ico;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -165,12 +167,70 @@ class Asset
     private $yearToDayChange;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Kami\AssetBundle\Entity\Algorithm", inversedBy="assets")
+     * @ORM\JoinColumn(name="algorithm_id", referencedColumnName="id")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $algorithm;
+
+    /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $minable = false;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $rank;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $age;
+
+    /**
+     * @ORM\Column(name="official_links", type="array", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $officialLinks;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Kami\AssetBundle\Entity\Pair", mappedBy="assets")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     */
+    private $pairs;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
         $this->volumes = new ArrayCollection();
+        $this->pairs = new ArrayCollection();
     }
 
     /**
@@ -486,5 +546,115 @@ class Asset
     {
         $this->tradableToken = $tradableToken;
     }
+
+    /**
+     * @return Algorithm
+     */
+    public function getAlgorithm()
+    {
+        return $this->algorithm;
+    }
+
+    /**
+     * @param Algorithm $algorithm
+     * @return self
+     */
+    public function setAlgorithm(Algorithm $algorithm): self
+    {
+        $this->algorithm = $algorithm;
+        $algorithm->setAsset($this);
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getMinable()
+    {
+        return $this->minable;
+    }
+
+    /**
+     * @param boolean $minable|null
+     * @return self
+     */
+    public function setMinable($minable = false): self
+    {
+        $this->minable = $minable;
+        return $this;
+    }
+
+    /**
+     * @return integer|null
+     */
+    public function getRank(): ?int
+    {
+        return $this->rank;
+    }
+
+    /**
+     * @param integer $rank
+     * @return self
+     */
+    public function setRank($rank): self
+    {
+        $this->rank = $rank;
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAge(): int
+    {
+        return $this->age;
+    }
+
+    /**
+     * @param int $age
+     */
+    public function setAge($age)
+    {
+        $this->age = $age;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getOfficialLinks(): ?array
+    {
+        return $this->officialLinks;
+    }
+
+    /**
+     * @param array $officialLinks
+     * @return self
+     */
+    public function setOfficialLinks($officialLinks): self
+    {
+        $this->officialLinks = $officialLinks;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPairs()
+    {
+        return $this->pairs;
+    }
+
+    /**
+     * @param Pair $pair
+     * @return self
+     */
+    public function setPair(Pair $pair): self
+    {
+        if (!$this->pairs->contains($pair)) {
+            $this->pairs[] = $pair;
+        }
+        return $this;
+    }
+
 
 }

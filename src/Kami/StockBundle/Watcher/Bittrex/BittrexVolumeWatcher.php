@@ -3,8 +3,6 @@
 
 namespace Kami\StockBundle\Watcher\Bittrex;
 
-
-use function dump;
 use Kami\StockBundle\Watcher\AbstractVolumesWatcher;
 
 class BittrexVolumeWatcher extends AbstractVolumesWatcher
@@ -41,6 +39,4 @@ class BittrexVolumeWatcher extends AbstractVolumesWatcher
         }
         return $valuesArray;
     }
-
-
 }

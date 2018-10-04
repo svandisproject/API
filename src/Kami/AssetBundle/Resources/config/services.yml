@@ -20,3 +20,10 @@ services:
             - "@kami_stock.history_volumes.watcher"
         tags:
             - { name: 'console.command' }
+
+    kami.sync_assets.candles.command:
+            class: Kami\AssetBundle\Command\SyncAssetsCandlesCommand
+            arguments:
+                - "@kami_stock.candles_watcher"
+            tags:
+                - { name: 'console.command' }

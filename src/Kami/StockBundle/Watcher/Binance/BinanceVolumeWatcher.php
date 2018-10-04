@@ -29,7 +29,6 @@ class BinanceVolumeWatcher extends AbstractVolumesWatcher
         $usdValues = $this->getUsdValues($volume, $ticker);
 
         foreach ($usdValues as $assetKey => $usdVolume) {
-
             if (array_key_exists($assetKey, $this->synonyms)) {
                 $assetKey = $this->synonyms[$assetKey];
             }
@@ -57,9 +56,6 @@ class BinanceVolumeWatcher extends AbstractVolumesWatcher
                 }
             }
         }
-
         return $points;
-
     }
-
 }

@@ -56,6 +56,24 @@ class MarketCap
     private $volume24;
 
     /**
+     * @ORM\Column(name="volume_year", type="float", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $volumeYear;
+
+    /**
+     * @ORM\Column(name="max_supply", type="float", nullable=true)
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\AnonymousAccess()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $maxSupply;
+
+    /**
      * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="marketCap")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
@@ -140,6 +158,38 @@ class MarketCap
     public function getVolume24()
     {
         return $this->volume24;
+    }
+
+    /**
+     * @return float
+     */
+    public function getMaxSupply(): float
+    {
+        return $this->maxSupply;
+    }
+
+    /**
+     * @param float $maxSupply
+     */
+    public function setMaxSupply(float $maxSupply)
+    {
+        $this->maxSupply = $maxSupply;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVolumeYear(): float
+    {
+        return $this->volumeYear;
+    }
+
+    /**
+     * @param float $volumeYear
+     */
+    public function setVolumeYear(float $volumeYear)
+    {
+        $this->volumeYear = $volumeYear;
     }
 
 }

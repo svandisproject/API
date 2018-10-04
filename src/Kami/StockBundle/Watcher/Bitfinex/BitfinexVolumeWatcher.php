@@ -3,9 +3,11 @@
 
 namespace Kami\StockBundle\Watcher\Bitfinex;
 
+use function dump;
 use GuzzleHttp\Client;
 use Kami\StockBundle\Watcher\AbstractVolumesWatcher;
 use SimpleXMLElement;
+use function sleep;
 
 class BitfinexVolumeWatcher extends AbstractVolumesWatcher
 {
