@@ -15,7 +15,7 @@ kami_api_core:
     - { name: volume, entity: Kami\AssetBundle\Entity\Volume}
 
     - { name: tag, entity: Kami\ContentBundle\Entity\Tag }
-    - { name: tag-post, entity: Kami\ContentBundle\Entity\TagPost }
+    - { name: post-tag, entity: Kami\ContentBundle\Entity\PostTag }
 
     - { name: filter-settings, entity: Kami\FilterBundle\Entity\FilterSettings }
     - { name: filter-item, entity: Kami\FilterBundle\Entity\FilterItem }

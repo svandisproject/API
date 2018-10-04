@@ -4,7 +4,7 @@ namespace Kami\UserBundle\Entity;
 
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use Kami\ContentBundle\Entity\TagPost;
+use Kami\ContentBundle\Entity\PostTag;
 use Kami\Util\TokenGenerator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
@@ -31,14 +31,14 @@ class User extends BaseUser
     private $workerToken;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\TagPost", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\PostTag", mappedBy="user")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $tagPost;
+    private $postTag;
 
     public function __construct()
     {
@@ -47,20 +47,20 @@ class User extends BaseUser
     }
 
     /**
-     * @return TagPost
+     * @return PostTag
      */
-    public function getTagPost() :TagPost
+    public function getPostTag() :PostTag
     {
-        return $this->tagPost;
+        return $this->postTag;
     }
 
     /**
-     * @param TagPost $tagPost
+     * @param PostTag $postTag
      * @return $this
      */
-    public function setTagPost(TagPost $tagPost)
+    public function setPostTag(PostTag $postTag)
     {
-        $this->tagPost = $tagPost;
+        $this->postTag = $postTag;
 
         return $this;
     }

@@ -8,16 +8,16 @@ use Kami\ApiCoreBundle\Annotation as Api;
 use Kami\UserBundle\Entity\User;
 
 /**
- * TagPost
+ * PostTag
  *
- * @ORM\Table(name="tag_post")
+ * @ORM\Table(name="post_tag")
  * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\TagPostRepository")
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
-class TagPost
+class PostTag
 {
     /**
      * @var int
@@ -42,7 +42,7 @@ class TagPost
     private $posts;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="tagPost")
+     * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="postTag")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -52,7 +52,7 @@ class TagPost
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="tagPost")
+     * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="postTag")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -116,7 +116,7 @@ class TagPost
      *
      * @param Post $post
      *
-     * @return TagPost
+     * @return PostTag
      */
     public function addPost(Post $post)
     {
@@ -145,5 +145,13 @@ class TagPost
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * @param ArrayCollection $posts
+     */
+    public function setPosts(ArrayCollection $posts): void
+    {
+        $this->posts = $posts;
     }
 }

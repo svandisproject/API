@@ -56,14 +56,14 @@ class Tag
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\TagPost", mappedBy="tag")
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\PostTag", mappedBy="tag")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $tagPost;
+    private $postTag;
 
     /**
      * Constructor
@@ -74,20 +74,20 @@ class Tag
     }
 
     /**
-     * @return TagPost
+     * @return PostTag
      */
-    public function getTagPost() :TagPost
+    public function getPostTag() :PostTag
     {
-        return $this->tagPost;
+        return $this->postTag;
     }
 
     /**
-     * @param TagPost $tagPost
+     * @param PostTag $postTag
      * @return $this
      */
-    public function setTagPost(TagPost $tagPost)
+    public function setPostTag(PostTag $postTag)
     {
-        $this->tagPost = $tagPost;
+        $this->postTag = $postTag;
 
         return $this;
     }

@@ -83,7 +83,7 @@ class Post
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publishedAt", type="datetime")
+     * @ORM\Column(name="published_at", type="datetime", nullable=true)
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -96,7 +96,7 @@ class Post
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
      * @Gedmo\Timestampable(on="create")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\AnonymousAccess
@@ -105,7 +105,7 @@ class Post
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\TagPost", inversedBy="posts")
+     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\PostTag", inversedBy="posts")
      * @ORM\JoinTable(name="posts_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -347,11 +347,11 @@ class Post
     /**
      * Add tag.
      *
-     * @param \Kami\ContentBundle\Entity\Tag $tag
+     * @param $tag
      *
      * @return Post
      */
-    public function addTag(\Kami\ContentBundle\Entity\Tag $tag)
+    public function addTag($tag)
     {
         $this->tags[] = $tag;
 
@@ -361,11 +361,11 @@ class Post
     /**
      * Remove tag.
      *
-     * @param \Kami\ContentBundle\Entity\Tag $tag
+     * @param $tag
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeTag(\Kami\ContentBundle\Entity\Tag $tag)
+    public function removeTag($tag)
     {
         return $this->tags->removeElement($tag);
     }
@@ -377,7 +377,7 @@ class Post
      */
     public function getTags()
     {
-        return $this->tags;
+        return $this->tags->map(function(PostTag $postTag) {return $postTag->getTag();});
     }
 
     /**
