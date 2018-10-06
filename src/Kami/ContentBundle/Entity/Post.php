@@ -106,7 +106,7 @@ class Post
 
     /**
      * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="posts")
+     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="posts", cascade={"persist"})
      * @ORM\JoinTable(name="post_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
