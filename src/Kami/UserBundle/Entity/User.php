@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kami\ContentBundle\Entity\Like;
 use Kami\Util\TokenGenerator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Kami\ApiCoreBundle\Annotation as Api;
 
 
 /**
@@ -31,8 +32,7 @@ class User extends BaseUser
     private $workerToken;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="user")
-     * @ORM\JoinColumn(name="liked_post_id", referencedColumnName="id")
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="user")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
