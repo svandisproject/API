@@ -2,8 +2,10 @@
 
 namespace Kami\UserBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Kami\ContentBundle\Entity\Like;
 use Kami\Util\TokenGenerator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -28,10 +30,59 @@ class User extends BaseUser
      */
     private $workerToken;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="user")
+     * @ORM\JoinColumn(name="liked_post_id", referencedColumnName="id")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_USER", "ROLE_ADMIN"})
+     */
+    private $likedPosts;
+
     public function __construct()
     {
         $this->workerToken = TokenGenerator::generate(16);
+        $this->likedPosts = new ArrayCollection();
         parent::__construct();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getLikedPosts()
+    {
+        return $this->likedPosts;
+    }
+
+    /**
+     * @param Like $like
+     * @return $this
+     */
+    public function addLikedPost(Like $like)
+    {
+        if(!$this->likedPosts->contains($like))
+        {
+            $this->likedPosts[] = $like;
+            $like->setUser($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Like $like
+     * @return $this
+     */
+    public function removeLikedPost(Like $like)
+    {
+        if($this->likedPosts->contains($like))
+        {
+            $this->likedPosts->removeElement($like);
+        }
+
+        return $this;
     }
 
     /**

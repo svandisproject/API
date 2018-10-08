@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kami\AssetBundle\Entity\Asset;
-use Kami\WorkerBundle\Entity\Worker;
+use Kami\StockBundle\Watcher\Poloniex\PoloniexVolumeWatcher;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
@@ -142,6 +142,16 @@ class Post
     private $assets;
 
     /**
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="post")
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\Relation
+     */
+    private $likedBy;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -149,6 +159,44 @@ class Post
         $this->tags = new ArrayCollection();
         $this->validatedBy = new ArrayCollection();
         $this->assets = new ArrayCollection();
+        $this->likedBy = new ArrayCollection();
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getLikedBy()
+    {
+        return $this->likedBy;
+    }
+
+    /**
+     * @param Like $like
+     * @return $this
+     */
+    public function addLikedBy(Like $like)
+    {
+        if(!$this->likedBy->contains($like))
+        {
+            $this->likedBy[] = $like;
+            $like->setPost($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Like $like
+     * @return $this
+     */
+    public function removeLikedBy(Like $like)
+    {
+        if($this->likedBy->contains($like))
+        {
+            $this->likedBy->removeElement($like);
+        }
+
+        return $this;
     }
 
     /**
