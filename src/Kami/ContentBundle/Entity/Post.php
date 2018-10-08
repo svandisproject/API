@@ -141,7 +141,7 @@ class Post
     private $assets;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="post")
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="post", cascade={"persist"})
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -173,13 +173,23 @@ class Post
      * @param Like $like
      * @return $this
      */
-    public function addLikedBy(Like $like)
+    public function addLikedBy($like)
     {
         if(!$this->likedBy->contains($like))
         {
             $this->likedBy[] = $like;
             $like->setPost($this);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setLikedBy($likedBy)
+    {
+        $this->likedBy = $likedBy;
 
         return $this;
     }

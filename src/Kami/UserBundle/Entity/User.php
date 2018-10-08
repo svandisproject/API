@@ -32,7 +32,7 @@ class User extends BaseUser
     private $workerToken;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="user", cascade={"persist"})
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})

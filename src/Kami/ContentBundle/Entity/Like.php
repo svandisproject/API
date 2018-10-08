@@ -44,9 +44,9 @@ class Like
      * @ORM\JoinColumn(name="liked_user_id", referencedColumnName="id")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $user;
 
@@ -55,9 +55,9 @@ class Like
      * @ORM\JoinColumn(name="liked_post_id", referencedColumnName="id")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_USER", "ROLE_ADMIN"})
      */
     private $post;
 
