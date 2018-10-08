@@ -57,6 +57,7 @@ class MarketCap
 
     /**
      * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\Asset", mappedBy="marketCap")
+     * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})

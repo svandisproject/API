@@ -114,7 +114,7 @@ class Person
     private $relevantExperience;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Department", inversedBy="person", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Department", inversedBy="persons", cascade={"persist"})
      * @Api\Relation()
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})

@@ -6,28 +6,48 @@ kami_api_core:
       strategies:
           create: "kami.post_creation_strategy"
 
+    - { name: asset, entity: Kami\AssetBundle\Entity\Asset }
+    - { name: token, entity: Kami\AssetBundle\Entity\TradableToken}
+    - { name: market-cap, entity: Kami\AssetBundle\Entity\MarketCap}
+    - { name: token-type, entity: Kami\AssetBundle\Entity\TokenType}
+    - { name: token-type-standard, entity: Kami\AssetBundle\Entity\TokenTypeStandard}
+    - { name: tradable-token, entity: Kami\AssetBundle\Entity\TradableToken}
+    - { name: volume, entity: Kami\AssetBundle\Entity\Volume}
+
     - { name: tag, entity: Kami\ContentBundle\Entity\Tag }
+    - { name: like, entity: Kami\ContentBundle\Entity\Like }
+
+    - { name: filter-settings, entity: Kami\FilterBundle\Entity\FilterSettings }
+    - { name: filter-item, entity: Kami\FilterBundle\Entity\FilterItem }
+
+    - { name: consensus-type, entity: Kami\IcoBundle\Entity\ConsensusType }
+    - { name: department, entity: Kami\IcoBundle\Entity\Department }
+    - { name: dev-stages, entity: Kami\IcoBundle\Entity\DevStages }
+    - { name: indusry, entity: Kami\IcoBundle\Entity\Industry }
+    - { name: modd-signal, entity: Kami\IcoBundle\Entity\MoodSignal}
+    - { name: person, entity: Kami\IcoBundle\Entity\Person}
+    - { name: sale-stage, entity: Kami\IcoBundle\Entity\SaleStage}
+    - { name: ico, entity: Kami\IcoBundle\Entity\Ico }
+    - { name: ico-values, entity: Kami\IcoBundle\Entity\IcoValues }
+    - { name: dates, entity: Kami\IcoBundle\Entity\Dates }
+    - { name: development, entity: Kami\IcoBundle\Entity\Development }
+    - { name: finance, entity: Kami\IcoBundle\Entity\Finance }
+    - { name: legal, entity: Kami\IcoBundle\Entity\Legal }
+    - { name: social-media, entity: Kami\IcoBundle\Entity\SocialMedia }
+
+    - { name: user, entity: Kami\UserBundle\Entity\User }
+
     - { name: worker, entity: Kami\WorkerBundle\Entity\Worker }
     - { name: web-feed, entity: Kami\WorkerBundle\Entity\WebFeed }
     - { name: facebook-feed, entity: Kami\WorkerBundle\Entity\FacebookFeed }
     - { name: twitter-feed, entity: Kami\WorkerBundle\Entity\TwitterFeed }
     - { name: reddit-feed, entity: Kami\WorkerBundle\Entity\RedditFeed }
-    - { name: asset, entity: Kami\AssetBundle\Entity\Asset }
-    - { name: filter-settings, entity: Kami\FilterBundle\Entity\FilterSettings }
-    - { name: ico, entity: Kami\IcoBundle\Entity\Ico }
-    - { name: consensus-type, entity: Kami\IcoBundle\Entity\ConsensusType }
-    - { name: department, entity: Kami\IcoBundle\Entity\Department }
-    - { name: dev-stages, entity: Kami\IcoBundle\Entity\DevStages }
-    - { name: indusry, entity: Kami\IcoBundle\Entity\Industry }
-    - { name: modd-signals, entity: Kami\IcoBundle\Entity\MoodSignal}
-    - { name: person, entity: Kami\IcoBundle\Entity\Person}
-    - { name: sale-stages, entity: Kami\IcoBundle\Entity\SaleStage}
 
-    - name: token
-      entity: Kami\AssetBundle\Model\TradableToken
+    - name: log
+      entity: Kami\WorkerBundle\Logger\Log
       strategies:
-          index: "kami.token_screener.index_strategy"
-          filter: "kami.token_screener.filter_strategy"
-          create: "kami.common.not_found_strategy"
+          index: "kami.logger.index_strategy"
+          filter: "kami.logger.filter_strategy"
+          create: "kami.logger.creation_strategy"
           update: "kami.common.not_found_strategy"
           delete: "kami.common.not_found_strategy"

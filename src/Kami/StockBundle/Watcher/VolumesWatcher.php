@@ -6,9 +6,9 @@ namespace Kami\StockBundle\Watcher;
 use Cassandra\BatchStatement;
 use Cassandra\Exception\ExecutionException;
 use Cassandra\SimpleStatement;
-use Cassandra\Uuid;
 use Doctrine\ORM\EntityManager;
 use Kami\AssetBundle\Entity\Asset;
+use Kami\AssetBundle\Entity\TradableToken;
 use Kami\StockBundle\ChangesHelper\ChangesHelper;
 use Kami\StockBundle\Watcher\Bitfinex\BitfinexVolumeWatcher;
 use Kami\StockBundle\Watcher\Bittrex\BittrexVolumeWatcher;
@@ -137,7 +137,6 @@ class VolumesWatcher
     {
         $assets = $this->em->getRepository(Asset::class)->findAll();
         foreach ($assets as $asset){
-
             $ticker = $asset->getTicker();
             $preparedTicker = strtolower(str_replace(" ", "_", trim($ticker)));
             if($data = $this->redis->get($ticker) )
@@ -146,9 +145,8 @@ class VolumesWatcher
                     $data = json_decode($data, true);
                     $soldAsset = 0;
                     foreach ($data as $exhange => $volume){
-                        $query = "SELECT id, exchange, price, year, max(time) FROM svandis_asset_prices.price_" .
-                            $preparedTicker . " WHERE exchange = '$exhange' ALLOW FILTERING";
-
+                        $query = "SELECT  exchange, price, time FROM svandis_asset_prices.price_" .
+                            $preparedTicker . " WHERE exchange = '$exhange' ORDER BY time DESC LIMIT 1 ALLOW FILTERING";
                         $statement = new SimpleStatement($query);
                         $result = $this->cassandra->executeAsync($statement);
                         foreach ($result->get() as $row) {
@@ -170,6 +168,7 @@ class VolumesWatcher
                         $asset->setChange($this->changesHelper->setChanges($asset, 'day'));
                         $asset->setWeeklyChange($this->changesHelper->setChanges($asset, 'week'));
                         $asset->setYearToDayChange($this->changesHelper->setChanges($asset, 'year'));
+                        $asset = $this->assetSetTradableToken($asset);
                         $this->em->persist($asset);
                         $this->push($asset, $avgPrice, array_sum($data));
                     }
@@ -181,6 +180,73 @@ class VolumesWatcher
     }
 
     /**
+     * @param Asset $asset
+     * @return Asset
+     */
+    private function assetSetTradableToken(Asset $asset)
+    {
+        $token = $asset->getTradableToken() ?: new TradableToken();
+
+        $token->setPrice(round($asset->getPrice(), 5));
+        $token->setTicker($asset->getTicker());
+        $token->setTitle($asset->getTitle());
+        $token->setType($asset->getTokenType());
+        $token->setChange(round($asset->getChange(), 5));
+        $token->setWeeklyChange(round($asset->getWeeklyChange(), 5));
+        $token->setYearToDayChange(round($asset->getYearToDayChange(), 5));
+
+        if($marketCap = $asset->getMarketCap()){
+            if($mCap = $marketCap->getMarketCap()){
+                $token->setMarketCap($mCap);
+            }
+            if($vol24 = $marketCap->getVolume24()){
+                $token->setVolume($vol24);//???
+            }
+            if($circSupply = $marketCap->getCirculatingSupply()){
+                $token->setCirculatingSupply($circSupply);
+            }
+        }
+
+        if($ico = $asset->getIco()){
+            if($finance = $ico->getFinance()){
+                if($raised = $finance->getRaisedUsd()){
+                    $token->setIcoAmount($raised);//???
+                }
+                if($totalSupply = $finance->getTotalSupply()){
+                    $token->setMaxSupply($totalSupply);//???
+                }
+            }
+        }
+//        $token->setAge();
+//        $token->setAlgorithm();
+//        $token->setAvgVolumeWeeks52();
+//        $token->setDiscord();
+//        $token->setFacebook();
+//        $token->setMediumFollowers();
+//        $token->setMedium();
+//        $token->setTwitterFollowers();
+//        $token->setTwitter();
+//        $token->setTelegrammFollowers();
+//        $token->setTelegramm();
+//        $token->setSteemit();
+//        $token->setRedditSubscriber();
+//        $token->setReddit();
+//        $token->setInitialPrice();
+//        $token->setLastPrice();
+//        $token->setVolumeDay();
+//        $token->setSector();//Industry? string?
+//        $token->setReturnOnIco();
+//        $token->setPriceChangeSixMonth();
+//        $token->setPriceChangePercent();
+//        $token->setPriceChangeMonth();
+//        $token->setPriceChangeHour();
+//        $token->setPriceChangeDay();
+        $asset->setTradableToken($token);
+
+        return $asset;
+    }
+
+    /**
      * @param string $ticker
      * @param float $avgPrice
      * @param float $volume
@@ -189,13 +255,13 @@ class VolumesWatcher
     private function storeAvgPrice($ticker, $avgPrice, $volume)
     {
         $prepared = $this->cassandra->prepare(
-            'INSERT INTO svandis_asset_prices.avg_price_' . $ticker . ' (id, price, volume, time) 
+            'INSERT INTO svandis_asset_prices.avg_price_' . $ticker . ' (ticker, price, volume, time) 
                         VALUES (?, ?, ?, toUnixTimestamp(now()));'
         );
         $batch = new BatchStatement(\Cassandra::BATCH_LOGGED);
 
         $batch->add($prepared, [
-            'id' => new Uuid(\Ramsey\Uuid\Uuid::uuid1()->toString()),
+            'ticker' => $ticker,
             'price' =>  new \Cassandra\Float(floatval($avgPrice)),
             'volume' =>  new \Cassandra\Float(floatval($volume)),
         ]);
@@ -208,7 +274,7 @@ class VolumesWatcher
         try {
             $statement = $cassandra->prepare(
                 'CREATE TABLE if NOT EXISTS svandis_asset_prices.avg_price_' . $ticker . '
-                    ( id uuid, price float, volume float, time timestamp , PRIMARY KEY (id, time ))
+                    ( ticker text, price float, volume float, time timestamp , PRIMARY KEY (ticker, time ))
                     with clustering order by (time desc);'
             );
             $cassandra->execute($statement);

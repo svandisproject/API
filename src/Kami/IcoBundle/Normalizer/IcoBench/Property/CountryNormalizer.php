@@ -16,7 +16,7 @@ class CountryNormalizer extends AbstractPropertyNormalizer
     public function normalize($remoteData, $ico): ?string
     {
         try {
-            return Country::getCodeFromName($remoteData);
+            return Country::getCodeFromName($remoteData, null);
         } catch (InvalidCountryName $exception) {
             return null;
         }

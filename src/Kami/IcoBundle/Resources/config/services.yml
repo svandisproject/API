@@ -2,7 +2,6 @@ parameters:
     kami.ico_normalizer.abstract.class: Kami\IcoBundle\Normalizer\AbstractIcoNormalizer
 
 services:
-
     kami.sync_icos.command:
         class: Kami\IcoBundle\Command\SyncIcosCommand
         arguments:

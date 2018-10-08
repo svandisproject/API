@@ -4,6 +4,7 @@ namespace Kami\AssetBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Kami\AssetBundle\Entity\TradableToken;
 use Kami\IcoBundle\Entity\Ico;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
@@ -102,7 +103,8 @@ class Asset
     private $convertable = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Volume", mappedBy="asset")
+     * @ORM\OneToMany(targetEntity="Kami\AssetBundle\Entity\Volume", mappedBy="asset", cascade={"persist"})
+     * @Api\Relation()
      */
     private $volumes;
 
@@ -116,6 +118,17 @@ class Asset
      * @MaxDepth(2)
      */
     private $ico;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\TradableToken", inversedBy="asset", cascade={"persist"})
+     * @ORM\JoinColumn(name="tradable_token_id", referencedColumnName="id")
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\Relation()
+     * @MaxDepth(2)
+     */
+    private $tradableToken;
 
     /**
      * @ORM\OneToOne(targetEntity="Kami\AssetBundle\Entity\MarketCap", inversedBy="asset", cascade={"persist"})
@@ -456,6 +469,22 @@ class Asset
     public function setTokenTypeStandard($tokenTypeStandard)
     {
         $this->tokenTypeStandard[] = $tokenTypeStandard;
+    }
+
+    /**
+     * @return TradableToken|null
+     */
+    public function getTradableToken(): ?TradableToken
+    {
+        return $this->tradableToken;
+    }
+
+    /**
+     * @param TradableToken $tradableToken
+     */
+    public function setTradableToken($tradableToken): void
+    {
+        $this->tradableToken = $tradableToken;
     }
 
 }

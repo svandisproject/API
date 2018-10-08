@@ -86,12 +86,12 @@ abstract class AbstractVolumesWatcher
             $this->redis->set($asset->getTicker(), json_encode([$exchange => $usdVolume]));
         }
         $volume = new Volume();
-        $volume->setAsset($asset);
         $volume->setVolumeUsd($usdVolume);
         $volume->setAddedTime(time());
         $volume->setExchange($exchange);
+        $asset->addVolume($volume);
 
-        $this->entityManager->persist($volume);
+        $this->entityManager->persist($asset);
         $this->entityManager->flush();
     }
 

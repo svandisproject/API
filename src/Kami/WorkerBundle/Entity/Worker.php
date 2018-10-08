@@ -30,6 +30,7 @@ class Worker implements UserInterface
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User")
+     * @Api\Relation()
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -69,6 +70,7 @@ class Worker implements UserInterface
     /**
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", mappedBy="validatedBy")
+     * @Api\Relation()
      */
     private $validatedPosts;
 
