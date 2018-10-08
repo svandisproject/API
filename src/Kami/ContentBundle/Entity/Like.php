@@ -2,7 +2,6 @@
 
 namespace Kami\ContentBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kami\UserBundle\Entity\User;
@@ -12,7 +11,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * Like
  *
  * @ORM\Table(name="post_liked_by")
- * @ORM\Entity(repositoryClass="LikeRepository")
+ * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\LikeRepository")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})

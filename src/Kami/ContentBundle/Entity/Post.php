@@ -6,7 +6,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Kami\AssetBundle\Entity\Asset;
-use Kami\StockBundle\Watcher\Poloniex\PoloniexVolumeWatcher;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
