@@ -450,16 +450,4 @@ class Post
     {
         return $this->validatedBy;
     }
-
-    /**
-     * @param $tags
-     * @return $this
-     */
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
-        return $this;
-    }
-
-
 }

@@ -58,6 +58,12 @@ class PersistPostStep extends AbstractStep
             if (null === $entity->getId() && $this->tokenStorage->getToken()->getUser() instanceof Worker) {
                $entity->setCreatedBy($this->tokenStorage->getToken()->getUser());
             }
+
+            if(isset($request->request->get('post')['tags'])){
+
+            }
+            dump($request->request->get('post'));die;
+
             $this->doctrine->getManager()->persist($entity);
             $this->doctrine->getManager()->flush();
         } catch (\Exception $exception) {

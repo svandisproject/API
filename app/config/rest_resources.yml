@@ -5,6 +5,7 @@ kami_api_core:
       entity: Kami\ContentBundle\Entity\Post
       strategies:
           create: "kami.post_creation_strategy"
+          update: "kami.post_update_strategy"
 
     - { name: asset, entity: Kami\AssetBundle\Entity\Asset }
     - { name: token, entity: Kami\AssetBundle\Entity\TradableToken}
