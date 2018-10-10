@@ -82,7 +82,7 @@ class Post
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="publishedAt", type="datetime")
+     * @ORM\Column(name="published_at", type="datetime")
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
@@ -95,7 +95,7 @@ class Post
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createdAt", type="datetime")
+     * @ORM\Column(name="created_at", type="datetime")
      * @Gedmo\Timestampable(on="create")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\AnonymousAccess
