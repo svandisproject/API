@@ -10,7 +10,10 @@ kami_api_core:
       entity: Kami\ContentBundle\Entity\Like
       strategies:
           create: "kami.like_creation_strategy"
+<<<<<<< HEAD
           delete: "kami.like_delete_strategy"
+=======
+>>>>>>> eeb2afc68fa1abe3fcec3b83884a953205daebe6
 
     - { name: asset, entity: Kami\AssetBundle\Entity\Asset }
     - { name: token, entity: Kami\AssetBundle\Entity\TradableToken}
