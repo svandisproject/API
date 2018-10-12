@@ -33,7 +33,7 @@ class FetchLikeByPostIdStep extends AbstractStep
     {
         /** @var \ReflectionClass $reflection */
         $reflection = $this->getArtifact('reflection');
-        $entity = $this->doctrine->getRepository($reflection->getName())->findBy(['post' => $request->get('id'),
+        $entity = $this->doctrine->getRepository($reflection->getName())->findOneBy(['post' => $request->get('id'),
             'user' => $this->tokenStorage->getToken()->getUser()]);
 
         if (!$entity) {
