@@ -22,15 +22,12 @@ parameters:
         - build_serializer
         - serialize
 
-<<<<<<< HEAD
     kami.like_delete_strategy:
         - get_reflection_from_request
         - validate_resource_access
         - fetch_like_by_post_id
         - delete
 
-=======
->>>>>>> eeb2afc68fa1abe3fcec3b83884a953205daebe6
 services:
     kami.request_processor.validate_post.step:
         class: Kami\ContentBundle\RequestProcessor\Step\ValidatePostStep
@@ -62,7 +59,6 @@ services:
             - "@doctrine"
             - "@security.token_storage"
         tags:
-<<<<<<< HEAD
             - { name: "kami_api_core.strategy_step", shortcut: "persist_like" }
 
     kami.request_processor.fetch_like_by_post_id.step:
@@ -72,6 +68,4 @@ services:
             - "@security.token_storage"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "fetch_like_by_post_id" }
-=======
             - { name: "kami_api_core.strategy_step", shortcut: "persist_like" }
->>>>>>> eeb2afc68fa1abe3fcec3b83884a953205daebe6
