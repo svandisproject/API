@@ -11,6 +11,17 @@ parameters:
         - build_serializer
         - serialize
 
+    kami.like_creation_strategy:
+        - get_reflection_from_request
+        - validate_resource_access
+        - get_entity_from_reflection
+        - build_create_form
+        - handle_request
+        - validate_form
+        - persist_like
+        - build_serializer
+        - serialize
+
 services:
     kami.request_processor.validate_post.step:
         class: Kami\ContentBundle\RequestProcessor\Step\ValidatePostStep
@@ -35,3 +46,11 @@ services:
             - "@m6web_cassandra.client.default"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "update_url_cache" }
+
+    kami.request_processor.persist_like.step:
+        class: Kami\ContentBundle\RequestProcessor\Step\PersistLikeStep
+        arguments:
+            - "@doctrine"
+            - "@security.token_storage"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "persist_like" }
