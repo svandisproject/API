@@ -84,7 +84,7 @@ class Post
      *
      * @ORM\Column(name="published_at", type="datetime")
      * @Assert\NotBlank()
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
