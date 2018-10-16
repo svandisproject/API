@@ -56,6 +56,16 @@ class Tag
     private $posts;
 
     /**
+     * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\TagGroup", inversedBy="tags")
+     * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
+     * @Api\Relation()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $group;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -114,11 +124,11 @@ class Tag
     /**
      * Remove post.
      *
-     * @param \Kami\ContentBundle\Entity\Post $post
+     * @param Post $post
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removePost(\Kami\ContentBundle\Entity\Post $post)
+    public function removePost(Post $post)
     {
         return $this->posts->removeElement($post);
     }
@@ -131,5 +141,24 @@ class Tag
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * @return TagGroup
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param TagGroup $group | null
+     * @return self
+     */
+    public function setGroup($group = null)
+    {
+        $this->group = $group;
+
+        return $this;
     }
 }
