@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManager;
 use Kami\Component\RequestProcessor\Artifact;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
+use Kami\ContentBundle\Entity\Like;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -33,6 +34,15 @@ class PersistLikeStep extends AbstractStep
     {
         $entity = $this->getArtifact('entity');
         $entity->setUser($this->tokenStorage->getToken()->getUser());
+
+        $postId = $request->request->get('like')['post'];
+        $userId = $this->tokenStorage->getToken()->getUser()->getId();
+        if($this->manager->getRepository(Like::class)->findOneBy([
+            'user' => $userId,
+            'post' => $postId
+        ])){
+            throw new BadRequestHttpException("Trying to duplicate like for user $userId and post $postId", null, 400);
+        }
 
         if(true !== $this->getArtifact('validation')) {
             return new ArtifactCollection();
