@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use const false;
 use Kami\ApiCoreBundle\Annotation as Api;
-use Kami\ContentBundle\Entity\Tag;
 
 /**
  * TagGroup
@@ -74,9 +73,9 @@ class TagGroup
     }
 
     /**
-     * @return string
+     * @return $title
      */
-    public function getTitle(): string
+    public function getTitle()
     {
         return $this->title;
     }
@@ -121,7 +120,7 @@ class TagGroup
     {
         if (!$this->tags->contains($tag)) {
             $this->tags = $tag;
-            $tag->setGroup = $this;
+            $tag->setGroup($this);
         }
         return $this;
     }

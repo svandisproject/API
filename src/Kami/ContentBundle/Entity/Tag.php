@@ -49,6 +49,7 @@ class Tag
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", mappedBy="tags")
      * @Api\Relation()
+     * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
@@ -59,6 +60,7 @@ class Tag
      * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\TagGroup", inversedBy="tags")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
      * @Api\Relation()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
@@ -70,7 +72,7 @@ class Tag
      */
     public function __construct()
     {
-        $this->posts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->posts = new ArrayCollection();
     }
 
     /**
@@ -110,11 +112,11 @@ class Tag
     /**
      * Add post.
      *
-     * @param \Kami\ContentBundle\Entity\Post $post
+     * @param Post $post
      *
      * @return Tag
      */
-    public function addPost(\Kami\ContentBundle\Entity\Post $post)
+    public function addPost(Post $post)
     {
         $this->posts[] = $post;
 
