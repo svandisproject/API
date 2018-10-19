@@ -115,7 +115,7 @@ class Post
     /**
      * @var ArrayCollection
      * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\PostTag", mappedBy="post", cascade={"persist"})
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})

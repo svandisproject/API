@@ -2,7 +2,6 @@
 
 namespace Kami\ContentBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\UserBundle\Entity\User;
 use Kami\ApiCoreBundle\Annotation as Api;
@@ -43,7 +42,7 @@ class PostTag
      * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="postTags")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * @Api\Relation()
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -53,7 +52,7 @@ class PostTag
      * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="postTags")
      * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
      * @Api\Relation()
-     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
