@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Tag
@@ -61,7 +62,7 @@ class Tag
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $posts;
 
@@ -71,7 +72,8 @@ class Tag
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @MaxDepth(2)
      */
     private $postTags;
 

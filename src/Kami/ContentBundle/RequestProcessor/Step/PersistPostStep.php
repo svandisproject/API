@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Kami\ContentBundle\RequestProcessor\Step;
-
 
 use Doctrine\Bundle\DoctrineBundle\Registry;
 use Kami\Component\RequestProcessor\Artifact;
@@ -59,14 +57,19 @@ class PersistPostStep extends AbstractStep
             if (null === $entity->getId() && $this->tokenStorage->getToken()->getUser() instanceof Worker) {
                $entity->setCreatedBy($this->tokenStorage->getToken()->getUser());
             }
-            if(isset($request->request->get('post')['tags'])){
+            if(isset($request->request->get('post')['tags'])) {
                 $existedPostTagIds = [];
                 $postTagsExisted = $this->doctrine->getRepository(PostTag::class)->findBy([
                     'post' => $entity->getId()
                 ]);
-                foreach ($postTagsExisted as $existedTag) {
-                    $existedPostTagIds[] = $existedTag->getTag()->getId();
+                foreach ($postTagsExisted as $existedData) {
+                    if ($existedData->getUser()->getId() !== $this->tokenStorage->getToken()->getUser()->getId()) {
+                        $existedPostTagIds[] = $existedData->getTag()->getId();
+                    } else {
+                        $this->doctrine->getManager()->remove($existedData);
+                    }
                 }
+                $this->doctrine->getManager()->flush();
                 foreach(($request->request->get('post')['tags']) as $tag) {
                     if(!in_array($tag, $existedPostTagIds)) {
                             $postTag = new PostTag();

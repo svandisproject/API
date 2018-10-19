@@ -9,6 +9,7 @@ use Kami\AssetBundle\Entity\Asset;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Post
@@ -118,8 +119,9 @@ class Post
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Api\Relation
+     * @MaxDepth(3)
      */
     private $postTags;
 
