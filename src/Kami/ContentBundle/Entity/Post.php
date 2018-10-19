@@ -18,7 +18,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @UniqueEntity("url")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER", "ROLE_WORKER"})
  * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
- * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class Post
@@ -52,8 +52,6 @@ class Post
      * @Assert\Url()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER", "ROLE_WORKER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      */
     private $url;
 
@@ -106,13 +104,24 @@ class Post
     /**
      * @var ArrayCollection
      * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="posts", cascade={"persist"})
-     * @ORM\JoinTable(name="post_tags")
+     * @ORM\JoinTable(name="posts_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\Relation
      */
     private $tags;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\PostTag", mappedBy="post", cascade={"persist"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\Relation
+     */
+    private $postTags;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker")
@@ -156,6 +165,7 @@ class Post
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->postTags = new ArrayCollection();
         $this->validatedBy = new ArrayCollection();
         $this->assets = new ArrayCollection();
         $this->likedBy = new ArrayCollection();
@@ -218,7 +228,6 @@ class Post
     public function addAsset(Asset $asset)
     {
         $this->assets[] = $asset;
-
         return $this;
     }
 
@@ -288,7 +297,6 @@ class Post
     public function setUrl($url)
     {
         $this->url = $url;
-
         return $this;
     }
 
@@ -312,7 +320,6 @@ class Post
     public function setContent($content)
     {
         $this->content = $content;
-
         return $this;
     }
 
@@ -336,7 +343,6 @@ class Post
     public function setSource($source)
     {
         $this->source = $source;
-
         return $this;
     }
 
@@ -405,33 +411,86 @@ class Post
     /**
      * Add tag.
      *
-     * @param \Kami\ContentBundle\Entity\Tag $tag
+     * @param Tag $tag
      *
      * @return Post
      */
-    public function addTag(\Kami\ContentBundle\Entity\Tag $tag)
+    public function addTag(Tag $tag): self
     {
-        $this->tags[] = $tag;
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addPost($this);
+        }
+        return $this;
+    }
 
+    /**
+     * @param  ArrayCollection
+     * @return $this
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
         return $this;
     }
 
     /**
      * Remove tag.
      *
-     * @param \Kami\ContentBundle\Entity\Tag $tag
+     * @param $tag
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeTag(\Kami\ContentBundle\Entity\Tag $tag)
+    public function removeTag($tag)
     {
         return $this->tags->removeElement($tag);
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getPostTags()
+    {
+        return $this->postTags;
+    }
+
+    /**
+     * @param PostTag $postTag
+     * @return Post
+     */
+    public function addPostTag($postTag): self
+    {
+            $this->postTags[] = $postTag;
+
+         return $this;
+    }
+
+    /**
+     * @param ArrayCollection $postTags
+     *
+     * @return Post
+     */
+    public function setPostTags ($postTags): self
+    {
+        $this->postTags = $postTags;
+
+        return $this;
+    }
+
+
+    /**
+     * @param PostTag $postTag
+     * @return boolean
+     */
+    public function removePostTag ($postTag)
+    {
+        return $this->postTags->removeElement($postTag);
+    }
+
+    /**
      * Get tags.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getTags()
     {
@@ -508,16 +567,5 @@ class Post
     {
         return $this->validatedBy;
     }
-
-    /**
-     * @param $tags
-     * @return $this
-     */
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
-        return $this;
-    }
-
 
 }

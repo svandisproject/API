@@ -36,24 +36,6 @@ class PostControllerTest extends ApiTestCase
 
     }
 
-    public function testFilterLoggedInAsAdmin()
-    {
-        $this->logInAsAdmin();
-        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]');
-        $response = $this->request('GET', '/api/post/filter?filter=' . $filter);
-        $this->assertEquals('Test post 1', $this->getResponseData($response)['content'][0]['title']);
-        $this->assertJsonResponse($response, 200);
-    }
-
-    public function testFilterLoggedInAsUser()
-    {
-        $this->logInAsUser();
-        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]');
-        $response = $this->request('GET', '/api/post/filter?filter=' . $filter);
-        $this->assertEquals('Test post 1', $this->getResponseData($response)['content'][0]['title']);
-        $this->assertJsonResponse($response, 200);
-    }
-
     public function testCreateLoggedInAsAnonymous()
     {
         $response = $this->request('POST', '/api/post', [

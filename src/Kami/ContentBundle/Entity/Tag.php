@@ -44,18 +44,6 @@ class Tag
      */
     private $title;
 
-
-    /**
-     * @var ArrayCollection
-     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", mappedBy="tags")
-     * @Api\Relation()
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
-     */
-    private $posts;
-
     /**
      * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\TagGroup", inversedBy="tags")
      * @ORM\JoinColumn(name="group_id", referencedColumnName="id")
@@ -68,11 +56,31 @@ class Tag
     private $group;
 
     /**
-     * Constructor
+     * @ORM\ManyToMany(targetEntity="Kami\ContentBundle\Entity\Post", mappedBy="tags")
+     * @Api\Relation()
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
+     */
+    private $posts;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\PostTag", mappedBy="tag")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
+     */
+    private $postTags;
+
+    /**
+     * Tag constructor.
      */
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->postTags = new ArrayCollection();
     }
 
     /**
@@ -92,7 +100,7 @@ class Tag
      *
      * @return Tag
      */
-    public function setTitle($title)
+    public function setTitle($title): self
     {
         $this->title = $title;
 
@@ -110,42 +118,6 @@ class Tag
     }
 
     /**
-     * Add post.
-     *
-     * @param Post $post
-     *
-     * @return Tag
-     */
-    public function addPost(Post $post)
-    {
-        $this->posts[] = $post;
-
-        return $this;
-    }
-
-    /**
-     * Remove post.
-     *
-     * @param Post $post
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removePost(Post $post)
-    {
-        return $this->posts->removeElement($post);
-    }
-
-    /**
-     * Get Posts.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getPosts()
-    {
-        return $this->posts;
-    }
-
-    /**
      * @return TagGroup
      */
     public function getGroup()
@@ -157,10 +129,70 @@ class Tag
      * @param TagGroup $group | null
      * @return self
      */
-    public function setGroup($group = null)
+    public function setGroup($group = null): self
     {
         $this->group = $group;
 
+        return $this;
+    }
+
+    /**
+     * @param ArrayCollection
+     *
+     * @return self
+     */
+    public function setPostTags($postTags): self
+    {
+        $this->postTags = $postTags;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPostTags()
+    {
+        return $this->postTags;
+    }
+
+    /**
+     * @param PostTag $postTag
+     * @return Tag
+     */
+    public function addPostTag (PostTag $postTag): self
+    {
+        $this->postTags[] = $postTag;
+        return $this;
+    }
+
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
+    }
+
+    /**
+     * @param ArrayCollection
+     * @return self
+     */
+    public function setPosts($posts): self
+    {
+        $this->posts = $posts;
+        return $this;
+    }
+
+    /**
+     * @param Post $post
+     * @return self
+     */
+    public function addPost (Post $post)
+    {
+        if (!$this->posts->contains($post)) {
+            $this->posts[] = $post;
+        }
         return $this;
     }
 }

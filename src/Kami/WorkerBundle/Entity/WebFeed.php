@@ -53,7 +53,7 @@ class WebFeed
     /**
      * @var string
      *
-     * @ORM\Column(name="title_selector", type="string", length=255)
+     * @ORM\Column(name="link_selector", type="string", length=255)
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})

@@ -1,0 +1,4 @@
+model: Kami\ContentBundle\Entity\PostTag
+fixtures:
+    post_tag1:
+        tag: tag1
