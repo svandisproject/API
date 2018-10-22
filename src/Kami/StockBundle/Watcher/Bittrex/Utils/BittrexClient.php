@@ -37,7 +37,7 @@ class BittrexClient implements ClientInterface
         foreach ($marketsArray as $market) {
 
             $data = $this->getTicker($market);
-            array_push($tickersArray, [$market => $data->result->Last]);
+            if($data->result) array_push($tickersArray, [$market => $data->result->Last]);
         }
 
        return $tickersArray;
