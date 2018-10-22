@@ -8,7 +8,6 @@ fixtures:
         publishedAt: 01-05-2018 11:00:00
         createdBy: worker0
         tags: [tag1]
-        postTags: [post_tag1]
         validatedBy:
             - worker1
             - worker2
@@ -27,7 +26,6 @@ fixtures:
         content:  post content 2
         source: twitter
         tags: [tag1]
-        postTags: [post_tag1]
         publishedAt:  01-05-2018 09:00:00
     post3:
         title: Test post 3
@@ -35,5 +33,4 @@ fixtures:
         content:  post content 3
         source: reddit
         tags: [tag1]
-        postTags: [post_tag1]
         publishedAt:  01-05-2018 08:00:00

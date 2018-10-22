@@ -67,7 +67,7 @@ class Tag
     private $posts;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\PostTag", mappedBy="tag")
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\TagAddedBy", mappedBy="tag")
      * @Api\Relation()
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -75,7 +75,7 @@ class Tag
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @MaxDepth(2)
      */
-    private $postTags;
+    private $addedBy;
 
     /**
      * Tag constructor.
@@ -83,7 +83,7 @@ class Tag
     public function __construct()
     {
         $this->posts = new ArrayCollection();
-        $this->postTags = new ArrayCollection();
+        $this->addedBy = new ArrayCollection();
     }
 
     /**
@@ -144,27 +144,27 @@ class Tag
      *
      * @return self
      */
-    public function setPostTags($postTags): self
+    public function setAddedBy($addedBy): self
     {
-        $this->postTags = $postTags;
+        $this->addedBy = $addedBy;
         return $this;
     }
 
     /**
      * @return ArrayCollection
      */
-    public function getPostTags()
+    public function getAddedBy()
     {
-        return $this->postTags;
+        return $this->addedBy;
     }
 
     /**
-     * @param PostTag $postTag
+     * @param TagAddedBy $addedBy
      * @return Tag
      */
-    public function addPostTag (PostTag $postTag): self
+    public function addAddedBy (TagAddedBy $addedBy): self
     {
-        $this->postTags[] = $postTag;
+        $this->addedBy[] = $addedBy;
         return $this;
     }
 

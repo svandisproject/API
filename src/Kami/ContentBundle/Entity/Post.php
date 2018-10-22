@@ -115,7 +115,7 @@ class Post
 
     /**
      * @var ArrayCollection
-     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\PostTag", mappedBy="post", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\TagAddedBy", mappedBy="post", cascade={"persist"})
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -123,7 +123,7 @@ class Post
      * @Api\Relation
      * @MaxDepth(3)
      */
-    private $postTags;
+    private $tagsAddedBy;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker")
@@ -167,7 +167,7 @@ class Post
     public function __construct()
     {
         $this->tags = new ArrayCollection();
-        $this->postTags = new ArrayCollection();
+        $this->tagsAddedBy = new ArrayCollection();
         $this->validatedBy = new ArrayCollection();
         $this->assets = new ArrayCollection();
         $this->likedBy = new ArrayCollection();
@@ -451,42 +451,42 @@ class Post
     /**
      * @return ArrayCollection
      */
-    public function getPostTags()
+    public function getTagsAddedBy()
     {
-        return $this->postTags;
+        return $this->tagsAddedBy;
     }
 
     /**
-     * @param PostTag $postTag
+     * @param TagAddedBy $tagAddedBy
      * @return Post
      */
-    public function addPostTag($postTag): self
+    public function addTagAddedBy($tagAddedBy): self
     {
-            $this->postTags[] = $postTag;
+            $this->tagsAddedBy[] = $tagAddedBy;
 
          return $this;
     }
 
     /**
-     * @param ArrayCollection $postTags
+     * @param ArrayCollection $tagsAddedBy
      *
      * @return Post
      */
-    public function setPostTags ($postTags): self
+    public function setTagsAddedBy ($tagsAddedBy): self
     {
-        $this->postTags = $postTags;
+        $this->tagsAddedBy = $tagsAddedBy;
 
         return $this;
     }
 
 
     /**
-     * @param PostTag $postTag
+     * @param TagAddedBy $tagsAddedBy
      * @return boolean
      */
-    public function removePostTag ($postTag)
+    public function removeTagsAddedBy ($tagsAddedBy)
     {
-        return $this->postTags->removeElement($postTag);
+        return $this->tagsAddedBy->removeElement($tagsAddedBy);
     }
 
     /**

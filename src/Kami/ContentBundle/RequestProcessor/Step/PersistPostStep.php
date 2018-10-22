@@ -6,7 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Kami\Component\RequestProcessor\Artifact;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
-use Kami\ContentBundle\Entity\PostTag;
+use Kami\ContentBundle\Entity\TagAddedBy;
 use Kami\ContentBundle\Entity\Tag;
 use Kami\WorkerBundle\Entity\Worker;
 use Psr\Log\LoggerInterface;
@@ -59,7 +59,7 @@ class PersistPostStep extends AbstractStep
             }
             if(isset($request->request->get('post')['tags'])) {
                 $existedPostTagIds = [];
-                $postTagsExisted = $this->doctrine->getRepository(PostTag::class)->findBy([
+                $postTagsExisted = $this->doctrine->getRepository(TagAddedBy::class)->findBy([
                     'post' => $entity->getId()
                 ]);
                 foreach ($postTagsExisted as $existedData) {
@@ -72,11 +72,11 @@ class PersistPostStep extends AbstractStep
                 $this->doctrine->getManager()->flush();
                 foreach(($request->request->get('post')['tags']) as $tag) {
                     if(!in_array($tag, $existedPostTagIds)) {
-                            $postTag = new PostTag();
+                            $postTag = new TagAddedBy();
                             $postTag->setPost($entity);
                             $postTag->setUser($this->tokenStorage->getToken()->getUser());
                             $postTag->setTag($this->doctrine->getRepository(Tag::class)->findOneBy(['id' => $tag]));
-                            $entity->addPostTag($postTag);
+                            $entity->addTagAddedBy($postTag);
                             $this->doctrine->getManager()->persist($postTag);
                     }
                 };

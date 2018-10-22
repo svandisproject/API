@@ -9,14 +9,14 @@ use Kami\ApiCoreBundle\Annotation as Api;
 /**
  * PostTag
  *
- * @ORM\Table(name="post_tag")
- * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\PostTagRepository")
+ * @ORM\Table(name="tag_added_by")
+ * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\TagAddedByRepository")
  * @Api\Access({"ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
-class PostTag
+class TagAddedBy
 {
     /**
      * @var int
@@ -28,7 +28,7 @@ class PostTag
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="postTags")
+     * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\Post", inversedBy="tagsAddedBy")
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      * @Api\Relation()
      * @Api\Access({"ROLE_ADMIN"})
@@ -39,7 +39,7 @@ class PostTag
     private $post;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="postTags")
+     * @ORM\ManyToOne(targetEntity="Kami\UserBundle\Entity\User", inversedBy="addedTags")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      * @Api\Relation()
      * @Api\Access({"ROLE_ADMIN"})
@@ -49,7 +49,7 @@ class PostTag
      */
     private $user;
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="postTags")
+     * @ORM\ManyToOne(targetEntity="Kami\ContentBundle\Entity\Tag", inversedBy="addedBy")
      * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
      * @Api\Relation()
      * @Api\Access({"ROLE_ADMIN"})
