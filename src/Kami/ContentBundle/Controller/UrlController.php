@@ -4,8 +4,6 @@
 namespace Kami\ContentBundle\Controller;
 
 
-use Kami\ContentBundle\Entity\Post;
-use Kami\WorkerBundle\Entity\Worker;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -54,27 +52,5 @@ class UrlController extends Controller
 
         return new JsonResponse(['hash' => $hash]);
 
-    }
-
-    /**
-     * @todo this is temporary solution for user statistics, remove this method in future
-     *
-     *
-     * @return JsonResponse
-     * @Route("/api/user/me/crawled", methods={"GET"})
-     */
-    public function getCrawledUrlsByCurrentUserAction()
-    {
-        $user = $this->getUser();
-
-        if (!$user) {
-            throw new HttpException(401, 'Authorization required');
-        }
-
-        $workers = $this->getDoctrine()->getRepository(Worker::class)->findByUser($user);
-        $posts = $this->getDoctrine()->getRepository(Post::class)
-            ->findBy(['createdBy' => $workers]);
-
-        return new JsonResponse(['posts' => $posts]);
     }
 }

@@ -28,6 +28,18 @@ parameters:
         - fetch_like_by_post_id
         - delete
 
+    kami.post_update_strategy:
+        - get_reflection_from_request
+        - validate_resource_access
+        - fetch_entity_by_id
+        - build_update_form
+        - handle_update_post
+        - validate_post
+        - persist_post
+        - update_url_cache
+        - build_serializer
+        - serialize
+
 services:
     kami.request_processor.validate_post.step:
         class: Kami\ContentBundle\RequestProcessor\Step\ValidatePostStep
@@ -45,6 +57,14 @@ services:
             - "@logger"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "persist_post" }
+
+    kami.request_processor.handle_update_request_post.step:
+            class: Kami\ContentBundle\RequestProcessor\Step\HandleUpdatePostRequestStep
+            arguments:
+                - "@doctrine"
+                - "@security.token_storage"
+            tags:
+                - { name: "kami_api_core.strategy_step", shortcut: "handle_update_post" }
 
     kami.request_processor.update_url_cache.step:
         class: Kami\ContentBundle\RequestProcessor\Step\UpdateUrlCacheStep

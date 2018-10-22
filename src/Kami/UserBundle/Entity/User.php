@@ -15,6 +15,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Entity
  * @ORM\Table(name="`user`")
  * @UniqueEntity("workerToken")
+ * @Api\Access({"ROLE_ADMIN"})
  */
 class User extends BaseUser
 {
@@ -22,6 +23,7 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * @Api\Access({"ROLE_ADMIN"})
      */
     protected $id;
 
@@ -41,10 +43,21 @@ class User extends BaseUser
      */
     private $likedPosts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\TagAddedBy", mappedBy="user")
+     * @Api\Relation()
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_USER", "ROLE_ADMIN"})
+     */
+    private $addedTags;
+
     public function __construct()
     {
         $this->workerToken = TokenGenerator::generate(16);
         $this->likedPosts = new ArrayCollection();
+        $this->addedTags = new ArrayCollection();
         parent::__construct();
     }
 

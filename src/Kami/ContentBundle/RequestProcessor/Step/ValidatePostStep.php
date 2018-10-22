@@ -50,15 +50,12 @@ class ValidatePostStep extends ValidateFormStep
             if (!$originalPost) {
                 return parent::execute($request);
             }
-
-
             $post = $this->validatePost($originalPost, $form);
             return new ArtifactCollection([
                 new Artifact('entity', $post),
                 new Artifact('validation', true)
             ]);
         }
-
         return parent::execute($request);
     }
 

@@ -36,24 +36,6 @@ class PostControllerTest extends ApiTestCase
 
     }
 
-    public function testFilterLoggedInAsAdmin()
-    {
-        $this->logInAsAdmin();
-        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]');
-        $response = $this->request('GET', '/api/post/filter?filter=' . $filter);
-        $this->assertEquals('Test post 1', $this->getResponseData($response)['content'][0]['title']);
-        $this->assertJsonResponse($response, 200);
-    }
-
-    public function testFilterLoggedInAsUser()
-    {
-        $this->logInAsUser();
-        $filter = base64_encode('[{"type": "eq", "property": "title", "value": "Test post 1"}]');
-        $response = $this->request('GET', '/api/post/filter?filter=' . $filter);
-        $this->assertEquals('Test post 1', $this->getResponseData($response)['content'][0]['title']);
-        $this->assertJsonResponse($response, 200);
-    }
-
     public function testCreateLoggedInAsAnonymous()
     {
         $response = $this->request('POST', '/api/post', [
@@ -196,7 +178,7 @@ class PostControllerTest extends ApiTestCase
         $this->assertJsonResponse($response, 403);
     }
 
-    public function testEditPostLoggedInAsUser()
+    public function testEditPostLoggedInAsUserWithForbiddenFields()
     {
         $this->logInAsUser();
         $response = $this->request('PUT', '/api/post/1', [
@@ -208,10 +190,11 @@ class PostControllerTest extends ApiTestCase
                 'published_at' => '01-01-2000 00:00:00'
             ]
         ]);
-        $this->assertJsonResponse($response, 403);
+        $this->assertJsonResponse($response, 400);
+        $this->assertEquals("This form should not contain extra fields.", json_decode($response->getContent())->errors[0]);
     }
 
-    public function testEditPostLoggedInAsAdmin()
+    public function testEditPostUrlLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
         $response = $this->request('PUT', '/api/post/1', [
@@ -223,9 +206,64 @@ class PostControllerTest extends ApiTestCase
                 'published_at' => '01-01-2001 00:00:00'
             ]
         ]);
+        $this->assertJsonResponse($response, 400);
+        $this->assertEquals("This form should not contain extra fields.", json_decode($response->getContent())->errors[0]);
+    }
+
+    public function testEditPostLoggedInAsAdmin() {
+        $this->logInAsAdmin();
+        $response = $this->request('PUT', '/api/post/1', [
+            'post' => [
+                'title' => 'test2',
+                'content' => 'test',
+                'source' => 'test',
+                'published_at' => '01-01-2001 00:00:00'
+            ]
+        ]);
         $this->assertJsonResponse($response, 200);
         $this->assertContainsKeys($response);
-        $this->assertEquals('test2', $this->getResponseData($response)['title']);
+    }
+
+    public function testAddTagToPostLoggedAsAdmin()
+    {
+        $this->logInAsAdmin();
+        $response = $this->request('PUT', '/api/post/1', [
+            'post' => [
+                'title' => 'test2',
+                'content' => 'test',
+                'source' => 'test',
+                'tags' => [1],
+                'published_at' => '01-01-2001 00:00:00'
+            ]
+        ]);
+
+        $this->assertJsonResponse($response, 200);
+        $this->assertContainsKeys($response);
+    }
+
+    public function testAddTagToPostloggedAsUser()
+    {
+        $this->logInAsUser();
+        $response = $this->request('PUT', '/api/post/1', [
+            'post' => [
+                'tags' => [1, 2]
+            ]
+        ]);
+
+        $this->assertJsonResponse($response, 200);
+        $this->assertContainsKeys($response);
+    }
+
+    public function testTryDeleteTagFromPostLoggedAsUser()
+    {
+        $this->logInAsUser();
+        $response = $this->request('PUT', '/api/post/1', [
+            'post' => [
+                'tags' => [2]
+            ]
+        ]);
+
+        $this->assertJsonResponse($response, 403);
     }
 
     public function testEditNotExistedFieldLoggedInAsAdmin()
@@ -257,6 +295,6 @@ class PostControllerTest extends ApiTestCase
 
     public function getModelKeys()
     {
-        return ['title', 'url', 'content', 'source', 'published_at'];
+        return ['title', 'content', 'source', 'published_at', 'tags'];
     }
 }

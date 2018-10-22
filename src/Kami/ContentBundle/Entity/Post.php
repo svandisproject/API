@@ -9,6 +9,7 @@ use Kami\AssetBundle\Entity\Asset;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
+use JMS\Serializer\Annotation\MaxDepth;
 
 /**
  * Post
@@ -18,7 +19,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @UniqueEntity("url")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER", "ROLE_WORKER"})
  * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
- * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class Post
@@ -52,8 +53,6 @@ class Post
      * @Assert\Url()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER", "ROLE_WORKER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_WORKER"})
      */
     private $url;
 
@@ -109,10 +108,22 @@ class Post
      * @ORM\JoinTable(name="post_tags")
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\Relation
      */
     private $tags;
+
+    /**
+     * @var ArrayCollection
+     * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\TagAddedBy", mappedBy="post", cascade={"persist"})
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Relation
+     * @MaxDepth(3)
+     */
+    private $tagsAddedBy;
 
     /**
      * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker")
@@ -156,6 +167,7 @@ class Post
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->tagsAddedBy = new ArrayCollection();
         $this->validatedBy = new ArrayCollection();
         $this->assets = new ArrayCollection();
         $this->likedBy = new ArrayCollection();
@@ -218,7 +230,6 @@ class Post
     public function addAsset(Asset $asset)
     {
         $this->assets[] = $asset;
-
         return $this;
     }
 
@@ -288,7 +299,6 @@ class Post
     public function setUrl($url)
     {
         $this->url = $url;
-
         return $this;
     }
 
@@ -312,7 +322,6 @@ class Post
     public function setContent($content)
     {
         $this->content = $content;
-
         return $this;
     }
 
@@ -336,7 +345,6 @@ class Post
     public function setSource($source)
     {
         $this->source = $source;
-
         return $this;
     }
 
@@ -405,33 +413,86 @@ class Post
     /**
      * Add tag.
      *
-     * @param \Kami\ContentBundle\Entity\Tag $tag
+     * @param Tag $tag
      *
      * @return Post
      */
-    public function addTag(\Kami\ContentBundle\Entity\Tag $tag)
+    public function addTag(Tag $tag): self
     {
-        $this->tags[] = $tag;
+        if (!$this->tags->contains($tag)) {
+            $this->tags[] = $tag;
+            $tag->addPost($this);
+        }
+        return $this;
+    }
 
+    /**
+     * @param  ArrayCollection
+     * @return $this
+     */
+    public function setTags($tags)
+    {
+        $this->tags = $tags;
         return $this;
     }
 
     /**
      * Remove tag.
      *
-     * @param \Kami\ContentBundle\Entity\Tag $tag
+     * @param $tag
      *
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeTag(\Kami\ContentBundle\Entity\Tag $tag)
+    public function removeTag($tag)
     {
         return $this->tags->removeElement($tag);
     }
 
     /**
+     * @return ArrayCollection
+     */
+    public function getTagsAddedBy()
+    {
+        return $this->tagsAddedBy;
+    }
+
+    /**
+     * @param TagAddedBy $tagAddedBy
+     * @return Post
+     */
+    public function addTagAddedBy($tagAddedBy): self
+    {
+            $this->tagsAddedBy[] = $tagAddedBy;
+
+         return $this;
+    }
+
+    /**
+     * @param ArrayCollection $tagsAddedBy
+     *
+     * @return Post
+     */
+    public function setTagsAddedBy ($tagsAddedBy): self
+    {
+        $this->tagsAddedBy = $tagsAddedBy;
+
+        return $this;
+    }
+
+
+    /**
+     * @param TagAddedBy $tagsAddedBy
+     * @return boolean
+     */
+    public function removeTagsAddedBy ($tagsAddedBy)
+    {
+        return $this->tagsAddedBy->removeElement($tagsAddedBy);
+    }
+
+    /**
      * Get tags.
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return ArrayCollection
      */
     public function getTags()
     {
@@ -508,16 +569,5 @@ class Post
     {
         return $this->validatedBy;
     }
-
-    /**
-     * @param $tags
-     * @return $this
-     */
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
-        return $this;
-    }
-
 
 }
