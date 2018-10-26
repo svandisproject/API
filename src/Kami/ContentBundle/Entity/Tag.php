@@ -63,6 +63,7 @@ class Tag
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @MaxDepth(2)
      */
     private $posts;
 

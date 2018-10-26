@@ -110,6 +110,7 @@ class Post
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\Relation
+     * @MaxDepth(2)
      */
     private $tags;
 
@@ -129,6 +130,7 @@ class Post
      * @ORM\ManyToOne(targetEntity="Kami\WorkerBundle\Entity\Worker")
      * @Api\Relation()
      * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     * @MaxDepth(2)
      */
     private $createdBy;
 
@@ -139,6 +141,7 @@ class Post
      * @ORM\ManyToMany(targetEntity="Kami\WorkerBundle\Entity\Worker", inversedBy="validatedPosts")
      * @Api\Relation()
      * @ORM\JoinTable(name="worker_validated_posts")
+     * @MaxDepth(2)
      */
     private $validatedBy;
 
@@ -148,6 +151,7 @@ class Post
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Relation
+     * @MaxDepth(2)
      */
     private $assets;
 
@@ -158,6 +162,7 @@ class Post
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\Relation
+     * @MaxDepth(2)
      */
     private $likedBy;
 
