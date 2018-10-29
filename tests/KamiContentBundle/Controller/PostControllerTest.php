@@ -44,7 +44,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'test',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -59,7 +59,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'test',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -74,7 +74,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'test',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 200);
@@ -91,7 +91,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'test',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 400);
@@ -105,7 +105,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'http://test.com',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 200);
@@ -120,7 +120,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'http://test.com',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 400);
@@ -134,7 +134,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'http://test.com',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ], [], [], null, true, true);
         $this->assertJsonResponse($response, 200);
@@ -148,7 +148,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'http://test.com/1',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ], [], [], null, true, true);
 
@@ -158,7 +158,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'http://test.com/1',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ], [], [], null, true, true);
         $this->assertJsonResponse($response, 400);
@@ -172,7 +172,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'test',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -187,7 +187,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'test',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2000 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 400);
@@ -203,7 +203,7 @@ class PostControllerTest extends ApiTestCase
                 'url' => 'http://test2.com',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2001 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 400);
@@ -217,7 +217,7 @@ class PostControllerTest extends ApiTestCase
                 'title' => 'test2',
                 'content' => 'test',
                 'source' => 'test',
-                'published_at' => '01-01-2001 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
         $this->assertJsonResponse($response, 200);
@@ -233,7 +233,7 @@ class PostControllerTest extends ApiTestCase
                 'content' => 'test',
                 'source' => 'test',
                 'tags' => [1],
-                'published_at' => '01-01-2001 00:00:00'
+                'published_at' => '2000-01-01 00:00:00'
             ]
         ]);
 
