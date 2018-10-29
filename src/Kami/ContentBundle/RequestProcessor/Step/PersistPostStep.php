@@ -74,7 +74,7 @@ class PersistPostStep extends AbstractStep
                     if(!in_array($tag, $existedPostTagIds)) {
                             $postTag = new TagAddedBy();
                             $postTag->setPost($entity);
-                            $postTag->setUser($this->tokenStorage->getToken()->getUser());
+                            $postTag->setUser(/** @scrutinizer ignore-type */$this->tokenStorage->getToken()->getUser());
                             $postTag->setTag($this->doctrine->getRepository(Tag::class)->findOneBy(['id' => $tag]));
                             $entity->addTagAddedBy($postTag);
                             $this->doctrine->getManager()->persist($postTag);
