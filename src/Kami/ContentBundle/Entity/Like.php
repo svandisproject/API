@@ -13,7 +13,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Table(name="post_liked_by")
  * @ORM\Entity(repositoryClass="Kami\ContentBundle\Repository\LikeRepository")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
- * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
+ * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
  * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
