@@ -372,12 +372,7 @@ class Post
      */
     public function setPublishedAt($publishedAt)
     {
-        if (!$publishedAt instanceof \DateTime) {
-            $this->publishedAt = \DateTime::createFromFormat('d-m-Y g:i:s', $publishedAt);
-            return $this;
-        }
         $this->publishedAt = $publishedAt;
-
         return $this;
     }
 

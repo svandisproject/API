@@ -5,6 +5,7 @@ filter:
     excluded_paths:
         - 'src/Kami/IcoBundle/Entity/Finance.php'
         - 'src/Kami/IcoBundle/Entity/Ico.php'
+        - 'src/Kami/AssetBundle/Entity/TradableToken.php'
 tools:
     php_mess_detector:
         config:
