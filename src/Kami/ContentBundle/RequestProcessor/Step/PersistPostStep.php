@@ -6,6 +6,7 @@ use Doctrine\Bundle\DoctrineBundle\Registry;
 use Kami\Component\RequestProcessor\Artifact;
 use Kami\Component\RequestProcessor\ArtifactCollection;
 use Kami\Component\RequestProcessor\Step\AbstractStep;
+use Kami\ContentBundle\Entity\Post;
 use Kami\ContentBundle\Entity\TagAddedBy;
 use Kami\ContentBundle\Entity\Tag;
 use Kami\WorkerBundle\Entity\Worker;
@@ -58,28 +59,9 @@ class PersistPostStep extends AbstractStep
                $entity->setCreatedBy($this->tokenStorage->getToken()->getUser());
             }
             if(isset($request->request->get('post')['tags'])) {
-                $existedPostTagIds = [];
-                $postTagsExisted = $this->doctrine->getRepository(TagAddedBy::class)->findBy([
-                    'post' => $entity->getId()
-                ]);
-                foreach ($postTagsExisted as $existedData) {
-                    if ($existedData->getUser()->getId() !== $this->tokenStorage->getToken()->getUser()->getId()) {
-                        $existedPostTagIds[] = $existedData->getTag()->getId();
-                    } else {
-                        $this->doctrine->getManager()->remove($existedData);
-                    }
-                }
-                $this->doctrine->getManager()->flush();
-                foreach(($request->request->get('post')['tags']) as $tag) {
-                    if(!in_array($tag, $existedPostTagIds)) {
-                            $postTag = new TagAddedBy();
-                            $postTag->setPost($entity);
-                            $postTag->setUser(/** @scrutinizer ignore-type */$this->tokenStorage->getToken()->getUser());
-                            $postTag->setTag($this->doctrine->getRepository(Tag::class)->findOneBy(['id' => $tag]));
-                            $entity->addTagAddedBy($postTag);
-                            $this->doctrine->getManager()->persist($postTag);
-                    }
-                };
+                $newTags = $request->request->get('post')['tags'];
+                $existedPostTagIds = $this->clearTagAddedByUserData($entity, $newTags);
+                $this->addTagToPostIfNotExist($newTags, $existedPostTagIds, $entity);
             }
             $this->doctrine->getManager()->persist($entity);
             $this->doctrine->getManager()->flush();
@@ -112,4 +94,66 @@ class PersistPostStep extends AbstractStep
         return ['validation', 'entity', 'access_granted'];
     }
 
+    /**
+     * @param Post $entity
+     * @return array
+     */
+    private function clearTagAddedByUserData($entity, $newTags)
+    {
+        $existedPostTagIds = [];
+
+        $postTagsExisted = $this->removeExtraTags($entity, $newTags);
+
+        foreach ($postTagsExisted as $existedData) {
+            if ($existedData->getUser()->getId() !== $this->tokenStorage->getToken()->getUser()->getId()) {
+                $existedPostTagIds[] = $existedData->getTag()->getId();
+            } else {
+                $this->doctrine->getManager()->remove($existedData);
+            }
+        }
+        $this->doctrine->getManager()->flush();
+        return $existedPostTagIds;
+    }
+
+    /**
+     * @param $newTags
+     * @param $existedPostTagIds
+     * @param $entity
+     */
+    private function addTagToPostIfNotExist($newTags, $existedPostTagIds, $entity)
+    {
+        foreach($newTags as $tag) {
+            if(!in_array($tag, $existedPostTagIds)) {
+                $postTag = new TagAddedBy();
+                $postTag->setPost($entity);
+                $postTag->setUser(/** @scrutinizer ignore-type */$this->tokenStorage->getToken()->getUser());
+                $postTag->setTag($this->doctrine->getRepository(Tag::class)->findOneBy(['id' => $tag]));
+                $entity->addTagAddedBy($postTag);
+                $this->doctrine->getManager()->persist($postTag);
+            }
+        }
+    }
+
+    private function removeExtraTags($entity, $newTags)
+    {
+        $tagsIds = [];
+        $postTagsExisted = $this->doctrine->getRepository(TagAddedBy::class)->findBy([
+            'post' => $entity->getId()
+        ]);
+        foreach ($postTagsExisted as $existedTag) {
+            $tagsIds[] = $existedTag->getTag()->getId();
+        }
+
+        $extraTags = array_diff( $tagsIds, $newTags);
+        foreach ($extraTags as $extraTag) {
+            $tagAddedBy = $this->doctrine->getRepository(TagAddedBy::class)->findOneBy(['tag'=>$extraTag]);
+            $this->doctrine->getManager()->remove($tagAddedBy);
+        }
+
+        $this->doctrine->getManager()->flush();
+
+        return $this->doctrine->getRepository(TagAddedBy::class)->findBy([
+            'post' => $entity->getId()
+        ]);
+    }
 }
