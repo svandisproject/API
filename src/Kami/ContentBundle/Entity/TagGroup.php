@@ -57,6 +57,15 @@ class TagGroup
     private $tags;
 
     /**
+     * @ORM\Column(type="boolean", nullable=true)
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $multiple = false;
+
+    /**
      * TagGroup constructor.
      */
     public function __construct()
@@ -122,6 +131,25 @@ class TagGroup
             $this->tags = $tag;
             $tag->setGroup($this);
         }
+        return $this;
+    }
+
+    /**
+     * @return boolean|null
+     */
+    public function getMultiple(): ?bool
+    {
+        return $this->multiple;
+    }
+
+    /**
+     * @param boolean $multiple
+     *
+     * @return self
+     */
+    public function setMultiple($multiple = false): self
+    {
+        $this->multiple = $multiple;
         return $this;
     }
 
