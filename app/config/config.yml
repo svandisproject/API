@@ -168,3 +168,11 @@ gesdinet_jwt_refresh_token:
 sensio_framework_extra:
     router:
         annotations: false
+
+jms_serializer:
+    metadata:
+        auto_detection: true
+        directories:
+            FOSUserBundle:
+                path: "@KamiUserBundle/Resources/config/serializer/"
+                namespace_prefix: "FOS\\UserBundle"
