@@ -5,10 +5,12 @@ namespace Kami\UserBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Serializer;
 use Kami\ContentBundle\Entity\Like;
 use Kami\Util\TokenGenerator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Kami\ApiCoreBundle\Annotation as Api;
+use JMS\Serializer\Annotation\Exclude;
 
 
 /**
@@ -40,6 +42,7 @@ class User extends BaseUser
      * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Exclude()
      */
     private $likedPosts;
 
@@ -50,6 +53,7 @@ class User extends BaseUser
      * @Api\CanBeCreatedBy({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_USER", "ROLE_ADMIN"})
+     * @Exclude()
      */
     private $addedTags;
 
