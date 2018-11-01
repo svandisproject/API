@@ -404,10 +404,12 @@ class TradableToken
 
     /**
      * @param int|null $age
+     * @return self
      */
-    public function setAge($age): void
+    public function setAge(?int $age): self
     {
         $this->age = $age;
+        return $this;
     }
 
     /**
@@ -420,10 +422,12 @@ class TradableToken
 
     /**
      * @param string|null $algorithm
+     * @return self
      */
-    public function setAlgorithm($algorithm): void
+    public function setAlgorithm(?string $algorithm): self
     {
         $this->algorithm = $algorithm;
+        return $this;
     }
 
     /**
@@ -436,10 +440,12 @@ class TradableToken
 
     /**
      * @param float|null $avgVolumeWeeks52
+     * @return self
      */
-    public function setAvgVolumeWeeks52($avgVolumeWeeks52): void
+    public function setAvgVolumeWeeks52(?float $avgVolumeWeeks52): self
     {
         $this->avgVolumeWeeks52 = $avgVolumeWeeks52;
+        return $this;
     }
 
     /**
@@ -452,10 +458,12 @@ class TradableToken
 
     /**
      * @param int|null $circulatingSupply
+     * @return self
      */
-    public function setCirculatingSupply($circulatingSupply): void
+    public function setCirculatingSupply(?int $circulatingSupply): self
     {
         $this->circulatingSupply = $circulatingSupply;
+        return $this;
     }
 
     /**
@@ -468,10 +476,12 @@ class TradableToken
 
     /**
      * @param string|null $discord
+     * @return self
      */
-    public function setDiscord($discord): void
+    public function setDiscord(?string $discord): self
     {
         $this->discord = $discord;
+        return $this;
     }
 
     /**
@@ -484,10 +494,12 @@ class TradableToken
 
     /**
      * @param string|null $facebook
+     * @return self
      */
-    public function setFacebook($facebook): void
+    public function setFacebook(?string $facebook): self
     {
         $this->facebook = $facebook;
+        return $this;
     }
 
     /**
@@ -500,10 +512,12 @@ class TradableToken
 
     /**
      * @param int|null $icoAmount
+     * @return self
      */
-    public function setIcoAmount($icoAmount): void
+    public function setIcoAmount(?int $icoAmount): self
     {
         $this->icoAmount = $icoAmount;
+        return $this;
     }
 
     /**
@@ -516,10 +530,12 @@ class TradableToken
 
     /**
      * @param float|null $initialPrice
+     * @return self
      */
-    public function setInitialPrice($initialPrice): void
+    public function setInitialPrice(?float $initialPrice): self
     {
         $this->initialPrice = $initialPrice;
+        return $this;
     }
 
     /**
@@ -532,10 +548,12 @@ class TradableToken
 
     /**
      * @param float|null $lastPrice
+     * @return self
      */
-    public function setLastPrice($lastPrice): void
+    public function setLastPrice($lastPrice): ?self
     {
         $this->lastPrice = $lastPrice;
+        return $this;
     }
 
     /**
@@ -548,10 +566,12 @@ class TradableToken
 
     /**
      * @param float|null $marketCap
+     * @return self
      */
-    public function setMarketCap($marketCap): void
+    public function setMarketCap(?float $marketCap): self
     {
         $this->marketCap = $marketCap;
+        return $this;
     }
 
     /**
@@ -564,10 +584,12 @@ class TradableToken
 
     /**
      * @param int|null $maxSupply
+     * @return self
      */
-    public function setMaxSupply($maxSupply): void
+    public function setMaxSupply(?int $maxSupply): self
     {
         $this->maxSupply = $maxSupply;
+        return $this;
     }
 
     /**
@@ -580,10 +602,12 @@ class TradableToken
 
     /**
      * @param string|null $medium
+     * @return self
      */
-    public function setMedium($medium): void
+    public function setMedium(?string $medium): self
     {
         $this->medium = $medium;
+        return $this;
     }
 
     /**
@@ -596,10 +620,12 @@ class TradableToken
 
     /**
      * @param int|null $mediumFollowers
+     * @return self
      */
-    public function setMediumFollowers($mediumFollowers): void
+    public function setMediumFollowers(?int $mediumFollowers): self
     {
         $this->mediumFollowers = $mediumFollowers;
+        return $this;
     }
 
     /**
@@ -612,10 +638,12 @@ class TradableToken
 
     /**
      * @param float|null $price
+     * @return self
      */
-    public function setPrice($price): void
+    public function setPrice(?float $price): self
     {
         $this->price = $price;
+        return $this;
     }
 
     /**
@@ -628,10 +656,12 @@ class TradableToken
 
     /**
      * @param float|null $priceChangeDay
+     * @return self
      */
-    public function setPriceChangeDay($priceChangeDay): void
+    public function setPriceChangeDay(?float $priceChangeDay): self
     {
         $this->priceChangeDay = $priceChangeDay;
+        return $this;
     }
 
     /**
@@ -644,10 +674,12 @@ class TradableToken
 
     /**
      * @param float|null $priceChangeHour
+     * @return self
      */
-    public function setPriceChangeHour($priceChangeHour): void
+    public function setPriceChangeHour(?float $priceChangeHour): self
     {
         $this->priceChangeHour = $priceChangeHour;
+        return $this;
     }
 
     /**
@@ -660,10 +692,12 @@ class TradableToken
 
     /**
      * @param float|null $priceChangeMonth
+     * @return self
      */
-    public function setPriceChangeMonth($priceChangeMonth): void
+    public function setPriceChangeMonth(?float $priceChangeMonth): self
     {
         $this->priceChangeMonth = $priceChangeMonth;
+        return $this;
     }
 
     /**
@@ -676,10 +710,12 @@ class TradableToken
 
     /**
      * @param float|null $priceChangePercent
+     * @return self
      */
-    public function setPriceChangePercent($priceChangePercent): void
+    public function setPriceChangePercent(?float $priceChangePercent): self
     {
         $this->priceChangePercent = $priceChangePercent;
+        return $this;
     }
 
     /**
@@ -692,10 +728,12 @@ class TradableToken
 
     /**
      * @param float|null $priceChangeSixMonth
+     * @return self
      */
-    public function setPriceChangeSixMonth($priceChangeSixMonth): void
+    public function setPriceChangeSixMonth($priceChangeSixMonth): self
     {
         $this->priceChangeSixMonth = $priceChangeSixMonth;
+        return $this;
     }
 
     /**
@@ -708,10 +746,12 @@ class TradableToken
 
     /**
      * @param string|null $reddit
+     * @return self
      */
-    public function setReddit($reddit): void
+    public function setReddit(?string $reddit): self
     {
         $this->reddit = $reddit;
+        return $this;
     }
 
     /**
@@ -724,10 +764,12 @@ class TradableToken
 
     /**
      * @param int|null $redditSubscriber
+     * @return self
      */
-    public function setRedditSubscriber($redditSubscriber): void
+    public function setRedditSubscriber(?int $redditSubscriber): self
     {
         $this->redditSubscriber = $redditSubscriber;
+        return $this;
     }
 
     /**
@@ -740,10 +782,12 @@ class TradableToken
 
     /**
      * @param float|null $returnOnIco
+     * @return self
      */
-    public function setReturnOnIco($returnOnIco): void
+    public function setReturnOnIco(?float $returnOnIco): self
     {
         $this->returnOnIco = $returnOnIco;
+        return $this;
     }
 
     /**
@@ -756,10 +800,12 @@ class TradableToken
 
     /**
      * @param string|null $sector
+     * @return self
      */
-    public function setSector($sector): void
+    public function setSector(?string $sector): self
     {
         $this->sector = $sector;
+        return $this;
     }
 
     /**
@@ -932,10 +978,12 @@ class TradableToken
 
     /**
      * @param mixed $asset
+     * @return self
      */
-    public function setAsset($asset): void
+    public function setAsset($asset): self
     {
         $this->asset = $asset;
+        return $this;
     }
 
     /**
@@ -947,50 +995,56 @@ class TradableToken
     }
 
     /**
-     * @return float
+     * @return float | null
      */
-    public function getChange(): float
+    public function getChange(): ?float
     {
         return $this->change;
     }
 
     /**
-     * @param float $change
+     * @param float | null $change
+     * @return self
      */
-    public function setChange(float $change): void
+    public function setChange(?float $change): self
     {
         $this->change = $change;
+        return $this;
     }
 
     /**
-     * @return float
+     * @return float | null
      */
-    public function getWeeklyChange(): float
+    public function getWeeklyChange(): ?float
     {
         return $this->weeklyChange;
     }
 
     /**
-     * @param float $weeklyChange
+     * @param float|null $weeklyChange
+     * @return self
      */
-    public function setWeeklyChange(float $weeklyChange): void
+    public function setWeeklyChange(?float $weeklyChange): self
     {
         $this->weeklyChange = $weeklyChange;
+        return $this;
     }
 
     /**
-     * @return float
+     * @return float | null
      */
-    public function getYearToDayChange(): float
+    public function getYearToDayChange(): ?float
     {
         return $this->yearToDayChange;
     }
 
     /**
-     * @param float $yearToDayChange
+     * @param float|null $yearToDayChange
+     * @return self
      */
-    public function setYearToDayChange(float $yearToDayChange): void
+    public function setYearToDayChange(?float $yearToDayChange): self
     {
         $this->yearToDayChange = $yearToDayChange;
+        return $this;
     }
 }

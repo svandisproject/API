@@ -23,7 +23,6 @@ kami_api_core:
     - { name: market-cap, entity: Kami\AssetBundle\Entity\MarketCap}
     - { name: token-type, entity: Kami\AssetBundle\Entity\TokenType}
     - { name: token-type-standard, entity: Kami\AssetBundle\Entity\TokenTypeStandard}
-    - { name: tradable-token, entity: Kami\AssetBundle\Entity\TradableToken}
     - { name: volume, entity: Kami\AssetBundle\Entity\Volume}
 
     - { name: tag-group, entity: Kami\ContentBundle\Entity\TagGroup }
