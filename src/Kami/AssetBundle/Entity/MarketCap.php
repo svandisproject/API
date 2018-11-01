@@ -16,6 +16,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\AnonymousAccess()
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class MarketCap
 {
@@ -74,19 +75,21 @@ class MarketCap
     }
 
     /**
-     * @return float
+     * @return float | null
      */
-    public function getMarketCap()
+    public function getMarketCap(): ?float
     {
         return $this->marketCap;
     }
 
     /**
-     * @param float $marketCap
+     * @param float|null $marketCap
+     * @return self
      */
-    public function setMarketCap($marketCap): void
+    public function setMarketCap($marketCap): self
     {
         $this->marketCap = $marketCap;
+        return $this;
     }
 
     /**
@@ -112,10 +115,12 @@ class MarketCap
 
     /**
      * @param integer $circulatingSupply
+     * @return self
      */
-    public function setCirculatingSupply($circulatingSupply)
+    public function setCirculatingSupply($circulatingSupply): self
     {
         $this->circulatingSupply = $circulatingSupply;
+        return $this;
     }
 
     /**
@@ -127,15 +132,17 @@ class MarketCap
     }
 
     /**
-     * @param integer $volume24
+     * @param integer|null $volume24
+     * @return self
      */
-    public function setVolume24($volume24)
+    public function setVolume24($volume24): self
     {
         $this->volume24 = $volume24;
+        return $this;
     }
 
     /**
-     * @return integer
+     * @return integer|null
      */
     public function getVolume24()
     {
