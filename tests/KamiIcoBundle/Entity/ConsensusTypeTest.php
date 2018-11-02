@@ -1,43 +1,44 @@
 <?php
 
 
-namespace Kami\ContentBundle\Tests\Controller;
+namespace Kami\IcoBundle\Tests;
+
 
 use Kami\Util\TestCase\ApiTestCase;
 
-class TagGroupControllerTest extends ApiTestCase
+class ConsensusTypeTest extends ApiTestCase
 {
     public function testIndexLoggedInAsAnonymous()
     {
-        $response = $this->request('GET', '/api/tag-group');
+        $response = $this->request('GET', '/api/consensus-type');
         $this->assertJsonResponse($response, 403);
     }
 
     public function testIndexLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/tag-group');
+        $response = $this->request('GET', '/api/consensus-type');
         $this->assertJsonResponse($response, 200);
     }
 
     public function testIndexLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('GET', '/api/tag-group');
+        $response = $this->request('GET', '/api/consensus-type');
         $this->assertJsonResponse($response, 200);
     }
 
     public function testFilterLoggedInAsAnonymous()
     {
         $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
-        $response = $this->request('GET', '/api/tag-group/filter?filter=' . $filter);
+        $response = $this->request('GET', '/api/consensus-type/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 403);
     }
 
     public function testCreateLoggedInAsAnonymous()
     {
-        $response = $this->request('POST', '/api/tag-group', [
-            'tag_group' => [
+        $response = $this->request('POST', '/api/consensus-type', [
+            'consensus_type' => [
                 'title' => 'test'
             ]
         ]);
@@ -47,8 +48,8 @@ class TagGroupControllerTest extends ApiTestCase
     public function testCreateLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('POST', '/api/tag-group', [
-            'tag_group' => [
+        $response = $this->request('POST', '/api/consensus-type', [
+            'consensus_type' => [
                 'title' => 'test'
             ]
         ]);
@@ -58,8 +59,8 @@ class TagGroupControllerTest extends ApiTestCase
     public function testCreateLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('POST', '/api/tag-group', [
-            'tag_group' => [
+        $response = $this->request('POST', '/api/consensus-type', [
+            'consensus_type' => [
                 'title' => 'test'
             ]
         ]);
@@ -70,8 +71,8 @@ class TagGroupControllerTest extends ApiTestCase
 
     public function testCreateByWorker()
     {
-        $response = $this->requestByWorker('POST', '/api/tag-group', [
-            'tag_group' => [
+        $response = $this->requestByWorker('POST', '/api/consensus-type', [
+            'consensus_type' => [
                 'title' => 'test'
             ]
         ]);
@@ -82,7 +83,7 @@ class TagGroupControllerTest extends ApiTestCase
     {
         $this->logInAsAdmin();
         $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
-        $response = $this->request('GET', '/api/tag-group/filter?filter=' . $filter);
+        $response = $this->request('GET', '/api/consensus-type/filter?filter=' . $filter);
         $this->assertEquals('test', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
     }
@@ -91,15 +92,15 @@ class TagGroupControllerTest extends ApiTestCase
     {
         $this->logInAsUser();
         $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
-        $response = $this->request('GET', '/api/tag-group/filter?filter=' . $filter);
+        $response = $this->request('GET', '/api/consensus-type/filter?filter=' . $filter);
         $this->assertEquals('test', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
     }
 
     public function testUpdateLoggedInAsAnonymous()
     {
-        $response = $this->request('PUT', '/api/tag-group/1', [
-            'tagP_group' => [
+        $response = $this->request('PUT', '/api/consensus-type/1', [
+            'consensus_type' => [
                 'title' => 'test2'
             ]
         ]);
@@ -109,8 +110,8 @@ class TagGroupControllerTest extends ApiTestCase
     public function testUpdateLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('PUT', '/api/tag-group/1', [
-            'tag_group' => [
+        $response = $this->request('PUT', '/api/consensus-type/1', [
+            'consensus_type' => [
                 'title' => 'test2'
             ]
         ]);
@@ -120,8 +121,8 @@ class TagGroupControllerTest extends ApiTestCase
     public function testUpdateLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('PUT', '/api/tag-group/1', [
-            'tag_group' => [
+        $response = $this->request('PUT', '/api/consensus-type/1', [
+            'consensus_type' => [
                 'title' => 'edit'
             ]
         ]);
@@ -133,7 +134,7 @@ class TagGroupControllerTest extends ApiTestCase
     public function testUpdateNotExistedFieldLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('PUT', '/api/tag-group/1', ['tag_group' => [
+        $response = $this->request('PUT', '/api/consensus-type/1', ['consensus_type' => [
             'titl' => 'edit'
         ]]);
         $this->assertJsonResponse($response, 400);
@@ -141,26 +142,26 @@ class TagGroupControllerTest extends ApiTestCase
 
     public function testDeleteLoggedInAsAnonymous()
     {
-        $response = $this->request('DELETE', '/api/tag-group/1');
+        $response = $this->request('DELETE', '/api/consensus-type/1');
         $this->assertJsonResponse($response, 403);
     }
 
-    public function testDeletePostLoggedInAsUser()
+    public function testDeleteLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('DELETE', '/api/tag-group/1');
+        $response = $this->request('DELETE', '/api/consensus-type/1');
         $this->assertJsonResponse($response, 403);
     }
 
-    public function testDeletePostLoggedInAsAdmin()
+    public function testDeleteLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('DELETE', '/api/tag-group/1');
+        $response = $this->request('DELETE', '/api/consensus-type/1');
         $this->assertEquals(204, $response->getStatusCode());
     }
 
     public function getModelKeys()
     {
-        return ['title', 'enabled', 'multiple'];
+        return ['title'];
     }
 }
