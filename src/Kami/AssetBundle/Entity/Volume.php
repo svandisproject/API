@@ -97,9 +97,9 @@ class Volume
     }
 
     /**
-     * @return Asset
+     * @return Asset|null
      */
-    public function getAsset(): Asset
+    public function getAsset(): ?Asset
     {
         return $this->asset;
     }
@@ -138,9 +138,9 @@ class Volume
     }
 
     /**
-     * @return \DateTime
+     * @return \DateTime|null
      */
-    public function getAddedTime(): \DateTime
+    public function getAddedTime(): ?\DateTime
     {
         return $this->addedTime;
     }
