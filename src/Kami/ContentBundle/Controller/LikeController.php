@@ -32,14 +32,18 @@ class LikeController extends Controller
 
         $sql = "SELECT l.liked_post_id
                 FROM post_liked_by l
-                WHERE l.created_at>'$from'
-                AND l.created_at<'$to'
+                WHERE l.created_at > ?
+                AND l.created_at < ?
                 GROUP BY l.liked_post_id
                 ORDER BY COUNT(l.liked_post_id)
                 DESC;
                 ";
         $em = $this->getDoctrine()->getManager();
         $stmt = $em->getConnection()->prepare($sql);
+
+        $stmt->bindValue(1, $from);
+        $stmt->bindValue(2, $to);
+
         $stmt->execute();
         $posts= [];
         foreach($stmt->fetchAll() as $post){

@@ -11,6 +11,16 @@ parameters:
         - build_serializer
         - serialize
 
+    kami.tag_index_strategy:
+        - get_reflection_from_request
+        - validate_resource_access
+        - get_query_builder
+        - build_select_query
+        - sort
+        - paginate_tag
+        - build_serializer
+        - serialize
+
     kami.like_creation_strategy:
         - get_reflection_from_request
         - validate_resource_access
@@ -41,13 +51,22 @@ parameters:
         - serialize
 
 services:
-    kami.request_processor.validate_post.step:
-        class: Kami\ContentBundle\RequestProcessor\Step\ValidatePostStep
+    kami.request_processor.paginate_tag.step:
+        class: Kami\ContentBundle\RequestProcessor\Step\PaginateTagStep
         arguments:
-            - "@doctrine"
-            - "@security.token_storage"
+            - "10000"
+            - "100000"
         tags:
-            - { name: "kami_api_core.strategy_step", shortcut: "validate_post" }
+            - { name: "kami_api_core.strategy_step", shortcut: "paginate_tag" }
+
+    kami.request_processor.validate_post.step:
+            class: Kami\ContentBundle\RequestProcessor\Step\ValidatePostStep
+            arguments:
+                - "@doctrine"
+                - "@security.token_storage"
+            tags:
+                - { name: "kami_api_core.strategy_step", shortcut: "validate_post" }
+
     kami.request_processor.persist_post.step:
         class: Kami\ContentBundle\RequestProcessor\Step\PersistPostStep
         arguments:
