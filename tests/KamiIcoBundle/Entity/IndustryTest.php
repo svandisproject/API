@@ -6,39 +6,40 @@ namespace Kami\IcoBundle\Tests;
 
 use Kami\Util\TestCase\ApiTestCase;
 
-class DevStagesTest extends ApiTestCase
+class IndustryTest extends ApiTestCase
 {
+
     public function testIndexLoggedInAsAnonymous()
     {
-        $response = $this->request('GET', '/api/dev-stages');
+        $response = $this->request('GET', '/api/industry');
         $this->assertJsonResponse($response, 403);
     }
 
     public function testIndexLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/dev-stages');
+        $response = $this->request('GET', '/api/industry');
         $this->assertJsonResponse($response, 200);
     }
 
     public function testIndexLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('GET', '/api/dev-stages');
+        $response = $this->request('GET', '/api/industry');
         $this->assertJsonResponse($response, 200);
     }
 
     public function testFilterLoggedInAsAnonymous()
     {
         $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
-        $response = $this->request('GET', '/api/dev-stages/filter?filter=' . $filter);
+        $response = $this->request('GET', '/api/industry/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 403);
     }
 
     public function testCreateLoggedInAsAnonymous()
     {
-        $response = $this->request('POST', '/api/dev-stages', [
-            'dev_stages' => [
+        $response = $this->request('POST', '/api/industry', [
+            'industry' => [
                 'title' => 'test'
             ]
         ]);
@@ -48,8 +49,8 @@ class DevStagesTest extends ApiTestCase
     public function testCreateLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('POST', '/api/dev-stages', [
-            'dev_stages' => [
+        $response = $this->request('POST', '/api/industry', [
+            'industry' => [
                 'title' => 'test'
             ]
         ]);
@@ -59,8 +60,8 @@ class DevStagesTest extends ApiTestCase
     public function testCreateLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('POST', '/api/dev-stages', [
-            'dev_stages' => [
+        $response = $this->request('POST', '/api/industry', [
+            'industry' => [
                 'title' => 'test'
             ]
         ]);
@@ -71,8 +72,8 @@ class DevStagesTest extends ApiTestCase
 
     public function testCreateByWorker()
     {
-        $response = $this->requestByWorker('POST', '/api/dev-stages', [
-            'dev_stages' => [
+        $response = $this->requestByWorker('POST', '/api/industry', [
+            'industry' => [
                 'title' => 'test'
             ]
         ]);
@@ -83,7 +84,7 @@ class DevStagesTest extends ApiTestCase
     {
         $this->logInAsAdmin();
         $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
-        $response = $this->request('GET', '/api/dev-stages/filter?filter=' . $filter);
+        $response = $this->request('GET', '/api/industry/filter?filter=' . $filter);
         $this->assertEquals('test', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
     }
@@ -92,15 +93,15 @@ class DevStagesTest extends ApiTestCase
     {
         $this->logInAsUser();
         $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
-        $response = $this->request('GET', '/api/dev-stages/filter?filter=' . $filter);
+        $response = $this->request('GET', '/api/industry/filter?filter=' . $filter);
         $this->assertEquals('test', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
     }
 
     public function testUpdateLoggedInAsAnonymous()
     {
-        $response = $this->request('PUT', '/api/dev-stages/1', [
-            'dev_stages' => [
+        $response = $this->request('PUT', '/api/industry/1', [
+            'industry' => [
                 'title' => 'test2'
             ]
         ]);
@@ -110,8 +111,8 @@ class DevStagesTest extends ApiTestCase
     public function testUpdateLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('PUT', '/api/dev-stages/1', [
-            'dev_stages' => [
+        $response = $this->request('PUT', '/api/industry/1', [
+            'industry' => [
                 'title' => 'test2'
             ]
         ]);
@@ -121,8 +122,8 @@ class DevStagesTest extends ApiTestCase
     public function testUpdateLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('PUT', '/api/dev-stages/1', [
-            'dev_stages' => [
+        $response = $this->request('PUT', '/api/industry/1', [
+            'industry' => [
                 'title' => 'edit'
             ]
         ]);
@@ -134,7 +135,7 @@ class DevStagesTest extends ApiTestCase
     public function testUpdateNotExistedFieldLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('PUT', '/api/dev-stages/1', ['dev_stages' => [
+        $response = $this->request('PUT', '/api/industry/1', ['industry' => [
             'titl' => 'edit'
         ]]);
         $this->assertJsonResponse($response, 400);
@@ -142,27 +143,26 @@ class DevStagesTest extends ApiTestCase
 
     public function testDeleteLoggedInAsAnonymous()
     {
-        $response = $this->request('DELETE', '/api/dev-stages/1');
+        $response = $this->request('DELETE', '/api/industry/1');
         $this->assertJsonResponse($response, 403);
     }
 
     public function testDeleteLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('DELETE', '/api/dev-stages/1');
+        $response = $this->request('DELETE', '/api/industry/1');
         $this->assertJsonResponse($response, 403);
     }
 
     public function testDeleteLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('DELETE', '/api/dev-stages/1');
+        $response = $this->request('DELETE', '/api/industry/1');
         $this->assertEquals(204, $response->getStatusCode());
     }
 
     public function getModelKeys()
     {
-       return ['title'];
+        return ['title'];
     }
-
 }

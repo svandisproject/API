@@ -33,7 +33,7 @@ kami_api_core:
     - { name: consensus-type, entity: Kami\IcoBundle\Entity\ConsensusType }
     - { name: department, entity: Kami\IcoBundle\Entity\Department }
     - { name: dev-stages, entity: Kami\IcoBundle\Entity\DevStages }
-    - { name: indusry, entity: Kami\IcoBundle\Entity\Industry }
+    - { name: industry, entity: Kami\IcoBundle\Entity\Industry }
     - { name: modd-signal, entity: Kami\IcoBundle\Entity\MoodSignal}
     - { name: person, entity: Kami\IcoBundle\Entity\Person}
     - { name: sale-stage, entity: Kami\IcoBundle\Entity\SaleStage}
