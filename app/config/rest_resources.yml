@@ -34,7 +34,7 @@ kami_api_core:
     - { name: department, entity: Kami\IcoBundle\Entity\Department }
     - { name: dev-stages, entity: Kami\IcoBundle\Entity\DevStages }
     - { name: industry, entity: Kami\IcoBundle\Entity\Industry }
-    - { name: modd-signal, entity: Kami\IcoBundle\Entity\MoodSignal}
+    - { name: mood-signal, entity: Kami\IcoBundle\Entity\MoodSignal}
     - { name: person, entity: Kami\IcoBundle\Entity\Person}
     - { name: sale-stage, entity: Kami\IcoBundle\Entity\SaleStage}
     - { name: ico, entity: Kami\IcoBundle\Entity\Ico }
