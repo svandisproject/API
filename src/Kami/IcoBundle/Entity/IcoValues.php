@@ -3,6 +3,7 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use const false;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -14,6 +15,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  * @Gedmo\Loggable
  */
 class IcoValues
@@ -28,100 +31,120 @@ class IcoValues
 
     /**
      * @var bool
-     * @ORM\Column(name="white_list", type="boolean")
+     * @ORM\Column(name="white_list", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $whiteList = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="staking", type="boolean")
+     * @ORM\Column(name="staking", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $staking = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="masternodes", type="boolean")
+     * @ORM\Column(name="masternodes", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $masternodes = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="dividend", type="boolean")
+     * @ORM\Column(name="dividend", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $dividend = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="burning", type="boolean")
+     * @ORM\Column(name="burning", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $burning = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="vesting", type="boolean")
+     * @ORM\Column(name="vesting", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $vesting = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="vcs", type="boolean")
+     * @ORM\Column(name="vcs", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $vcs = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="accredited_investors", type="boolean")
+     * @ORM\Column(name="accredited_investors", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $accreditedInvestors = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="demoAvailability", type="boolean")
+     * @ORM\Column(name="demoAvailability", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $demoAvailability = false;
 
     /**
      * @var bool
-     * @ORM\Column(name="smartContractAudit", type="boolean")
+     * @ORM\Column(name="smartContractAudit", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $smartContractAudit = false;
@@ -152,6 +175,8 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $projectCompletion;
@@ -161,6 +186,8 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $listingOrder;
@@ -170,15 +197,19 @@ class IcoValues
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $kyc;
 
     /**
-     * @ORM\Column(name="open_presale", type="boolean")
+     * @ORM\Column(name="open_presale", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $openPresale = false;
@@ -196,11 +227,11 @@ class IcoValues
     /**
      * Set whiteList.
      *
-     * @param bool $whiteList
+     * @param bool $whiteList|null
      *
      * @return IcoValues
      */
-    public function setWhiteList($whiteList)
+    public function setWhiteList($whiteList = false)
     {
         $this->whiteList = $whiteList;
 
@@ -220,11 +251,11 @@ class IcoValues
     /**
      * Set staking.
      *
-     * @param bool $staking
+     * @param bool $staking|null
      *
      * @return IcoValues
      */
-    public function setStaking($staking)
+    public function setStaking($staking = false)
     {
         $this->staking = $staking;
 
@@ -244,11 +275,11 @@ class IcoValues
     /**
      * Set masternodes.
      *
-     * @param bool $masternodes
+     * @param bool $masternodes|null
      *
      * @return IcoValues
      */
-    public function setMasternodes($masternodes)
+    public function setMasternodes($masternodes = false)
     {
         $this->masternodes = $masternodes;
 
@@ -268,11 +299,11 @@ class IcoValues
     /**
      * Set dividend.
      *
-     * @param bool $dividend
+     * @param bool $dividend|null
      *
      * @return IcoValues
      */
-    public function setDividend($dividend)
+    public function setDividend($dividend = false)
     {
         $this->dividend = $dividend;
 
@@ -292,11 +323,11 @@ class IcoValues
     /**
      * Set burning.
      *
-     * @param bool $burning
+     * @param bool $burning|null
      *
      * @return IcoValues
      */
-    public function setBurning($burning)
+    public function setBurning($burning = false)
     {
         $this->burning = $burning;
 
@@ -316,11 +347,11 @@ class IcoValues
     /**
      * Set demoAvailability.
      *
-     * @param bool $demoAvailability
+     * @param bool $demoAvailability|null
      *
      * @return IcoValues
      */
-    public function setDemoAvailability($demoAvailability)
+    public function setDemoAvailability($demoAvailability = false)
     {
         $this->demoAvailability = $demoAvailability;
 
@@ -340,11 +371,11 @@ class IcoValues
     /**
      * Set smartContractAudit.
      *
-     * @param bool $smartContractAudit
+     * @param bool $smartContractAudit|null
      *
      * @return IcoValues
      */
-    public function setSmartContractAudit($smartContractAudit)
+    public function setSmartContractAudit($smartContractAudit = false)
     {
         $this->smartContractAudit = $smartContractAudit;
 
@@ -398,7 +429,7 @@ class IcoValues
     }
 
     /**
-     * @param integer $listingOrder
+     * @param integer $listingOrder | null
      * @return self
      */
     public function setListingOrder($listingOrder)
@@ -442,7 +473,7 @@ class IcoValues
     }
 
     /**
-     * @param float $kyc
+     * @param float $kyc | null
      * @return self
      */
     public function setKyc($kyc)
@@ -460,20 +491,20 @@ class IcoValues
     }
 
     /**
-     * @param boolean $openPresale
+     * @param boolean $openPresale | null
      * @return self
      */
-    public function setOpenPresale($openPresale)
+    public function setOpenPresale($openPresale = false)
     {
         $this->openPresale = $openPresale;
         return $this;
     }
 
     /**
-     * @param bool $vesting
+     * @param bool $vesting | null
      * @return self
      */
-    public function setVesting(bool $vesting)
+    public function setVesting(?bool $vesting = false )
     {
         $this->vesting = $vesting;
         return $this;
@@ -488,10 +519,10 @@ class IcoValues
     }
 
     /**
-     * @param bool $vcs
+     * @param bool $vcs | null
      * @return self
      */
-    public function setVcs(bool $vcs)
+    public function setVcs(?bool $vcs = false)
     {
         $this->vcs = $vcs;
         return $this;
@@ -506,19 +537,19 @@ class IcoValues
     }
 
     /**
-     * @param bool $accreditedInvestors
+     * @param bool $accreditedInvestors | null
      * @return self
      */
-    public function setAccreditedInvestors(bool $accreditedInvestors)
+    public function setAccreditedInvestors(?bool $accreditedInvestors = false)
     {
         $this->accreditedInvestors = $accreditedInvestors;
         return $this;
     }
 
     /**
-     * @return bool
+     * @return boolean|null
      */
-    public function getAccreditedInvestors(): bool
+    public function getAccreditedInvestors(): ?bool
     {
         return $this->accreditedInvestors;
     }
