@@ -13,6 +13,11 @@ kami_api_core:
           create: "kami.like_creation_strategy"
           delete: "kami.like_delete_strategy"
 
+    - name: tag
+      entity: Kami\ContentBundle\Entity\Tag
+      strategies:
+           index: "kami.tag_index_strategy"
+
     - { name: asset, entity: Kami\AssetBundle\Entity\Asset }
     - { name: token, entity: Kami\AssetBundle\Entity\TradableToken}
     - { name: market-cap, entity: Kami\AssetBundle\Entity\MarketCap}
@@ -21,7 +26,6 @@ kami_api_core:
     - { name: tradable-token, entity: Kami\AssetBundle\Entity\TradableToken}
     - { name: volume, entity: Kami\AssetBundle\Entity\Volume}
 
-    - { name: tag, entity: Kami\ContentBundle\Entity\Tag }
     - { name: tag-group, entity: Kami\ContentBundle\Entity\TagGroup }
 
     - { name: filter-settings, entity: Kami\FilterBundle\Entity\FilterSettings }
