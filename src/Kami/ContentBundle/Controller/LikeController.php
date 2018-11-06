@@ -30,14 +30,29 @@ class LikeController extends Controller
         $from = date('Y-m-d H:i:s', strtotime("-1 $period" , strtotime(date('Y-m-d H:i:s'))));
         $to = date('Y-m-d H:i:s');
 
+        $sql = "SELECT l.liked_post_id
+                FROM post_liked_by l
+                WHERE l.created_at>'$from'
+                AND l.created_at<'$to'
+                GROUP BY l.liked_post_id
+                ORDER BY COUNT(l.liked_post_id)
+                DESC;
+                ";
+        $em = $this->getDoctrine()->getManager();
+        $stmt = $em->getConnection()->prepare($sql);
+        $stmt->execute();
+        $posts= [];
+        foreach($stmt->fetchAll() as $post){
+            array_push($posts, $post['liked_post_id']);
+        }
+
         $queryBuilder = $this->getDoctrine()
-            ->getRepository("KamiContentBundle:Like")
-            ->createQueryBuilder('l')
-            ->select('l')
-            ->where("l.createdAt>'$from'")
-            ->andWhere("l.createdAt<'$to'")
-            ->addGroupBy('l.post', 'l.id')
-            ->addOrderBy('COUNT(l.post)', 'DESC');
+            ->getRepository("KamiContentBundle:Post")
+            ->createQueryBuilder('p')
+            ->select('p')
+            ->where("p.id IN(:posts)")
+            ->setParameter('posts', array_values($posts))
+            ->orderBy('p.id','DESC');
 
         $perPage = $request->query->getInt('per_page', 10);
         if ($perPage > $this->maxPerPage) {
