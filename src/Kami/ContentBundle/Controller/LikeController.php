@@ -3,6 +3,7 @@
 
 namespace Kami\ContentBundle\Controller;
 
+use Kami\ApiCoreBundle\Bridge\JmsSerializer\ContextFactory\ApiContextFactory;
 use Kami\ApiCoreBundle\Model\Pageable;
 use Kami\ApiCoreBundle\Model\PageRequest;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
