@@ -1,44 +1,45 @@
 <?php
 
 
-namespace Kami\AssetBundle\Tests\Controller;
+namespace Kami\IcoBundle\Tests;
 
 
+use function dump;
 use Kami\Util\TestCase\ApiTestCase;
 
-class TokenTypeControllerTest extends ApiTestCase
+class DevStagesTest extends ApiTestCase
 {
     public function testIndexLoggedInAsAnonymous()
     {
-        $response = $this->request('GET', '/api/token-type');
+        $response = $this->request('GET', '/api/dev-stages');
         $this->assertJsonResponse($response, 403);
     }
 
     public function testIndexLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('GET', '/api/token-type');
+        $response = $this->request('GET', '/api/dev-stages');
         $this->assertJsonResponse($response, 200);
     }
 
     public function testIndexLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('GET', '/api/token-type');
+        $response = $this->request('GET', '/api/dev-stages');
         $this->assertJsonResponse($response, 200);
     }
 
     public function testFilterLoggedInAsAnonymous()
     {
         $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
-        $response = $this->request('GET', '/api/token-type/filter?filter=' . $filter);
+        $response = $this->request('GET', '/api/dev-stages/filter?filter=' . $filter);
         $this->assertJsonResponse($response, 403);
     }
 
     public function testCreateLoggedInAsAnonymous()
     {
-        $response = $this->request('POST', '/api/token-type', [
-            'token_type' => [
+        $response = $this->request('POST', '/api/dev-stages', [
+            'dev_stages' => [
                 'title' => 'test'
             ]
         ]);
@@ -48,9 +49,9 @@ class TokenTypeControllerTest extends ApiTestCase
     public function testCreateLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('POST', '/api/token-type', [
-            'token_type' => [
-                'title' => 'test',
+        $response = $this->request('POST', '/api/dev-stages', [
+            'dev_stages' => [
+                'title' => 'test'
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -59,8 +60,8 @@ class TokenTypeControllerTest extends ApiTestCase
     public function testCreateLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('POST', '/api/token-type', [
-            'token_type' => [
+        $response = $this->request('POST', '/api/dev-stages', [
+            'dev_stages' => [
                 'title' => 'test'
             ]
         ]);
@@ -71,8 +72,8 @@ class TokenTypeControllerTest extends ApiTestCase
 
     public function testCreateByWorker()
     {
-        $response = $this->requestByWorker('POST', '/api/token-type', [
-            'token_type' => [
+        $response = $this->requestByWorker('POST', '/api/dev-stages', [
+            'dev_stages' => [
                 'title' => 'test'
             ]
         ]);
@@ -83,7 +84,7 @@ class TokenTypeControllerTest extends ApiTestCase
     {
         $this->logInAsAdmin();
         $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
-        $response = $this->request('GET', '/api/token-type/filter?filter=' . $filter);
+        $response = $this->request('GET', '/api/dev-stages/filter?filter=' . $filter);
         $this->assertEquals('test', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
     }
@@ -92,16 +93,16 @@ class TokenTypeControllerTest extends ApiTestCase
     {
         $this->logInAsUser();
         $filter = json_encode(base64_encode('[{"type": "eq", "property": "title", "value": "test"}]'));
-        $response = $this->request('GET', '/api/token-type/filter?filter=' . $filter);
+        $response = $this->request('GET', '/api/dev-stages/filter?filter=' . $filter);
         $this->assertEquals('test', $this->getResponseData($response)['content'][0]['title']);
         $this->assertJsonResponse($response, 200);
     }
 
     public function testUpdateLoggedInAsAnonymous()
     {
-        $response = $this->request('PUT', '/api/token-type/1', [
-            'token_type' => [
-                'title' => 'test1'
+        $response = $this->request('PUT', '/api/dev-stages/1', [
+            'dev_stages' => [
+                'title' => 'test2'
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -110,9 +111,9 @@ class TokenTypeControllerTest extends ApiTestCase
     public function testUpdateLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('PUT', '/api/token-type/1', [
-            'token_type' => [
-                'title' => 'test'
+        $response = $this->request('PUT', '/api/dev-stages/1', [
+            'dev_stages' => [
+                'title' => 'test2'
             ]
         ]);
         $this->assertJsonResponse($response, 403);
@@ -121,8 +122,8 @@ class TokenTypeControllerTest extends ApiTestCase
     public function testUpdateLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('PUT', '/api/token-type/1', [
-            'token_type' => [
+        $response = $this->request('PUT', '/api/dev-stages/1', [
+            'dev_stages' => [
                 'title' => 'edit'
             ]
         ]);
@@ -134,32 +135,35 @@ class TokenTypeControllerTest extends ApiTestCase
     public function testUpdateNotExistedFieldLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('PUT', '/api/token-type/1', ['token_type' => ['titl' => 'edit']]);
+        $response = $this->request('PUT', '/api/dev-stages/1', ['consensus_type' => [
+            'titl' => 'edit'
+        ]]);
         $this->assertJsonResponse($response, 400);
     }
 
     public function testDeleteLoggedInAsAnonymous()
     {
-        $response = $this->request('DELETE', '/api/token-type/1');
+        $response = $this->request('DELETE', '/api/dev-stages/1');
         $this->assertJsonResponse($response, 403);
     }
 
     public function testDeleteLoggedInAsUser()
     {
         $this->logInAsUser();
-        $response = $this->request('DELETE', '/api/token-type/1');
+        $response = $this->request('DELETE', '/api/dev-stages/1');
         $this->assertJsonResponse($response, 403);
     }
 
     public function testDeleteLoggedInAsAdmin()
     {
         $this->logInAsAdmin();
-        $response = $this->request('DELETE', '/api/token-type/1');
+        $response = $this->request('DELETE', '/api/dev-stages/1');
         $this->assertEquals(204, $response->getStatusCode());
     }
 
     public function getModelKeys()
     {
-        return ['title'];
+       return ['title'];
     }
+
 }

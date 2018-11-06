@@ -2,6 +2,7 @@
 
 namespace Kami\IcoBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -11,7 +12,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
  *
  * @ORM\Table(name="development")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\DevelopmentRepository")
- * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -32,7 +32,6 @@ class Development
      * @var bool
      *
      * @ORM\Column(name="native_blockchain", type="boolean")
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -44,7 +43,6 @@ class Development
      * @var string
      *
      * @ORM\Column(name="whitepaper_link", type="string", length=255, nullable=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -56,7 +54,6 @@ class Development
      * @var bool
      *
      * @ORM\Column(name="open_source", type="boolean")
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -68,7 +65,6 @@ class Development
      * @var bool
      *
      * @ORM\Column(name="demo_availability", type="boolean")
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -80,7 +76,6 @@ class Development
      * @var string|null
      *
      * @ORM\Column(name="demo_link", type="string", length=255, nullable=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -91,7 +86,6 @@ class Development
     /**
      * @var string|null
      * @ORM\Column(name="github_link", type="string", length=255, nullable=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -103,7 +97,6 @@ class Development
      * @var bool
      *
      * @ORM\Column(name="smart_contract_audit", type="boolean")
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -115,7 +108,6 @@ class Development
      * @var bool
      *
      * @ORM\Column(name="code_audits", type="boolean")
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -127,7 +119,6 @@ class Development
      * @var array
      *
      * @ORM\Column(name="wallet_audit", type="array", nullable=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -137,7 +128,6 @@ class Development
 
     /**
      * @ORM\Column(name="testnet_date", type="datetime", nullable=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -147,7 +137,6 @@ class Development
 
     /**
      * @ORM\Column(name="mainnet_date", type="datetime", nullable=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -159,7 +148,6 @@ class Development
      * @var int|null
      *
      * @ORM\Column(name="projectCompletion", type="integer", nullable=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -168,8 +156,7 @@ class Development
     private $projectCompletion;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\DevStages", inversedBy="development")
-     * @Api\AnonymousAccess()
+     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\DevStages", mappedBy="development")
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
@@ -181,7 +168,6 @@ class Development
     /**
      * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\ConsensusType", inversedBy="development", cascade={"persist"})
      * @Api\Relation()
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -192,13 +178,16 @@ class Development
     /**
      * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="development")
      * @Api\Relation()
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $ico;
+
+    public function __construct() {
+        $this->stages = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -451,7 +440,7 @@ class Development
     }
 
     /**
-     * @return DevStages
+     * @return ArrayCollection
      */
     public function getStages()
     {
@@ -459,14 +448,23 @@ class Development
     }
 
     /**
-     * @param DevStages $stages
+     * @param $stages
      * @return self
      */
-    public function setStages(DevStages $stages)
+    public function setStages($stages)
     {
         $this->stages = $stages;
         return $this;
     }
+
+    public function addStage(DevStages $stage)
+    {
+        if (!$this->stages->contains($stage)) {
+            $this->stages[] = $stage;
+        }
+        return $this;
+    }
+
 
     /**
      * @return ConsensusType
