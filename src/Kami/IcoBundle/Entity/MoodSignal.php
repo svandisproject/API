@@ -14,9 +14,9 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\MoodSignalRepository")
  * @UniqueEntity({"title"})
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
- * @Api\AnonymousAccess()
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class MoodSignal
 {
@@ -34,9 +34,9 @@ class MoodSignal
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
-     * @Api\AnonymousAccess()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $title;
 
