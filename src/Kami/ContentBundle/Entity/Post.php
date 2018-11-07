@@ -159,7 +159,6 @@ class Post
      * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="post", cascade={"persist"})
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\Relation
      * @MaxDepth(2)
