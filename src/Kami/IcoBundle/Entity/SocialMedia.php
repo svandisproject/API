@@ -14,6 +14,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class SocialMedia
 {
@@ -34,6 +35,7 @@ class SocialMedia
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $twitterFollowers;
 
@@ -45,6 +47,7 @@ class SocialMedia
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $mediumFollowers;
 
@@ -56,6 +59,7 @@ class SocialMedia
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $telegramFollowers;
 
@@ -67,16 +71,18 @@ class SocialMedia
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $redditSubscribers;
 
     /**
-     * @ORM\OneToOne(targetEntity="Ico", mappedBy="social_media")
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="social_media")
      * @Api\Relation()
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     protected $ico;
 
@@ -187,15 +193,26 @@ class SocialMedia
     }
 
     /**
-     * @param Ico $ico
+     * @param Ico $ico | null
      *
      * @return self
      */
-    public function setIco($ico)
+    public function setIco(?Ico $ico): self
     {
-        $this->ico = $ico;
-        $ico->setSocialMedia($this);
+        if ($ico) {
+            $this->ico = $ico;
+            $ico->setSocialMedia($this);
+        }
+
         return $this;
+    }
+
+    /**
+     * @return Ico | null
+     */
+    public function getIco(): ?Ico
+    {
+        return $this->ico;
     }
 
 }
