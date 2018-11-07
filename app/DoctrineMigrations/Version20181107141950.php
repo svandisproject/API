@@ -8,19 +8,28 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20181107075137 extends AbstractMigration
+final class Version20181107141950 extends AbstractMigration
 {
     public function up(Schema $schema) : void
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'postgresql', 'Migration can only be executed safely on \'postgresql\'.');
 
+        $this->addSql('ALTER TABLE legal ALTER team_kyc DROP NOT NULL');
+        $this->addSql('ALTER TABLE legal ALTER buisness_model DROP NOT NULL');
+        $this->addSql('ALTER TABLE legal ALTER gdpr_compliant DROP NOT NULL');
+        $this->addSql('ALTER TABLE legal RENAME COLUMN ofice_locations TO office_locations');
         $this->addSql('ALTER TABLE dev_stages ADD development_id INT DEFAULT NULL');
         $this->addSql('ALTER TABLE dev_stages ADD CONSTRAINT FK_CB0C219B0B464C4 FOREIGN KEY (development_id) REFERENCES development (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('CREATE INDEX IDX_CB0C219B0B464C4 ON dev_stages (development_id)');
         $this->addSql('ALTER TABLE development DROP CONSTRAINT fk_c0d6212a8e55e70a');
         $this->addSql('DROP INDEX idx_c0d6212a8e55e70a');
         $this->addSql('ALTER TABLE development DROP stages_id');
+        $this->addSql('ALTER TABLE development ALTER native_blockchain DROP NOT NULL');
+        $this->addSql('ALTER TABLE development ALTER open_source DROP NOT NULL');
+        $this->addSql('ALTER TABLE development ALTER demo_availability DROP NOT NULL');
+        $this->addSql('ALTER TABLE development ALTER smart_contract_audit DROP NOT NULL');
+        $this->addSql('ALTER TABLE development ALTER code_audits DROP NOT NULL');
         $this->addSql('ALTER TABLE ico_values ALTER white_list DROP NOT NULL');
         $this->addSql('ALTER TABLE ico_values ALTER staking DROP NOT NULL');
         $this->addSql('ALTER TABLE ico_values ALTER masternodes DROP NOT NULL');
@@ -43,7 +52,16 @@ final class Version20181107075137 extends AbstractMigration
         $this->addSql('ALTER TABLE dev_stages DROP CONSTRAINT FK_CB0C219B0B464C4');
         $this->addSql('DROP INDEX IDX_CB0C219B0B464C4');
         $this->addSql('ALTER TABLE dev_stages DROP development_id');
+        $this->addSql('ALTER TABLE legal ALTER team_kyc SET NOT NULL');
+        $this->addSql('ALTER TABLE legal ALTER buisness_model SET NOT NULL');
+        $this->addSql('ALTER TABLE legal ALTER GDPR_compliant SET NOT NULL');
+        $this->addSql('ALTER TABLE legal RENAME COLUMN office_locations TO ofice_locations');
         $this->addSql('ALTER TABLE development ADD stages_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE development ALTER native_blockchain SET NOT NULL');
+        $this->addSql('ALTER TABLE development ALTER open_source SET NOT NULL');
+        $this->addSql('ALTER TABLE development ALTER demo_availability SET NOT NULL');
+        $this->addSql('ALTER TABLE development ALTER smart_contract_audit SET NOT NULL');
+        $this->addSql('ALTER TABLE development ALTER code_audits SET NOT NULL');
         $this->addSql('ALTER TABLE development ADD CONSTRAINT fk_c0d6212a8e55e70a FOREIGN KEY (stages_id) REFERENCES dev_stages (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('CREATE INDEX idx_c0d6212a8e55e70a ON development (stages_id)');
         $this->addSql('ALTER TABLE ico_values ALTER white_list SET NOT NULL');
