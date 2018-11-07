@@ -82,3 +82,10 @@ services:
             - "@logger"
          tags:
             - { name: doctrine.event_listener, event: postPersist }
+
+    kami.update_statistic.command:
+          class: Kami\WorkerBundle\StatisticUpdater\UpdateStatisticCommand
+          arguments:
+              - "@doctrine.orm.entity_manager"
+          tags:
+              - { name: 'console.command' }
