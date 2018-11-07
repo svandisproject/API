@@ -74,7 +74,6 @@ class Post
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      */
     private $source;
 
@@ -85,7 +84,6 @@ class Post
      * @Assert\NotBlank()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_WORKER", "ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
      *     options={"widget": "single_text"})
      */
@@ -119,7 +117,6 @@ class Post
      * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\TagAddedBy", mappedBy="post", cascade={"persist"})
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Api\Relation
      * @MaxDepth(3)
@@ -159,7 +156,6 @@ class Post
      * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="post", cascade={"persist"})
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\Relation
      * @MaxDepth(2)
