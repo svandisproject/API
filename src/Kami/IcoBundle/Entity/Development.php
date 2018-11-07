@@ -15,6 +15,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  * @Gedmo\Loggable
  */
 class Development
@@ -31,10 +32,11 @@ class Development
     /**
      * @var bool
      *
-     * @ORM\Column(name="native_blockchain", type="boolean")
+     * @ORM\Column(name="native_blockchain", type="boolean", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $nativeBlockchain = false;
@@ -46,6 +48,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $whitepaperLink;
@@ -53,10 +56,11 @@ class Development
     /**
      * @var bool
      *
-     * @ORM\Column(name="open_source", type="boolean")
+     * @ORM\Column(name="open_source", type="boolean", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $openSource = false;
@@ -64,10 +68,11 @@ class Development
     /**
      * @var bool
      *
-     * @ORM\Column(name="demo_availability", type="boolean")
+     * @ORM\Column(name="demo_availability", type="boolean", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $demoAvailability = false;
@@ -79,6 +84,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $demoLink;
@@ -89,6 +95,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $githubLink;
@@ -96,10 +103,11 @@ class Development
     /**
      * @var bool
      *
-     * @ORM\Column(name="smart_contract_audit", type="boolean")
+     * @ORM\Column(name="smart_contract_audit", type="boolean", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $smartContractAudit = false;
@@ -107,10 +115,11 @@ class Development
     /**
      * @var bool
      *
-     * @ORM\Column(name="code_audits", type="boolean")
+     * @ORM\Column(name="code_audits", type="boolean", nullable=true)
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $codeAudits = false;
@@ -122,6 +131,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $walletAudit;
@@ -131,6 +141,9 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $testnetDate;
@@ -140,6 +153,9 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $mainnetDate;
@@ -151,6 +167,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $projectCompletion;
@@ -161,6 +178,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $stages;
@@ -171,6 +189,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $consensusType;
@@ -181,6 +200,7 @@ class Development
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $ico;

@@ -2,6 +2,7 @@
 
 namespace Kami\IcoBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -16,6 +17,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  * @Gedmo\Loggable
  */
 class Dates
@@ -37,6 +39,9 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $privateSaleStart;
@@ -49,6 +54,9 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $privateSaleEnd;
@@ -61,6 +69,9 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $presaleStart;
@@ -73,6 +84,9 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $presaleEnd;
@@ -85,6 +99,9 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $icoStart;
@@ -97,6 +114,9 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $icoEnd;
@@ -109,6 +129,9 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $crowdsaleStart;
@@ -121,6 +144,9 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      *
      */
@@ -134,36 +160,44 @@ class Dates
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $daysLeft;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $lockup;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true, nullable=true)
+     * @ORM\Column(type="datetime", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Form(type="Symfony\Component\Form\Extension\Core\Type\DateTimeType",
+     *     options={"widget": "single_text"})
      * @Gedmo\Versioned
      */
     private $vesting;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\ICO", mappedBy="dates")
+     * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="dates")
      * @Api\AnonymousAccess()
      * @Api\Relation()
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $ico;
@@ -211,6 +245,9 @@ class Dates
      */
     public function setPrivateSaleEnd($privateSaleEnd = null)
     {
+//        if ($privateSaleEnd && !is_a($privateSaleEnd, DateTime::class)) {
+//            $privateSaleEnd = new DateTime($privateSaleEnd);
+//        }
         $this->privateSaleEnd = $privateSaleEnd;
 
         return $this;
