@@ -13,10 +13,10 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * @ORM\Table(name="sale_stage")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\SaleStageRepository")
  * @UniqueEntity({"title"})
- * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  */
 class SaleStage
 {
@@ -33,10 +33,10 @@ class SaleStage
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
     private $title;
 

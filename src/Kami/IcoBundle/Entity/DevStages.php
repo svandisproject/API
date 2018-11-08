@@ -13,10 +13,10 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @ORM\Table(name="dev_stages")
  * @ORM\Entity(repositoryClass="Kami\IcoBundle\Repository\DevStagesRepository")
  * @UniqueEntity({"title"})
- * @Api\AnonymousAccess()
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  * @Gedmo\Loggable
  */
 class DevStages
@@ -34,18 +34,18 @@ class DevStages
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255, unique=true)
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $title;
 
     /**
-     * @ORM\OneToMany(targetEntity="Kami\IcoBundle\Entity\Development", mappedBy="stages")
+     * @ORM\ManyToOne(targetEntity="Kami\IcoBundle\Entity\Development", inversedBy="stages")
+     * @ORM\JoinColumn(name="development_id", referencedColumnName="id")
      * @Api\Relation()
-     * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -89,18 +89,18 @@ class DevStages
     }
 
     /**
-     * @return Development
+     * @return Development | null
      */
-    public function getDevelopment()
+    public function getDevelopment(): ?Development
     {
         return $this->development;
     }
 
     /**
-     * @param Development $development
+     * @param Development $development | null
      * @return self
      */
-    public function setDevelopment(Development $development)
+    public function setDevelopment(Development $development = null): self
     {
         $this->development = $development;
         return $this;

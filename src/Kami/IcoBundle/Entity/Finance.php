@@ -3,9 +3,12 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use const false;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Gedmo\Mapping\Annotation as Gedmo;
+use function posix_getgid;
 
 
 /**
@@ -17,6 +20,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  * @Gedmo\Loggable
  */
 class Finance
@@ -37,6 +41,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $tokenPriceEth;
@@ -47,6 +52,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $acceptedCurrencies;
@@ -58,6 +64,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $totalSupply;
@@ -70,6 +77,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $saleSupply;
@@ -80,6 +88,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $tokensBeingSold;
@@ -90,6 +99,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $privateSoldTokens;
@@ -100,6 +110,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $presaleSoldTokens;
@@ -110,6 +121,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $crowdsaleSoldTokens;
@@ -120,6 +132,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $totalSupplyValuation;
@@ -130,6 +143,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $tokensToTeam;
@@ -140,6 +154,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $individualCap;
@@ -150,6 +165,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $circulatingSupply;
@@ -160,6 +176,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $teamVestingClif;
@@ -170,6 +187,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $advisorsVestingClif;
@@ -180,6 +198,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $presaleContributorsVestingClif;
@@ -193,6 +212,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $hardCap;
@@ -205,6 +225,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $hardCapEth;
@@ -217,6 +238,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $raisedUsd;
@@ -229,6 +251,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $distribution;
@@ -240,6 +263,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $priceCrypto;
@@ -252,6 +276,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $minCap;
@@ -262,6 +287,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $debts;
@@ -272,6 +298,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $historyOfBankruptcy;
@@ -283,6 +310,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $ico;
@@ -293,16 +321,18 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $vestedTokens;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
+     * @ORM\Column(name="bonuses", type="array", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $bonuses;
@@ -313,6 +343,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $dayToLiquidity;
@@ -325,6 +356,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $majorInvestors;
@@ -335,6 +367,7 @@ class Finance
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $priceAdjustedBonus;
@@ -357,13 +390,13 @@ class Finance
     }
 
     /**
-     * Set acceptedCurrency.
+     * Set acceptedCurrencies.
      *
      * @param array $acceptedCurrencies
      *
      * @return Finance
      */
-    public function setAcceptedCurrency($acceptedCurrencies): self
+    public function setAcceptedCurrencies($acceptedCurrencies): self
     {
         $this->acceptedCurrencies = $acceptedCurrencies;
 
@@ -383,7 +416,7 @@ class Finance
     /**
      * Set totalSupply.
      *
-     * @param int $totalSupply
+     * @param int $totalSupply | null
      *
      * @return Finance
      */
@@ -397,7 +430,7 @@ class Finance
     /**
      * Get totalSupply.
      *
-     * @return int
+     * @return int |null
      */
     public function getTotalSupply()
     {
@@ -405,34 +438,34 @@ class Finance
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getSaleSupply(): int
+    public function getSaleSupply(): ?int
     {
         return $this->saleSupply;
     }
 
     /**
-     * @param int $saleSupply
+     * @param int $saleSupply | null
      *
      * @return self
      */
-    public function setSaleSupply(int $saleSupply): self
+    public function setSaleSupply(?int $saleSupply): self
     {
         $this->saleSupply = $saleSupply;
         return $this;
     }
 
     /**
-     * @return integer
+     * @return integer | null
      */
-    public function getTokensBeingSold()
+    public function getTokensBeingSold(): ?int
     {
         return $this->tokensBeingSold;
     }
 
     /**
-     * @param integer $tokensBeingSold
+     * @param integer $tokensBeingSold | null
      *
      * @return self
      */
@@ -444,19 +477,19 @@ class Finance
     }
 
     /**
-     * @return float
+     * @return float | null
      */
-    public function getHardCap(): float
+    public function getHardCap(): ?float
     {
         return $this->hardCap;
     }
 
     /**
-     * @param float $hardCap
+     * @param float $hardCap | null
      *
      * @return self
      */
-    public function setHardCap(float $hardCap): self
+    public function setHardCap(?float $hardCap): self
     {
         $this->hardCap = $hardCap;
 
@@ -464,15 +497,15 @@ class Finance
     }
 
     /**
-     * @return float
+     * @return float | null
      */
-    public function getRaisedUsd()
+    public function getRaisedUsd(): ?float
     {
         return $this->raisedUsd;
     }
 
     /**
-     * @param float $raisedUsd
+     * @param float $raisedUsd | null
      *
      * @return self
      */
@@ -486,7 +519,7 @@ class Finance
     /**
      * Set distribution.
      *
-     * @param string $distribution
+     * @param string $distribution | null
      *
      * @return Finance
      */
@@ -500,9 +533,9 @@ class Finance
     /**
      * Get distribution.
      *
-     * @return array
+     * @return array | null
      */
-    public function getDistribution()
+    public function getDistribution(): ?array
     {
         return $this->distribution;
     }
@@ -526,15 +559,15 @@ class Finance
      *
      * @return float|null
      */
-    public function getPriceCrypto()
+    public function getPriceCrypto(): ?float
     {
         return $this->priceCrypto;
     }
 
     /**
-     * @return Ico
+     * @return Ico | null
      */
-    public function getIco(): Ico
+    public function getIco(): ?Ico
     {
         return $this->ico;
     }
@@ -561,61 +594,81 @@ class Finance
 
     /**
      * @param string|null $debts
+     * @return self
      */
-    public function setDebts($debts = null)
+    public function setDebts($debts = null): self
     {
         $this->debts = $debts;
+        return $this;
     }
 
     /**
      * @return string|null
      */
-    public function getHistoryOfBankruptcy()
+    public function getHistoryOfBankruptcy(): ?string
     {
         return $this->historyOfBankruptcy;
     }
 
     /**
      * @param string|null $history_of_bankruptcy
+     * @return self
      */
-    public function setHistoryOfBankruptcy($history_of_bankruptcy = null)
+    public function setHistoryOfBankruptcy($history_of_bankruptcy = null): self
     {
         $this->historyOfBankruptcy = $history_of_bankruptcy;
+
+        return $this;
     }
 
     /**
-     * @return string
+     * @return string | null
      */
-    public function getVestedTokens()
+    public function getVestedTokens(): ?string
     {
         return $this->vestedTokens;
     }
 
     /**
-     * @param string $vested_token
+     * @param string $vested_token | null
      *
      * @return self
      */
-    public function setVestedToken($vested_token): self
+    public function setVestedToken($vested_token = null): self
     {
         $this->vestedTokens = $vested_token;
         return $this;
     }
 
     /**
-     * @return array
+     * @return array | null
      */
-    public function getBonuses()
+    public function getBonuses(): ?array
     {
         return $this->bonuses;
     }
 
     /**
      * @param string $bonus
+     * @return self
      */
-    public function addBonus($bonus)
+    public function addBonus($bonus): self
     {
-        $this->bonuses[] = $bonus;
+        if ($bonus) {
+            $this->bonuses[] = $bonus;
+        }
+        return $this;
+    }
+
+    /**
+     * @param $bonuses
+     * @return $this
+     */
+    public function setBonuses($bonuses)
+    {
+        $this->bonuses = $bonuses;
+
+        return $this;
     }
 
     /**
@@ -693,7 +746,7 @@ class Finance
     /**
      * @return float|null
      */
-    public function getMinCap()
+    public function getMinCap(): ?float
     {
         return $this->minCap;
     }
@@ -771,18 +824,18 @@ class Finance
     }
 
     /**
-     * @return int
+     * @return int | null
      */
-    public function getTokensToTeam()
+    public function getTokensToTeam(): ?int
     {
         return $this->tokensToTeam;
     }
 
     /**
-     * @param int $tokensToTeam
+     * @param int $tokensToTeam | null
      * @return self
      */
-    public function setTokensToTeam($tokensToTeam)
+    public function setTokensToTeam($tokensToTeam): self
     {
         $this->tokensToTeam = $tokensToTeam;
         return $this;
@@ -800,7 +853,7 @@ class Finance
      * @param mixed $totalSupplyValuation
      * @return self
      */
-    public function setTotalSupplyValuation($totalSupplyValuation)
+    public function setTotalSupplyValuation($totalSupplyValuation): self
     {
         $this->totalSupplyValuation = $totalSupplyValuation;
         return $this;
@@ -810,45 +863,55 @@ class Finance
      * @param mixed $presaleContributorsVestingClif
      * @return self
      */
-    public function setPresaleContributorsVestingClif($presaleContributorsVestingClif)
+    public function setPresaleContributorsVestingClif($presaleContributorsVestingClif): self
     {
         $this->presaleContributorsVestingClif = $presaleContributorsVestingClif;
         return $this;
     }
 
     /**
-     * @return integer
+     * @return integer | null
      */
-    public function getDayToLiquidity()
+    public function getDayToLiquidity(): ?int
     {
         return $this->dayToLiquidity;
     }
 
     /**
-     * @param int $dayToLiquidity
+     * @param int $dayToLiquidity | null
      * @return self
      */
-    public function setDayToLiquidity($dayToLiquidity)
+    public function setDayToLiquidity($dayToLiquidity): self
     {
         $this->dayToLiquidity = $dayToLiquidity;
         return $this;
     }
 
     /**
-     * @return ArrayCollection
+     * @return Collection | null
      */
-    public function getMajorInvestors()
+    public function getMajorInvestors(): ?Collection
     {
         return $this->majorInvestors;
     }
 
     /**
-     * @param Person $majorInvestor
+     * @param Person $majorInvestor | null
      * @return self
      */
-    public function setMajorInvestor(Person $majorInvestor)
+    public function addMajorInvestor(?Person $majorInvestor): self
     {
         $this->majorInvestors[] = $majorInvestor;
+        return $this;
+    }
+
+    /**
+     * @param $majorInvestors | null
+     * @return self
+     */
+    public function setMajorInvestors(?Person $majorInvestors): self
+    {
+        $this->majorInvestors = $majorInvestors;
         return $this;
     }
 
@@ -856,24 +919,24 @@ class Finance
      * @param Person $majorInvestor
      * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeMajorInvestor(Person $majorInvestor)
+    public function removeMajorInvestor(Person $majorInvestor): bool
     {
         $this->majorInvestors->removeElement($majorInvestor);
     }
 
     /**
-     * @return float
+     * @return float | null
      */
-    public function getPriceAdjustedBonus()
+    public function getPriceAdjustedBonus(): ?float
     {
         return $this->priceAdjustedBonus;
     }
 
     /**
-     * @param float $priceAdjustedBonus
+     * @param float $priceAdjustedBonus | null
      * @return self
      */
-    public function setPriceAdjustedBonus($priceAdjustedBonus)
+    public function setPriceAdjustedBonus($priceAdjustedBonus): self
     {
         $this->priceAdjustedBonus = $priceAdjustedBonus;
         return $this;
@@ -888,7 +951,7 @@ class Finance
     }
 
     /**
-     * @param float $tokenPriceEth
+     * @param float $tokenPriceEth | null
      * @return self
      */
     public function setTokenPriceEth($tokenPriceEth)
@@ -906,11 +969,11 @@ class Finance
     }
 
     /**
-     * @param float $hardCapEth
+     * @param float $hardCapEth | null
      *
      * @return self
      */
-    public function setHardCapEth(float $hardCapEth): self
+    public function setHardCapEth(?float $hardCapEth): self
     {
         $this->hardCapEth = $hardCapEth;
         return $this;

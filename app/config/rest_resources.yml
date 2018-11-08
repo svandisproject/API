@@ -23,7 +23,6 @@ kami_api_core:
     - { name: market-cap, entity: Kami\AssetBundle\Entity\MarketCap}
     - { name: token-type, entity: Kami\AssetBundle\Entity\TokenType}
     - { name: token-type-standard, entity: Kami\AssetBundle\Entity\TokenTypeStandard}
-    - { name: tradable-token, entity: Kami\AssetBundle\Entity\TradableToken}
     - { name: volume, entity: Kami\AssetBundle\Entity\Volume}
 
     - { name: tag-group, entity: Kami\ContentBundle\Entity\TagGroup }
@@ -34,8 +33,8 @@ kami_api_core:
     - { name: consensus-type, entity: Kami\IcoBundle\Entity\ConsensusType }
     - { name: department, entity: Kami\IcoBundle\Entity\Department }
     - { name: dev-stages, entity: Kami\IcoBundle\Entity\DevStages }
-    - { name: indusry, entity: Kami\IcoBundle\Entity\Industry }
-    - { name: modd-signal, entity: Kami\IcoBundle\Entity\MoodSignal}
+    - { name: industry, entity: Kami\IcoBundle\Entity\Industry }
+    - { name: mood-signal, entity: Kami\IcoBundle\Entity\MoodSignal}
     - { name: person, entity: Kami\IcoBundle\Entity\Person}
     - { name: sale-stage, entity: Kami\IcoBundle\Entity\SaleStage}
     - { name: ico, entity: Kami\IcoBundle\Entity\Ico }

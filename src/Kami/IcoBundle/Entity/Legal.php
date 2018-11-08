@@ -3,6 +3,7 @@
 namespace Kami\IcoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use const false;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -15,6 +16,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+ * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
  * @Gedmo\Loggable
  */
 class Legal
@@ -36,6 +38,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $companyName;
@@ -48,6 +51,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $companyUrl;
@@ -60,6 +64,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $companyAddress;
@@ -67,26 +72,28 @@ class Legal
     /**
      * @var array|null
      *
-     * @ORM\Column(name="ofice_locations", type="array", nullable=true)
+     * @ORM\Column(name="office_locations", type="array", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
-    private $oficeLocations;
+    private $officeLocations;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="team_kyc", type="boolean")
+     * @ORM\Column(name="team_kyc", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
-    private $teamKYC =false;
+    private $teamKyc =false;
 
     /**
      * @var array|null
@@ -96,6 +103,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $partnership;
@@ -103,11 +111,12 @@ class Legal
     /**
      * @var bool
      *
-     * @ORM\Column(name="buisness_model", type="boolean")
+     * @ORM\Column(name="buisness_model", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
     private $buisnessModel;
@@ -115,14 +124,15 @@ class Legal
     /**
      * @var bool
      *
-     * @ORM\Column(name="GDPR_compliant", type="boolean")
+     * @ORM\Column(name="GDPR_compliant", type="boolean", nullable=true)
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Gedmo\Versioned
      */
-    private $gDPRCompliant;
+    private $gDprCompliant = false;
 
     /**
      * @ORM\OneToOne(targetEntity="Kami\IcoBundle\Entity\Ico", mappedBy="legal")
@@ -130,6 +140,7 @@ class Legal
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      * @Api\Relation()
      * @Gedmo\Versioned
      */
@@ -219,51 +230,51 @@ class Legal
     }
 
     /**
-     * Set oficeLocations.
+     * Set officeLocations.
      *
-     * @param array|null $oficeLocations
+     * @param array|null $officeLocations
      *
      * @return Legal
      */
-    public function setOficeLocations($oficeLocations = null)
+    public function setOfficeLocations($officeLocations = null)
     {
-        $this->oficeLocations = $oficeLocations;
+        $this->officeLocations = $officeLocations;
 
         return $this;
     }
 
     /**
-     * Get oficeLocations.
+     * Get officeLocations.
      *
      * @return array|null
      */
-    public function getOficeLocations()
+    public function getOfficeLocations()
     {
-        return $this->oficeLocations;
+        return $this->officeLocations;
     }
 
     /**
-     * Set teamKYC.
+     * Set teamKyc.
      *
-     * @param bool $teamKYC
+     * @param bool $teamKyc
      *
      * @return Legal
      */
-    public function setTeamKYC($teamKYC)
+    public function setTeamKyc($teamKyc)
     {
-        $this->teamKYC = $teamKYC;
+        $this->teamKyc = $teamKyc;
 
         return $this;
     }
 
     /**
-     * Get teamKYC.
+     * Get teamKyc.
      *
      * @return bool
      */
-    public function getTeamKYC()
+    public function getTeamKyc()
     {
-        return $this->teamKYC;
+        return $this->teamKyc;
     }
 
     /**
@@ -315,27 +326,27 @@ class Legal
     }
 
     /**
-     * Set gDPRCompliant.
+     * Set gDprCompliant.
      *
-     * @param bool $gDPRCompliant
+     * @param bool $gDprCompliant
      *
      * @return Legal
      */
-    public function setGDPRCompliant($gDPRCompliant)
+    public function setGDprCompliant($gDprCompliant)
     {
-        $this->gDPRCompliant = $gDPRCompliant;
+        $this->gDprCompliant = $gDprCompliant;
 
         return $this;
     }
 
     /**
-     * Get gDPRCompliant.
+     * Get gDprCompliant.
      *
      * @return bool
      */
-    public function getGDPRCompliant()
+    public function getGDprCompliant()
     {
-        return $this->gDPRCompliant;
+        return $this->gDprCompliant;
     }
 
     /**
