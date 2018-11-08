@@ -215,12 +215,11 @@ class PostControllerTest extends ApiTestCase
         $response = $this->request('PUT', '/api/post/1', [
             'post' => [
                 'title' => 'test2',
-                'content' => 'test',
-                'source' => 'test',
-                'published_at' => '2000-01-01 00:00:00'
+                'content' => 'test'
             ]
         ]);
         $this->assertJsonResponse($response, 200);
+        $this->assertEquals("test2", $this->getResponseData($response)['title']);
         $this->assertContainsKeys($response);
     }
 
@@ -231,9 +230,7 @@ class PostControllerTest extends ApiTestCase
             'post' => [
                 'title' => 'test2',
                 'content' => 'test',
-                'source' => 'test',
-                'tags' => [1],
-                'published_at' => '2000-01-01 00:00:00'
+                'tags' => [1]
             ]
         ]);
 
@@ -295,6 +292,6 @@ class PostControllerTest extends ApiTestCase
 
     public function getModelKeys()
     {
-        return ['title', 'content', 'source', 'published_at', 'tags'];
+        return ['title', 'content', 'tags'];
     }
 }
