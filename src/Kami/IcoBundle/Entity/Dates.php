@@ -2,7 +2,6 @@
 
 namespace Kami\IcoBundle\Entity;
 
-use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Kami\ApiCoreBundle\Annotation as Api;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -245,9 +244,7 @@ class Dates
      */
     public function setPrivateSaleEnd($privateSaleEnd = null)
     {
-//        if ($privateSaleEnd && !is_a($privateSaleEnd, DateTime::class)) {
-//            $privateSaleEnd = new DateTime($privateSaleEnd);
-//        }
+
         $this->privateSaleEnd = $privateSaleEnd;
 
         return $this;
