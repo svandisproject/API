@@ -33,7 +33,7 @@ class UserController extends Controller
     public function checkTokenAction(Request $request)
     {
         return new Response(
-            $this->get('jms_serializer')->serialize(['result'=>$this->get('security.token_storage')->getToken()->getUser() == null], 'json'), 200
+            $this->get('jms_serializer')->serialize(['result'=>$this->get('security.token_storage')->getToken()->getUser() != null], 'json'), 200
         );
     }
 }
