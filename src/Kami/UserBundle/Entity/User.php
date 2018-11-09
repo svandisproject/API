@@ -17,7 +17,7 @@ use JMS\Serializer\Annotation\Exclude;
  * @ORM\Entity
  * @ORM\Table(name="`user`")
  * @UniqueEntity("workerToken")
- * @Api\Access({"ROLE_ADMIN"})
+ * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
  */
 class User extends BaseUser
 {
@@ -25,7 +25,7 @@ class User extends BaseUser
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
-     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      */
     protected $id;
 
