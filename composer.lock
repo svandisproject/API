@@ -2291,19 +2291,19 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kamilabs/api-core-bundle.git",
-                "reference": "0c520ed88cfd0d9daf4b43b369adf11f84c254ed"
+                "reference": "2522f90760ba26da8fc98769a5aa85d975c4143a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/0c520ed88cfd0d9daf4b43b369adf11f84c254ed",
-                "reference": "0c520ed88cfd0d9daf4b43b369adf11f84c254ed",
+                "url": "https://api.github.com/repos/kamilabs/api-core-bundle/zipball/2522f90760ba26da8fc98769a5aa85d975c4143a",
+                "reference": "2522f90760ba26da8fc98769a5aa85d975c4143a",
                 "shasum": ""
             },
             "require": {
                 "doctrine/doctrine-bundle": "^1.3",
                 "doctrine/orm": "^2.5 || ^2.7",
                 "jms/serializer-bundle": "^2.4",
-                "kami/request-processor": "dev-master",
+                "kami/request-processor": "^1.1",
                 "pagerfanta/pagerfanta": "^2.0",
                 "php": "^7.1",
                 "symfony/form": "^2.8 || ^3.0 || ^4.0",
@@ -2345,7 +2345,7 @@
                 }
             ],
             "description": "This bundle provides you with easy and flexible REST CRUDs creation",
-            "time": "2018-11-06 12:30:00"
+            "time": "2018-11-06T12:30:00+00:00"
         },
         {
             "name": "kami/icobench-bundle",
@@ -2385,7 +2385,7 @@
                 }
             ],
             "description": "IcoBench API Client Bundle",
-            "time": "2018-06-15 09:31:19"
+            "time": "2018-06-15T09:31:19+00:00"
         },
         {
             "name": "kami/icobench-client",
@@ -2424,7 +2424,7 @@
                 }
             ],
             "description": "ICOBench API Client",
-            "time": "2018-09-21 12:30:32"
+            "time": "2018-09-21T12:30:32+00:00"
         },
         {
             "name": "kami/request-processor",
@@ -2470,7 +2470,7 @@
                 }
             ],
             "description": "Request processor component",
-            "time": "2018-06-01 10:38:23"
+            "time": "2018-06-01T10:38:23+00:00"
         },
         {
             "name": "khepin/yaml-fixtures-bundle",
@@ -4979,7 +4979,7 @@
                 "redis",
                 "symfony"
             ],
-            "time": "2018-11-05 08:00:46"
+            "time": "2018-11-05T08:00:46+00:00"
         },
         {
             "name": "stof/doctrine-extensions-bundle",
