@@ -4,6 +4,7 @@
 namespace Kami\WorkerBundle\StatisticUpdater;
 
 use Doctrine\ORM\EntityManager;
+use Kami\ContentBundle\Entity\Post;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
