@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class FilterPostStep extends FilterStep
 {
-    protected function applyNeFilter($filter, QueryBuilder $queryBuilder, $shortcut, $index)
+    public function applyNeFilter($filter, QueryBuilder $queryBuilder, $shortcut, $index)
     {
         $subQueryBuilder = clone $queryBuilder;
         $subQuery = $subQueryBuilder
