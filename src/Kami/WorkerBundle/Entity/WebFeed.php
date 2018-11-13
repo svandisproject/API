@@ -71,6 +71,15 @@ class WebFeed
     private $timeInterval;
 
     /**
+     * @var bool
+     * @ORM\Column(name="enabled", type="boolean", nullable=true)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     */
+    private $enabled = true;
+
+    /**
      * Get id.
      *
      * @return int
@@ -167,6 +176,25 @@ class WebFeed
     public function setTimeInterval(int $timeInterval): WebFeed
     {
         $this->timeInterval = $timeInterval;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $enabled
+     * @return self
+     */
+    public function setEnabled(bool $enabled = true): self
+    {
+        $this->enabled = $enabled;
 
         return $this;
     }
