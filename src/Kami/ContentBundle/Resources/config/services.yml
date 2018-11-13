@@ -11,6 +11,18 @@ parameters:
         - build_serializer
         - serialize
 
+    kami.post_filter_strategy:
+        - get_reflection_from_request
+        - validate_resource_access
+        - validate_filters
+        - get_query_builder
+        - build_select_query
+        - filter_post
+        - sort
+        - paginate
+        - build_serializer
+        - serialize
+
     kami.tag_index_strategy:
         - get_reflection_from_request
         - validate_resource_access
@@ -58,6 +70,14 @@ services:
             - "100000"
         tags:
             - { name: "kami_api_core.strategy_step", shortcut: "paginate_tag" }
+
+    kami.request_processor.filter_post.step:
+        class: Kami\ContentBundle\RequestProcessor\Step\FilterPostStep
+        arguments:
+            - "@kami.api_core.access_manager"
+            - "@annotations.reader"
+        tags:
+            - { name: "kami_api_core.strategy_step", shortcut: "filter_post" }
 
     kami.request_processor.validate_post.step:
             class: Kami\ContentBundle\RequestProcessor\Step\ValidatePostStep

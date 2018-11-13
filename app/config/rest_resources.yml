@@ -6,6 +6,7 @@ kami_api_core:
       strategies:
           create: "kami.post_creation_strategy"
           update: "kami.post_update_strategy"
+          filter: "kami.post_filter_strategy"
 
     - name: like
       entity: Kami\ContentBundle\Entity\Like
