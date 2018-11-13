@@ -199,5 +199,4 @@ class WebFeed
         return $this;
     }
 
-
 }
