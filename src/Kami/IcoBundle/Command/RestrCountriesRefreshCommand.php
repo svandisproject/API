@@ -39,6 +39,7 @@ class RestrCountriesRefreshCommand extends Command
             $restrCountries = $ico->getRestrictedCountries();
             $correctData = [];
             foreach ($restrCountries as $restrCountry){
+                if($restrCountry)
                 array_push($correctData, $restrCountry);
             }
             $ico->setRestrictedCountries([]);
