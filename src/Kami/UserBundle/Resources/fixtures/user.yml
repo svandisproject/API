@@ -4,6 +4,13 @@ service_calls:
         service: fos_user.user_manager
         method: updateUser
 fixtures:
+    editor:
+        email: editor@apimonster.com
+        plain_password: editor
+        enabled: true
+        roles:
+          - ROLE_EDITOR
+          - ROLE_USER
     admin:
         email: admin@apimonster.com
         plain_password: admin
