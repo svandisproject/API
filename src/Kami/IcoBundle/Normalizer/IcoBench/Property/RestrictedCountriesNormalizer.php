@@ -16,7 +16,8 @@ class RestrictedCountriesNormalizer extends AbstractPropertyNormalizer
 
             foreach ($remoteData as $item) {
                 try {
-                    $restricted[] = Country::getCodeFromName($item['country'], null) ;
+                    if($country = Country::getCodeFromName($item['country'], null))
+                        array_push($restricted, $country);
                 } catch (InvalidCountryName $exception) {}
             }
         }
