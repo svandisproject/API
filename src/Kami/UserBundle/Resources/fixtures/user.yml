@@ -22,3 +22,11 @@ fixtures:
         enabled: true
         worker_token: 1234567890123456
 
+    editor:
+            email: editor@apimonster.com
+            plain_password: editor
+            enabled: true
+            roles:
+              - ROLE_EDITOR
+              - ROLE_USER
+

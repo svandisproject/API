@@ -247,6 +247,18 @@ class PostControllerTest extends ApiTestCase
             ]
         ]);
 
+        $this->assertJsonResponse($response, 400);
+    }
+
+    public function testAddTagToPostloggedAsEditor()
+    {
+        $this->logInAsEditor();
+        $response = $this->request('PUT', '/api/post/1', [
+            'post' => [
+                'tags' => [1, 2]
+            ]
+        ]);
+
         $this->assertJsonResponse($response, 200);
         $this->assertContainsKeys($response);
     }
@@ -254,6 +266,18 @@ class PostControllerTest extends ApiTestCase
     public function testTryDeleteTagFromPostLoggedAsUser()
     {
         $this->logInAsUser();
+        $response = $this->request('PUT', '/api/post/1', [
+            'post' => [
+                'tags' => [2]
+            ]
+        ]);
+
+        $this->assertJsonResponse($response, 403);
+    }
+
+    public function testTryDeleteTagFromPostLoggedAsEditor()
+    {
+        $this->logInAsEditor();
         $response = $this->request('PUT', '/api/post/1', [
             'post' => [
                 'tags' => [2]
