@@ -51,7 +51,7 @@ class Scheduler
     public function getSchedule()
     {
         $feeds = array_merge(
-            $this->doctrine->getRepository(WebFeed::class)->findAll(),
+            $this->doctrine->getRepository(WebFeed::class)->findBy(['enabled' => true]),
             $this->doctrine->getRepository(FacebookFeed::class)->findAll(),
             $this->doctrine->getRepository(TwitterFeed::class)->findAll(),
             $this->doctrine->getRepository(RedditFeed::class)->findAll()
