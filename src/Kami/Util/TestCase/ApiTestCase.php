@@ -86,6 +86,19 @@ abstract class ApiTestCase extends WebTestCase
         $this->token = sprintf('Bearer %s', (json_decode($client->getResponse()->getContent()))->token);
     }
 
+    protected function logInAsEditor()
+    {
+        $client = static::createClient();
+        $client->request(
+            'POST', '/api/login_check', [
+            'username' => 'editor@apimonster.com',
+            'password' => 'editor' ]);
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+
+        $this->token = sprintf('Bearer %s', (json_decode($client->getResponse()->getContent()))->token);
+    }
+
     /**
      * Calls a URI.
      *
