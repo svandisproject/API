@@ -12,6 +12,13 @@ services:
         tags:
             - { name: 'console.command' }
 
+    kami.refresh_restr_countries.command:
+        class: Kami\IcoBundle\Command\RestrCountriesRefreshCommand
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: 'console.command' }
+
     kami.ico_normalizer.abstract:
         class: "%kami.ico_normalizer.abstract.class%"
         abstract: true
