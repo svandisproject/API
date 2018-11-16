@@ -5,6 +5,8 @@ namespace Kami\WorkerBundle\StatisticUpdater;
 
 use Doctrine\ORM\EntityManager;
 use Kami\ContentBundle\Entity\Post;
+use Kami\WorkerBundle\Entity\Stat;
+use Kami\WorkerBundle\Entity\WebFeed;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -44,11 +46,38 @@ class UpdateStatisticCommand extends Command
     {
         while (!$this->emergency) {
 
-            $this->manager->getRepository(Post::class);
+            $webFeeds = $this->manager->getRepository(WebFeed::class)->findAll();
 
-            dump(1);
+            foreach ($webFeeds as $webFeed){
+                $queryBuilderMain = $this->manager->getRepository(Post::class)
+                    ->createQueryBuilder('e')
+                    ->where('e.source LIKE :url')
+                    ->setParameter('url', '%'.$webFeed->getUrl().'%');
 
-//            sleep(1);
+                $queryBuilderToxic = clone $queryBuilderMain;
+                $toxicPosts = $queryBuilderToxic
+                    ->leftJoin('e.tags', 't')
+                    ->where("t.title = 'Toxic'")
+                    ->getQuery()
+                    ->getResult();
+
+                $postsAll = $queryBuilderMain->getQuery()->getResult();
+
+                $stat = $webFeed->getStat() ?: new Stat();
+                $stat->setTotalAmount(count($postsAll));
+                $firstPostCreated = end($postsAll)->getCreatedAt();
+                $stat->setListed($firstPostCreated);
+                $daysListed = (new \DateTime())->diff($firstPostCreated)->days;
+                $stat->setFrequency($daysListed ? (count($postsAll) / $daysListed) : count($postsAll));
+                $stat->setToxicity(!count($toxicPosts) ? 0 : ((count($toxicPosts) / count($postsAll)) * 100));
+
+                $webFeed->setStat($stat);
+                $this->manager->persist($webFeed);
+            }
+
+            $this->manager->flush();
+
+            sleep(2);
         }
     }
 }

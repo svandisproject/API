@@ -72,7 +72,7 @@ class Stat
     private $frequency;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\WorkerBundle\Entity\WebFeed", mappedBy="stat")
+     * @ORM\OneToOne(targetEntity="Kami\WorkerBundle\Entity\WebFeed", inversedBy="stat")
      * @Api\Relation()
      * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})

@@ -81,7 +81,7 @@ class WebFeed
     private $enabled = true;
 
     /**
-     * @ORM\OneToOne(targetEntity="Kami\WorkerBundle\Entity\Stat", mappedBy="webFeed")
+     * @ORM\OneToOne(targetEntity="Kami\WorkerBundle\Entity\Stat", mappedBy="webFeed", cascade={"persist"})
      * @Api\Relation()
      * @Api\AnonymousAccess()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
@@ -93,7 +93,7 @@ class WebFeed
     /**
      * @return Stat
      */
-    public function getStat(): Stat
+    public function getStat(): ?Stat
     {
         return $this->stat;
     }
