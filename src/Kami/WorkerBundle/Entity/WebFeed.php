@@ -81,6 +81,36 @@ class WebFeed
     private $enabled = true;
 
     /**
+     * @ORM\OneToOne(targetEntity="Kami\WorkerBundle\Entity\Stat", mappedBy="webFeed", cascade={"persist"})
+     * @Api\Relation()
+     * @Api\AnonymousAccess()
+     * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     */
+    private $stat;
+
+    /**
+     * @return Stat
+     */
+    public function getStat(): ?Stat
+    {
+        return $this->stat;
+    }
+
+    /**
+     * @param Stat $stat
+     *
+     * @return self
+     */
+    public function setStat($stat): self
+    {
+        $this->stat = $stat;
+
+        return $this;
+    }
+
+    /**
      * Get id.
      *
      * @return int
@@ -199,7 +229,6 @@ class WebFeed
 
         return $this;
     }
-
 
 
 }

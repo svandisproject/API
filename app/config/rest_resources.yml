@@ -53,6 +53,7 @@ kami_api_core:
     - { name: facebook-feed, entity: Kami\WorkerBundle\Entity\FacebookFeed }
     - { name: twitter-feed, entity: Kami\WorkerBundle\Entity\TwitterFeed }
     - { name: reddit-feed, entity: Kami\WorkerBundle\Entity\RedditFeed }
+    - { name: statistics, entity: Kami\WorkerBundle\Entity\Stat }
 
     - name: log
       entity: Kami\WorkerBundle\Logger\Log
