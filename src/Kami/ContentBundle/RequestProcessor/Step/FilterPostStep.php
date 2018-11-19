@@ -18,7 +18,7 @@ class FilterPostStep extends FilterStep
             ->getQuery()
             ->getArrayResult()
         ;
-        $arr = [];
+        $arr = [0];
         foreach ($subQuery as $id) {
             array_push($arr, $id['id']);
         }
