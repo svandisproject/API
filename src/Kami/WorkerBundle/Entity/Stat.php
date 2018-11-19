@@ -9,7 +9,7 @@ use Kami\ApiCoreBundle\Annotation as Api;
  * Stat
  *
  * @ORM\Table(name="stat")
- * @ORM\Entity(repositoryClass="Kami\WorkerBundle\Repository\StatRepository")
+ * @ORM\Entity()
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
  * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})

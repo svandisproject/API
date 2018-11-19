@@ -78,8 +78,8 @@ class UpdateStatisticCommand extends Command
             }
 
             $this->manager->flush();
-
-            sleep(2);
+            $output->writeln('Successfully updated web-feed statistics');
+            sleep(60);
         }
     }
 }

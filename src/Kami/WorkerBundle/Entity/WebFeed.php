@@ -105,6 +105,7 @@ class WebFeed
      */
     public function setStat($stat): self
     {
+        $stat->setWebFeed($this);
         $this->stat = $stat;
 
         return $this;
