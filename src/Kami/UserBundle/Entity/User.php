@@ -36,6 +36,24 @@ class User extends BaseUser
     private $workerToken;
 
     /**
+     * @ORM\Column(name="onboarded", type="smallint")
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $onboarded = 0;
+
+    /**
+     * @ORM\Column(name="eth_addresses", type="array", nullable=true)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $eth_addresses;
+
+    /**
      * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="user", cascade={"persist"})
      * @Api\Relation()
      * @Api\Access({"ROLE_USER", "ROLE_ADMIN"})
@@ -137,4 +155,44 @@ class User extends BaseUser
     {
         $this->workerToken = TokenGenerator::generate(16);
     }
+
+    /**
+     * @return int
+     */
+    public function getOnboarded()
+    {
+        return $this->onboarded;
+    }
+
+    /**
+     * @param int $onboarded
+     * @return self
+     */
+    public function setOnboarded($onboarded = 0)
+    {
+        $this->onboarded = $onboarded;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getEthAddresses()
+    {
+        return $this->eth_addresses;
+    }
+
+    /**
+     * @param array $eth_addresses
+     *
+     * @return self
+     */
+    public function setEthAddresses($eth_addresses)
+    {
+        $this->eth_addresses = $eth_addresses;
+
+        return $this;
+    }
+
 }
