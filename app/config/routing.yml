@@ -8,6 +8,11 @@ kami_content:
     type:     annotation
     prefix:   /
 
+kami_asset:
+    resource: "@KamiAssetBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 kami_user:
     resource: "@KamiUserBundle/Controller/"
     type:     annotation
