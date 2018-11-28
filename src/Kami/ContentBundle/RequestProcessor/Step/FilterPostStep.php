@@ -24,6 +24,8 @@ class FilterPostStep extends FilterStep
             array_push($arr, $id['id']);
         }
 
-        $queryBuilder->andWhere($queryBuilder->expr()->notIn('e.id', $arr));
+        $queryBuilder
+            ->andWhere($queryBuilder->expr()->notIn('e.id', $arr))
+            ->orWhere($shortcut.' is NULL');
     }
 }
