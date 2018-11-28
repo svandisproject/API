@@ -36,22 +36,50 @@ class User extends BaseUser
     private $workerToken;
 
     /**
-     * @ORM\Column(name="onboarded", type="smallint")
+     * @ORM\Column(name="onboarded", type="boolean")
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $onboarded = 0;
+    private $onboarded = false;
 
     /**
-     * @ORM\Column(name="eth_addresses", type="array", nullable=true)
+     * @ORM\Column(name="centralized", type="boolean")
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
      */
-    private $eth_addresses;
+    private $centralized = false;
+
+
+    /**
+     * @ORM\Column(name="key_addresses", type="array", nullable=true)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $keyAddresses;
+
+    /**
+     * @ORM\Column(name="recovery_addresses", type="array", nullable=true)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $recoveryAddresses;
+
+    /**
+     * @ORM\Column(name="identity_address", type="string", length=150, nullable=true)
+     * @Api\Access({"ROLE_ADMIN"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     */
+    private $identityAddress;
 
     /**
      * @ORM\OneToMany(targetEntity="Kami\ContentBundle\Entity\Like", mappedBy="user", cascade={"persist"})
@@ -157,7 +185,7 @@ class User extends BaseUser
     }
 
     /**
-     * @return int
+     * @return bool|null
      */
     public function getOnboarded()
     {
@@ -165,10 +193,10 @@ class User extends BaseUser
     }
 
     /**
-     * @param int $onboarded
+     * @param boolean $onboarded|null
      * @return self
      */
-    public function setOnboarded($onboarded = 0)
+    public function setOnboarded($onboarded = false)
     {
         $this->onboarded = $onboarded;
 
@@ -176,21 +204,74 @@ class User extends BaseUser
     }
 
     /**
-     * @return array|null
+     * @return bool|null
      */
-    public function getEthAddresses()
+    public function getCentralized()
     {
-        return $this->eth_addresses;
+        return $this->centralized;
     }
 
     /**
-     * @param array $eth_addresses
-     *
+     * @param bool $centralized|null
      * @return self
      */
-    public function setEthAddresses($eth_addresses)
+    public function setCentralized($centralized = false)
     {
-        $this->eth_addresses = $eth_addresses;
+        $this->centralized = $centralized;
+
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getKeyAddresses()
+    {
+        return $this->keyAddresses;
+    }
+
+    /**
+     * @param array $keyAddresses|null
+     */
+    public function setKeyAddresses($keyAddresses)
+    {
+        $this->keyAddresses = $keyAddresses;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getIdentityAddress()
+    {
+        return $this->identityAddress;
+    }
+
+    /**
+     * @param string $identityAddress|null
+     * @return self
+     */
+    public function setIdentityAddress($identityAddress)
+    {
+        $this->identityAddress = $identityAddress;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getRecoveryAddresses()
+    {
+        return $this->recoveryAddresses;
+    }
+
+    /**
+     * @param array $recoveryAddresses|null
+     * @return self
+     */
+    public function setRecoveryAddresses($recoveryAddresses)
+    {
+        $this->recoveryAddresses = $recoveryAddresses;
 
         return $this;
     }
