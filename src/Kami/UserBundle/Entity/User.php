@@ -36,7 +36,7 @@ class User extends BaseUser
     private $workerToken;
 
     /**
-     * @ORM\Column(name="onboarded", type="boolean")
+     * @ORM\Column(name="onboarded", type="boolean", nullable=true)
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
@@ -45,7 +45,7 @@ class User extends BaseUser
     private $onboarded = false;
 
     /**
-     * @ORM\Column(name="centralized", type="boolean")
+     * @ORM\Column(name="centralized", type="boolean", nullable=true)
      * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
