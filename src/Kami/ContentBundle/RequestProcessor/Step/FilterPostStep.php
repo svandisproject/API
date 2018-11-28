@@ -15,6 +15,7 @@ class FilterPostStep extends FilterStep
         $subQuery = $subQueryBuilder
             ->where(sprintf($shortcut.'.%s = :%s_value', $filter['property'], $filter['property'].$index))
             ->setParameter(sprintf('%s_value', $filter['property'].$index), $filter['value'])
+            ->orWhere($shortcut.' is NULL')
             ->getQuery()
             ->getArrayResult()
         ;
@@ -23,8 +24,6 @@ class FilterPostStep extends FilterStep
             array_push($arr, $id['id']);
         }
 
-        $queryBuilder
-            ->andWhere($queryBuilder->expr()->notIn('e.id', $arr))
-            ->orWhere($shortcut.' is NULL');
+        $queryBuilder->andWhere($queryBuilder->expr()->notIn('e.id', $arr));
     }
 }
