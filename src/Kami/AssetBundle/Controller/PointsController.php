@@ -3,8 +3,7 @@
 
 namespace Kami\AssetBundle\Controller;
 
-use Cassandra\Exception\ExecutionException;
-use Cassandra\SimpleStatement;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,34 +19,14 @@ class PointsController extends Controller
      */
     public function getPoints($ticker)
     {
-
-        $cassandra = $this->get('m6web_cassandra.client.default');
-        $serializer = $this->get('jms_serializer');
-
-        $rows = [];
-        $preparedTicker = strtolower(str_replace(" ", "_", trim($ticker)));
-
+        $preparedTicker = strtolower(trim($ticker));
         try {
-            $query = "SELECT  volume, price, time FROM svandis_asset_prices.avg_price_" .
-                $preparedTicker . " WHERE ticker = '$preparedTicker' ORDER BY time DESC ALLOW FILTERING";
-            $statement = new SimpleStatement($query);
-            $result = $cassandra->execute($statement);
-
-        } catch (ExecutionException $exception) {
-            return new Response($exception->getMessage());
+            $data = file_get_contents(__DIR__ . '/../Points/' . $preparedTicker . '.json');
+        } catch (\Exception $exception) {
+            throw new BadRequestHttpException('There is not any points for this ticker ' . $ticker);
         }
 
-        foreach ($result as $row) {
-
-            array_push($rows, [
-                'time' => $row['time']->time(),
-                'price' => $row['price']->value(),
-                'volume' => $row['volume']->value()
-            ]);
-        }
-
-        $response = $serializer->serialize($rows, 'json');
-        return new Response($response);
+        return new Response($data);
 
     }
 
