@@ -53,19 +53,19 @@ class SyncAssetsPricesCommand extends Command
         foreach ($assets as $asset) {
             $preparedTicker = strtolower(trim($asset->getTicker()));
                 try {
-                    $query = "SELECT COUNT(*), volume, price, time FROM svandis_asset_prices.avg_price_" .
-                        $preparedTicker . " WHERE ticker = '$preparedTicker' ORDER BY time ASC LIMIT 3000000 ALLOW FILTERING";
+                    $query = "SELECT volume, price, time FROM svandis_asset_prices.avg_price_" .
+                        $preparedTicker . " WHERE ticker = '$preparedTicker' ORDER BY time ASC ALLOW FILTERING";
                     $statement = new SimpleStatement($query);
                     $result = $this->client->execute($statement);
                     try {
                         $points = [];
-                        foreach ($result as $row) {
+                        foreach ($result as $index => $row) {
                             array_push($points, [
                                 "price" => $row['price']->value(),
                                 "volume" => $row['volume']->value(),
                                 "time" => $row['time']->time()
                             ]);
-                            $output->writeln($row['count']->value());
+                            $output->writeln($index);
                         }
                         file_put_contents(__DIR__ . '/../Points/' . $preparedTicker . '.json', json_encode($points));
                     } catch (\Exception $exception) {
