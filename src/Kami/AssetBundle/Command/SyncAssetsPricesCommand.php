@@ -54,7 +54,7 @@ class SyncAssetsPricesCommand extends Command
             $preparedTicker = strtolower(trim($asset->getTicker()));
                 try {
                     $query = "SELECT volume, price, time FROM svandis_asset_prices.avg_price_" .
-                        $preparedTicker . " WHERE ticker = '$preparedTicker' ORDER BY time ASC ALLOW FILTERING";
+                        $preparedTicker . " WHERE ticker = '$preparedTicker' ORDER BY time ASC LIMIT 3000000 ALLOW FILTERING";
                     $statement = new SimpleStatement($query);
                     $result = $this->client->execute($statement);
                     try {
