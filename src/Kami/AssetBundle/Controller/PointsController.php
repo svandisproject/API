@@ -21,12 +21,16 @@ class PointsController extends Controller
     {
         $preparedTicker = strtolower(trim($ticker));
         try {
-            $data = file_get_contents(__DIR__ . '/../Points/' . $preparedTicker . '.json');
+            $data = file_get_contents(__DIR__ . '/../Points/' . $preparedTicker . '.txt');
         } catch (\Exception $exception) {
             throw new BadRequestHttpException('There is not any points for this ticker ' . $ticker);
         }
+        $newArr = explode(',', $data);
 
-        return new Response($data);
+         dump($newArr); die;
+//         dump( json_encode([$data])); die;
+
+        return new Response(json_encode([$data]));
 
     }
 

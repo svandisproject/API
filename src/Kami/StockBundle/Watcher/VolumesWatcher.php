@@ -19,6 +19,7 @@ use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
 use Psr\Log\LoggerInterface;
 use Pusher\Pusher;
 use Pusher\PusherException;
+use Symfony\Component\Filesystem\Filesystem;
 
 class VolumesWatcher
 {
@@ -267,6 +268,7 @@ class VolumesWatcher
         ]);
 
         $this->cassandra->executeAsync($batch);
+        $this->updatePointsFile($ticker, $avgPrice, $volume);
     }
 
     private function createCassandraAveragePriceTable($ticker, $cassandra)
@@ -281,6 +283,23 @@ class VolumesWatcher
         } catch (ExecutionException $exception) {
             echo $exception->getMessage();
         }
+    }
+
+    private function updatePointsFile($ticker, $avgPrice, $volume)
+    {
+        $time = time();
+        $newData = '{"price"=>'.$avgPrice.',"volume"=>'.$volume.',"time"=>'.$time.'},';
+        $fileSystem = new Filesystem();
+        $fileSystem->appendToFile(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.txt', $newData);
+//        $content = file_get_contents(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json');
+//
+//        $content = ltrim($content, '[');
+//        $newContent = '{"price:"'.$avgPrice.',"volume":'.$volume.","
+
+//        $handler = fopen(__DIR__ . '/../../AssetBundle/Points/ada.json', "r+");
+//        fseek($handler, 1);
+//        fwrite($handler, "want to add this");
+
     }
 
 

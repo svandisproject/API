@@ -53,21 +53,23 @@ class SyncAssetsPricesCommand extends Command
             $preparedTicker = strtolower(trim($asset->getTicker()));
                 try {
                     $query = "SELECT  volume, price, time FROM svandis_asset_prices.avg_price_" .
-                        $preparedTicker . " WHERE ticker = '$preparedTicker' ORDER BY time DESC ALLOW FILTERING";
+                        $preparedTicker . " WHERE ticker = '$preparedTicker' ORDER BY time ASC ALLOW FILTERING";
                     $statement = new SimpleStatement($query);
                     $result = $this->client->execute($statement);
                     try {
-                        $file = fopen(__DIR__ . '/../Points/' . $preparedTicker . '.json', 'x+');
-                        $points = [];
+//                        $file = fopen(__DIR__ . '/../Points/' . $preparedTicker . '.json', 'x+');
+                        $points = '';
                         foreach ($result as $row) {
-                            array_push($points, [
-                                'price' => $row['price']->value(),
-                                'volume' => $row['volume']->value(),
-                                'time' => $row['time']->time(),
-                            ]);
+                            $price = $row['price']->value();
+                            $volume = $row['volume']->value();
+                            $time = $row['time']->time();
+                            $points .= '["price"=>'.$price.',"volume"=>'.$volume.',"time"=>'.$time.'],';
+//                            array_push($points, '{"price":'.$price.',"volume":'.$volume.',"time:"'.$time.'},');
                         }
-                        fwrite($file, json_encode($points));
-                        fclose($file);
+//                        json_encode([fop])
+                        file_put_contents ( __DIR__ . '/../Points/' . $preparedTicker . '.txt', $points) ;
+//                        fwrite($file, json_encode($points));
+//                        fclose($file);
 
                     } catch (\Exception $exception) {
                         $output->writeln($exception->getMessage());
