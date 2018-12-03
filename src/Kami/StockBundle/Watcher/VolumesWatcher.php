@@ -296,7 +296,7 @@ class VolumesWatcher
             file_put_contents ( $filePath, json_encode([
                 ["price"=>$avgPrice,"volume"=>$volume,"time"=>time()]
             ]));
-            chmod($filePath, 0664);
+            chmod($filePath, 0644);
         }
     }
 

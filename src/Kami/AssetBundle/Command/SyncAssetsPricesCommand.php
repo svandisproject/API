@@ -48,7 +48,7 @@ class SyncAssetsPricesCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $assets = $this->entityManager->getRepository(TradableToken::class)->findAll();
-
+        mkdir(__DIR__ . '/../Points', 0755);
         foreach ($assets as $asset) {
             $preparedTicker = strtolower(trim($asset->getTicker()));
                 try {
@@ -67,7 +67,7 @@ class SyncAssetsPricesCommand extends Command
                         }
                         $file = __DIR__ . '/../Points/' . $preparedTicker . '.json';
                         file_put_contents($file, json_encode($points));
-                        chmod($file, 0664);
+                        chmod($file, 0644);
                     } catch (\Exception $exception) {
                         $output->writeln($exception->getMessage());
                     }
