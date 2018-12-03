@@ -48,13 +48,12 @@ class SyncAssetsPricesCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $assets = $this->entityManager->getRepository(TradableToken::class)->findAll();
-        $assets = $this->entityManager->getRepository(TradableToken::class)->findByTicker('ADA');
 
         foreach ($assets as $asset) {
             $preparedTicker = strtolower(trim($asset->getTicker()));
                 try {
                     $query = "SELECT volume, price, time FROM svandis_asset_prices.avg_price_" .
-                        $preparedTicker . " WHERE ticker = '$preparedTicker' ORDER BY time ASC LIMIT 3000000 ALLOW FILTERING";
+                        $preparedTicker . " WHERE ticker = '$preparedTicker' ORDER BY time ASC ALLOW FILTERING";
                     $statement = new SimpleStatement($query);
                     $result = $this->client->execute($statement);
                     try {
@@ -65,7 +64,6 @@ class SyncAssetsPricesCommand extends Command
                                 "volume" => $row['volume']->value(),
                                 "time" => $row['time']->time()
                             ]);
-                            $output->writeln($index);
                         }
                         file_put_contents(__DIR__ . '/../Points/' . $preparedTicker . '.json', json_encode($points));
                     } catch (\Exception $exception) {
