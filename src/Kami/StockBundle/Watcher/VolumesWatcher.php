@@ -289,6 +289,8 @@ class VolumesWatcher
         $filePath = __DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json';
         if (file_exists($filePath)) {
             $file = fopen($filePath, "r+");
+            dump('!!!!!!!!!!!!!');
+            dump($file);
             fseek($file, filesize($filePath)-1);
             fwrite($file, ',{"price":' . $avgPrice . ',"volume":' . $volume . ',"time":' . time() . '}]');
             fclose($file);

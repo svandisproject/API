@@ -87,7 +87,6 @@
             "rm web/app_dev.php",
             "bin/production-update",
             "bin/generate-token",
-            "chmod 755 src/Kami/AssetBundle/Points",
             "bin/console svandis:assets_prices:sync"
         ]
     },
