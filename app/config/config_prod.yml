@@ -48,6 +48,7 @@ m6web_cassandra:
     clients:
         default:
             contact_endpoints: [18.202.128.219, 18.202.139.34, 34.253.68.126]
+            default_pagesize: ~
             credentials:
                 username: "%env(INSTACLUSTR_BROWN_USER)%"
                 password: "%env(INSTACLUSTR_BROWN_PASSWORD)%"
