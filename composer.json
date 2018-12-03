@@ -86,8 +86,8 @@
         "compile": [
             "rm web/app_dev.php",
             "bin/production-update",
-            "bin/generate-token",
-            "bin/console svandis:assets_prices:sync"
+            "bin/generate-token"
+//            "bin/console svandis:assets_prices:sync"
         ]
     },
     "config": {

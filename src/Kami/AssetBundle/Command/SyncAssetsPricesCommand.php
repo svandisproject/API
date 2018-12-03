@@ -58,14 +58,16 @@ class SyncAssetsPricesCommand extends Command
                     $result = $this->client->execute($statement);
                     try {
                         $points = [];
-                        foreach ($result as $row) {
-                            $price = $row['price']->value();
-                            $volume = $row['volume']->value();
-                            $time = $row['time']->time();
-                            array_push($points, ["price"=>$price,"volume"=>$volume,"time"=>$time]);
+                        if($preparedTicker == 'ada') {
+                            foreach ($result as $row) {
+                                $price = $row['price']->value();
+                                $volume = $row['volume']->value();
+                                $time = $row['time']->time();
+                                $output->writeln($time);
+                                array_push($points, ["price" => $price, "volume" => $volume, "time" => $time]);
+                            }
+                            file_put_contents(__DIR__ . '/../Points/' . $preparedTicker . '.json', json_encode($points));
                         }
-                        file_put_contents ( __DIR__ . '/../Points/' . $preparedTicker . '.json', json_encode($points));
-
                     } catch (\Exception $exception) {
                         $output->writeln($exception->getMessage());
                     }
