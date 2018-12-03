@@ -65,7 +65,7 @@ class SyncAssetsPricesCommand extends Command
                                 "volume" => $row['volume']->value(),
                                 "time" => $row['time']->time()
                             ]);
-                            dump($row['time']->time());
+                            $output->writeln($row['time']->time());
                         }
                         file_put_contents(__DIR__ . '/../Points/' . $preparedTicker . '.json', json_encode($points));
                     } catch (\Exception $exception) {
