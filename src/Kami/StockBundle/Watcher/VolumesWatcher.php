@@ -286,15 +286,17 @@ class VolumesWatcher
 
     private function updatePointsFile($ticker, $avgPrice, $volume)
     {
-        if (file_exists(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json')) {
-            $file = fopen(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json', "r+");
-            fseek($file, filesize(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json')-1);
+        $filePath = __DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json';
+        if (file_exists($filePath)) {
+            $file = fopen($filePath, "r+");
+            fseek($file, filesize($filePath)-1);
             fwrite($file, ',{"price":' . $avgPrice . ',"volume":' . $volume . ',"time":' . time() . '}]');
             fclose($file);
         } else {
-            file_put_contents ( __DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json', json_encode([
+            file_put_contents ( $filePath, json_encode([
                 ["price"=>$avgPrice,"volume"=>$volume,"time"=>time()]
             ]));
+            chmod($filePath, 0664);
         }
     }
 

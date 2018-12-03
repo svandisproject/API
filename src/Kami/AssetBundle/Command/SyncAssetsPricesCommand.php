@@ -65,7 +65,9 @@ class SyncAssetsPricesCommand extends Command
                                 "time" => $row['time']->time()
                             ]);
                         }
-                        file_put_contents(__DIR__ . '/../Points/' . $preparedTicker . '.json', json_encode($points));
+                        $file = __DIR__ . '/../Points/' . $preparedTicker . '.json';
+                        file_put_contents($file, json_encode($points));
+                        chmod($file, 0664);
                     } catch (\Exception $exception) {
                         $output->writeln($exception->getMessage());
                     }
