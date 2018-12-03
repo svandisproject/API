@@ -48,7 +48,6 @@ class SyncAssetsPricesCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $assets = $this->entityManager->getRepository(TradableToken::class)->findAll();
-        mkdir(__DIR__ . '/../Points', 0755);
         foreach ($assets as $asset) {
             $preparedTicker = strtolower(trim($asset->getTicker()));
                 try {
