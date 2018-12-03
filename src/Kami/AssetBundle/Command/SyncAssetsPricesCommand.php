@@ -57,19 +57,14 @@ class SyncAssetsPricesCommand extends Command
                     $statement = new SimpleStatement($query);
                     $result = $this->client->execute($statement);
                     try {
-//                        $file = fopen(__DIR__ . '/../Points/' . $preparedTicker . '.json', 'x+');
-                        $points = '';
+                        $points = [];
                         foreach ($result as $row) {
                             $price = $row['price']->value();
                             $volume = $row['volume']->value();
                             $time = $row['time']->time();
-                            $points .= '["price"=>'.$price.',"volume"=>'.$volume.',"time"=>'.$time.'],';
-//                            array_push($points, '{"price":'.$price.',"volume":'.$volume.',"time:"'.$time.'},');
+                            array_push($points, ["price"=>$price,"volume"=>$volume,"time"=>$time]);
                         }
-//                        json_encode([fop])
-                        file_put_contents ( __DIR__ . '/../Points/' . $preparedTicker . '.txt', $points) ;
-//                        fwrite($file, json_encode($points));
-//                        fclose($file);
+                        file_put_contents ( __DIR__ . '/../Points/' . $preparedTicker . '.json', json_encode($points));
 
                     } catch (\Exception $exception) {
                         $output->writeln($exception->getMessage());

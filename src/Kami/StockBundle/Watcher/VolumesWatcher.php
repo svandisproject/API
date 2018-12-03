@@ -19,7 +19,6 @@ use M6Web\Bundle\CassandraBundle\Cassandra\Client as CassandraClient;
 use Psr\Log\LoggerInterface;
 use Pusher\Pusher;
 use Pusher\PusherException;
-use Symfony\Component\Filesystem\Filesystem;
 
 class VolumesWatcher
 {
@@ -287,19 +286,16 @@ class VolumesWatcher
 
     private function updatePointsFile($ticker, $avgPrice, $volume)
     {
-        $time = time();
-        $newData = '{"price"=>'.$avgPrice.',"volume"=>'.$volume.',"time"=>'.$time.'},';
-        $fileSystem = new Filesystem();
-        $fileSystem->appendToFile(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.txt', $newData);
-//        $content = file_get_contents(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json');
-//
-//        $content = ltrim($content, '[');
-//        $newContent = '{"price:"'.$avgPrice.',"volume":'.$volume.","
-
-//        $handler = fopen(__DIR__ . '/../../AssetBundle/Points/ada.json', "r+");
-//        fseek($handler, 1);
-//        fwrite($handler, "want to add this");
-
+        if (file_exists(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json')) {
+            $file = fopen(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json', "r+");
+            fseek($file, filesize(__DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json')-1);
+            fwrite($file, ',{"price":' . $avgPrice . ',"volume":' . $volume . ',"time":' . time() . '}]');
+            fclose($file);
+        } else {
+            file_put_contents ( __DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json', json_encode([
+                ["price"=>$avgPrice,"volume"=>$volume,"time"=>time()]
+            ]));
+        }
     }
 
 
