@@ -12,6 +12,7 @@
         <server name="KERNEL_CLASS" value="AppKernel" />
         <env name="BOOTSTRAP_REFRESH_DATABASE_ENV" value="test" />
         <env name="BOOTSTRAP_CLEAR_CACHE_ENV" value="test" />
+        <env name="SYMFONY_PHPUNIT_VERSION" value="7.4.4" />
     </php>
 
     <testsuites>
