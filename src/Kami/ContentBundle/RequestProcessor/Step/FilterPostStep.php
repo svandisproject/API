@@ -15,6 +15,7 @@ class FilterPostStep extends FilterStep
         $subQuery = $subQueryBuilder
             ->where(sprintf($shortcut.'.%s = :%s_value', $filter['property'], $filter['property'].$index))
             ->setParameter(sprintf('%s_value', $filter['property'].$index), $filter['value'])
+            ->orWhere($shortcut.' is NULL')
             ->getQuery()
             ->getArrayResult()
         ;
