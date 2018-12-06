@@ -38,7 +38,7 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(name="onboarded", type="boolean", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -47,7 +47,7 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(name="centralized", type="boolean", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -57,7 +57,7 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(name="key_addresses", type="array", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -66,7 +66,7 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(name="recovery_addresses", type="array", nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -75,7 +75,7 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(name="identity_address", type="string", length=150, nullable=true)
-     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\Access({"ROLE_ADMIN"})
      * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
      * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
@@ -110,6 +110,30 @@ class User extends BaseUser
         $this->likedPosts = new ArrayCollection();
         $this->addedTags = new ArrayCollection();
         parent::__construct();
+    }
+
+    /**
+     * @param array $likedPosts
+     */
+    public function setLikedPosts($likedPosts)
+    {
+        $this->likedPosts = $likedPosts;
+    }
+
+    /**
+     * @param array $addedTags
+     */
+    public function setAddedTags($addedTags)
+    {
+        $this->addedTags = $addedTags;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddedTags()
+    {
+        return $this->addedTags;
     }
 
     /**
