@@ -18,6 +18,7 @@ use JMS\Serializer\Annotation\Exclude;
  * @ORM\Table(name="`user`")
  * @UniqueEntity("workerToken")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
  */
 class User extends BaseUser
 {
