@@ -19,3 +19,4 @@
 /web/build/*
 /worker/node_modules
 /cassandra.log
+/src/Kami/AssetBundle/Points/

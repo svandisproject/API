@@ -267,6 +267,7 @@ class VolumesWatcher
         ]);
 
         $this->cassandra->executeAsync($batch);
+        $this->updatePointsFile($ticker, $avgPrice, $volume);
     }
 
     private function createCassandraAveragePriceTable($ticker, $cassandra)
@@ -280,6 +281,24 @@ class VolumesWatcher
             $cassandra->execute($statement);
         } catch (ExecutionException $exception) {
             echo $exception->getMessage();
+        }
+    }
+
+    private function updatePointsFile($ticker, $avgPrice, $volume)
+    {
+        $filePath = __DIR__ . '/../../AssetBundle/Points/' . $ticker . '.json';
+        if (file_exists($filePath)) {
+            $file = fopen($filePath, "r+");
+            dump('!!!!!!!!!!!!!');
+            dump($file);
+            fseek($file, filesize($filePath)-1);
+            fwrite($file, ',{"price":' . $avgPrice . ',"volume":' . $volume . ',"time":' . time() . '}]');
+            fclose($file);
+        } else {
+            file_put_contents ( $filePath, json_encode([
+                ["price"=>$avgPrice,"volume"=>$volume,"time"=>time()]
+            ]));
+            chmod($filePath, 0644);
         }
     }
 

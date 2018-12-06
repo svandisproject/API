@@ -20,3 +20,11 @@ services:
             - "@kami_stock.history_volumes.watcher"
         tags:
             - { name: 'console.command' }
+
+    kami.sync_assets.prices.command:
+            class: Kami\AssetBundle\Command\SyncAssetsPricesCommand
+            arguments:
+                - "@doctrine.orm.entity_manager"
+                - "@m6web_cassandra.client.default"
+            tags:
+                - { name: 'console.command' }
