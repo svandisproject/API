@@ -18,6 +18,7 @@ use JMS\Serializer\Annotation\Exclude;
  * @ORM\Table(name="`user`")
  * @UniqueEntity("workerToken")
  * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+ * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
  */
 class User extends BaseUser
 {
@@ -37,47 +38,47 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(name="onboarded", type="boolean", nullable=true)
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $onboarded = false;
 
     /**
      * @ORM\Column(name="centralized", type="boolean", nullable=true)
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $centralized = false;
 
 
     /**
      * @ORM\Column(name="key_addresses", type="array", nullable=true)
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $keyAddresses;
 
     /**
      * @ORM\Column(name="recovery_addresses", type="array", nullable=true)
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $recoveryAddresses;
 
     /**
      * @ORM\Column(name="identity_address", type="string", length=150, nullable=true)
-     * @Api\Access({"ROLE_ADMIN"})
-     * @Api\CanBeCreatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeUpdatedBy({"ROLE_ADMIN"})
-     * @Api\CanBeDeletedBy({"ROLE_ADMIN"})
+     * @Api\Access({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeCreatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeUpdatedBy({"ROLE_ADMIN", "ROLE_USER"})
+     * @Api\CanBeDeletedBy({"ROLE_ADMIN", "ROLE_USER"})
      */
     private $identityAddress;
 
